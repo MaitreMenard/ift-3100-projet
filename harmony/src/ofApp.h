@@ -1,9 +1,12 @@
 #pragma once
-
 #include "ofMain.h"
+#include "scene.h"
+#include "cube.h"
 
 class ofApp : public ofBaseApp
 {
+private:
+    Scene scene;
 
 public:
     void setup();
