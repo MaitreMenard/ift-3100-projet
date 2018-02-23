@@ -17,6 +17,7 @@ public:
     void draw();
 
     void addGameObject(GameObject* gameObject);
+    void translateSelectedGameObject(float dx, float dy, float dz);
 
     Scene& operator=(const Scene& other);
 

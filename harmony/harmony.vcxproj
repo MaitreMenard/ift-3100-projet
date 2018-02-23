@@ -176,6 +176,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\scene.cpp" />
+    <ClCompile Include="src\transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\cube.h" />

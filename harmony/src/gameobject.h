@@ -4,13 +4,15 @@
 
 class GameObject
 {
-private:
+protected:
     Transform transform;
 
 public:
     virtual void setup();
     virtual void update();
     virtual void draw();
+
+    void translate(float dx, float dy, float dz);
 
     virtual ~GameObject();
 };

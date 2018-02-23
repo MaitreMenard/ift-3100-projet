@@ -32,7 +32,29 @@ void ofApp::draw()
 
 void ofApp::keyPressed(int key)
 {
-
+    switch (key)
+    {
+    case '+':
+        scene.translateSelectedGameObject(0, 0, 20);
+        break;
+    case '-':
+        scene.translateSelectedGameObject(0, 0, -20);
+        break;
+    case 356:   // left arrow
+        scene.translateSelectedGameObject(-20, 0, 0);
+        break;
+    case 357:   // up arrow
+        scene.translateSelectedGameObject(0, -20, 0);
+        break;
+    case 358:   // right arrow
+        scene.translateSelectedGameObject(20, 0, 0);
+        break;
+    case 359:   // down arrow
+        scene.translateSelectedGameObject(0, 20, 0);
+        break;
+    default:
+        break;
+    }
 }
 
 void ofApp::keyReleased(int key)

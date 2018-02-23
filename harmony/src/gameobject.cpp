@@ -15,5 +15,10 @@ void GameObject::draw()
     
 }
 
+void GameObject::translate(float dx, float dy, float dz)
+{
+    transform.translate(dx, dy, dz);
+}
+
 GameObject::~GameObject()
 {}

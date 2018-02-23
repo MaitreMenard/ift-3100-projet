@@ -40,6 +40,15 @@ void Scene::addGameObject(GameObject* gameObject)
     gameObjects.push_back(gameObject);
 }
 
+void Scene::translateSelectedGameObject(float dx, float dy, float dz)
+{
+    //TODO: modify this when gameObject selection will be implemented
+    if (gameObjects.size() > 0)
+    {
+        gameObjects[0]->translate(dx, dy, dz);
+    }
+}
+
 Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();

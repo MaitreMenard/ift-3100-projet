@@ -72,5 +72,10 @@ Cube::Cube()
 
 void Cube::draw()
 {
+    ofPushMatrix();
+
+    ofTranslate(transform.getPosition());
     model.draw();
+
+    ofPopMatrix();
 }
