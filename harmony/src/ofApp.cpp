@@ -4,8 +4,12 @@
 
 void ofApp::setup()
 {
+    shiftIsPressed = false;
+
     ofSetFrameRate(60);
     ofEnableDepthTest();
+
+    camera.setNearClip(0.1);
 
     scene.setup();
 
@@ -21,13 +25,12 @@ void ofApp::update()
 void ofApp::draw()
 {
     ofClear(0);
-    ofPushMatrix();
 
-    ofTranslate(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f, 0);
-    
+    camera.setPosition(0, 0, 5);
+
+    camera.begin();
     scene.draw();
-
-    ofPopMatrix();
+    camera.end();
 }
 
 void ofApp::keyPressed(int key)
@@ -35,22 +38,39 @@ void ofApp::keyPressed(int key)
     switch (key)
     {
     case '+':
-        scene.translateSelectedGameObject(0, 0, 20);
+        if (shiftIsPressed)
+        {
+            scene.rescaleSelectedGameObject(1.2, 1.2, 1.2);
+        }
+        else
+        {
+            scene.translateSelectedGameObject(0, 0, 1);
+        }
         break;
     case '-':
-        scene.translateSelectedGameObject(0, 0, -20);
+        if (shiftIsPressed)
+        {
+            scene.rescaleSelectedGameObject(0.8, 0.8, 0.8);
+        }
+        else
+        {
+            scene.translateSelectedGameObject(0, 0, -1);
+        }
         break;
     case 356:   // left arrow
-        scene.translateSelectedGameObject(-20, 0, 0);
+        scene.translateSelectedGameObject(-1, 0, 0);
         break;
     case 357:   // up arrow
-        scene.translateSelectedGameObject(0, -20, 0);
+        scene.translateSelectedGameObject(0, -1, 0);
         break;
     case 358:   // right arrow
-        scene.translateSelectedGameObject(20, 0, 0);
+        scene.translateSelectedGameObject(1, 0, 0);
         break;
     case 359:   // down arrow
-        scene.translateSelectedGameObject(0, 20, 0);
+        scene.translateSelectedGameObject(0, 1, 0);
+        break;
+    case 2304:  // shift
+        shiftIsPressed = true;
         break;
     default:
         break;
@@ -59,7 +79,14 @@ void ofApp::keyPressed(int key)
 
 void ofApp::keyReleased(int key)
 {
-
+    switch (key)
+    {
+    case 2304:  // shift
+        shiftIsPressed = false;
+        break;
+    default:
+        break;
+    }
 }
 
 void ofApp::mouseMoved(int x, int y)

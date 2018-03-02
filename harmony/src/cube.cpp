@@ -3,14 +3,6 @@
 Cube::Cube()
 {
     model.setMode(OF_PRIMITIVE_TRIANGLES);
-    model.addVertex(ofPoint(-50, -50, 50));
-    model.addVertex(ofPoint(50, -50, 50));
-    model.addVertex(ofPoint(-50, 50, 50));
-    model.addVertex(ofPoint(50, 50, 50));
-    model.addVertex(ofPoint(-50, -50, -50));
-    model.addVertex(ofPoint(50, -50, -50));
-    model.addVertex(ofPoint(-50, 50, -50));
-    model.addVertex(ofPoint(50, 50, -50));
 
     model.addIndex(0);
     model.addIndex(1);
@@ -72,6 +64,17 @@ Cube::Cube()
 
 void Cube::draw()
 {
+    //TODO: modify vertices in the reScale method
+    model.clearVertices();
+    model.addVertex(ofPoint(-transform.getScale().x / 2, transform.getScale().y / -2, transform.getScale().z / 2));
+    model.addVertex(ofPoint(transform.getScale().x / 2, -transform.getScale().y / 2, transform.getScale().z / 2));
+    model.addVertex(ofPoint(-transform.getScale().x / 2, transform.getScale().y / 2, transform.getScale().z / 2));
+    model.addVertex(ofPoint(transform.getScale().x / 2, transform.getScale().y / 2, transform.getScale().z / 2));
+    model.addVertex(ofPoint(-transform.getScale().x / 2, -transform.getScale().y / 2, -transform.getScale().z / 2));
+    model.addVertex(ofPoint(transform.getScale().x / 2, -transform.getScale().y / 2, -transform.getScale().z / 2));
+    model.addVertex(ofPoint(-transform.getScale().x / 2, transform.getScale().y / 2, -transform.getScale().z / 2));
+    model.addVertex(ofPoint(transform.getScale().x / 2, transform.getScale().y / 2, -transform.getScale().z / 2));
+
     ofPushMatrix();
 
     ofTranslate(transform.getPosition());

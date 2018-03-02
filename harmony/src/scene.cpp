@@ -49,6 +49,11 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
     }
 }
 
+void Scene::rescaleSelectedGameObject(float x, float y, float z)
+{
+    gameObjects[0]->reScale(x, y, z);
+}
+
 Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();

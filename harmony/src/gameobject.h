@@ -13,6 +13,7 @@ public:
     virtual void draw();
 
     void translate(float dx, float dy, float dz);
+    void reScale(float x, float y, float z);
 
     virtual ~GameObject();
 };

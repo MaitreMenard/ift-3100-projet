@@ -6,6 +6,9 @@
 class ofApp : public ofBaseApp
 {
 private:
+    bool shiftIsPressed;
+
+    ofCamera camera;
     Scene scene;
 
 public:
