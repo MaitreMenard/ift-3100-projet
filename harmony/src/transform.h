@@ -11,8 +11,10 @@ private:
 public:
     Transform();
     ofVec3f getPosition();
+	ofQuaternion getRotation();
     ofVec3f getScale();
 
     void translate(float dx, float dy, float dz);
     void reScale(float x, float y, float z);
+	void rotate(float dx, float dy, float dz);
 };

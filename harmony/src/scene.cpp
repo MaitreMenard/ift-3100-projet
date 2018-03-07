@@ -54,6 +54,15 @@ void Scene::rescaleSelectedGameObject(float x, float y, float z)
     gameObjects[0]->reScale(x, y, z);
 }
 
+void Scene::rotateSelectedGameObject(float dx, float dy, float dz)
+{
+	//TODO: modify this when gameObject selection will be implemented
+	if (gameObjects.size() > 0)
+	{
+		gameObjects[0]->rotate(dx, dy, dz);
+	}
+}
+
 Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();

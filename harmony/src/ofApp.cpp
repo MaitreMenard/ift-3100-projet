@@ -1,6 +1,6 @@
 #include "ofApp.h"
 
-//TODO: transfert all the rendering details into an AppRenderer class
+//TODO: transfer all the rendering details into an AppRenderer class
 
 void ofApp::setup()
 {
@@ -9,7 +9,7 @@ void ofApp::setup()
     ofSetFrameRate(60);
     ofEnableDepthTest();
 
-    camera.setNearClip(0.1);
+    camera.setNearClip(0.1f);
 
     scene.setup();
 
@@ -40,7 +40,7 @@ void ofApp::keyPressed(int key)
     case '+':
         if (shiftIsPressed)
         {
-            scene.rescaleSelectedGameObject(1.2, 1.2, 1.2);
+            scene.rescaleSelectedGameObject(1.2f, 1.2f, 1.2f);
         }
         else
         {
@@ -50,7 +50,7 @@ void ofApp::keyPressed(int key)
     case '-':
         if (shiftIsPressed)
         {
-            scene.rescaleSelectedGameObject(0.8, 0.8, 0.8);
+            scene.rescaleSelectedGameObject(0.8f, 0.8f, 0.8f);
         }
         else
         {
@@ -61,14 +61,26 @@ void ofApp::keyPressed(int key)
         scene.translateSelectedGameObject(-1, 0, 0);
         break;
     case 357:   // up arrow
-        scene.translateSelectedGameObject(0, -1, 0);
+        scene.translateSelectedGameObject(0, 1, 0);
         break;
     case 358:   // right arrow
         scene.translateSelectedGameObject(1, 0, 0);
         break;
     case 359:   // down arrow
-        scene.translateSelectedGameObject(0, 1, 0);
+        scene.translateSelectedGameObject(0, -1, 0);
         break;
+	case 119:   // w
+		scene.rotateSelectedGameObject(-1, 0, 0);
+		break;
+	case 97:   // a
+		scene.rotateSelectedGameObject(0, 1, 0);
+		break;
+	case 115:   // s
+		scene.rotateSelectedGameObject(1, 0, 0);
+		break;
+	case 100:   // d
+		scene.rotateSelectedGameObject(0, -1, 0);
+		break;
     case 2304:  // shift
         shiftIsPressed = true;
         break;

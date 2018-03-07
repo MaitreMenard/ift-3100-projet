@@ -25,5 +25,10 @@ void GameObject::reScale(float x, float y, float z)
     transform.reScale(x, y, z);
 }
 
+void GameObject::rotate(float dx, float dy, float dz)
+{
+	transform.rotate(dx, dy, dz);
+}
+
 GameObject::~GameObject()
 {}
