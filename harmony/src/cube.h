@@ -10,5 +10,4 @@ public:
     Cube();
 
     void setColor(ofColor color);
-    void draw();
 };
