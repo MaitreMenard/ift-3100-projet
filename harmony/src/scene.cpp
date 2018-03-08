@@ -27,7 +27,24 @@ void Scene::update()
     }
 }
 
-void Scene::updateSelectedGameObjectColor(ofColor color)
+ofVec3f Scene::getEulerRotationSelectedGameObject() {
+    if (gameObjects.size() > 0)
+    {
+        return gameObjects[0]->getRotation().getEuler();
+    }
+    return ofVec3f(0, 0, 0);
+}
+
+void Scene::updateSelectedGameObjectRotation(ofVec3f rotation)
+{
+    //TODO: Actually use the selected object in the scene, not the first
+    if (gameObjects.size() > 0 && gameObjects[0]->getRotation().getEuler() != rotation)
+    {
+        gameObjects[0]->setRotation(rotation.x, rotation.y, rotation.z);
+    }
+}
+
+void Scene::setColorSelectedGameObject(ofColor color)
 {
     //TODO: Actually use the selected object in the scene, not the first
     if (gameObjects.size() > 0 && gameObjects[0]->getColor() != color)
@@ -36,12 +53,28 @@ void Scene::updateSelectedGameObjectColor(ofColor color)
     }
 }
 
-void Scene::updateSelectedGameObjectRotation(ofVec3f rotation) {
-    //TODO: Actually use the selected object in the scene, not the first
-    if (gameObjects.size() > 0 && gameObjects[0]->getRotation().getEuler() != rotation)
+ofVec3f Scene::getPositionSelectedGameObject() {
+    if (gameObjects.size() > 0)
     {
-        gameObjects[0]->setRotation(rotation.x, rotation.y, rotation.z);
+        return gameObjects[0]->getPosition();
     }
+    return ofVec3f(0, 0, 0);
+}
+
+ofVec3f Scene::getScaleSelectedGameObject() {
+    if (gameObjects.size() > 0)
+    {
+        return gameObjects[0]->getScale();
+    }
+    return ofVec3f(1, 1, 1);
+}
+
+ofColor Scene::getColorSelectedGameObject() {
+    if (gameObjects.size() > 0)
+    {
+        return gameObjects[0]->getColor();
+    }
+    return ofColor(255, 255, 255);
 }
 
 void Scene::draw()

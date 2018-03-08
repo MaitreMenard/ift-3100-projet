@@ -26,6 +26,7 @@ public:
     void update();
     void draw();
 
+    void initGUI(bool colorIsRGB);
     void exit();
     void takeScreenShot();
 
@@ -53,6 +54,9 @@ public:
     void yScaleChanged(string & value);
     void zScaleChanged(string & value);
 
+    void colorChangedRGB(int & value);
+    void colorChangedHSB(int & value);
+
     bool bHide;
 
     ofxTextField scale_x;
@@ -63,7 +67,16 @@ public:
     ofxTextField position_y;
     ofxTextField position_z;
 
-    ofxColorSlider color;
+    ofxIntField RGB_r;
+    ofxIntField RGB_g;
+    ofxIntField RGB_b;
+    ofxIntField RGB_a;
+
+    ofxIntField HSB_h;
+    ofxIntField HSB_s;
+    ofxIntField HSB_b;
+    ofxIntField HSB_a;
+
     ofxVec3Slider rotation;
     ofxToggle colorType;
 
@@ -71,4 +84,5 @@ public:
 
     ofxLabel scale_label;
     ofxLabel position_label;
+    ofxLabel color_label;
 };

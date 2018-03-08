@@ -18,9 +18,11 @@ public:
     void translate(float dx, float dy, float dz);
     void reScale(float x, float y, float z);
     void rotate(float degrees, float x, float y, float z);
+    ofVec3f getPosition();
     void setPosition(float x, float y, float z);
     ofQuaternion getRotation();
     void setRotation(float x, float y, float z);
+    ofVec3f getScale();
     void setScale(float x, float y, float z);
 
     ofColor getColor();

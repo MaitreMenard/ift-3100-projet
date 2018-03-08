@@ -14,7 +14,6 @@ public:
 
     void setup();
     void update();
-    void updateSelectedGameObjectColor(ofColor color);
     void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
 
@@ -24,6 +23,12 @@ public:
     void rotateSelectedGameObject(float degrees, float x, float y, float z);
     void setPositionSelectedGameObject(float x, float y, float z);
     void setScaleSelectedGameObject(float x, float y, float z);
+    void setColorSelectedGameObject(ofColor color);
+
+    ofVec3f getPositionSelectedGameObject();
+    ofVec3f getEulerRotationSelectedGameObject();
+    ofVec3f getScaleSelectedGameObject();
+    ofColor getColorSelectedGameObject();
 
     Scene& operator=(const Scene& other);
 
