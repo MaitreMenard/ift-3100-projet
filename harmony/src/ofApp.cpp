@@ -12,6 +12,8 @@ void ofApp::setup()
     ofEnableAlphaBlending();
 
     camera.setNearClip(0.1f);
+    camera.setPosition(0, 2, 5);
+    camera.lookAt(ofVec3f(0, 0, 0));
 
     gridPlane.setup();
     scene.setup();
@@ -28,13 +30,11 @@ void ofApp::update()
 void ofApp::draw()
 {
     ofClear(0);
-
-    camera.setPosition(0, 2, 5);
-    camera.lookAt(ofVec3f(0, 0, 0));
-
     camera.begin();
+
     scene.draw();
     gridPlane.draw();
+
     camera.end();
 }
 
@@ -63,48 +63,34 @@ void ofApp::keyPressed(int key)
         takeScreenShot();
         break;
     case '+':
-        if (shiftIsPressed)
-        {
-            scene.rescaleSelectedGameObject(1.2f, 1.2f, 1.2f);
-        }
-        else
-        {
-            scene.translateSelectedGameObject(0, 0, 1);
-        }
+        camera.move(0, 0, -1);
         break;
     case '-':
-        if (shiftIsPressed)
-        {
-            scene.rescaleSelectedGameObject(0.8f, 0.8f, 0.8f);
-        }
-        else
-        {
-            scene.translateSelectedGameObject(0, 0, -1);
-        }
+        camera.move(0, 0, 1);
         break;
     case 356:   // left arrow
-        scene.translateSelectedGameObject(-1, 0, 0);
+        camera.pan(10);
         break;
     case 357:   // up arrow
-        scene.translateSelectedGameObject(0, 1, 0);
+        camera.tilt(10);
         break;
     case 358:   // right arrow
-        scene.translateSelectedGameObject(1, 0, 0);
+        camera.pan(-10);
         break;
     case 359:   // down arrow
-        scene.translateSelectedGameObject(0, -1, 0);
+        camera.tilt(-10);
         break;
 	case 'w':
-		scene.rotateSelectedGameObject(-10, 1, 0, 1);
+        camera.move(0, 1, 0);
 		break;
 	case 'a':
-		scene.rotateSelectedGameObject(-10, 0, 1, 0);
+        camera.move(-1, 0, 0);
 		break;
 	case 's':
-		scene.rotateSelectedGameObject(10, 1, 0, 0);
+        camera.move(0, -1, 0);
 		break;
 	case 'd':
-		scene.rotateSelectedGameObject(10, 0, 1, 0);
+        camera.move(1, 0, 0);
 		break;
     case 2304:  // shift
         shiftIsPressed = true;
