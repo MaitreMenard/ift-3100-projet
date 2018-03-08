@@ -27,6 +27,15 @@ void Scene::update()
     }
 }
 
+void Scene::updateSelectedGameObjectColor(ofColor color) 
+{
+    //TODO: Actually use the selected object in the scene, not the first
+    if (gameObjects.size() > 0 && gameObjects[0]->getColor() != color)
+    {
+        gameObjects[0]->setColor(color);
+    }
+}
+
 void Scene::draw()
 {
     for (GameObject* gameObject : gameObjects)
@@ -51,12 +60,12 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
-	gameObjects[0]->setPosition(x, y, z);
+    gameObjects[0]->setPosition(x, y, z);
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
-	gameObjects[0]->setScale(x, y, z);
+    gameObjects[0]->setScale(x, y, z);
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
@@ -66,11 +75,11 @@ void Scene::rescaleSelectedGameObject(float x, float y, float z)
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
 {
-	//TODO: modify this when gameObject selection will be implemented
-	if (gameObjects.size() > 0)
-	{
-		gameObjects[0]->rotate(degrees, x, y, z);
-	}
+    //TODO: modify this when gameObject selection will be implemented
+    if (gameObjects.size() > 0)
+    {
+        gameObjects[0]->rotate(degrees, x, y, z);
+    }
 }
 
 Scene& Scene::operator=(const Scene& other)

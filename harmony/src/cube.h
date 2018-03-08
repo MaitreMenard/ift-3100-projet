@@ -5,10 +5,10 @@
 class Cube: public GameObject
 {
 private:
-    ofMesh model;
 
 public:
     Cube();
 
+    void setColor(ofColor color);
     void draw();
 };

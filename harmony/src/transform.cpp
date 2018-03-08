@@ -12,7 +12,7 @@ ofVec3f Transform::getPosition()
 
 ofQuaternion Transform::getRotation()
 {
-	return rotation;
+    return rotation;
 }
 
 void Transform::getRotate(float & angle, float & x, float & y, float & z)
@@ -34,15 +34,15 @@ void Transform::translate(float dx, float dy, float dz)
 
 void Transform::setPosition(float x, float y, float z)
 {
-	if (x >= -1000) {
-		position = ofVec3f(x, position.y, position.z);
-	}
-	else if (y >= -1000) {
-		position = ofVec3f(position.x, y, position.z);
-	}
-	else if (z >= -1000) {
-		position = ofVec3f(position.x, position.y, z);
-	}
+    if (x >= -1000) {
+        position = ofVec3f(x, position.y, position.z);
+    }
+    else if (y >= -1000) {
+        position = ofVec3f(position.x, y, position.z);
+    }
+    else if (z >= -1000) {
+        position = ofVec3f(position.x, position.y, z);
+    }
 }
 
 void Transform::rotate(float degrees, float x, float y, float z)
@@ -64,13 +64,13 @@ void Transform::reScale(float x, float y, float z)
 
 void Transform::setScale(float x, float y, float z)
 {
-	if (x >= -100) {
-		scale = ofVec3f(x, scale.y, scale.z);
-	}
-	else if (y >= -100) {
-		scale = ofVec3f(scale.x, y, scale.z);
-	}
-	else if (z >= -100) {
-		scale = ofVec3f(scale.x, scale.y, z);
-	}
+    if (x >= -100) {
+        scale = ofVec3f(x, scale.y, scale.z);
+    }
+    else if (y >= -100) {
+        scale = ofVec3f(scale.x, y, scale.z);
+    }
+    else if (z >= -100) {
+        scale = ofVec3f(scale.x, scale.y, z);
+    }
 }

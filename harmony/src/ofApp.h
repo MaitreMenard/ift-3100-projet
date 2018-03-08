@@ -10,10 +10,10 @@
 class ofApp : public ofBaseApp
 {
 private:
-	const float SCALE_MIN_VALUE = -100;
-	const float SCALE_MAX_VALUE = 100;
-	const float POSITION_MIN_VALUE = -1000;
-	const float POSITION_MAX_VALUE = 1000;
+    const float SCALE_MIN_VALUE = -100;
+    const float SCALE_MAX_VALUE = 100;
+    const float POSITION_MIN_VALUE = -1000;
+    const float POSITION_MAX_VALUE = 1000;
 
     bool shiftIsPressed;
 
@@ -26,7 +26,7 @@ public:
     void update();
     void draw();
 
-	void exit();
+    void exit();
     void takeScreenShot();
 
     void keyPressed(int key);
@@ -41,34 +41,34 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-	void colorTypeChanged(bool & pressed);
+    void colorTypeChanged(bool & pressed);
 
-	void updateUIValues(ofxInputField<string> & field, int & key);
-	
-	void xPositionChanged(string & value);
-	void yPositionChanged(string & value);
-	void zPositionChanged(string & value);
+    void updateUIValues(ofxInputField<string> & field, int & key);
 
-	void xScaleChanged(string & value);
-	void yScaleChanged(string & value);
-	void zScaleChanged(string & value);
+    void xPositionChanged(string & value);
+    void yPositionChanged(string & value);
+    void zPositionChanged(string & value);
 
-	bool bHide;
+    void xScaleChanged(string & value);
+    void yScaleChanged(string & value);
+    void zScaleChanged(string & value);
 
-	ofxTextField scale_x;
-	ofxTextField scale_y;
-	ofxTextField scale_z;
+    bool bHide;
 
-	ofxTextField position_x;
-	ofxTextField position_y;
-	ofxTextField position_z;
+    ofxTextField scale_x;
+    ofxTextField scale_y;
+    ofxTextField scale_z;
 
-	ofxColorSlider color;
-	ofxVec3Slider rotation;
-	ofxToggle colorType;
+    ofxTextField position_x;
+    ofxTextField position_y;
+    ofxTextField position_z;
 
-	ofxPanel gui;
+    ofxColorSlider color;
+    ofxVec3Slider rotation;
+    ofxToggle colorType;
 
-	ofxLabel scale_label;
-	ofxLabel position_label;
+    ofxPanel gui;
+
+    ofxLabel scale_label;
+    ofxLabel position_label;
 };
