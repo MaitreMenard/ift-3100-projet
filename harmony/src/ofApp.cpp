@@ -33,10 +33,30 @@ void ofApp::draw()
     camera.end();
 }
 
+void ofApp::takeScreenShot()
+{
+    time_t secondsSinceEpoch = time(0);
+    tm* now = localtime(&secondsSinceEpoch);
+
+    std::stringstream ss;
+    ss << now->tm_year + 1900 << '-' << now->tm_mon + 1 << '-' << now->tm_mday << '_' <<
+        now->tm_hour << 'h' << now->tm_min << 'm' << now->tm_sec << "s.png";
+    std::string fileName = ss.str();
+
+    ofImage image;
+    image.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+    image.save(fileName);
+
+    ofLog() << "screenshot saved to: " << fileName;
+}
+
 void ofApp::keyPressed(int key)
 {
     switch (key)
     {
+    case ' ':
+        takeScreenShot();
+        break;
     case '+':
         if (shiftIsPressed)
         {
@@ -69,16 +89,16 @@ void ofApp::keyPressed(int key)
     case 359:   // down arrow
         scene.translateSelectedGameObject(0, -1, 0);
         break;
-	case 119:   // w
+	case 'w':
 		scene.rotateSelectedGameObject(-1, 0, 0);
 		break;
-	case 97:   // a
+	case 'a':
 		scene.rotateSelectedGameObject(0, 1, 0);
 		break;
-	case 115:   // s
+	case 's':
 		scene.rotateSelectedGameObject(1, 0, 0);
 		break;
-	case 100:   // d
+	case 'd':
 		scene.rotateSelectedGameObject(0, -1, 0);
 		break;
     case 2304:  // shift

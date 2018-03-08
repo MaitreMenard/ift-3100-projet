@@ -1,4 +1,5 @@
 #pragma once
+#include <ctime>
 #include "ofMain.h"
 #include "scene.h"
 #include "cube.h"
@@ -15,6 +16,8 @@ public:
     void setup();
     void update();
     void draw();
+
+    void takeScreenShot();
 
     void keyPressed(int key);
     void keyReleased(int key);
