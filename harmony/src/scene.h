@@ -19,7 +19,7 @@ public:
     void addGameObject(GameObject* gameObject);
     void translateSelectedGameObject(float dx, float dy, float dz);
     void rescaleSelectedGameObject(float x, float y, float z);
-	void rotateSelectedGameObject(float dx, float dy, float dz);
+	void rotateSelectedGameObject(float degrees, float x, float y, float z);
 
     Scene& operator=(const Scene& other);
 

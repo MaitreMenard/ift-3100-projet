@@ -15,6 +15,11 @@ ofQuaternion Transform::getRotation()
 	return rotation;
 }
 
+void Transform::getRotate(float & angle, float & x, float & y, float & z)
+{
+    rotation.getRotate(angle, x, y, z);
+}
+
 ofVec3f Transform::getScale()
 {
     return scale;
@@ -27,13 +32,14 @@ void Transform::translate(float dx, float dy, float dz)
     position.z += dz;
 }
 
-void Transform::rotate(float dx, float dy, float dz)
+void Transform::rotate(float degrees, float x, float y, float z)
 {
-	//TODO: How to rotate?
+    rotation *= ofQuaternion(degrees, ofVec3f(x, y, z));
+}
 
-	/*rotation.x += dx;
-	rotation.y += dy;
-	rotation.z += dz;*/
+void Transform::setRotation(float thetaX, float thetaY, float thetaZ)
+{
+    rotation.makeRotate(thetaX, ofVec3f(1, 0, 0), thetaY, ofVec3f(0, 1, 0), thetaZ, ofVec3f(0, 0, 1));
 }
 
 void Transform::reScale(float x, float y, float z)

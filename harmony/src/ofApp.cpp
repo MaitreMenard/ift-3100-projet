@@ -95,16 +95,16 @@ void ofApp::keyPressed(int key)
         scene.translateSelectedGameObject(0, -1, 0);
         break;
 	case 'w':
-		scene.rotateSelectedGameObject(-1, 0, 0);
+		scene.rotateSelectedGameObject(-10, 1, 0, 1);
 		break;
 	case 'a':
-		scene.rotateSelectedGameObject(0, 1, 0);
+		scene.rotateSelectedGameObject(-10, 0, 1, 0);
 		break;
 	case 's':
-		scene.rotateSelectedGameObject(1, 0, 0);
+		scene.rotateSelectedGameObject(10, 1, 0, 0);
 		break;
 	case 'd':
-		scene.rotateSelectedGameObject(0, -1, 0);
+		scene.rotateSelectedGameObject(10, 0, 1, 0);
 		break;
     case 2304:  // shift
         shiftIsPressed = true;

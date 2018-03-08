@@ -75,10 +75,13 @@ void Cube::draw()
     ofPushMatrix();
 
     ofTranslate(transform.getPosition());
+
     ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-    //ofRotate();
+
+    float angle, x, y, z;
+    transform.getRotate(angle, x, y, z);
+    ofRotate(angle, x, y, z);
 
     model.draw();
-
     ofPopMatrix();
 }
