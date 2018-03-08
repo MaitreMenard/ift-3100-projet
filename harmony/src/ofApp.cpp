@@ -19,6 +19,10 @@ void ofApp::setup()
     scene.setup();
 
     Cube* cube = new Cube();
+    Cube* cube2 = new Cube();
+    cube->addChild(cube2);
+    cube2->reScale(0.5f, 0.5f, 0.5f);
+    cube2->translate(0.0f, 1.0f, 0.0f);
     scene.addGameObject(cube);
 
     ofSetVerticalSync(true);
@@ -244,34 +248,34 @@ void ofApp::keyPressed(int key)
         takeScreenShot();
         break;
     case '+':
-        camera.move(0, 0, -1);
+        camera.dolly(-1);
         break;
     case '-':
-        camera.move(0, 0, 1);
+        camera.dolly(1);
         break;
     case 356:   // left arrow
-        camera.pan(10);
+        camera.pan(5);
         break;
     case 357:   // up arrow
-        camera.tilt(10);
+        camera.tilt(5);
         break;
     case 358:   // right arrow
-        camera.pan(-10);
+        camera.pan(-5);
         break;
     case 359:   // down arrow
-        camera.tilt(-10);
+        camera.tilt(-5);
         break;
     case 'w':
-        camera.move(0, 1, 0);
+        camera.boom(1);
         break;
     case 'a':
-        camera.move(-1, 0, 0);
+        camera.truck(-1);
         break;
     case 's':
-        camera.move(0, -1, 0);
+        camera.boom(-1);
         break;
     case 'd':
-        camera.move(1, 0, 0);
+        camera.truck(1);
         break;
     case 2304:  // shift
         shiftIsPressed = true;
