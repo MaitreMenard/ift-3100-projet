@@ -1,6 +1,7 @@
 #pragma once
 #include <ctime>
 #include "ofMain.h"
+#include "grid_plane.h"
 #include "scene.h"
 #include "cube.h"
 
@@ -10,6 +11,7 @@ private:
     bool shiftIsPressed;
 
     ofCamera camera;
+    GridPlane gridPlane;
     Scene scene;
 
 public:

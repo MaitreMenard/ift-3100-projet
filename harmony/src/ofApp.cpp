@@ -8,9 +8,12 @@ void ofApp::setup()
 
     ofSetFrameRate(60);
     ofEnableDepthTest();
+    ofDisableArbTex();
+    ofEnableAlphaBlending();
 
     camera.setNearClip(0.1f);
 
+    gridPlane.setup();
     scene.setup();
 
     Cube* cube = new Cube();
@@ -26,10 +29,12 @@ void ofApp::draw()
 {
     ofClear(0);
 
-    camera.setPosition(0, 0, 5);
+    camera.setPosition(0, 2, 5);
+    camera.lookAt(ofVec3f(0, 0, 0));
 
     camera.begin();
     scene.draw();
+    gridPlane.draw();
     camera.end();
 }
 
