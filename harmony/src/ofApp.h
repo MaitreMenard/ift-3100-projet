@@ -4,6 +4,7 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "cube.h"
+#include "sphere.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
 

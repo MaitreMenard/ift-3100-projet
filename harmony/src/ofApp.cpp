@@ -18,12 +18,15 @@ void ofApp::setup()
     gridPlane.setup();
     scene.setup();
 
-    Cube* cube = new Cube();
-    Cube* cube2 = new Cube();
-    cube->addChild(cube2);
-    cube2->reScale(0.5f, 0.5f, 0.5f);
-    cube2->translate(0.0f, 1.0f, 0.0f);
-    scene.addGameObject(cube);
+    Sphere* sphere = new Sphere();
+    sphere->translate(0.0f, 2.0f, 0.0f);
+    scene.addGameObject(sphere);
+    //Cube* cube = new Cube();
+    //Cube* cube2 = new Cube();
+    //cube->addChild(cube2);
+    //cube2->reScale(0.5f, 0.5f, 0.5f);
+    //cube2->translate(0.0f, 1.0f, 0.0f);
+    //scene.addGameObject(cube);
 
     ofSetVerticalSync(true);
 
