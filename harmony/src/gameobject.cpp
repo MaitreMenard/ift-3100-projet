@@ -42,19 +42,14 @@ void GameObject::draw()
     ofPopMatrix();
 }
 
+ofVec3f GameObject::getPosition()
+{
+    return transform.getPosition();
+}
+
 void GameObject::translate(float dx, float dy, float dz)
 {
     transform.translate(dx, dy, dz);
-}
-
-void GameObject::reScale(float x, float y, float z)
-{
-    transform.reScale(x, y, z);
-}
-
-void GameObject::rotate(float degrees, float x, float y, float z)
-{
-    transform.rotate(degrees, x, y, z);
 }
 
 void GameObject::setPosition(float x, float y, float z)
@@ -62,13 +57,29 @@ void GameObject::setPosition(float x, float y, float z)
     transform.setPosition(x, y, z);
 }
 
-ofQuaternion GameObject::getRotation() {
+ofQuaternion GameObject::getRotation()
+{
     return transform.getRotation();
+}
+
+void GameObject::rotate(float degrees, float x, float y, float z)
+{
+    transform.rotate(degrees, x, y, z);
 }
 
 void GameObject::setRotation(float x, float y, float z)
 {
     transform.setRotation(x, y, z);
+}
+
+ofVec3f GameObject::getScale()
+{
+    return transform.getScale();
+}
+
+void GameObject::reScale(float x, float y, float z)
+{
+    transform.reScale(x, y, z);
 }
 
 void GameObject::setScale(float x, float y, float z)
