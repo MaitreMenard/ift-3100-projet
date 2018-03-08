@@ -35,9 +35,13 @@ void GameObject::setPosition(float x, float y, float z)
     transform.setPosition(x, y, z);
 }
 
-void GameObject::setRotation(float thetaX, float thetaY, float thetaZ)
+ofQuaternion GameObject::getRotation() {
+    return transform.getRotation();
+}
+
+void GameObject::setRotation(float x, float y, float z)
 {
-    transform.setRotation(thetaX, thetaY, thetaZ);
+    transform.setRotation(x, y, z);
 }
 
 void GameObject::setScale(float x, float y, float z)

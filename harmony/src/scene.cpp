@@ -27,12 +27,20 @@ void Scene::update()
     }
 }
 
-void Scene::updateSelectedGameObjectColor(ofColor color) 
+void Scene::updateSelectedGameObjectColor(ofColor color)
 {
     //TODO: Actually use the selected object in the scene, not the first
     if (gameObjects.size() > 0 && gameObjects[0]->getColor() != color)
     {
         gameObjects[0]->setColor(color);
+    }
+}
+
+void Scene::updateSelectedGameObjectRotation(ofVec3f rotation) {
+    //TODO: Actually use the selected object in the scene, not the first
+    if (gameObjects.size() > 0 && gameObjects[0]->getRotation().getEuler() != rotation)
+    {
+        gameObjects[0]->setRotation(rotation.x, rotation.y, rotation.z);
     }
 }
 

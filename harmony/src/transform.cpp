@@ -50,9 +50,9 @@ void Transform::rotate(float degrees, float x, float y, float z)
     rotation *= ofQuaternion(degrees, ofVec3f(x, y, z));
 }
 
-void Transform::setRotation(float thetaX, float thetaY, float thetaZ)
+void Transform::setRotation(float x, float y, float z)
 {
-    rotation.makeRotate(thetaX, ofVec3f(1, 0, 0), thetaY, ofVec3f(0, 1, 0), thetaZ, ofVec3f(0, 0, 1));
+    rotation.makeRotate(x, ofVec3f(1, 0, 0), y, ofVec3f(0, 1, 0), z, ofVec3f(0, 0, 1));
 }
 
 void Transform::reScale(float x, float y, float z)
