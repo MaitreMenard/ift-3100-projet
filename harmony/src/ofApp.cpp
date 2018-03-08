@@ -12,6 +12,8 @@ void ofApp::setup()
 	ofEnableAlphaBlending();
 
 	camera.setNearClip(0.1f);
+	camera.setPosition(0, 2, 5);
+	camera.lookAt(ofVec3f(0, 0, 0));
 
 	gridPlane.setup();
 	scene.setup();
@@ -196,9 +198,6 @@ void ofApp::draw()
 
 	ofBackgroundGradient(ofColor::white, ofColor::gray); //CHANGE LA COULEUR DU FOND D'ECRAN
 
-	camera.setPosition(0, 2, 5);
-	camera.lookAt(ofVec3f(0, 0, 0));
-
 	camera.begin();
 	scene.draw();
 	gridPlane.draw();
@@ -232,7 +231,7 @@ void ofApp::takeScreenShot()
 }
 
 void ofApp::updateUIValues(ofxInputField<string> & field, int & key) {
-	
+
 }
 
 void ofApp::keyPressed(int key)
@@ -243,54 +242,34 @@ void ofApp::keyPressed(int key)
 		takeScreenShot();
 		break;
 	case '+':
-		if (shiftIsPressed)
-		{
-			scene.rescaleSelectedGameObject(1.2f, 1.2f, 1.2f);
-		}
-		else
-		{
-			scene.translateSelectedGameObject(0, 0, 1);
-		}
+		camera.move(0, 0, -1);
 		break;
 	case '-':
-		if (shiftIsPressed)
-		{
-			scene.rescaleSelectedGameObject(0.8f, 0.8f, 0.8f);
-		}
-		else
-		{
-			scene.translateSelectedGameObject(0, 0, -1);
-		}
+		camera.move(0, 0, 1);
 		break;
 	case 356:   // left arrow
-		scene.translateSelectedGameObject(-1, 0, 0);
+		camera.pan(10);
 		break;
 	case 357:   // up arrow
-		scene.translateSelectedGameObject(0, 1, 0);
+		camera.tilt(10);
 		break;
 	case 358:   // right arrow
-		scene.translateSelectedGameObject(1, 0, 0);
+		camera.pan(-10);
 		break;
 	case 359:   // down arrow
-		scene.translateSelectedGameObject(0, -1, 0);
+		camera.tilt(-10);
 		break;
-	case 'w':   // x, towards back
-		scene.rotateSelectedGameObject(10, -1, 0, 0);
+	case 'w':
+		camera.move(0, 1, 0);
 		break;
-	case 's':   // x, towards camera
-		scene.rotateSelectedGameObject(10, 1, 0, 0);
+	case 'a':
+		camera.move(-1, 0, 0);
 		break;
-	case 'e':   // y, left
-		scene.rotateSelectedGameObject(10, 0, -1, 0);
+	case 's':
+		camera.move(0, -1, 0);
 		break;
-	case 'd':   // y, right
-		scene.rotateSelectedGameObject(10, 0, 1, 0);
-		break;
-	case 'r':   // z, clockwise
-		scene.rotateSelectedGameObject(10, 0, 0, -1);
-		break;
-	case 'f':   // z, anticlockwise
-		scene.rotateSelectedGameObject(10, 0, 0, 1);
+	case 'd':
+		camera.move(1, 0, 0);
 		break;
 	case 2304:  // shift
 		shiftIsPressed = true;
