@@ -195,6 +195,7 @@ void ofApp::update()
 {
     scene.update();
     scene.updateSelectedGameObjectColor(color);
+    scene.updateSelectedGameObjectRotation(rotation);
 }
 
 void ofApp::draw()

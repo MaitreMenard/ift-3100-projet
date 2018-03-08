@@ -2,7 +2,7 @@
 #include "ofMain.h"
 #include "gameobject.h"
 
-class Cube: public GameObject
+class Cube : public GameObject
 {
 private:
 

@@ -19,6 +19,6 @@ public:
     void reScale(float x, float y, float z);
     void rotate(float degrees, float x, float y, float z);
     void setPosition(float x, float y, float z);
-    void setRotation(float thetaX, float thetaY, float thetaZ);
+    void setRotation(float x, float y, float z);
     void setScale(float x, float y, float z);
 };

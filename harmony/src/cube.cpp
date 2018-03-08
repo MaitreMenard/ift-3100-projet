@@ -61,15 +61,6 @@ Cube::Cube()
     model.addIndex(1);
     model.addIndex(4);
     model.addIndex(5);
-
-    /*model.addColor(ofColor(0, 0, 0));
-    model.addColor(ofColor(255, 0, 0));
-    model.addColor(ofColor(0, 255, 0));
-    model.addColor(ofColor(255, 255, 0));
-    model.addColor(ofColor(0, 0, 255));
-    model.addColor(ofColor(255, 0, 255));
-    model.addColor(ofColor(0, 255, 255));
-    model.addColor(ofColor(255, 255, 255));*/
 }
 
 void Cube::setColor(ofColor color) {

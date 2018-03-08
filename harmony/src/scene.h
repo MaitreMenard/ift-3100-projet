@@ -15,6 +15,7 @@ public:
     void setup();
     void update();
     void updateSelectedGameObjectColor(ofColor color);
+    void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
 
     void addGameObject(GameObject* gameObject);
