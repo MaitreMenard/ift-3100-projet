@@ -23,74 +23,54 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    initGUI(true);
+    gui.setup();
 
     position_label.setBackgroundColor(ofColor(48, 48, 72));
     position_x.addListener(this, &ofApp::xPositionChanged);
     position_y.addListener(this, &ofApp::yPositionChanged);
     position_z.addListener(this, &ofApp::zPositionChanged);
+    gui.add(position_label.setup(ofParameter<string>("Position")));
+    gui.add(position_x.setup("X: ", "0"));
+    gui.add(position_y.setup("Y: ", "0"));
+    gui.add(position_z.setup("Z: ", "0"));
 
+    gui.add(rotation.setup("Rotation", ofVec3f(0, 0, 0), ofVec3f(0, 0, 0), ofVec3f(360, 360, 360)));
     rotation.setHeaderBackgroundColor(ofColor(48, 48, 72));
 
     scale_label.setBackgroundColor(ofColor(48, 48, 72));
     scale_x.addListener(this, &ofApp::xScaleChanged);
     scale_y.addListener(this, &ofApp::yScaleChanged);
     scale_z.addListener(this, &ofApp::zScaleChanged);
+    gui.add(scale_label.setup(ofParameter<string>("Scale")));
+    gui.add(scale_x.setup("X: ", "1"));
+    gui.add(scale_y.setup("Y: ", "1"));
+    gui.add(scale_z.setup("Z: ", "1"));
 
-    color_label.setBackgroundColor(ofColor(48, 48, 72));
-
-    colorType.addListener(this, &ofApp::colorTypeChanged);
-    colorType.setBackgroundColor(ofColor(72, 72, 122));
-
+    rgb_label.setBackgroundColor(ofColor(48, 48, 72));
     RGB_r.addListener(this, &ofApp::colorChangedRGB);
     RGB_g.addListener(this, &ofApp::colorChangedRGB);
     RGB_b.addListener(this, &ofApp::colorChangedRGB);
     RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    gui.add(rgb_label.setup(ofParameter<string>("RGB")));
+    gui.add(RGB_r.setup("R: ", 255, 0, 255));
+    gui.add(RGB_g.setup("G: ", 255, 0, 255));
+    gui.add(RGB_b.setup("B: ", 255, 0, 255));
+    gui.add(RGB_a.setup("A: ", 255, 0, 255));
+
+    hsb_label.setBackgroundColor(ofColor(48, 48, 72));
     HSB_h.addListener(this, &ofApp::colorChangedHSB);
     HSB_s.addListener(this, &ofApp::colorChangedHSB);
     HSB_b.addListener(this, &ofApp::colorChangedHSB);
     HSB_a.addListener(this, &ofApp::colorChangedHSB);
-
-    bHide = false;
-}
-
-void ofApp::initGUI(bool colorIsRGB) {
-    gui.clear();
-    gui.setup();
-
-    ofVec3f positionSelectedGameObject = scene.getPositionSelectedGameObject();
-    gui.add(position_label.setup(ofParameter<string>("Position")));
-    gui.add(position_x.setup("X: ", to_string(positionSelectedGameObject.x)));
-    gui.add(position_y.setup("Y: ", to_string(positionSelectedGameObject.y)));
-    gui.add(position_z.setup("Z: ", to_string(positionSelectedGameObject.z)));
-
-    gui.add(rotation.setup("Rotation", scene.getEulerRotationSelectedGameObject(), ofVec3f(0, 0, 0), ofVec3f(360, 360, 360)));
-
-    ofVec3f scaleSelectedGameObject = scene.getScaleSelectedGameObject();
-    gui.add(scale_label.setup(ofParameter<string>("Scale")));
-    gui.add(scale_x.setup("X: ", to_string(scaleSelectedGameObject.x)));
-    gui.add(scale_y.setup("Y: ", to_string(scaleSelectedGameObject.y)));
-    gui.add(scale_z.setup("Z: ", to_string(scaleSelectedGameObject.z)));
-
-    gui.add(color_label.setup(ofParameter<string>("Color")));
-
-    ofColor colorSelectedGameObject = scene.getColorSelectedGameObject();
-    if (colorIsRGB) {
-        gui.add(colorType.setup("RGB", true));
-        gui.add(RGB_r.setup("R: ", colorSelectedGameObject.r, 0, 255));
-        gui.add(RGB_g.setup("G: ", colorSelectedGameObject.g, 0, 255));
-        gui.add(RGB_b.setup("B: ", colorSelectedGameObject.b, 0, 255));
-        gui.add(RGB_a.setup("A: ", colorSelectedGameObject.a, 0, 255));
-    }
-    else {
-        gui.add(colorType.setup("HSB", false));
-        gui.add(HSB_h.setup("H: ", colorSelectedGameObject.getHue(), 0, 255));
-        gui.add(HSB_s.setup("S: ", colorSelectedGameObject.getSaturation(), 0, 255));
-        gui.add(HSB_b.setup("B: ", colorSelectedGameObject.getBrightness(), 0, 255));
-        gui.add(HSB_a.setup("A: ", colorSelectedGameObject.a, 0, 255));
-    }
+    gui.add(hsb_label.setup(ofParameter<string>("HSB")));
+    gui.add(HSB_h.setup("H: ", 0, 0, 255));
+    gui.add(HSB_s.setup("S: ", 0, 0, 255));
+    gui.add(HSB_b.setup("B: ", 255, 0, 255));
+    gui.add(HSB_a.setup("A: ", 255, 0, 255));
 
     gui.setPosition(ofGetWidth() - gui.getWidth() - 2, 2);
+
+    bHide = false;
 }
 
 void ofApp::exit()
@@ -98,17 +78,44 @@ void ofApp::exit()
 
 void ofApp::colorChangedRGB(int & value) {
     scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
+   
+    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
+    
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    HSB_h = currentColor.getHue();
+    HSB_s = currentColor.getSaturation();
+    HSB_b = currentColor.getBrightness();
+    HSB_a = currentColor.a;
+
+    HSB_h.addListener(this, &ofApp::colorChangedHSB);
+    HSB_s.addListener(this, &ofApp::colorChangedHSB);
+    HSB_b.addListener(this, &ofApp::colorChangedHSB);
+    HSB_a.addListener(this, &ofApp::colorChangedHSB);
 }
 
 void ofApp::colorChangedHSB(int & value) {
     ofColor newColor = ofColor(0);
     newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
     scene.setColorSelectedGameObject(newColor);
-}
+    
+    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
 
-void ofApp::colorTypeChanged(bool & pressed)
-{
-    initGUI(pressed);
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    RGB_r = currentColor.r;
+    RGB_g = currentColor.g;
+    RGB_b = currentColor.b;
+    RGB_a = currentColor.a;
+
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
 }
 
 void ofApp::xPositionChanged(string & value)
@@ -235,9 +242,7 @@ void ofApp::draw()
 {
     ofClear(0);
 
-    ofBackgroundGradient(ofColor::white, ofColor::gray); //CHANGE LA COULEUR DU FOND D'ECRAN
-
-    //ofSetColor(color);
+    ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
     scene.draw();
@@ -267,10 +272,6 @@ void ofApp::takeScreenShot()
     image.save(fileName);
 
     ofLog() << "screenshot saved to: " << fileName;
-}
-
-void ofApp::updateUIValues(ofxInputField<string> & field, int & key) {
-
 }
 
 void ofApp::keyPressed(int key)

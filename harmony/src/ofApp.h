@@ -26,7 +26,6 @@ public:
     void update();
     void draw();
 
-    void initGUI(bool colorIsRGB);
     void exit();
     void takeScreenShot();
 
@@ -41,10 +40,6 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-
-    void colorTypeChanged(bool & pressed);
-
-    void updateUIValues(ofxInputField<string> & field, int & key);
 
     void xPositionChanged(string & value);
     void yPositionChanged(string & value);
@@ -78,11 +73,11 @@ public:
     ofxIntField HSB_a;
 
     ofxVec3Slider rotation;
-    ofxToggle colorType;
 
     ofxPanel gui;
 
     ofxLabel scale_label;
     ofxLabel position_label;
-    ofxLabel color_label;
+    ofxLabel rgb_label;
+    ofxLabel hsb_label;
 };
