@@ -1,5 +1,7 @@
 #pragma once
+#include <ctime>
 #include "ofMain.h"
+#include "grid_plane.h"
 #include "scene.h"
 #include "cube.h"
 #include "ofxGui.h"
@@ -11,6 +13,7 @@ private:
     bool shiftIsPressed;
 
     ofCamera camera;
+    GridPlane gridPlane;
     Scene scene;
 
 public:
@@ -19,6 +22,7 @@ public:
     void draw();
 
 	void exit();
+    void takeScreenShot();
 
     void keyPressed(int key);
     void keyReleased(int key);

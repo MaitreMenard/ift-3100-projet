@@ -7,10 +7,13 @@ void ofApp::setup()
 	shiftIsPressed = false;
 
 	ofSetFrameRate(60);
-	//ofEnableDepthTest();
+	ofEnableDepthTest();
+	ofDisableArbTex();
+	ofEnableAlphaBlending();
 
 	camera.setNearClip(0.1f);
 
+	gridPlane.setup();
 	scene.setup();
 
 	Cube* cube = new Cube();
@@ -75,11 +78,13 @@ void ofApp::draw()
     ofClear(0);
 
 	ofBackgroundGradient(ofColor::white, ofColor::gray); //CHANGE LA COULEUR DU FOND D'ECRAN
-
-    camera.setPosition(0, 0, 5);
+    
+	camera.setPosition(0, 2, 5);
+    camera.lookAt(ofVec3f(0, 0, 0));
 
     camera.begin();
     scene.draw();
+    gridPlane.draw();
     camera.end();
 
 	/*if (filled)
@@ -108,10 +113,30 @@ void ofApp::draw()
 	}
 }
 
+void ofApp::takeScreenShot()
+{
+    time_t secondsSinceEpoch = time(0);
+    tm* now = localtime(&secondsSinceEpoch);
+
+    std::stringstream ss;
+    ss << now->tm_year + 1900 << '-' << now->tm_mon + 1 << '-' << now->tm_mday << '_' <<
+        now->tm_hour << 'h' << now->tm_min << 'm' << now->tm_sec << "s.png";
+    std::string fileName = ss.str();
+
+    ofImage image;
+    image.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
+    image.save(fileName);
+
+    ofLog() << "screenshot saved to: " << fileName;
+}
+
 void ofApp::keyPressed(int key)
 {
     switch (key)
     {
+    case ' ':
+        takeScreenShot();
+        break;
     case '+':
         if (shiftIsPressed)
         {
@@ -144,17 +169,17 @@ void ofApp::keyPressed(int key)
     case 359:   // down arrow
         scene.translateSelectedGameObject(0, -1, 0);
         break;
-	case 119:   // w
-		scene.rotateSelectedGameObject(-1, 0, 0);
+	case 'w':
+		scene.rotateSelectedGameObject(-10, 1, 0, 1);
 		break;
-	case 97:   // a
-		scene.rotateSelectedGameObject(0, 1, 0);
+	case 'a':
+		scene.rotateSelectedGameObject(-10, 0, 1, 0);
 		break;
-	case 115:   // s
-		scene.rotateSelectedGameObject(1, 0, 0);
+	case 's':
+		scene.rotateSelectedGameObject(10, 1, 0, 0);
 		break;
-	case 100:   // d
-		scene.rotateSelectedGameObject(0, -1, 0);
+	case 'd':
+		scene.rotateSelectedGameObject(10, 0, 1, 0);
 		break;
     case 2304:  // shift
         shiftIsPressed = true;
