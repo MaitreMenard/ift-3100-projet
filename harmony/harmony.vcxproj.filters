@@ -55,6 +55,9 @@
     <ClCompile Include="src\grid_plane.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\sphere.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -126,6 +129,9 @@
       <Filter>addons\ofxInputField\src</Filter>
     </ClInclude>
     <ClInclude Include="src\grid_plane.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sphere.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

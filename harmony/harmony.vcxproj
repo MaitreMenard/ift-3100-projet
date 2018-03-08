@@ -177,6 +177,7 @@
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
     <ClCompile Include="src\scene.cpp" />
+    <ClCompile Include="src\sphere.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxButton.cpp" />
@@ -194,6 +195,7 @@
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\grid_plane.h" />
     <ClInclude Include="src\scene.h" />
+    <ClInclude Include="src\sphere.h" />
     <ClInclude Include="src\transform.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxButton.h" />
