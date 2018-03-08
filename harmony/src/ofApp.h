@@ -10,6 +10,11 @@
 class ofApp : public ofBaseApp
 {
 private:
+	const float SCALE_MIN_VALUE = -100;
+	const float SCALE_MAX_VALUE = 100;
+	const float POSITION_MIN_VALUE = -1000;
+	const float POSITION_MAX_VALUE = 1000;
+
     bool shiftIsPressed;
 
     ofCamera camera;
@@ -38,15 +43,25 @@ public:
 
 	void colorTypeChanged(bool & pressed);
 
+	void updateUIValues(ofxInputField<string> & field, int & key);
+	
+	void xPositionChanged(string & value);
+	void yPositionChanged(string & value);
+	void zPositionChanged(string & value);
+
+	void xScaleChanged(string & value);
+	void yScaleChanged(string & value);
+	void zScaleChanged(string & value);
+
 	bool bHide;
 
-	ofxFloatField scale_x;
-	ofxFloatField scale_y;
-	ofxFloatField scale_z;
+	ofxTextField scale_x;
+	ofxTextField scale_y;
+	ofxTextField scale_z;
 
-	ofxFloatField position_x;
-	ofxFloatField position_y;
-	ofxFloatField position_z;
+	ofxTextField position_x;
+	ofxTextField position_y;
+	ofxTextField position_z;
 
 	ofxColorSlider color;
 	ofxVec3Slider rotation;

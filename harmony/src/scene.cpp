@@ -49,6 +49,16 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
     }
 }
 
+void Scene::setPositionSelectedGameObject(float x, float y, float z)
+{
+	gameObjects[0]->setPosition(x, y, z);
+}
+
+void Scene::setScaleSelectedGameObject(float x, float y, float z)
+{
+	gameObjects[0]->setScale(x, y, z);
+}
+
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->reScale(x, y, z);
