@@ -16,13 +16,18 @@ private:
     const float POSITION_MIN_VALUE = -1000;
     const float POSITION_MAX_VALUE = 1000;
 
+    const int MAXIMUM_SHAPES = 10;
+
     bool shiftIsPressed;
 
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
 
+    int selectedShapeID;
+
 public:
+    ~ofApp();
     void setup();
     void update();
     void draw();
@@ -53,15 +58,23 @@ public:
     void colorChangedRGB(int & value);
     void colorChangedHSB(int & value);
 
-    bool bHide;
+    void parentChanged(int & newParentID);
 
-    ofxTextField scale_x;
-    ofxTextField scale_y;
-    ofxTextField scale_z;
+    void addNewShape(int shape);
+
+    void setupGUIInspector(int shapeID);
+
+    bool bHide;
 
     ofxTextField position_x;
     ofxTextField position_y;
     ofxTextField position_z;
+
+    ofxVec3Slider rotation;
+
+    ofxTextField scale_x;
+    ofxTextField scale_y;
+    ofxTextField scale_z;
 
     ofxIntField RGB_r;
     ofxIntField RGB_g;
@@ -73,12 +86,14 @@ public:
     ofxIntField HSB_b;
     ofxIntField HSB_a;
 
-    ofxVec3Slider rotation;
+    ofxIntField parent;
 
-    ofxPanel gui;
+    ofxPanel guiInspector;
+    ofxPanel guiScene;
 
     ofxLabel scale_label;
     ofxLabel position_label;
     ofxLabel rgb_label;
     ofxLabel hsb_label;
+    ofxLabel* object_labels[10];
 };

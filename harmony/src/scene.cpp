@@ -53,10 +53,10 @@ void Scene::setColorSelectedGameObject(ofColor color)
     }
 }
 
-ofVec3f Scene::getPositionSelectedGameObject() {
+ofVec3f Scene::getPositionSelectedGameObject(int selectedGameObjectID) {
     if (gameObjects.size() > 0)
     {
-        return gameObjects[0]->getPosition();
+        return gameObjects[selectedGameObjectID]->getPosition();
     }
     return ofVec3f(0, 0, 0);
 }
@@ -101,17 +101,26 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->setPosition(x, y, z);
+    if (gameObjects.size() > 0)
+    {
+        gameObjects[0]->setPosition(x, y, z);
+    }
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->setScale(x, y, z);
+    if (gameObjects.size() > 0)
+    {
+        gameObjects[0]->setScale(x, y, z);
+    }
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->reScale(x, y, z);
+    if (gameObjects.size() > 0)
+    {
+        gameObjects[0]->reScale(x, y, z);
+    }
 }
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
