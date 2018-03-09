@@ -16,11 +16,22 @@ void ofApp::setup()
     camera.lookAt(ofVec3f(0, 0, 0));
 
     gridPlane.setup();
-    scene.setup();
+	scene.setup();
 
     Sphere* sphere = new Sphere();
+	plan2D* plan = new plan2D();
+
+	// Test procedural texture
+	ofPixels pix;
+	pix.allocate(250, 250, OF_PIXELS_RGB);
+	pix = *tFac.setMarbleTexture(&pix, 5.f, 5.f, 2.f, 16.f);
+	plan->setTexture(&pix);
+
+
     sphere->translate(0.0f, 2.0f, 0.0f);
     scene.addGameObject(sphere);
+	scene.addGameObject(plan);
+
     //Cube* cube = new Cube();
     //Cube* cube2 = new Cube();
     //cube->addChild(cube2);

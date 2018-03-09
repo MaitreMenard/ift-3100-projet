@@ -8,16 +8,16 @@ class texelFactory
 {
 private:
 	ofColor texelFactory::convertHslToHsb(int h, int s, int l);
-	float linearInterpolation(const ofImage & image, float x, float y);
-	float turbulence(const ofImage & image, float x, float y, float size);
+	float linearInterpolation(const ofPixels & image, float x, float y);
+	float turbulence(const ofPixels & image, float x, float y, float size);
 public:
 	texelFactory();
 	~texelFactory();
 
-	void setNoise(ofImage * p_img);
-	void setZoom(ofImage * image, float zoom);
-	void setTurbulenceImage(ofImage * image, float size);
-	void setCloudImage(ofImage * image, float size);
-	void setMarbleTexture(ofImage * image, float xPeriod, float yPeriod, float TurbPower, float TurbSize);
-	void setWoodTexture(ofImage * image, float numberRings, float TurbPower, float TurbSize);
+	ofPixels * setNoise(ofPixels * p_img);
+	ofPixels * setZoom(ofPixels * image, float zoom);
+	ofPixels * setTurbulenceImage(ofPixels * image, float size);
+	ofPixels * setCloudImage(ofPixels * image, float size);
+	ofPixels * setMarbleTexture(ofPixels * image, float xPeriod, float yPeriod, float TurbPower, float TurbSize);
+	ofPixels * setWoodTexture(ofPixels * image, float numberRings, float TurbPower, float TurbSize);
 };
