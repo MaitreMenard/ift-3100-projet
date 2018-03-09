@@ -4,7 +4,9 @@
 
 void ofApp::setup()
 {
+	scene.enableUndoRedo();
     shiftIsPressed = false;
+	CtrlIsPressed = false;
 
     ofSetFrameRate(60);
     ofEnableDepthTest();
@@ -72,7 +74,6 @@ void ofApp::setup()
     gui.setPosition(ofGetWidth() - gui.getWidth() - 2, 2);
 
     bHide = false;
-	scene.enableUndoRedo();
 }
 
 void ofApp::exit()
@@ -258,11 +259,17 @@ void ofApp::keyPressed(int key)
 	ofPixels * pix;
     switch (key)
     {
-	case 'u':
-		scene.undo();
+	case -1: // CTRL_R + Z
+	case 26: // CTRL_L + Z
+		if (CtrlIsPressed){
+			scene.undo();
+		}
 		break;
-	case 'r':
-		scene.redo();
+	case 8592: // CTRL_R + Y
+	case 25: // CTRL_L + Y
+		if(CtrlIsPressed){	
+			scene.redo();
+		}
 		break;
 	case 'p':
 		pix = new ofPixels();
@@ -305,11 +312,13 @@ void ofApp::keyPressed(int key)
     case 2304:  // shift
         shiftIsPressed = true;
         break;
+	case 768: // Ctrl L and R
+		CtrlIsPressed = true;
+		break;
     case 'h':
         bHide = !bHide;
         break;
     default:
-		cout << key << endl;
         break;
     }
 }
@@ -321,6 +330,10 @@ void ofApp::keyReleased(int key)
     case 2304:  // shift
         shiftIsPressed = false;
         break;
+	case 769: // Ctrl L and R
+	case 770:
+		CtrlIsPressed = false;
+		break;
     default:
         break;
     }

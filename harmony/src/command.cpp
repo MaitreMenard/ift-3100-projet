@@ -13,7 +13,6 @@ void CommandHandler::flush_fw_command() {
 
 void CommandHandler::add(Command * cmd) {
 	if(isEnable){
-		cout << "add" << endl;
 		flush_fw_command();
 		history_bw.push(cmd);
 		history_bw.top()->exec();

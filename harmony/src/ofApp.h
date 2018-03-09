@@ -19,6 +19,7 @@ private:
     const float POSITION_MAX_VALUE = 1000;
 
     bool shiftIsPressed;
+	bool CtrlIsPressed;
 
     ofCamera camera;
     GridPlane gridPlane;

@@ -92,21 +92,18 @@ void Scene::setColorSelectedGameObject(ofColor color)
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->setPosition(x, y, z);
-	cout << "updatepst" << endl;
 	history_.add(new Command(gameObjects[0]));
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->setScale(x, y, z);
-	cout << "updatescale" << endl;
 	history_.add(new Command(gameObjects[0]));
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->reScale(x, y, z);
-	cout << "updaterescale" << endl;
 	history_.add(new Command(gameObjects[0]));
 }
 
