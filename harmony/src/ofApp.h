@@ -24,9 +24,13 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
-	texelFactory tFac;
+
+    vector<ofxButton*> object_buttons;
+
+    texelFactory tFac;
 
 public:
+    ~ofApp();
     void setup();
     void update();
     void draw();
@@ -57,15 +61,26 @@ public:
     void colorChangedRGB(int & value);
     void colorChangedHSB(int & value);
 
-    bool bHide;
+    void parentChanged(int & newParentID);
 
-    ofxTextField scale_x;
-    ofxTextField scale_y;
-    ofxTextField scale_z;
+    void addNewGameObject(int gameObjectType);
+
+    void setupGUIInspector();
+    void setupGUIInspector(int buttonID);
+
+    void checkIfAButtonIsPressed();
+
+    bool bHide;
 
     ofxTextField position_x;
     ofxTextField position_y;
     ofxTextField position_z;
+
+    ofxVec3Slider rotation;
+
+    ofxTextField scale_x;
+    ofxTextField scale_y;
+    ofxTextField scale_z;
 
     ofxIntField RGB_r;
     ofxIntField RGB_g;
@@ -77,9 +92,10 @@ public:
     ofxIntField HSB_b;
     ofxIntField HSB_a;
 
-    ofxVec3Slider rotation;
+    ofxIntField parent;
 
-    ofxPanel gui;
+    ofxPanel guiInspector;
+    ofxPanel guiScene;
 
     ofxLabel scale_label;
     ofxLabel position_label;

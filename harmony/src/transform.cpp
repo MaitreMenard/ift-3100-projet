@@ -9,6 +9,8 @@ Transform::Transform(const Transform &transf) {
 
 Transform::Transform()
 {
+    setPosition(0, 0, 0);
+    setRotation(0, 0, 0);
     scale = ofVec3f(1, 1, 1);
 }
 
@@ -67,6 +69,17 @@ void Transform::reScale(float x, float y, float z)
     scale.x *= x;
     scale.y *= y;
     scale.z *= z;
+}
+
+void Transform::applyToModelViewMatrix()
+{
+    ofTranslate(position);
+
+    ofScale(scale);
+
+    float angle, x, y, z;
+    rotation.getRotate(angle, x, y, z);
+    ofRotate(angle, x, y, z);
 }
 
 void Transform::setScale(float x, float y, float z)

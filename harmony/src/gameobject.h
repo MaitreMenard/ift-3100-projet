@@ -9,10 +9,11 @@ private:
     void deleteAllChildren();
 
 protected:
-	ofTexture texture;
+    ofTexture texture;
     Transform transform;
     std::vector<GameObject*> children;
     ofMesh model;
+    int parentGameObjectID;
 
     int nbVertex;
 
@@ -23,6 +24,8 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
+
+    void drawDelimitationBox();
 
     ofVec3f getPosition();
     void setPosition(float x, float y, float z);
@@ -43,13 +46,18 @@ public:
     GameObject* getChild(size_t index);
     void removeChild(size_t index);
     void removeChild(GameObject* childToRemove);
+    bool hasChildren();
+    vector<GameObject *> getChildren();
+
+    int getParentGameObjectID();
+    void setParentGameObjectID(int parentGameObjectID);
 
 	Transform getTransform() { return Transform(transform); };
 	void setTransform(const Transform &transf) { transform = Transform(transf); };
 
     GameObject& operator=(const GameObject& other);
 
-	void setTexture(ofPixels * pixels);
+    void setTexture(ofPixels * pixels);
 
     virtual ~GameObject();
 };

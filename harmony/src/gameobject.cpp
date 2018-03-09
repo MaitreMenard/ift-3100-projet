@@ -1,7 +1,9 @@
 #include "gameobject.h"
 
 GameObject::GameObject()
-{}
+{
+    parentGameObjectID = 0;
+}
 
 GameObject::GameObject(const GameObject & other)
 {
@@ -25,19 +27,32 @@ void GameObject::draw()
 {
     ofPushMatrix();
 
-    ofTranslate(transform.getPosition());
-
-    ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
+    transform.applyToModelViewMatrix();
 
     model.draw();
     for (GameObject* child : children)
     {
         child->draw();
     }
+
+    ofPopMatrix();
+}
+
+void GameObject::drawDelimitationBox()
+{
+    ofPushMatrix();
+
+    ofBoxPrimitive delimitationBox = ofBoxPrimitive();
+    delimitationBox.set(1);
+
+    for (int i = 0; i < 6; i++)
+    {
+        delimitationBox.setSideColor(i, ofColor(0, 255, 0));
+    }
+
+    transform.applyToModelViewMatrix();
+
+    delimitationBox.drawWireframe();
 
     ofPopMatrix();
 }
@@ -111,17 +126,33 @@ GameObject * GameObject::getChild(size_t index)
     return children.at(index);
 }
 
+vector<GameObject *> GameObject::getChildren()
+{
+    return children;
+}
+
 void GameObject::removeChild(size_t index)
 {
     std::vector<GameObject*>::iterator it = children.begin();
     std::advance(it, index);
     children.erase(it);
-
 }
 
 void GameObject::removeChild(GameObject * childToRemove)
 {
     children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
+}
+
+int GameObject::getParentGameObjectID() {
+    return parentGameObjectID;
+}
+
+void GameObject::setParentGameObjectID(int parentGameObjectID) {
+    this->parentGameObjectID = parentGameObjectID;
+}
+
+bool GameObject::hasChildren() {
+    return children.size() > 0;
 }
 
 GameObject & GameObject::operator=(const GameObject & other)
@@ -140,9 +171,9 @@ void GameObject::deleteAllChildren()
 }
 
 void GameObject::setTexture(ofPixels * pixels) {
-	texture.clear();
-	texture.allocate(*pixels);
-	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+    texture.clear();
+    texture.allocate(*pixels);
+    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()
