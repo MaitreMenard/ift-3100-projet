@@ -1,7 +1,9 @@
 #include "scene.h"
 
 Scene::Scene()
-{}
+{
+    selectedGameObject = nullptr;
+}
 
 Scene::Scene(const Scene& other)
 {
@@ -9,6 +11,8 @@ Scene::Scene(const Scene& other)
     {
         gameObjects.push_back(gameObject);
     }
+
+    selectedGameObject = other.selectedGameObject;
 }
 
 void Scene::setup()
@@ -72,6 +76,11 @@ void Scene::draw()
         if (gameObject->getParentGameObjectID() == 0) {
             gameObject->draw();
         }
+    }
+
+    if (selectedGameObject != nullptr)
+    {
+        selectedGameObject->drawDelimitationBox();
     }
 }
 
@@ -137,6 +146,7 @@ int Scene::getSelectedGameObjectParentID() {
 }
 
 void Scene::setSelectedGameObjectParent(int parentGameObjectID) {
+    //TODO: Make sure transform is modified when setting a new parent or having no parents
     if (selectedGameObject->getParentGameObjectID() > 0) {
         getGameObject(selectedGameObject->getParentGameObjectID() - 1)->removeChild(selectedGameObject);
     }
@@ -173,6 +183,7 @@ Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();
     gameObjects.assign(other.gameObjects.begin(), other.gameObjects.end());
+    selectedGameObject = other.selectedGameObject;
     return *this;
 }
 

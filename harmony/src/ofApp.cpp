@@ -19,18 +19,7 @@ void ofApp::setup()
     scene.setup();
 
     /*Sphere* sphere = new Sphere();
-    sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);*/
-    /*Cube* cube = new Cube();
-    Cube* cube2 = new Cube();
-    cube->addChild(cube2);
-    cube2->reScale(0.5f, 0.5f, 0.5f);
-    cube2->translate(0.0f, 1.0f, 0.0f);
-    scene.addGameObject(cube);*/
-
-    /*Sphere* sphere = new Sphere();
     plan2D* plan = new plan2D();
-
     sphere->translate(0.0f, 2.0f, 0.0f);
     scene.addGameObject(sphere);
     scene.addGameObject(plan);
@@ -39,13 +28,6 @@ void ofApp::setup()
     ofPixels * pix = new ofPixels();
     pix->allocate(500, 500, OF_PIXELS_RGB);
     scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));*/
-
-    //Cube* cube = new Cube();
-    //Cube* cube2 = new Cube();
-    //cube->addChild(cube2);
-    //cube2->reScale(0.5f, 0.5f, 0.5f);
-    //cube2->translate(0.0f, 1.0f, 0.0f);
-    //scene.addGameObject(cube);
 
     ofSetVerticalSync(true);
 
@@ -198,17 +180,21 @@ void ofApp::colorChangedHSB(int & value) {
 void ofApp::xPositionChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < POSITION_MIN_VALUE) {
+        if (fValue < POSITION_MIN_VALUE)
+        {
             fValue = POSITION_MIN_VALUE;
         }
-        else if (fValue > POSITION_MAX_VALUE) {
+        else if (fValue > POSITION_MAX_VALUE)
+        {
             fValue = POSITION_MAX_VALUE;
         }
         scene.setPositionSelectedGameObject(fValue, POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (xPositionChanged)" << endl;
         scene.setPositionSelectedGameObject(0, POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1);
     }
@@ -217,17 +203,21 @@ void ofApp::xPositionChanged(string & value)
 void ofApp::yPositionChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < POSITION_MIN_VALUE) {
+        if (fValue < POSITION_MIN_VALUE)
+        {
             fValue = POSITION_MIN_VALUE;
         }
-        else if (fValue > POSITION_MAX_VALUE) {
+        else if (fValue > POSITION_MAX_VALUE)
+        {
             fValue = POSITION_MAX_VALUE;
         }
         scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, fValue, POSITION_MIN_VALUE - 1);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (yPositionChanged)" << endl;
         scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, 0, POSITION_MIN_VALUE - 1);
     }
@@ -236,17 +226,21 @@ void ofApp::yPositionChanged(string & value)
 void ofApp::zPositionChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < POSITION_MIN_VALUE) {
+        if (fValue < POSITION_MIN_VALUE)
+        {
             fValue = POSITION_MIN_VALUE;
         }
-        else if (fValue > POSITION_MAX_VALUE) {
+        else if (fValue > POSITION_MAX_VALUE)
+        {
             fValue = POSITION_MAX_VALUE;
         }
         scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1, fValue);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (zPositionChanged)" << endl;
         scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1, 0);
     }
@@ -255,17 +249,21 @@ void ofApp::zPositionChanged(string & value)
 void ofApp::xScaleChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < SCALE_MIN_VALUE) {
+        if (fValue < SCALE_MIN_VALUE)
+        {
             fValue = SCALE_MIN_VALUE;
         }
-        else if (fValue > SCALE_MAX_VALUE) {
+        else if (fValue > SCALE_MAX_VALUE)
+        {
             fValue = SCALE_MAX_VALUE;
         }
         scene.setScaleSelectedGameObject(fValue, SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (xScaleChanged)" << endl;
         scene.setScaleSelectedGameObject(1, SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1);
     }
@@ -274,17 +272,21 @@ void ofApp::xScaleChanged(string & value)
 void ofApp::yScaleChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < SCALE_MIN_VALUE) {
+        if (fValue < SCALE_MIN_VALUE)
+        {
             fValue = SCALE_MIN_VALUE;
         }
-        else if (fValue > SCALE_MAX_VALUE) {
+        else if (fValue > SCALE_MAX_VALUE)
+        {
             fValue = SCALE_MAX_VALUE;
         }
         scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, fValue, SCALE_MIN_VALUE - 1);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (yScaleChanged)" << endl;
         scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, 1, SCALE_MIN_VALUE - 1);
     }
@@ -293,17 +295,21 @@ void ofApp::yScaleChanged(string & value)
 void ofApp::zScaleChanged(string & value)
 {
     float fValue;
-    try {
+    try
+    {
         fValue = stof(value);
-        if (fValue < SCALE_MIN_VALUE) {
+        if (fValue < SCALE_MIN_VALUE)
+        {
             fValue = SCALE_MIN_VALUE;
         }
-        else if (fValue > SCALE_MAX_VALUE) {
+        else if (fValue > SCALE_MAX_VALUE)
+        {
             fValue = SCALE_MAX_VALUE;
         }
         scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1, fValue);
     }
-    catch (...) {
+    catch (...)
+    {
         cout << value << " is not a valid input (zScaleChanged)" << endl;
         scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1, 1);
     }

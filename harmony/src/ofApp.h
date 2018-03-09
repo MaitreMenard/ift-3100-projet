@@ -8,7 +8,7 @@
 #include "ofxGui.h"
 #include "ofxInputField.h"
 #include "plan2D.h"
-//#include "texelFactory.h"
+#include "texelFactory.h"
 
 class ofApp : public ofBaseApp
 {
@@ -23,9 +23,10 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
-    //texelFactory tFac;
 
     vector<ofxButton*> object_buttons;
+
+    texelFactory tFac;
 
 public:
     ~ofApp();
