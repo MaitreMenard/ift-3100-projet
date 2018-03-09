@@ -5,8 +5,10 @@
 class Scene
 {
 private:
-    std::vector<GameObject*> gameObjects;
+    vector<GameObject*> gameObjects;
     void deleteAllGameObjects();
+    size_t selectedGameObjectID;
+    GameObject* selectedGameObject;
 
 public:
     Scene();
@@ -16,6 +18,9 @@ public:
     void update();
     void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
+
+    void setSelectedGameObject(size_t gameObjectID);
+    int getSelectedGameObjectID();
 
     void addGameObject(GameObject* gameObject);
     void translateSelectedGameObject(float dx, float dy, float dz);
@@ -32,6 +37,9 @@ public:
 
     GameObject* getGameObject(size_t index);
     void removeGameObject(size_t index);
+
+    int getSelectedGameObjectParentID();
+    void setSelectedGameObjectParentID(int parentGameObjectID);
 
     Scene& operator=(const Scene& other);
 

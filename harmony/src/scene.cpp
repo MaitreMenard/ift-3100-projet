@@ -27,54 +27,42 @@ void Scene::update()
     }
 }
 
+void Scene::setSelectedGameObject(size_t gameObjectID) {
+    selectedGameObjectID = gameObjectID;
+    selectedGameObject = gameObjects[gameObjectID];
+}
+
+int Scene::getSelectedGameObjectID() {
+    return selectedGameObjectID;
+}
+
 ofVec3f Scene::getEulerRotationSelectedGameObject() {
-    if (gameObjects.size() > 0)
-    {
-        return gameObjects[0]->getRotation().getEuler();
-    }
-    return ofVec3f(0, 0, 0);
+    return selectedGameObject->getRotation().getEuler();
 }
 
 void Scene::updateSelectedGameObjectRotation(ofVec3f rotation)
 {
-    //TODO: Actually use the selected object in the scene, not the first
-    if (gameObjects.size() > 0 && gameObjects[0]->getRotation().getEuler() != rotation)
+    if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
     {
-        gameObjects[0]->setRotation(rotation.x, rotation.y, rotation.z);
+        selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
     }
 }
 
 void Scene::setColorSelectedGameObject(ofColor color)
 {
-    //TODO: Actually use the selected object in the scene, not the first
-    if (gameObjects.size() > 0 && gameObjects[0]->getColor() != color)
-    {
-        gameObjects[0]->setColor(color);
-    }
+    selectedGameObject->setColor(color);
 }
 
-ofVec3f Scene::getPositionSelectedGameObject(int selectedGameObjectID) {
-    if (gameObjects.size() > 0)
-    {
-        return gameObjects[selectedGameObjectID]->getPosition();
-    }
-    return ofVec3f(0, 0, 0);
+ofVec3f Scene::getPositionSelectedGameObject() {
+    return selectedGameObject->getPosition();
 }
 
 ofVec3f Scene::getScaleSelectedGameObject() {
-    if (gameObjects.size() > 0)
-    {
-        return gameObjects[0]->getScale();
-    }
-    return ofVec3f(1, 1, 1);
+    return selectedGameObject->getScale();
 }
 
 ofColor Scene::getColorSelectedGameObject() {
-    if (gameObjects.size() > 0)
-    {
-        return gameObjects[0]->getColor();
-    }
-    return ofColor(255, 255, 255);
+    return selectedGameObject->getColor();
 }
 
 void Scene::draw()
@@ -104,44 +92,35 @@ void Scene::removeGameObject(size_t index)
 
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 {
-    //TODO: modify this when gameObject selection will be implemented
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->translate(dx, dy, dz);
-    }
+    selectedGameObject->translate(dx, dy, dz);
 }
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->setPosition(x, y, z);
-    }
+    selectedGameObject->setPosition(x, y, z);
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->setScale(x, y, z);
-    }
+    selectedGameObject->setScale(x, y, z);
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->reScale(x, y, z);
-    }
+    selectedGameObject->reScale(x, y, z);
 }
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
 {
-    //TODO: modify this when gameObject selection will be implemented
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->rotate(degrees, x, y, z);
-    }
+    selectedGameObject->rotate(degrees, x, y, z);
+}
+
+int Scene::getSelectedGameObjectParentID() {
+    return selectedGameObject->getParentGameObjectID();
+}
+
+void Scene::setSelectedGameObjectParentID(int parentGameObjectID) {
+    selectedGameObject->setParentGameObjectID(parentGameObjectID);
 }
 
 Scene& Scene::operator=(const Scene& other)

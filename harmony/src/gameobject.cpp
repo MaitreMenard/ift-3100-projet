@@ -116,7 +116,14 @@ void GameObject::removeChild(size_t index)
     std::vector<GameObject*>::iterator it = children.begin();
     std::advance(it, index);
     children.erase(it);
+}
 
+int GameObject::getParentGameObjectID() {
+    return parentGameObjectID;
+}
+
+void GameObject::setParentGameObjectID(int parentGameObjectID) {
+    this->parentGameObjectID = parentGameObjectID;
 }
 
 GameObject & GameObject::operator=(const GameObject & other)
@@ -135,9 +142,9 @@ void GameObject::deleteAllChildren()
 }
 
 void GameObject::setTexture(ofPixels * pixels) {
-	texture.clear();
-	texture.allocate(*pixels);
-	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+    texture.clear();
+    texture.allocate(*pixels);
+    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()

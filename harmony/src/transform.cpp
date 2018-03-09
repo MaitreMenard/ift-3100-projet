@@ -2,6 +2,8 @@
 
 Transform::Transform()
 {
+    setPosition(0, 0, 0);
+    setRotation(0, 0, 0);
     scale = ofVec3f(1, 1, 1);
 }
 

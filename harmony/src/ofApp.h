@@ -8,7 +8,7 @@
 #include "ofxGui.h"
 #include "ofxInputField.h"
 #include "plan2D.h"
-#include "texelFactory.h"
+//#include "texelFactory.h"
 
 class ofApp : public ofBaseApp
 {
@@ -18,16 +18,14 @@ private:
     const float POSITION_MIN_VALUE = -1000;
     const float POSITION_MAX_VALUE = 1000;
 
-    const int MAXIMUM_SHAPES = 10;
-
     bool shiftIsPressed;
 
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
-	texelFactory tFac;
+    //texelFactory tFac;
 
-    int selectedShapeID;
+    vector<ofxButton*> object_buttons;
 
 public:
     ~ofApp();
@@ -63,9 +61,11 @@ public:
 
     void parentChanged(int & newParentID);
 
-    void addNewShape(int shape);
+    void addNewGameObject(int gameObjectType);
 
-    void setupGUIInspector(int shapeID);
+    void setupGUIInspector(int buttonID);
+
+    void checkIfAButtonIsPressed();
 
     bool bHide;
 
@@ -98,5 +98,4 @@ public:
     ofxLabel position_label;
     ofxLabel rgb_label;
     ofxLabel hsb_label;
-    ofxLabel* object_labels[10];
 };
