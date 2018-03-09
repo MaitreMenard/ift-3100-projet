@@ -7,10 +7,12 @@ class MilleniumFalcon : public GameObject
 private:
     ofxAssimpModelLoader objModel;
 
-    const float X_OFFSET = -5.9;
-    const float Y_OFFSET = -1.8;
-    const float Z_OFFSET = 190;
-    const float SCALE_FACTOR = 0.1;
+    const ofVec3f POSITION_OFFSET = ofVec3f(-0.59, -0.18, 19.0);
+    const float ROTATION_ANGLE = 180;
+    const ofVec3f ROTATION_AXIS = ofVec3f(0, 0, 1);
+    const ofVec3f SCALE_FACTOR = ofVec3f(0.01, 0.01, 0.01);
+
+    void fixModel();
 
 public:
     MilleniumFalcon();
