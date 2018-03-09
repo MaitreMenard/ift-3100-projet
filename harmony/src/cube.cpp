@@ -69,19 +69,3 @@ void Cube::setColor(ofColor color) {
         model.addColor(color);
     }
 }
-
-void Cube::draw()
-{
-    ofPushMatrix();
-
-    ofTranslate(transform.getPosition());
-
-    ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
-
-    model.draw();
-    ofPopMatrix();
-}
