@@ -6,6 +6,7 @@ class Scene
 {
 private:
     std::vector<GameObject*> gameObjects;
+    GameObject* selectedGameObject;
     void deleteAllGameObjects();
 
 public:
@@ -19,6 +20,11 @@ public:
     void draw();
 
     void addGameObject(GameObject* gameObject);
+    GameObject* getGameObject(size_t index);
+    void selectGameObject(size_t index);
+    void removeGameObject(GameObject* gameObjectToRemove);
+    void removeGameObject(size_t index);
+
     void translateSelectedGameObject(float dx, float dy, float dz);
     void rescaleSelectedGameObject(float x, float y, float z);
     void rotateSelectedGameObject(float degrees, float x, float y, float z);

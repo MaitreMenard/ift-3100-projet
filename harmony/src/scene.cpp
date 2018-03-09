@@ -1,7 +1,9 @@
 #include "scene.h"
 
 Scene::Scene()
-{}
+{
+    selectedGameObject = nullptr;
+}
 
 Scene::Scene(const Scene& other)
 {
@@ -9,6 +11,8 @@ Scene::Scene(const Scene& other)
     {
         gameObjects.push_back(gameObject);
     }
+
+    selectedGameObject = other.selectedGameObject;
 }
 
 void Scene::setup()
@@ -50,11 +54,45 @@ void Scene::draw()
     {
         gameObject->draw();
     }
+
+    if (selectedGameObject != nullptr)
+    {
+        selectedGameObject->drawDelimitationBox();
+    }
 }
 
 void Scene::addGameObject(GameObject* gameObject)
 {
     gameObjects.push_back(gameObject);
+}
+
+GameObject * Scene::getGameObject(size_t index)
+{
+    return gameObjects.at(index);
+}
+
+void Scene::selectGameObject(size_t index)
+{
+    if (index >= gameObjects.size())
+    {
+        selectedGameObject = nullptr;
+    }
+    else
+    {
+        selectedGameObject = gameObjects.at(index);
+    }
+}
+
+void Scene::removeGameObject(GameObject * gameObjectToRemove)
+{
+    gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
+}
+
+void Scene::removeGameObject(size_t index)
+{
+    std::vector<GameObject*>::iterator it = gameObjects.begin();
+    std::advance(it, index);
+    gameObjects.erase(it);
 }
 
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
@@ -94,6 +132,7 @@ Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();
     gameObjects.assign(other.gameObjects.begin(), other.gameObjects.end());
+    selectedGameObject = other.selectedGameObject;
     return *this;
 }
 

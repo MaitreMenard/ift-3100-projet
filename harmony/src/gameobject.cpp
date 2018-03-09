@@ -25,19 +25,32 @@ void GameObject::draw()
 {
     ofPushMatrix();
 
-    ofTranslate(transform.getPosition());
-
-    ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
+    transform.applyToModelViewMatrix();
 
     model.draw();
     for (GameObject* child : children)
     {
         child->draw();
     }
+
+    ofPopMatrix();
+}
+
+void GameObject::drawDelimitationBox()
+{
+    ofPushMatrix();
+
+    ofBoxPrimitive delimitationBox = ofBoxPrimitive();
+    delimitationBox.set(1);
+
+    for (int i = 0; i < 6; i++)
+    {
+        delimitationBox.setSideColor(i, ofColor(0, 255, 0));
+    }
+
+    transform.applyToModelViewMatrix();
+
+    delimitationBox.drawWireframe();
 
     ofPopMatrix();
 }
@@ -119,6 +132,11 @@ void GameObject::removeChild(size_t index)
 
 }
 
+void GameObject::removeChild(GameObject * childToRemove)
+{
+    children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
+}
+
 GameObject & GameObject::operator=(const GameObject & other)
 {
     deleteAllChildren();
@@ -132,6 +150,12 @@ void GameObject::deleteAllChildren()
     {
         delete child;
     }
+}
+
+void GameObject::setTexture(ofPixels * pixels) {
+	texture.clear();
+	texture.allocate(*pixels);
+	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()
