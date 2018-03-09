@@ -20,11 +20,17 @@ void ofApp::setup()
     gridPlane.setup();
 	scene.setup();
 
-    Sphere* sphere = new Sphere();
-	plan2D* plan = new plan2D();
-	
+    /*Sphere* sphere = new Sphere();
     sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);
+    scene.addGameObject(sphere);*/
+    Cube* cube = new Cube();
+    Cube* cube2 = new Cube();
+    cube->addChild(cube2);
+    cube2->reScale(0.5f, 0.5f, 0.5f);
+    cube2->translate(0.0f, 1.0f, 0.0f);
+    scene.addGameObject(cube);
+
+	plan2D* plan = new plan2D();
 	scene.addGameObject(plan);
 
 	// Test procedural texture
@@ -32,44 +38,52 @@ void ofApp::setup()
 	pix->allocate(500, 500, OF_PIXELS_RGB);
 	scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
 
-    //Cube* cube = new Cube();
-    //Cube* cube2 = new Cube();
-    //cube->addChild(cube2);
-    //cube2->reScale(0.5f, 0.5f, 0.5f);
-    //cube2->translate(0.0f, 1.0f, 0.0f);
-    //scene.addGameObject(cube);
-
     ofSetVerticalSync(true);
 
     gui.setup();
 
     position_label.setBackgroundColor(ofColor(48, 48, 72));
-    gui.add(position_label.setup(ofParameter<string>("Position")));
     position_x.addListener(this, &ofApp::xPositionChanged);
     position_y.addListener(this, &ofApp::yPositionChanged);
     position_z.addListener(this, &ofApp::zPositionChanged);
+    gui.add(position_label.setup(ofParameter<string>("Position")));
     gui.add(position_x.setup("X: ", "0"));
     gui.add(position_y.setup("Y: ", "0"));
     gui.add(position_z.setup("Z: ", "0"));
 
-    rotation.setHeaderBackgroundColor(ofColor(48, 48, 72));
     gui.add(rotation.setup("Rotation", ofVec3f(0, 0, 0), ofVec3f(0, 0, 0), ofVec3f(360, 360, 360)));
+    rotation.setHeaderBackgroundColor(ofColor(48, 48, 72));
 
     scale_label.setBackgroundColor(ofColor(48, 48, 72));
-    gui.add(scale_label.setup(ofParameter<string>("Scale")));
     scale_x.addListener(this, &ofApp::xScaleChanged);
     scale_y.addListener(this, &ofApp::yScaleChanged);
     scale_z.addListener(this, &ofApp::zScaleChanged);
+    gui.add(scale_label.setup(ofParameter<string>("Scale")));
     gui.add(scale_x.setup("X: ", "1"));
     gui.add(scale_y.setup("Y: ", "1"));
     gui.add(scale_z.setup("Z: ", "1"));
 
-    colorType.addListener(this, &ofApp::colorTypeChanged);
-    colorType.setBackgroundColor(ofColor(48, 48, 72));
-    gui.add(colorType.setup("HSB", true));
+    rgb_label.setBackgroundColor(ofColor(48, 48, 72));
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    gui.add(rgb_label.setup(ofParameter<string>("RGB")));
+    gui.add(RGB_r.setup("R: ", 255, 0, 255));
+    gui.add(RGB_g.setup("G: ", 255, 0, 255));
+    gui.add(RGB_b.setup("B: ", 255, 0, 255));
+    gui.add(RGB_a.setup("A: ", 255, 0, 255));
 
-    color.setHeaderBackgroundColor(ofColor(48, 48, 72));
-    gui.add(color.setup("Color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+    hsb_label.setBackgroundColor(ofColor(48, 48, 72));
+    HSB_h.addListener(this, &ofApp::colorChangedHSB);
+    HSB_s.addListener(this, &ofApp::colorChangedHSB);
+    HSB_b.addListener(this, &ofApp::colorChangedHSB);
+    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+    gui.add(hsb_label.setup(ofParameter<string>("HSB")));
+    gui.add(HSB_h.setup("H: ", 0, 0, 255));
+    gui.add(HSB_s.setup("S: ", 0, 0, 255));
+    gui.add(HSB_b.setup("B: ", 255, 0, 255));
+    gui.add(HSB_a.setup("A: ", 255, 0, 255));
 
     gui.setPosition(ofGetWidth() - gui.getWidth() - 2, 2);
 
@@ -78,6 +92,48 @@ void ofApp::setup()
 
 void ofApp::exit()
 {}
+
+void ofApp::colorChangedRGB(int & value) {
+    scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
+   
+    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
+    
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    HSB_h = currentColor.getHue();
+    HSB_s = currentColor.getSaturation();
+    HSB_b = currentColor.getBrightness();
+    HSB_a = currentColor.a;
+
+    HSB_h.addListener(this, &ofApp::colorChangedHSB);
+    HSB_s.addListener(this, &ofApp::colorChangedHSB);
+    HSB_b.addListener(this, &ofApp::colorChangedHSB);
+    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+}
+
+void ofApp::colorChangedHSB(int & value) {
+    ofColor newColor = ofColor(0);
+    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
+    scene.setColorSelectedGameObject(newColor);
+    
+    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    RGB_r = currentColor.r;
+    RGB_g = currentColor.g;
+    RGB_b = currentColor.b;
+    RGB_a = currentColor.a;
+
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+}
 
 void ofApp::xPositionChanged(string & value)
 {
@@ -193,22 +249,9 @@ void ofApp::zScaleChanged(string & value)
     }
 }
 
-void ofApp::colorTypeChanged(bool & pressed)
-{
-    if (pressed) {
-        colorType.setName("RGB");
-        //TODO: Change color into RGB
-    }
-    else {
-        colorType.setName("HSB");
-        //TODO: Change color into HSB
-    }
-}
-
 void ofApp::update()
 {
     scene.update();
-    scene.updateSelectedGameObjectColor(color);
     scene.updateSelectedGameObjectRotation(rotation);
 }
 
@@ -216,9 +259,7 @@ void ofApp::draw()
 {
     ofClear(0);
 
-    ofBackgroundGradient(ofColor::white, ofColor::gray); //CHANGE LA COULEUR DU FOND D'ECRAN
-
-    //ofSetColor(color);
+    ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
     scene.draw();
@@ -250,10 +291,6 @@ void ofApp::takeScreenShot()
     ofLog() << "screenshot saved to: " << fileName;
 }
 
-void ofApp::updateUIValues(ofxInputField<string> & field, int & key) {
-
-}
-
 void ofApp::keyPressed(int key)
 {
 	ofPixels * pix;
@@ -261,15 +298,11 @@ void ofApp::keyPressed(int key)
     {
 	case -1: // CTRL_R + Z
 	case 26: // CTRL_L + Z
-		if (CtrlIsPressed){
-			scene.undo();
-		}
+		scene.undo();
 		break;
 	case 8592: // CTRL_R + Y
 	case 25: // CTRL_L + Y
-		if(CtrlIsPressed){	
-			scene.redo();
-		}
+		scene.redo();
 		break;
 	case 'p':
 		pix = new ofPixels();

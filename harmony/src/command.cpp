@@ -13,6 +13,7 @@ void CommandHandler::flush_fw_command() {
 
 void CommandHandler::add(Command * cmd) {
 	if(isEnable){
+		if (UNDO_REDO_VERBOSE) cout << "Cmd add" << endl;
 		flush_fw_command();
 		history_bw.push(cmd);
 		history_bw.top()->exec();
@@ -21,7 +22,7 @@ void CommandHandler::add(Command * cmd) {
 
 void CommandHandler::undo() {
     if(!history_bw.empty()){
-		cout << "undo" << endl;
+		if(UNDO_REDO_VERBOSE) cout << "Cmd undo" << endl;
 		history_fw.push(history_bw.top());
 		history_bw.pop();
 		if(!history_bw.empty())
@@ -31,7 +32,7 @@ void CommandHandler::undo() {
 
 void CommandHandler::redo() {
     if (!history_fw.empty()) {
-		cout << "redo" << endl;
+		if (UNDO_REDO_VERBOSE) cout << "Cmd redo" << endl;
 		history_bw.push(history_fw.top());
 		history_fw.pop();
 		history_bw.top()->exec();

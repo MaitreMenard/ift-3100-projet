@@ -46,10 +46,6 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
-    void colorTypeChanged(bool & pressed);
-
-    void updateUIValues(ofxInputField<string> & field, int & key);
-
     void xPositionChanged(string & value);
     void yPositionChanged(string & value);
     void zPositionChanged(string & value);
@@ -57,6 +53,9 @@ public:
     void xScaleChanged(string & value);
     void yScaleChanged(string & value);
     void zScaleChanged(string & value);
+
+    void colorChangedRGB(int & value);
+    void colorChangedHSB(int & value);
 
     bool bHide;
 
@@ -68,12 +67,22 @@ public:
     ofxTextField position_y;
     ofxTextField position_z;
 
-    ofxColorSlider color;
+    ofxIntField RGB_r;
+    ofxIntField RGB_g;
+    ofxIntField RGB_b;
+    ofxIntField RGB_a;
+
+    ofxIntField HSB_h;
+    ofxIntField HSB_s;
+    ofxIntField HSB_b;
+    ofxIntField HSB_a;
+
     ofxVec3Slider rotation;
-    ofxToggle colorType;
 
     ofxPanel gui;
 
     ofxLabel scale_label;
     ofxLabel position_label;
+    ofxLabel rgb_label;
+    ofxLabel hsb_label;
 };

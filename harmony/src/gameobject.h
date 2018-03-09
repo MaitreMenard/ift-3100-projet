@@ -25,16 +25,16 @@ public:
     virtual void draw();
 
     ofVec3f getPosition();
-    void translate(float dx, float dy, float dz);
     void setPosition(float x, float y, float z);
+    void translate(float dx, float dy, float dz);
 
     ofQuaternion getRotation();
-    void rotate(float degrees, float x, float y, float z);
     void setRotation(float x, float y, float z);
+    void rotate(float degrees, float x, float y, float z);
 
     ofVec3f getScale();
-    void reScale(float x, float y, float z);
     void setScale(float x, float y, float z);
+    void reScale(float x, float y, float z);
 
     ofColor getColor();
     void setColor(ofColor color);

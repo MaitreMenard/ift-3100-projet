@@ -2,8 +2,9 @@
 #include "gameobject.h"
 #include <stack>
 
-#pragma once
+#define UNDO_REDO_VERBOSE 1
 
+#pragma once
 class Command {
 private:
 	GameObject * gobj_;
