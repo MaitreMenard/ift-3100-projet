@@ -64,7 +64,6 @@ void Scene::draw()
 void Scene::addGameObject(GameObject* gameObject)
 {
     gameObjects.push_back(gameObject);
-    selectedGameObject = gameObject;
 }
 
 GameObject * Scene::getGameObject(size_t index)

@@ -40,19 +40,15 @@ void GameObject::drawDelimitationBox()
 {
     ofPushMatrix();
 
-    transform.applyToModelViewMatrix();
-
     ofBoxPrimitive delimitationBox = ofBoxPrimitive();
-
-    ofVec3f scale = transform.getScale();
-    delimitationBox.setWidth(scale.x);
-    delimitationBox.setHeight(scale.y);
-    delimitationBox.setDepth(scale.z);
+    delimitationBox.set(1);
 
     for (int i = 0; i < 6; i++)
     {
         delimitationBox.setSideColor(i, ofColor(0, 255, 0));
     }
+
+    transform.applyToModelViewMatrix();
 
     delimitationBox.drawWireframe();
 
