@@ -9,6 +9,7 @@ private:
     void deleteAllChildren();
 
 protected:
+	ofTexture texture;
     Transform transform;
     std::vector<GameObject*> children;
     ofMesh model;
@@ -43,8 +44,11 @@ public:
     void addChild(GameObject* child);
     GameObject* getChild(size_t index);
     void removeChild(size_t index);
+    void removeChild(GameObject* childToRemove);
 
     GameObject& operator=(const GameObject& other);
+
+	void setTexture(ofPixels * pixels);
 
     virtual ~GameObject();
 };

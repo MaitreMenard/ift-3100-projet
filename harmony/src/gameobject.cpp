@@ -132,6 +132,11 @@ void GameObject::removeChild(size_t index)
 
 }
 
+void GameObject::removeChild(GameObject * childToRemove)
+{
+    children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
+}
+
 GameObject & GameObject::operator=(const GameObject & other)
 {
     deleteAllChildren();
@@ -145,6 +150,12 @@ void GameObject::deleteAllChildren()
     {
         delete child;
     }
+}
+
+void GameObject::setTexture(ofPixels * pixels) {
+	texture.clear();
+	texture.allocate(*pixels);
+	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()

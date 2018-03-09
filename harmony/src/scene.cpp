@@ -83,6 +83,11 @@ void Scene::selectGameObject(size_t index)
     }
 }
 
+void Scene::removeGameObject(GameObject * gameObjectToRemove)
+{
+    gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
+}
+
 void Scene::removeGameObject(size_t index)
 {
     std::vector<GameObject*>::iterator it = gameObjects.begin();
