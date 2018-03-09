@@ -90,6 +90,18 @@ void Scene::addGameObject(GameObject* gameObject)
     gameObjects.push_back(gameObject);
 }
 
+GameObject * Scene::getGameObject(size_t index)
+{
+    return gameObjects.at(index);
+}
+
+void Scene::removeGameObject(size_t index)
+{
+    std::vector<GameObject*>::iterator it = gameObjects.begin();
+    std::advance(it, index);
+    gameObjects.erase(it);
+}
+
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 {
     //TODO: modify this when gameObject selection will be implemented

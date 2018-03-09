@@ -16,7 +16,7 @@ void ofApp::setup()
     camera.lookAt(ofVec3f(0, 0, 0));
 
     gridPlane.setup();
-    scene.setup();
+	scene.setup();
 
     /*Sphere* sphere = new Sphere();
     sphere->translate(0.0f, 2.0f, 0.0f);
@@ -27,6 +27,25 @@ void ofApp::setup()
     cube2->reScale(0.5f, 0.5f, 0.5f);
     cube2->translate(0.0f, 1.0f, 0.0f);
     scene.addGameObject(cube);*/
+
+    /*Sphere* sphere = new Sphere();
+	plan2D* plan = new plan2D();
+	
+    sphere->translate(0.0f, 2.0f, 0.0f);
+    scene.addGameObject(sphere);
+	scene.addGameObject(plan);
+
+	// Test procedural texture
+	ofPixels * pix = new ofPixels();
+	pix->allocate(500, 500, OF_PIXELS_RGB);
+	scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));*/
+
+    //Cube* cube = new Cube();
+    //Cube* cube2 = new Cube();
+    //cube->addChild(cube2);
+    //cube2->reScale(0.5f, 0.5f, 0.5f);
+    //cube2->translate(0.0f, 1.0f, 0.0f);
+    //scene.addGameObject(cube);
 
     ofSetVerticalSync(true);
 
@@ -307,8 +326,14 @@ void ofApp::takeScreenShot()
 
 void ofApp::keyPressed(int key)
 {
+	ofPixels * pix;
     switch (key)
     {
+	case 'p':
+		pix = new ofPixels();
+		pix->allocate(500, 500, OF_PIXELS_RGB);
+		scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 2.0, 2.0, 1.0, 16.0));
+		break;
     case ' ':
         takeScreenShot();
         break;

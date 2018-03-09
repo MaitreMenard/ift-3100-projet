@@ -134,6 +134,12 @@ void GameObject::deleteAllChildren()
     }
 }
 
+void GameObject::setTexture(ofPixels * pixels) {
+	texture.clear();
+	texture.allocate(*pixels);
+	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+}
+
 GameObject::~GameObject()
 {
     deleteAllChildren();

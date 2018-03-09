@@ -7,6 +7,8 @@
 #include "sphere.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
+#include "plan2D.h"
+#include "texelFactory.h"
 
 class ofApp : public ofBaseApp
 {
@@ -23,6 +25,7 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
+	texelFactory tFac;
 
     int selectedShapeID;
 
