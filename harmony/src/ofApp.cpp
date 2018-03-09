@@ -72,6 +72,7 @@ void ofApp::setup()
     gui.setPosition(ofGetWidth() - gui.getWidth() - 2, 2);
 
     bHide = false;
+	scene.enableUndoRedo();
 }
 
 void ofApp::exit()
@@ -257,6 +258,12 @@ void ofApp::keyPressed(int key)
 	ofPixels * pix;
     switch (key)
     {
+	case 'u':
+		scene.undo();
+		break;
+	case 'r':
+		scene.redo();
+		break;
 	case 'p':
 		pix = new ofPixels();
 		pix->allocate(500, 500, OF_PIXELS_RGB);
@@ -302,6 +309,7 @@ void ofApp::keyPressed(int key)
         bHide = !bHide;
         break;
     default:
+		cout << key << endl;
         break;
     }
 }

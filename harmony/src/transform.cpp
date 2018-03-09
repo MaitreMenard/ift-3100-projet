@@ -1,16 +1,23 @@
 #include "transform.h"
 
+
+Transform::Transform(const Transform &transf) {
+	position = ofVec3f(transf.getPosition());
+	rotation = ofQuaternion(transf.getRotation());
+	scale = ofVec3f(transf.getScale());
+}
+
 Transform::Transform()
 {
     scale = ofVec3f(1, 1, 1);
 }
 
-ofVec3f Transform::getPosition()
+ofVec3f Transform::getPosition() const
 {
     return position;
 }
 
-ofQuaternion Transform::getRotation()
+ofQuaternion Transform::getRotation() const
 {
     return rotation;
 }
@@ -20,7 +27,7 @@ void Transform::getRotate(float & angle, float & x, float & y, float & z)
     rotation.getRotate(angle, x, y, z);
 }
 
-ofVec3f Transform::getScale()
+ofVec3f Transform::getScale() const
 {
     return scale;
 }

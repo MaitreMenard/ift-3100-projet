@@ -1,12 +1,14 @@
 #pragma once
 #include <vector>
 #include "gameobject.h"
+#include "command.h"
 
 class Scene
 {
 private:
     std::vector<GameObject*> gameObjects;
     void deleteAllGameObjects();
+	CommandHandler history_;
 
 public:
     Scene();
@@ -28,6 +30,12 @@ public:
     void rotateSelectedGameObject(float degrees, float x, float y, float z);
     void setPositionSelectedGameObject(float x, float y, float z);
     void setScaleSelectedGameObject(float x, float y, float z);
+	void setColorSelectedGameObject(ofColor color);
+
+	void undo();
+	void redo();
+	void enableUndoRedo() { history_.enable(); };
+	void disableUndoRedo() { history_.disable(); };
 
     Scene& operator=(const Scene& other);
 

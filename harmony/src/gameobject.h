@@ -44,6 +44,9 @@ public:
     void removeChild(size_t index);
     void removeChild(GameObject* childToRemove);
 
+	Transform getTransform() { return Transform(transform); };
+	void setTransform(const Transform &transf) { transform = Transform(transf); };
+
     GameObject& operator=(const GameObject& other);
 
 	void setTexture(ofPixels * pixels);

@@ -83,19 +83,31 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
     }
 }
 
+void Scene::setColorSelectedGameObject(ofColor color)
+{
+	gameObjects[0]->setColor(color);
+	history_.add(new Command(gameObjects[0]));
+}
+
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->setPosition(x, y, z);
+	cout << "updatepst" << endl;
+	history_.add(new Command(gameObjects[0]));
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->setScale(x, y, z);
+	cout << "updatescale" << endl;
+	history_.add(new Command(gameObjects[0]));
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
     gameObjects[0]->reScale(x, y, z);
+	cout << "updaterescale" << endl;
+	history_.add(new Command(gameObjects[0]));
 }
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
@@ -120,6 +132,14 @@ void Scene::deleteAllGameObjects()
     {
         delete gameObject;
     }
+}
+
+void Scene::undo() {
+	history_.undo();
+}
+
+void Scene::redo(){
+	history_.redo();
 }
 
 Scene::~Scene()
