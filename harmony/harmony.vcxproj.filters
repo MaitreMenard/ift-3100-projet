@@ -58,12 +58,12 @@
     <ClCompile Include="src\sphere.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\plan2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
       <Filter>src</Filter>
-	</ClCompile>
-    <ClCompile Include="src\plan2D.cpp">
-	  <Filter>src</Filter>
-	</ClCompile>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -140,12 +140,12 @@
     <ClInclude Include="src\sphere.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\texelFactory.h">
-	  <Filter>src</Filter>
-	</ClInclude>
     <ClInclude Include="src\plan2D.h">
-	  <Filter>src</Filter>
-	</ClInclude>
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texelFactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
