@@ -24,6 +24,8 @@ public:
     virtual void update();
     virtual void draw();
 
+    void drawDelimitationBox();
+
     ofVec3f getPosition();
     void translate(float dx, float dy, float dz);
     void setPosition(float x, float y, float z);

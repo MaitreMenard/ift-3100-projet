@@ -23,7 +23,7 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
-	texelFactory tFac;
+    texelFactory tFac;
 
 public:
     void setup();

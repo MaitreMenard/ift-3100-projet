@@ -25,19 +25,32 @@ void GameObject::draw()
 {
     ofPushMatrix();
 
-    ofTranslate(transform.getPosition());
-
-    ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
+    transform.applyToModelViewMatrix();
 
     model.draw();
     for (GameObject* child : children)
     {
         child->draw();
     }
+
+    ofPopMatrix();
+}
+
+void GameObject::drawDelimitationBox()
+{
+    ofPushMatrix();
+
+    ofBoxPrimitive delimitationBox = ofBoxPrimitive();
+    delimitationBox.set(1);
+
+    for (int i = 0; i < 6; i++)
+    {
+        delimitationBox.setSideColor(i, ofColor(0, 255, 0));
+    }
+
+    transform.applyToModelViewMatrix();
+
+    delimitationBox.drawWireframe();
 
     ofPopMatrix();
 }

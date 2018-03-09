@@ -62,6 +62,17 @@ void Transform::reScale(float x, float y, float z)
     scale.z *= z;
 }
 
+void Transform::applyToModelViewMatrix()
+{
+    ofTranslate(position);
+
+    ofScale(scale);
+
+    float angle, x, y, z;
+    rotation.getRotate(angle, x, y, z);
+    ofRotate(angle, x, y, z);
+}
+
 void Transform::setScale(float x, float y, float z)
 {
     if (x >= -100) {
