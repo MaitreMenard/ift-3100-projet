@@ -19,9 +19,6 @@ public:
     void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
 
-    void setSelectedGameObject(size_t gameObjectID);
-    int getSelectedGameObjectID();
-
     void addGameObject(GameObject* gameObject);
     void translateSelectedGameObject(float dx, float dy, float dz);
     void rescaleSelectedGameObject(float x, float y, float z);
@@ -36,7 +33,11 @@ public:
     ofColor getColorSelectedGameObject();
 
     GameObject* getGameObject(size_t index);
+    void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
+
+    int getSelectedGameObjectID();
+    void setSelectedGameObject(size_t gameObjectID);
 
     int getSelectedGameObjectParentID();
     void setSelectedGameObjectParent(int parentGameObjectID);
