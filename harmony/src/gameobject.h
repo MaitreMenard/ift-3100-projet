@@ -13,7 +13,7 @@ protected:
     Transform transform;
     std::vector<GameObject*> children;
     ofMesh model;
-    int parentGameObjectID = -1;
+    int parentGameObjectID;
 
     int nbVertex;
 

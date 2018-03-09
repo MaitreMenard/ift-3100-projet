@@ -55,6 +55,10 @@ void ofApp::setup()
     bHide = false;
 }
 
+void ofApp::setupGUIInspector() {
+    setupGUIInspector(scene.getSelectedGameObjectID());
+}
+
 void ofApp::setupGUIInspector(int buttonID) {
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(ofColor(24, 24, 24));
     scene.setSelectedGameObject(buttonID);
@@ -66,55 +70,70 @@ void ofApp::setupGUIInspector(int buttonID) {
     guiInspector.setup();
 
     position_label.setBackgroundColor(ofColor(48, 48, 72));
-    position_x.addListener(this, &ofApp::xPositionChanged);
-    position_y.addListener(this, &ofApp::yPositionChanged);
-    position_z.addListener(this, &ofApp::zPositionChanged);
+    position_x.removeListener(this, &ofApp::xPositionChanged);
+    position_y.removeListener(this, &ofApp::yPositionChanged);
+    position_z.removeListener(this, &ofApp::zPositionChanged);
     guiInspector.add(position_label.setup(ofParameter<string>("Position")));
     ofVec3f selectedGameObjectPosition = scene.getPositionSelectedGameObject();
     guiInspector.add(position_x.setup("X: ", to_string(selectedGameObjectPosition.x)));
     guiInspector.add(position_y.setup("Y: ", to_string(selectedGameObjectPosition.y)));
     guiInspector.add(position_z.setup("Z: ", to_string(selectedGameObjectPosition.z)));
+    position_x.addListener(this, &ofApp::xPositionChanged);
+    position_y.addListener(this, &ofApp::yPositionChanged);
+    position_z.addListener(this, &ofApp::zPositionChanged);
 
     ofVec3f selectedGameObjectRotation = scene.getEulerRotationSelectedGameObject();
     guiInspector.add(rotation.setup("Rotation", selectedGameObjectRotation, ofVec3f(0, 0, 0), ofVec3f(360, 360, 360)));
     rotation.setHeaderBackgroundColor(ofColor(48, 48, 72));
 
     scale_label.setBackgroundColor(ofColor(48, 48, 72));
-    scale_x.addListener(this, &ofApp::xScaleChanged);
-    scale_y.addListener(this, &ofApp::yScaleChanged);
-    scale_z.addListener(this, &ofApp::zScaleChanged);
+    scale_x.removeListener(this, &ofApp::xScaleChanged);
+    scale_y.removeListener(this, &ofApp::yScaleChanged);
+    scale_z.removeListener(this, &ofApp::zScaleChanged);
     guiInspector.add(scale_label.setup(ofParameter<string>("Scale")));
     ofVec3f selectedGameObjectScale = scene.getScaleSelectedGameObject();
     guiInspector.add(scale_x.setup("X: ", to_string(selectedGameObjectScale.x)));
     guiInspector.add(scale_y.setup("Y: ", to_string(selectedGameObjectScale.y)));
     guiInspector.add(scale_z.setup("Z: ", to_string(selectedGameObjectScale.z)));
+    scale_x.addListener(this, &ofApp::xScaleChanged);
+    scale_y.addListener(this, &ofApp::yScaleChanged);
+    scale_z.addListener(this, &ofApp::zScaleChanged);
 
     rgb_label.setBackgroundColor(ofColor(48, 48, 72));
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
     guiInspector.add(rgb_label.setup(ofParameter<string>("RGB")));
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
     guiInspector.add(RGB_r.setup("R: ", selectedGameObjectColor.r, 0, 255));
     guiInspector.add(RGB_g.setup("G: ", selectedGameObjectColor.g, 0, 255));
     guiInspector.add(RGB_b.setup("B: ", selectedGameObjectColor.b, 0, 255));
     guiInspector.add(RGB_a.setup("A: ", selectedGameObjectColor.a, 0, 255));
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
 
     hsb_label.setBackgroundColor(ofColor(48, 48, 72));
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
+    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
     guiInspector.add(hsb_label.setup(ofParameter<string>("HSB")));
     guiInspector.add(HSB_h.setup("H: ", selectedGameObjectColor.getHue(), 0, 255));
     guiInspector.add(HSB_s.setup("S: ", selectedGameObjectColor.getSaturation(), 0, 255));
     guiInspector.add(HSB_b.setup("B: ", selectedGameObjectColor.getBrightness(), 0, 255));
     guiInspector.add(HSB_a.setup("A: ", selectedGameObjectColor.a, 0, 255));
+    HSB_h.addListener(this, &ofApp::colorChangedHSB);
+    HSB_s.addListener(this, &ofApp::colorChangedHSB);
+    HSB_b.addListener(this, &ofApp::colorChangedHSB);
+    HSB_a.addListener(this, &ofApp::colorChangedHSB);
 
+    parent.removeListener(this, &ofApp::parentChanged);
     parent.setBackgroundColor(ofColor(48, 48, 72));
+    guiInspector.add(parent.setup("Parent: ", scene.getSelectedGameObjectParentID(), 0, object_buttons.size()));
     parent.addListener(this, &ofApp::parentChanged);
-    guiInspector.add(parent.setup("Parent: ", scene.getSelectedGameObjectParentID(), -1, 9));
 
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
 }
@@ -123,7 +142,12 @@ void ofApp::exit()
 {}
 
 void ofApp::parentChanged(int & newParentID) {
-    scene.setSelectedGameObjectParentID(newParentID);
+    if (newParentID - 1 == scene.getSelectedGameObjectID()) {
+        cout << "You cannot set the parent of an object to itself." << endl;
+    }
+    else {
+        scene.setSelectedGameObjectParent(newParentID);
+    }
 }
 
 void ofApp::colorChangedRGB(int & value) {

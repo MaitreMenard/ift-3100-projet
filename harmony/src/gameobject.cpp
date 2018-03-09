@@ -1,7 +1,9 @@
 #include "gameobject.h"
 
 GameObject::GameObject()
-{}
+{
+    parentGameObjectID = 0;
+}
 
 GameObject::GameObject(const GameObject & other)
 {

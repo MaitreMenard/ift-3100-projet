@@ -39,7 +39,7 @@ public:
     void removeGameObject(size_t index);
 
     int getSelectedGameObjectParentID();
-    void setSelectedGameObjectParentID(int parentGameObjectID);
+    void setSelectedGameObjectParent(int parentGameObjectID);
 
     Scene& operator=(const Scene& other);
 

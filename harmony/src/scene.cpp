@@ -119,8 +119,15 @@ int Scene::getSelectedGameObjectParentID() {
     return selectedGameObject->getParentGameObjectID();
 }
 
-void Scene::setSelectedGameObjectParentID(int parentGameObjectID) {
+void Scene::setSelectedGameObjectParent(int parentGameObjectID) {
+    if (parentGameObjectID == 0) {
+        getGameObject(parentGameObjectID)->removeChild(selectedGameObject);
+    }
+    getGameObject(parentGameObjectID)->removeChild(selectedGameObject);
     selectedGameObject->setParentGameObjectID(parentGameObjectID);
+    if (parentGameObjectID > 0) {
+        getGameObject(parentGameObjectID)->addChild(selectedGameObject);
+    }
 }
 
 Scene& Scene::operator=(const Scene& other)

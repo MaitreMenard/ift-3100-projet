@@ -63,6 +63,7 @@ public:
 
     void addNewGameObject(int gameObjectType);
 
+    void setupGUIInspector();
     void setupGUIInspector(int buttonID);
 
     void checkIfAButtonIsPressed();
