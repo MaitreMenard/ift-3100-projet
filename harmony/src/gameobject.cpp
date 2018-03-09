@@ -119,6 +119,11 @@ void GameObject::removeChild(size_t index)
 
 }
 
+void GameObject::removeChild(GameObject * childToRemove)
+{
+    children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
+}
+
 GameObject & GameObject::operator=(const GameObject & other)
 {
     deleteAllChildren();
