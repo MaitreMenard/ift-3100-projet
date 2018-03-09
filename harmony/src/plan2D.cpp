@@ -24,11 +24,6 @@ plan2D::plan2D() {
 	model.addIndex(2);
 }
 
-void plan2D::setTexture(ofPixels * pixels) {
-	texture.allocate(*pixels);
-	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
-}
-
 void plan2D::draw() {
 	texture.bind();
 	model.draw();

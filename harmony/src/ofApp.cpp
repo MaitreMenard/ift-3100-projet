@@ -20,17 +20,15 @@ void ofApp::setup()
 
     Sphere* sphere = new Sphere();
 	plan2D* plan = new plan2D();
-
-	// Test procedural texture
-	ofPixels pix;
-	pix.allocate(250, 250, OF_PIXELS_RGB);
-	pix = *tFac.setMarbleTexture(&pix, 5.f, 5.f, 2.f, 16.f);
-	plan->setTexture(&pix);
-
-
+	
     sphere->translate(0.0f, 2.0f, 0.0f);
     scene.addGameObject(sphere);
 	scene.addGameObject(plan);
+
+	// Test procedural texture
+	ofPixels * pix = new ofPixels();
+	pix->allocate(500, 500, OF_PIXELS_RGB);
+	scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
 
     //Cube* cube = new Cube();
     //Cube* cube2 = new Cube();
@@ -256,8 +254,14 @@ void ofApp::updateUIValues(ofxInputField<string> & field, int & key) {
 
 void ofApp::keyPressed(int key)
 {
+	ofPixels * pix;
     switch (key)
     {
+	case 'p':
+		pix = new ofPixels();
+		pix->allocate(500, 500, OF_PIXELS_RGB);
+		scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 2.0, 2.0, 1.0, 16.0));
+		break;
     case ' ':
         takeScreenShot();
         break;

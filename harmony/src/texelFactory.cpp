@@ -25,7 +25,7 @@ float texelFactory::linearInterpolation(const ofPixels & image, float x, float y
 	return value;
 }
 
-float texelFactory::turbulence(const ofPixels & image, float x, float y, float size) {
+float texelFactory::turbulence(const ofPixels &image, float x, float y, float size) {
 	float value = 0.f, initSize = size;
 	while (size >= 1) {
 		value += linearInterpolation(image, x / size, y / size) * size;
