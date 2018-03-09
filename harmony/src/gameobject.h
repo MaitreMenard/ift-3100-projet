@@ -42,6 +42,7 @@ public:
     void addChild(GameObject* child);
     GameObject* getChild(size_t index);
     void removeChild(size_t index);
+    void removeChild(GameObject* childToRemove);
 
     GameObject& operator=(const GameObject& other);
 
