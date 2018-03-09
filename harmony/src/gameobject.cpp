@@ -25,19 +25,42 @@ void GameObject::draw()
 {
     ofPushMatrix();
 
-    ofTranslate(transform.getPosition());
-
-    ofScale(transform.getScale().x, transform.getScale().y, transform.getScale().z);
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
+    transform.applyToModelViewMatrix();
 
     model.draw();
     for (GameObject* child : children)
     {
         child->draw();
     }
+
+    ofPopMatrix();
+}
+
+void GameObject::drawDelimitationBox()
+{
+    ofPushMatrix();
+
+    transform.applyToModelViewMatrix();
+
+    ofBoxPrimitive delimitationBox = ofBoxPrimitive();
+    delimitationBox.setSideColor(delimitationBox.SIDE_FRONT, ofColor(0, 255, 0));
+    delimitationBox.setSideColor(delimitationBox.SIDE_BACK, ofColor(0, 255, 0));
+    delimitationBox.setSideColor(delimitationBox.SIDE_LEFT, ofColor(0, 255, 0));
+    delimitationBox.setSideColor(delimitationBox.SIDE_RIGHT, ofColor(0, 255, 0));
+    delimitationBox.setSideColor(delimitationBox.SIDE_TOP, ofColor(0, 255, 0));
+    delimitationBox.setSideColor(delimitationBox.SIDE_BOTTOM, ofColor(0, 255, 0));
+    /*for (int i = delimitationBox.S; i < 6; i++)
+    {
+        delimitationBox.setSideColor(i, ofColor(0, 255, 0));
+    }*/
+
+    ofVec3f scale = transform.getScale();
+    delimitationBox.setWidth(scale.x);
+    delimitationBox.setHeight(scale.y);
+    delimitationBox.setDepth(scale.z);
+
+    //delimitationBox.drawWireframe();
+    delimitationBox.drawFaces();
 
     ofPopMatrix();
 }

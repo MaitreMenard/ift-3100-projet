@@ -1,7 +1,9 @@
 #include "scene.h"
 
 Scene::Scene()
-{}
+{
+    selectedGameObject = nullptr;
+}
 
 Scene::Scene(const Scene& other)
 {
@@ -9,6 +11,8 @@ Scene::Scene(const Scene& other)
     {
         gameObjects.push_back(gameObject);
     }
+
+    selectedGameObject = other.selectedGameObject;
 }
 
 void Scene::setup()
@@ -50,16 +54,34 @@ void Scene::draw()
     {
         gameObject->draw();
     }
+
+    if (selectedGameObject != nullptr)
+    {
+        selectedGameObject->drawDelimitationBox();
+    }
 }
 
 void Scene::addGameObject(GameObject* gameObject)
 {
     gameObjects.push_back(gameObject);
+    selectedGameObject = gameObject;
 }
 
 GameObject * Scene::getGameObject(size_t index)
 {
     return gameObjects.at(index);
+}
+
+void Scene::selectGameObject(size_t index)
+{
+    if (index >= gameObjects.size())
+    {
+        selectedGameObject = nullptr;
+    }
+    else
+    {
+        selectedGameObject = gameObjects.at(index);
+    }
 }
 
 void Scene::removeGameObject(size_t index)
@@ -106,6 +128,7 @@ Scene& Scene::operator=(const Scene& other)
 {
     deleteAllGameObjects();
     gameObjects.assign(other.gameObjects.begin(), other.gameObjects.end());
+    selectedGameObject = other.selectedGameObject;
     return *this;
 }
 
