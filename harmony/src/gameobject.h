@@ -43,6 +43,10 @@ public:
     void addChild(GameObject* child);
     GameObject* getChild(size_t index);
     void removeChild(size_t index);
+    void removeChild(GameObject* childToRemove);
+    bool hasChildren();
+    vector<GameObject *> getChildren();
+
     int getParentGameObjectID();
     void setParentGameObjectID(int parentGameObjectID);
 

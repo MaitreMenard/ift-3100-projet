@@ -113,11 +113,21 @@ GameObject * GameObject::getChild(size_t index)
     return children.at(index);
 }
 
+vector<GameObject *> GameObject::getChildren()
+{
+    return children;
+}
+
 void GameObject::removeChild(size_t index)
 {
     std::vector<GameObject*>::iterator it = children.begin();
     std::advance(it, index);
     children.erase(it);
+}
+
+void GameObject::removeChild(GameObject * childToRemove)
+{
+    children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
 }
 
 int GameObject::getParentGameObjectID() {
@@ -126,6 +136,10 @@ int GameObject::getParentGameObjectID() {
 
 void GameObject::setParentGameObjectID(int parentGameObjectID) {
     this->parentGameObjectID = parentGameObjectID;
+}
+
+bool GameObject::hasChildren() {
+    return children.size() > 0;
 }
 
 GameObject & GameObject::operator=(const GameObject & other)

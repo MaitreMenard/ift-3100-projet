@@ -69,7 +69,9 @@ void Scene::draw()
 {
     for (GameObject* gameObject : gameObjects)
     {
-        gameObject->draw();
+        if (gameObject->getParentGameObjectID() == 0) {
+            gameObject->draw();
+        }
     }
 }
 
@@ -86,6 +88,16 @@ GameObject * Scene::getGameObject(size_t index)
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
     gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
+}
+
+void Scene::removeNonChildGameObject(GameObject * gameObjectToRemove)
+{
+    nonChildrenGameObjects.erase(std::remove(nonChildrenGameObjects.begin(), nonChildrenGameObjects.end(), gameObjectToRemove), nonChildrenGameObjects.end());
+}
+
+bool Scene::isANonChildGameObject(GameObject * gameObjectToFind)
+{
+    return std::find(nonChildrenGameObjects.begin(), nonChildrenGameObjects.end(), gameObjectToFind) != nonChildrenGameObjects.end();
 }
 
 void Scene::removeGameObject(size_t index)
@@ -125,14 +137,36 @@ int Scene::getSelectedGameObjectParentID() {
 }
 
 void Scene::setSelectedGameObjectParent(int parentGameObjectID) {
-    if (parentGameObjectID == 0) {
-        getGameObject(parentGameObjectID)->removeChild(selectedGameObject);
+    if (selectedGameObject->getParentGameObjectID() > 0) {
+        getGameObject(selectedGameObject->getParentGameObjectID() - 1)->removeChild(selectedGameObject);
     }
-    getGameObject(parentGameObjectID)->removeChild(selectedGameObject);
-    selectedGameObject->setParentGameObjectID(parentGameObjectID);
     if (parentGameObjectID > 0) {
-        getGameObject(parentGameObjectID)->addChild(selectedGameObject);
+        selectedGameObject->setParentGameObjectID(parentGameObjectID);
+        getGameObject(parentGameObjectID - 1)->addChild(selectedGameObject);
+        removeNonChildGameObject(selectedGameObject);
     }
+    else if(!isANonChildGameObject(selectedGameObject)){
+        nonChildrenGameObjects.push_back(selectedGameObject);
+    }
+}
+
+bool Scene::isNewParentIDInSelectedGameObjectChildren(int newParentID) {
+    return recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, selectedGameObject->getChildren());
+}
+
+bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(int newParentID, vector<GameObject*> children) {
+    bool cannotBeItsNewParent = false;
+    for (GameObject* child : children) {
+        if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren())) {
+            cannotBeItsNewParent = true;
+            break;
+        }
+    }
+    return cannotBeItsNewParent;
+}
+
+int Scene::getGameObjectID(GameObject* gameObject) {
+    return find(gameObjects.begin(), gameObjects.end(), gameObject) - gameObjects.begin();
 }
 
 Scene& Scene::operator=(const Scene& other)
@@ -144,7 +178,7 @@ Scene& Scene::operator=(const Scene& other)
 
 void Scene::deleteAllGameObjects()
 {
-    for (GameObject* gameObject : gameObjects)
+    for (GameObject* gameObject : nonChildrenGameObjects)
     {
         delete gameObject;
     }
@@ -153,5 +187,6 @@ void Scene::deleteAllGameObjects()
 Scene::~Scene()
 {
     deleteAllGameObjects();
+    nonChildrenGameObjects.clear();
     gameObjects.clear();
 }

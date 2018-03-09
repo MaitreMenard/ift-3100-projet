@@ -6,6 +6,7 @@ class Scene
 {
 private:
     vector<GameObject*> gameObjects;
+    vector<GameObject*> nonChildrenGameObjects;
     void deleteAllGameObjects();
     size_t selectedGameObjectID;
     GameObject* selectedGameObject;
@@ -35,12 +36,18 @@ public:
     GameObject* getGameObject(size_t index);
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
+    void removeNonChildGameObject(GameObject * gameObjectToRemove);
+    bool isANonChildGameObject(GameObject * gameObjectToFind);
 
     int getSelectedGameObjectID();
+    int getGameObjectID(GameObject* gameObject);
     void setSelectedGameObject(size_t gameObjectID);
 
     int getSelectedGameObjectParentID();
     void setSelectedGameObjectParent(int parentGameObjectID);
+
+    bool isNewParentIDInSelectedGameObjectChildren(int newParentID);
+    bool recursiveIsNewParentIDInSelectedGameObjectChildren(int newParentID, vector<GameObject*>);
 
     Scene& operator=(const Scene& other);
 

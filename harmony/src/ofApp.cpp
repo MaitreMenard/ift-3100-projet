@@ -145,6 +145,9 @@ void ofApp::parentChanged(int & newParentID) {
     if (newParentID - 1 == scene.getSelectedGameObjectID()) {
         cout << "You cannot set the parent of an object to itself." << endl;
     }
+    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID)) {
+        cout << "You cannot set the parent of an object to one of its children." << endl;
+    }
     else {
         scene.setSelectedGameObjectParent(newParentID);
     }
