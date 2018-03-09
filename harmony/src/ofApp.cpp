@@ -13,14 +13,15 @@ void ofApp::setup()
 
     camera.setNearClip(0.1f);
     camera.setPosition(0, 2, 5);
-    camera.lookAt(ofVec3f(0, 0, 0));
 
     gridPlane.setup();
     scene.setup();
 
-    Sphere* sphere = new Sphere();
-    sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);
+    MilleniumFalcon* falcon = new MilleniumFalcon();
+    scene.addGameObject(falcon);
+    //Sphere* sphere = new Sphere();
+    //sphere->translate(0.0f, 2.0f, 0.0f);
+    //scene.addGameObject(sphere);
     //Cube* cube = new Cube();
     //Cube* cube2 = new Cube();
     //cube->addChild(cube2);
