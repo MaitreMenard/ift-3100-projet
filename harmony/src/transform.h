@@ -25,4 +25,7 @@ public:
     void reScale(float x, float y, float z);
 
     void applyToModelViewMatrix();
+
+	bool operator==(const Transform &obj);
+	bool operator!=(const Transform &obj);
 };

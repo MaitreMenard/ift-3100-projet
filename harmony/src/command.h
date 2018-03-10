@@ -18,7 +18,10 @@ private:
 public:
 	Command(GameObject * gob);
 	~Command();
+	GameObject* getGameObject() { return gobj_; };
     void exec();
+	bool operator==(const Command &cmd);
+	bool operator!=(const Command &cmd);
 };
 
 class CommandHandler
@@ -36,4 +39,5 @@ public:
     void redo();
 	void enable() { isEnable = true; };
 	void disable() { isEnable = false; };
+	GameObject * getSelectedGameObject();
 };

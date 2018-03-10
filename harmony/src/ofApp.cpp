@@ -391,7 +391,6 @@ void ofApp::takeScreenShot()
 
 void ofApp::keyPressed(int key)
 {
-    ofPixels * pix;
     switch (key)
     {
 	case -1: // CTRL_R + Z

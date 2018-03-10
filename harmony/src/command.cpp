@@ -12,7 +12,7 @@ void CommandHandler::flush_fw_command() {
 }
 
 void CommandHandler::add(Command * cmd) {
-	if(isEnable){
+	if(isEnable && (history_bw.empty() || *history_bw.top() != *cmd)){
 		if (UNDO_REDO_VERBOSE) cout << "Cmd add" << endl;
 		flush_fw_command();
 		history_bw.push(cmd);
@@ -58,6 +58,10 @@ void CommandHandler::pop_back_bw() {
 	}
 }
 
+GameObject * CommandHandler::getSelectedGameObject() {
+	return history_bw.empty() ? __nullptr : history_bw.top()->getGameObject();
+};
+
 /***** COMMAND *****/
 Command::Command(GameObject * gobj){
 	gobj_ = gobj;
@@ -77,3 +81,13 @@ void Command::exec() {
 	gobj_->setChildren(child_);
 }
 
+bool Command::operator==(const Command &cmd) {
+	// TODO check children / id GameObject
+	if (transf_ != cmd.transf_) return false;
+	if (color_ != cmd.color_) return false;
+	return true;
+}
+
+bool Command::operator!=(const Command &cmd) {
+	return !(*this == cmd);
+}

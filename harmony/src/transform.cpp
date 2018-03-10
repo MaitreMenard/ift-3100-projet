@@ -94,3 +94,17 @@ void Transform::setScale(float x, float y, float z)
         scale = ofVec3f(scale.x, scale.y, z);
     }
 }
+
+bool Transform::operator==(const Transform &obj1) {
+	if (position != obj1.position)
+		return false;
+	if (rotation != obj1.rotation)
+		return false;
+	if (scale != obj1.scale)
+		return false;
+	return true;
+}
+
+bool Transform::operator!=(const Transform &obj1) {
+	return !(*this == obj1);
+}

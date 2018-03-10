@@ -49,6 +49,7 @@ void Scene::setRotationSelectedGameObject(ofVec3f rotation)
     if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
     {
         selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
+		history_.add(new Command(selectedGameObject));
     }
 }
 
@@ -204,10 +205,16 @@ void Scene::deleteAllGameObjects()
 
 void Scene::undo() {
 	history_.undo();
+	GameObject * gobj = history_.getSelectedGameObject();
+	if (gobj != nullptr)
+		selectedGameObject = gobj;
 }
 
 void Scene::redo(){
 	history_.redo();
+	GameObject * gobj = history_.getSelectedGameObject();
+	if (gobj != nullptr)
+		selectedGameObject = gobj;
 }
 
 Scene::~Scene()
