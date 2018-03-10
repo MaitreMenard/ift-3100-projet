@@ -13,24 +13,23 @@ void ofApp::setup()
     ofDisableArbTex();
     ofEnableAlphaBlending();
 
-    camera.setNearClip(0.1f);
-    camera.setPosition(0, 2, 5);
-    camera.lookAt(ofVec3f(0, 0, 0));
-
+    setupCamera();
     gridPlane.setup();
     scene.setup();
+    MilleniumFalcon* falcon = new MilleniumFalcon();
+    scene.addGameObject(falcon);
 
-    /*Sphere*/
-	Sphere * sphere = new Sphere();
+    Sphere* sphere = new Sphere();
     plan2D* plan = new plan2D();
-    sphere->translate(0.0f, 2.0f, 0.0f);
+
+    //sphere->translate(0.0f, 2.0f, 0.0f);
     scene.addGameObject(sphere);
-    scene.addGameObject(plan);
+    //scene.addGameObject(plan);
 
     // Test procedural texture
-    ofPixels * pix = new ofPixels();
-    pix->allocate(500, 500, OF_PIXELS_RGB);
-    scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
+    //ofPixels * pix = new ofPixels();
+    //pix->allocate(500, 500, OF_PIXELS_RGB);
+    //scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
 
     ofSetVerticalSync(true);
 
@@ -178,6 +177,12 @@ void ofApp::colorChangedHSB(int & value) {
     RGB_g.addListener(this, &ofApp::colorChangedRGB);
     RGB_b.addListener(this, &ofApp::colorChangedRGB);
     RGB_a.addListener(this, &ofApp::colorChangedRGB);
+}
+
+void ofApp::setupCamera()
+{
+    camera.setNearClip(0.1f);
+    camera.setPosition(0, 2, 5);
 }
 
 void ofApp::xPositionChanged(string & value)

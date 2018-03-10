@@ -88,6 +88,7 @@ void Scene::draw()
 void Scene::addGameObject(GameObject* gameObject)
 {
     gameObjects.push_back(gameObject);
+	history_.add(new Command(gameObject));
 }
 
 GameObject * Scene::getGameObject(size_t index)
@@ -120,6 +121,7 @@ void Scene::removeGameObject(size_t index)
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 {
     selectedGameObject->translate(dx, dy, dz);
+	history_.add(new Command(selectedGameObject));
 }
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
@@ -143,6 +145,7 @@ void Scene::rescaleSelectedGameObject(float x, float y, float z)
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
 {
     selectedGameObject->rotate(degrees, x, y, z);
+	history_.add(new Command(selectedGameObject));
 }
 
 int Scene::getSelectedGameObjectParentID() {
