@@ -13,22 +13,24 @@ void ofApp::setup()
 
     camera.setNearClip(0.1f);
     camera.setPosition(0, 2, 5);
-    camera.lookAt(ofVec3f(0, 0, 0));
 
     gridPlane.setup();
     scene.setup();
 
+    MilleniumFalcon* falcon = new MilleniumFalcon();
+    scene.addGameObject(falcon);
+
     Sphere* sphere = new Sphere();
     plan2D* plan = new plan2D();
 
-    sphere->translate(0.0f, 2.0f, 0.0f);
+    //sphere->translate(0.0f, 2.0f, 0.0f);
     scene.addGameObject(sphere);
-    scene.addGameObject(plan);
+    //scene.addGameObject(plan);
 
     // Test procedural texture
-    ofPixels * pix = new ofPixels();
-    pix->allocate(500, 500, OF_PIXELS_RGB);
-    scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
+    //ofPixels * pix = new ofPixels();
+    //pix->allocate(500, 500, OF_PIXELS_RGB);
+    //scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));
 
     //Cube* cube = new Cube();
     //Cube* cube2 = new Cube();
