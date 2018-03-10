@@ -13,7 +13,7 @@ protected:
     Transform transform;
     std::vector<GameObject*> children;
     ofMesh model;
-    int parentGameObjectID;
+    GameObject* parentGameObject;
 
     int nbVertex;
 
@@ -49,8 +49,7 @@ public:
     bool hasChildren();
     vector<GameObject *> getChildren();
 
-    int getParentGameObjectID();
-    void setParentGameObjectID(int parentGameObjectID);
+    GameObject* getParentGameObject();
     void setParentGameObject(GameObject* parent);
 
     GameObject& operator=(const GameObject& other);

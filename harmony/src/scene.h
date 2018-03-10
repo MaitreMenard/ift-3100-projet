@@ -39,11 +39,11 @@ public:
     void removeNonChildGameObject(GameObject * gameObjectToRemove);
     bool isANonChildGameObject(GameObject * gameObjectToFind);
 
-    int getSelectedGameObjectID();
-    int getGameObjectID(GameObject* gameObject);
+    size_t getSelectedGameObjectID();
+    size_t getGameObjectID(GameObject* gameObject);
     void setSelectedGameObject(size_t gameObjectID);
 
-    int getSelectedGameObjectParentID();
+    size_t getSelectedGameObjectParentID();
     void setSelectedGameObjectParent(size_t parentGameObjectID);
 
     bool isNewParentIDInSelectedGameObjectChildren(size_t newParentID);

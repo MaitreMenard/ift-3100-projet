@@ -2,7 +2,7 @@
 
 GameObject::GameObject()
 {
-    parentGameObjectID = 0;
+    parentGameObject = nullptr;
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -143,17 +143,18 @@ void GameObject::removeChild(GameObject * childToRemove)
     children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
 }
 
-int GameObject::getParentGameObjectID() {
-    return parentGameObjectID;
+GameObject* GameObject::getParentGameObject() {
+    return parentGameObject;
 }
 
-void GameObject::setParentGameObjectID(int parentGameObjectID) {
-    this->parentGameObjectID = parentGameObjectID;
-}
-
-void GameObject::setParentGameObject(GameObject * parent)
-{
-    transform.setRelativeTo(parent->transform);
+void GameObject::setParentGameObject(GameObject* parentGameObject) {
+    this->parentGameObject = parentGameObject;
+    if (parentGameObject != nullptr) {
+        transform.setRelativeTo(parentGameObject->transform);
+    }
+    else {
+        transform.setRelativeTo(Transform());
+    }
 }
 
 bool GameObject::hasChildren() {
