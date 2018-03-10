@@ -22,11 +22,7 @@ void MilleniumFalcon::draw()
 {
     ofPushMatrix();
 
-    ofTranslate(transform.getPosition());
-
-    float angle, x, y, z;
-    transform.getRotate(angle, x, y, z);
-    ofRotate(angle, x, y, z);
+    transform.applyToModelViewMatrix();
 
     objModel.draw(OF_MESH_FILL);
     for (GameObject* child : children)
