@@ -412,11 +412,26 @@ void ofApp::keyPressed(int key)
     case 'h':
         GUIIsDisplayed = !GUIIsDisplayed;
         break;
-    case 'i':
+    case '1':
         addNewGameObject(0);
         break;
-    case 'o':
+    case '2':
         addNewGameObject(1);
+        break;
+    case '3':
+        addNewGameObject(2);
+        break;
+    case '4':
+        addNewGameObject(3);
+        break;
+    case '5':
+        addNewGameObject(4);
+        break;
+    case '6':
+        addNewGameObject(5);
+        break;
+    case '7':
+        addNewGameObject(6);
         break;
     default:
         break;
@@ -435,6 +450,26 @@ void ofApp::addNewGameObject(size_t shapeType) {
     else if (shapeType == Shape_Cube) {
         gameObject = new Cube();
         shapeName = cubeText;
+    }
+    else if (shapeType == Shape_Point) {
+        gameObject = new Point();
+        shapeName = pointText;
+    }
+    else if (shapeType == Shape_Line) {
+        gameObject = new Line();
+        shapeName = lineText;
+    }
+    else if (shapeType == Shape_Triangle) {
+        gameObject = new Triangle();
+        shapeName = triangleText;
+    }
+    else if (shapeType == Shape_Rectangle) {
+        gameObject = new Rektangle();
+        shapeName = rectangleText;
+    }
+    else if (shapeType == Shape_Polygon) {
+        gameObject = new Polygone();
+        shapeName = polygonText;
     }
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);

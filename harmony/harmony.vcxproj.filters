@@ -58,14 +58,26 @@
     <ClCompile Include="src\sphere.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\plan2D.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\gui\rotation_slider.cpp">
       <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\triangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rectangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\point.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polygon.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,14 +158,26 @@
     <ClInclude Include="src\sphere.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\plan2D.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\texelFactory.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\gui\rotation_slider.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\triangle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rectangle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\point.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\line.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\polygon.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
