@@ -9,6 +9,7 @@
 #include "ofxInputField.h"
 #include "plan2D.h"
 #include "texelFactory.h"
+#include "gui/rotation_slider.h"
 
 class ofApp : public ofBaseApp
 {
@@ -53,6 +54,8 @@ public:
     void yPositionChanged(string & value);
     void zPositionChanged(string & value);
 
+    void rotationChanged(ofVec3f eulerAngles);
+
     void xScaleChanged(string & value);
     void yScaleChanged(string & value);
     void zScaleChanged(string & value);
@@ -75,7 +78,7 @@ public:
     ofxTextField position_y;
     ofxTextField position_z;
 
-    ofxVec3Slider rotation;
+    RotationSlider rotation;
 
     ofxTextField scale_x;
     ofxTextField scale_y;

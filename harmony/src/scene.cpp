@@ -44,7 +44,7 @@ ofVec3f Scene::getEulerRotationSelectedGameObject() {
     return selectedGameObject->getRotation().getEuler();
 }
 
-void Scene::updateSelectedGameObjectRotation(ofVec3f rotation)
+void Scene::setRotationSelectedGameObject(ofVec3f rotation)
 {
     if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
     {

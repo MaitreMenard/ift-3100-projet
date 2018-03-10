@@ -118,6 +118,12 @@ void ofApp::setupGUIInspector(int buttonID) {
     parent.addListener(this, &ofApp::parentChanged);
 
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
+
+    std::function<void(ofVec3f)> listener = [=](ofVec3f value)
+    {
+        this->rotationChanged(value);
+    };
+    rotation.addListener(listener);
 }
 
 void ofApp::exit()
@@ -246,6 +252,11 @@ void ofApp::zPositionChanged(string & value)
     }
 }
 
+void ofApp::rotationChanged(ofVec3f eulerAngles)
+{
+    scene.setRotationSelectedGameObject(eulerAngles);
+}
+
 void ofApp::xScaleChanged(string & value)
 {
     float fValue;
@@ -319,7 +330,6 @@ void ofApp::update()
 {
     checkIfAButtonIsPressed();
     scene.update();
-    scene.updateSelectedGameObjectRotation(rotation);
 }
 
 void ofApp::checkIfAButtonIsPressed() {

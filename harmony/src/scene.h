@@ -17,14 +17,14 @@ public:
 
     void setup();
     void update();
-    void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
 
     void addGameObject(GameObject* gameObject);
     void translateSelectedGameObject(float dx, float dy, float dz);
-    void rescaleSelectedGameObject(float x, float y, float z);
     void rotateSelectedGameObject(float degrees, float x, float y, float z);
+    void rescaleSelectedGameObject(float x, float y, float z);
     void setPositionSelectedGameObject(float x, float y, float z);
+    void setRotationSelectedGameObject(ofVec3f rotation);
     void setScaleSelectedGameObject(float x, float y, float z);
     void setColorSelectedGameObject(ofColor color);
 
