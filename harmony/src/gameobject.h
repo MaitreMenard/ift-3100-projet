@@ -51,6 +51,7 @@ public:
 
     int getParentGameObjectID();
     void setParentGameObjectID(int parentGameObjectID);
+    void setParentGameObject(GameObject* parent);
 
     GameObject& operator=(const GameObject& other);
 
