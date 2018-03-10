@@ -25,6 +25,7 @@ void GameObject::update()
 
 void GameObject::draw()
 {
+	texture.bind();
     ofPushMatrix();
 
     transform.applyToModelViewMatrix();
@@ -36,6 +37,7 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
+	texture.unbind();
 }
 
 void GameObject::drawDelimitationBox()
@@ -179,7 +181,8 @@ void GameObject::deleteAllChildren()
 void GameObject::setTexture(ofPixels * pixels) {
     texture.clear();
     texture.allocate(*pixels);
-    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+    //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
+	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()

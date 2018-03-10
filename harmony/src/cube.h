@@ -4,10 +4,7 @@
 
 class Cube : public GameObject
 {
-private:
-
 public:
     Cube();
-
     void setColor(ofColor color);
 };

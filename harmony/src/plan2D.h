@@ -6,5 +6,5 @@ class plan2D : public GameObject
 {
 public:
     plan2D();
-    void draw();
+	void plan2D::setColor(ofColor color);
 };

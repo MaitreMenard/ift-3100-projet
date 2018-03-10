@@ -459,27 +459,47 @@ void ofApp::keyPressed(int key)
     case 'o':
         addNewGameObject(1);
         break;
+	case 'p':
+		addNewGameObject(2);
+		break;
     default:
         break;
     }
 }
 
 void ofApp::addNewGameObject(int gameObjectType) {
+	bool availableGOType = true;
     ofxButton *object_button = new ofxButton();
     object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
-    if (gameObjectType == 0) {
-        gameObject = new Sphere();
-        shapeName = "Sphere ";
+	ofPixels * pix;
+    switch( gameObjectType){
+		case 0:
+			gameObject = new Sphere();
+			shapeName = "Sphere ";
+			break;
+		case 1:
+			gameObject = new Cube();
+			shapeName = "Cube ";
+			break;
+		case 2:
+			gameObject = new plan2D();
+			pix = new ofPixels();
+			pix->allocate(250, 250, OF_PIXELS_RGB);
+			pix = tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0);
+			gameObject->setTexture(pix);
+			shapeName = "2DPlan ";
+			break;
+		default:
+			availableGOType = false;
+			break;
     }
-    else if (gameObjectType == 1) {
-        gameObject = new Cube();
-        shapeName = "Cube ";
-    }
-    guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
-    scene.addGameObject(gameObject);
-    setupGUIInspector(object_buttons.size() - 1);
+	if(availableGOType){
+		guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
+		scene.addGameObject(gameObject);
+		setupGUIInspector(object_buttons.size() - 1);
+	}
 }
 
 void ofApp::keyReleased(int key)
