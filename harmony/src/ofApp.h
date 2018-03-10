@@ -6,6 +6,7 @@
 #include "cube.h"
 #include "sphere.h"
 #include "millenium-falcon.h"
+#include "x-wing.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
 #include "plan2D.h"

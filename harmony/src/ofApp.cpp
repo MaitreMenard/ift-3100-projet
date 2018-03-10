@@ -17,14 +17,16 @@ void ofApp::setup()
     gridPlane.setup();
     scene.setup();
 
-    MilleniumFalcon* falcon = new MilleniumFalcon();
-    scene.addGameObject(falcon);
+    //MilleniumFalcon* falcon = new MilleniumFalcon();
+    //scene.addGameObject(falcon);
+    XWing* xWing = new XWing();
+    scene.addGameObject(xWing);
 
     Sphere* sphere = new Sphere();
     plan2D* plan = new plan2D();
 
     //sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);
+    //scene.addGameObject(sphere);
     //scene.addGameObject(plan);
 
     // Test procedural texture
