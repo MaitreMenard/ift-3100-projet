@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\command.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
+    <ClCompile Include="src\gui\rotation_slider.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\millenium-falcon.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\command.h" />
+    <ClInclude Include="src\gui\rotation_slider.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\gameobject.h" />

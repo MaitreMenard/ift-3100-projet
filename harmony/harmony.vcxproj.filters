@@ -82,6 +82,9 @@
     <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\rotation_slider.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -122,6 +125,9 @@
     </Filter>
     <Filter Include="addons\ofxInputField\src">
       <UniqueIdentifier>{A25CD3D6-9534-BE4E-B514-C157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gui">
+      <UniqueIdentifier>{defd50b7-50a5-4e95-8a27-edfdbd17848c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -319,6 +325,9 @@
     </ClInclude>
     <ClInclude Include="src\command.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\rotation_slider.h">
+      <Filter>src\gui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

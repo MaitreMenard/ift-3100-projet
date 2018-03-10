@@ -10,6 +10,7 @@
 #include "ofxInputField.h"
 #include "plan2D.h"
 #include "texelFactory.h"
+#include "gui/rotation_slider.h"
 
 class ofApp : public ofBaseApp
 {
@@ -21,6 +22,7 @@ private:
 
     bool shiftIsPressed;
 	bool CtrlIsPressed;
+    bool GUIIsDisplayed;
 
     ofCamera camera;
     GridPlane gridPlane;
@@ -57,6 +59,8 @@ public:
     void yPositionChanged(string & value);
     void zPositionChanged(string & value);
 
+    void rotationChanged(ofVec3f eulerAngles);
+
     void xScaleChanged(string & value);
     void yScaleChanged(string & value);
     void zScaleChanged(string & value);
@@ -73,13 +77,11 @@ public:
 
     void checkIfAButtonIsPressed();
 
-    bool bHide;
-
     ofxTextField position_x;
     ofxTextField position_y;
     ofxTextField position_z;
 
-    ofxVec3Slider rotation;
+    RotationSlider rotation;
 
     ofxTextField scale_x;
     ofxTextField scale_y;
