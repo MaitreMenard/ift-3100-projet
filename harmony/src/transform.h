@@ -25,4 +25,6 @@ public:
     void reScale(float x, float y, float z);
 
     void applyToModelViewMatrix();
+
+    void setRelativeTo(Transform other);
 };

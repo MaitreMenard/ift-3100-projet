@@ -153,7 +153,7 @@ void GameObject::setParentGameObjectID(int parentGameObjectID) {
 
 void GameObject::setParentGameObject(GameObject * parent)
 {
-    
+    transform.setRelativeTo(parent->transform);
 }
 
 bool GameObject::hasChildren() {
