@@ -15,14 +15,23 @@ void ofApp::setup()
     gridPlane.setup();
     scene.setup();
 
-    MilleniumFalcon* falcon = new MilleniumFalcon();
+    Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+        ofVec3f(-0.59, 0.17, 19.0),
+        180,
+        ofVec3f(0, 0, 1),
+        ofVec3f(0.01, 0.01, 0.01));
     scene.addGameObject(falcon);
+    //Model3D* xWing = new Model3D("/models/xwing/x-wing.obj",
+    //    ofVec3f(-14.59, 0.17, 19.0),
+    //    180, ofVec3f(0, 0, 1),
+    //    ofVec3f(0.01, 0.01, 0.01));
+    //scene.addGameObject(xWing);
 
     Sphere* sphere = new Sphere();
     plan2D* plan = new plan2D();
 
     //sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);
+    //scene.addGameObject(sphere);
     //scene.addGameObject(plan);
 
     // Test procedural texture

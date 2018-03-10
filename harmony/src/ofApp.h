@@ -5,7 +5,7 @@
 #include "scene.h"
 #include "cube.h"
 #include "sphere.h"
-#include "millenium-falcon.h"
+#include "model3D.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
 #include "plan2D.h"

@@ -172,7 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\millenium-falcon.cpp" />
+    <ClCompile Include="src\model3D.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
@@ -197,11 +197,11 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\model3D.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\grid_plane.h" />
-    <ClInclude Include="src\millenium-falcon.h" />
     <ClInclude Include="src\plan2D.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\sphere.h" />
