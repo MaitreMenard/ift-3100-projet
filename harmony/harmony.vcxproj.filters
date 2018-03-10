@@ -70,9 +70,6 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp">
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\millenium-falcon.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\plan2D.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\grid_plane.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\millenium-falcon.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\ofApp.h">
