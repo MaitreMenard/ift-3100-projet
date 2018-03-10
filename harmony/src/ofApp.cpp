@@ -34,7 +34,7 @@ void ofApp::setup()
     //SCENE
     guiScene.setup();
 
-    bHide = false;
+    GUIIsDisplayed = true;
 }
 
 void ofApp::setupGUIInspector() {
@@ -355,7 +355,7 @@ void ofApp::draw()
     gridPlane.draw();
     camera.end();
 
-    if (!bHide)
+    if (GUIIsDisplayed)
     {
         ofDisableDepthTest();
         guiInspector.draw();
@@ -428,7 +428,7 @@ void ofApp::keyPressed(int key)
         shiftIsPressed = true;
         break;
     case 'h':
-        bHide = !bHide;
+        GUIIsDisplayed = !GUIIsDisplayed;
         break;
     case 'i':
         addNewGameObject(0);

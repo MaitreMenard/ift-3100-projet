@@ -20,6 +20,7 @@ private:
     const float POSITION_MAX_VALUE = 1000;
 
     bool shiftIsPressed;
+    bool GUIIsDisplayed;
 
     ofCamera camera;
     GridPlane gridPlane;
@@ -71,8 +72,6 @@ public:
     void setupGUIInspector(int buttonID);
 
     void checkIfAButtonIsPressed();
-
-    bool bHide;
 
     ofxTextField position_x;
     ofxTextField position_y;
