@@ -87,6 +87,8 @@ private:
     ofxLabel rgb_label;
     ofxLabel hsb_label;
 
+    bool guiIsSetup = false;
+
     void takeScreenShot();
 
     float convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue);
@@ -110,6 +112,7 @@ private:
 
     void setupGUIInspector();
     void setupGUIInspector(size_t buttonID);
+    void updateGUIInspector();
     void updateGUIInspector(size_t buttonID);
 
     void checkIfAButtonIsPressed();
