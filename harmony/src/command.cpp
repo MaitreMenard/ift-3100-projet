@@ -18,6 +18,9 @@ void CommandHandler::add(Command * cmd) {
 		history_bw.push(cmd);
 		history_bw.top()->exec();
 	}
+	// Limit stack length
+	if (history_bw.size() > QUEUE_LIMIT)
+		pop_back_bw();
 }
 
 void CommandHandler::undo() {
@@ -37,6 +40,22 @@ void CommandHandler::redo() {
 		history_fw.pop();
 		history_bw.top()->exec();
     }
+}
+
+void CommandHandler::pop_back_bw() {
+	stack<Command*> temp_stack;
+	// unstack to get last object
+	while (!history_bw.empty()) {
+		temp_stack.push(history_bw.top());
+		history_bw.pop();
+	}
+	// pop last object
+	temp_stack.pop();
+	// restack rest of objects
+	while (!temp_stack.empty()) {
+		history_bw.push(temp_stack.top());
+		temp_stack.pop();
+	}
 }
 
 /***** COMMAND *****/

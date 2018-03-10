@@ -4,6 +4,7 @@
 #include <vector>
 
 #define UNDO_REDO_VERBOSE 1
+#define QUEUE_LIMIT 50
 
 #pragma once
 class Command {
@@ -25,6 +26,7 @@ class CommandHandler
 private:
 	bool isEnable = false;
     void flush_fw_command();
+	void pop_back_bw();
     stack<Command*> history_bw;
     stack<Command*> history_fw;
 public:
