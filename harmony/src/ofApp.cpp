@@ -11,9 +11,7 @@ void ofApp::setup()
     ofDisableArbTex();
     ofEnableAlphaBlending();
 
-    camera.setNearClip(0.1f);
-    camera.setPosition(0, 2, 5);
-
+    setupCamera();
     gridPlane.setup();
     scene.setup();
 
@@ -83,6 +81,12 @@ void ofApp::setup()
     gui.setPosition(ofGetWidth() - gui.getWidth() - 2, 2);
 
     bHide = false;
+}
+
+void ofApp::setupCamera()
+{
+    camera.setNearClip(0.1f);
+    camera.setPosition(0, 2, 5);
 }
 
 void ofApp::exit()
