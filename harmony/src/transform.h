@@ -4,9 +4,13 @@
 class Transform
 {
 private:
-    ofVec3f position;
-    ofQuaternion rotation;
-    ofVec3f scale;
+    ofVec3f globalPosition;
+    ofQuaternion globalRotation;
+    ofVec3f globalScale;
+
+    ofVec3f localPosition;
+    ofQuaternion localRotation;
+    ofVec3f localScale;
 
 public:
     Transform();

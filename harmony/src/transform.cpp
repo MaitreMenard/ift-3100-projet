@@ -2,85 +2,97 @@
 
 Transform::Transform()
 {
-    setPosition(0, 0, 0);
-    setRotation(0, 0, 0);
-    scale = ofVec3f(1, 1, 1);
+    globalPosition = localPosition = ofVec3f(0, 0, 0);
+
+    globalRotation.makeRotate(0, ofVec3f(1, 0, 0), 0, ofVec3f(0, 1, 0), 0, ofVec3f(0, 0, 1));
+    localRotation.makeRotate(0, ofVec3f(1, 0, 0), 0, ofVec3f(0, 1, 0), 0, ofVec3f(0, 0, 1));
+
+    globalScale = localScale = ofVec3f(1, 1, 1);
 }
 
 ofVec3f Transform::getPosition()
 {
-    return position;
-}
-
-ofQuaternion Transform::getRotation()
-{
-    return rotation;
-}
-
-void Transform::getRotate(float & angle, float & x, float & y, float & z)
-{
-    rotation.getRotate(angle, x, y, z);
-}
-
-ofVec3f Transform::getScale()
-{
-    return scale;
-}
-
-void Transform::translate(float dx, float dy, float dz)
-{
-    position.x += dx;
-    position.y += dy;
-    position.z += dz;
+    return localPosition;
 }
 
 void Transform::setPosition(float x, float y, float z)
 {
-    position = ofVec3f(x, y, z);
+    ofVec3f newLocalPosition = ofVec3f(x, y, z);
+    ofLog() << localPosition << " -> " << newLocalPosition;
+    globalPosition += (newLocalPosition - localPosition);
+    localPosition = newLocalPosition;
 }
 
-void Transform::rotate(float degrees, float x, float y, float z)
+void Transform::translate(float dx, float dy, float dz)
 {
-    rotation *= ofQuaternion(degrees, ofVec3f(x, y, z));
+    ofVec3f delta = ofVec3f(dx, dy, dz);
+
+    localPosition += delta;
+    globalPosition += delta;
+}
+
+ofQuaternion Transform::getRotation()
+{
+    return localRotation;
+}
+
+void Transform::getRotate(float & angle, float & x, float & y, float & z)
+{
+    localRotation.getRotate(angle, x, y, z);
 }
 
 void Transform::setRotation(float x, float y, float z)
 {
-    rotation.makeRotate(x, ofVec3f(1, 0, 0), y, ofVec3f(0, 1, 0), z, ofVec3f(0, 0, 1));
+    ofQuaternion newLocalRotation = ofQuaternion(x, ofVec3f(1, 0, 0), y, ofVec3f(0, 1, 0), z, ofVec3f(0, 0, 1));
+    ofQuaternion delta = localRotation.inverse() * newLocalRotation;
+    globalRotation *= delta;
+    localRotation = newLocalRotation;
+}
+
+void Transform::rotate(float degrees, float x, float y, float z)
+{
+    ofQuaternion rotation = ofQuaternion(degrees, ofVec3f(x, y, z));
+
+    localRotation *= rotation;
+    globalRotation *= rotation;
+}
+
+ofVec3f Transform::getScale()
+{
+    return localScale;
+}
+
+void Transform::setScale(float x, float y, float z)
+{
+    ofVec3f newLocalScale = ofVec3f(x, y, z);
+    globalScale *= (newLocalScale / localScale);
+    localScale = newLocalScale;
 }
 
 void Transform::reScale(float x, float y, float z)
 {
-    scale.x *= x;
-    scale.y *= y;
-    scale.z *= z;
+    ofVec3f scaleFactors = ofVec3f(x, y, z);
+
+    localScale *= scaleFactors;
+    globalScale *= scaleFactors;
 }
 
 void Transform::applyToModelViewMatrix()
 {
-    ofTranslate(position);
+    ofTranslate(localPosition);
 
-    ofScale(scale);
+    ofScale(localScale);
 
     float angle, x, y, z;
-    rotation.getRotate(angle, x, y, z);
+    localRotation.getRotate(angle, x, y, z);
     ofRotate(angle, x, y, z);
 }
 
 void Transform::setRelativeTo(Transform other)
 {
-    position.x -= other.position.x;
-    position.y -= other.position.y;
-    position.z -= other.position.z;
+    localPosition = globalPosition - other.globalPosition;
 
-    rotation *= other.rotation.inverse();
+    localRotation *= other.globalRotation.inverse() * globalRotation;
 
-    scale.x /= other.scale.x;
-    scale.y /= other.scale.y;
-    scale.z /= other.scale.z;
-}
-
-void Transform::setScale(float x, float y, float z)
-{
-    scale = ofVec3f(x, y, z);
+    localScale = globalScale / other.globalScale;
 }
