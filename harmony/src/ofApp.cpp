@@ -16,13 +16,12 @@ void ofApp::setup()
     setupCamera();
     gridPlane.setup();
     scene.setup();
-
-    Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
-        ofVec3f(-0.59, 0.17, 19.0),
-        180,
-        ofVec3f(0, 0, 1),
-        ofVec3f(0.01, 0.01, 0.01));
-    scene.addGameObject(falcon);
+    //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+    //    ofVec3f(-0.59, 0.17, 19.0),
+    //    180,
+    //    ofVec3f(0, 0, 1),
+    //    ofVec3f(0.01, 0.01, 0.01));
+    //scene.addGameObject(falcon);
     //Model3D* xWing = new Model3D("/models/xwing/x-wing.obj",
     //    ofVec3f(-14.59, 0.17, 19.0),
     //    180, ofVec3f(0, 0, 1),
