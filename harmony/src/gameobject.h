@@ -48,6 +48,7 @@ public:
     void removeChild(GameObject* childToRemove);
     bool hasChildren();
     vector<GameObject *> getChildren();
+	void setChildren(vector<GameObject *>);
 
     int getParentGameObjectID();
     void setParentGameObjectID(int parentGameObjectID);

@@ -1,6 +1,7 @@
 #include "ofMain.h"
 #include "gameobject.h"
 #include <stack>
+#include <vector>
 
 #define UNDO_REDO_VERBOSE 1
 
@@ -11,6 +12,8 @@ private:
 	ofTexture texture_;
 	ofColor color_;
 	Transform transf_;
+	vector<GameObject*> child_;
+
 public:
 	Command(GameObject * gob);
 	~Command();

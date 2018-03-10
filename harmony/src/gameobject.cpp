@@ -131,6 +131,12 @@ vector<GameObject *> GameObject::getChildren()
     return children;
 }
 
+void GameObject::setChildren(vector<GameObject *> child) {
+	children.clear();
+	for (vector<GameObject*>::iterator it = child.begin(); it != child.end(); ++it)
+		children.push_back(*it);
+}
+
 void GameObject::removeChild(size_t index)
 {
     std::vector<GameObject*>::iterator it = children.begin();
