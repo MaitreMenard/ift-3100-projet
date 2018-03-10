@@ -9,6 +9,12 @@ void RotationSlider::addListener(std::function<void(ofVec3f)> method)
     getFloatSlider("z").addListener(this, &RotationSlider::slidersListener);
 }
 
+ofVec3f RotationSlider::operator=(const ofVec3f & v)
+{
+    value = v;
+    return value;
+}
+
 void RotationSlider::slidersListener(float & value)
 {
     ofVec3f values = ofVec3f(getFloatSlider("x"), getFloatSlider("y"), getFloatSlider("z"));

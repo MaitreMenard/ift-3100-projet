@@ -7,6 +7,7 @@ class RotationSlider : public ofxVec3Slider
 {
 public:
     void addListener(std::function<void(ofVec3f)> method);
+    ofVec3f operator=(const ofVec3f & v);
     ~RotationSlider();
 
 private:
