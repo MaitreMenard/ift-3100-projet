@@ -175,7 +175,7 @@
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\millenium-falcon.cpp" />
+    <ClCompile Include="src\model3D.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
@@ -202,11 +202,11 @@
   <ItemGroup>
     <ClInclude Include="src\command.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
+    <ClInclude Include="src\model3D.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\grid_plane.h" />
-    <ClInclude Include="src\millenium-falcon.h" />
     <ClInclude Include="src\plan2D.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\sphere.h" />
