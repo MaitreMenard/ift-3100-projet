@@ -151,6 +151,11 @@ void GameObject::setParentGameObjectID(int parentGameObjectID) {
     this->parentGameObjectID = parentGameObjectID;
 }
 
+void GameObject::setParentGameObject(GameObject * parent)
+{
+    
+}
+
 bool GameObject::hasChildren() {
     return children.size() > 0;
 }
