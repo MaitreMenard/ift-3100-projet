@@ -36,15 +36,7 @@ void Transform::translate(float dx, float dy, float dz)
 
 void Transform::setPosition(float x, float y, float z)
 {
-    if (x >= -1000) {
-        position = ofVec3f(x, position.y, position.z);
-    }
-    else if (y >= -1000) {
-        position = ofVec3f(position.x, y, position.z);
-    }
-    else if (z >= -1000) {
-        position = ofVec3f(position.x, position.y, z);
-    }
+    position = ofVec3f(x, y, z);
 }
 
 void Transform::rotate(float degrees, float x, float y, float z)
@@ -90,13 +82,5 @@ void Transform::setRelativeTo(Transform other)
 
 void Transform::setScale(float x, float y, float z)
 {
-    if (x >= -100) {
-        scale = ofVec3f(x, scale.y, scale.z);
-    }
-    else if (y >= -100) {
-        scale = ofVec3f(scale.x, y, scale.z);
-    }
-    else if (z >= -100) {
-        scale = ofVec3f(scale.x, scale.y, z);
-    }
+    scale = ofVec3f(x, y, z);
 }
