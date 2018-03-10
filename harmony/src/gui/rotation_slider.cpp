@@ -1,5 +1,10 @@
 #include "rotation_slider.h"
 
+RotationSlider::RotationSlider()
+{
+    eventsEnabled = true;
+}
+
 void RotationSlider::addListener(std::function<void(ofVec3f)> method)
 {
     listeners.push_back(method);
@@ -9,9 +14,14 @@ void RotationSlider::addListener(std::function<void(ofVec3f)> method)
     getFloatSlider("z").addListener(this, &RotationSlider::slidersListener);
 }
 
-void RotationSlider::removeListener(std::function<void(ofVec3f)> method)
+void RotationSlider::enableEvents()
 {
-    listeners.erase(std::remove(listeners.begin(), listeners.end(), method), listeners.end());
+    eventsEnabled = true;
+}
+
+void RotationSlider::disableEvents()
+{
+    eventsEnabled = false;
 }
 
 ofVec3f RotationSlider::operator=(const ofVec3f & v)
@@ -21,6 +31,14 @@ ofVec3f RotationSlider::operator=(const ofVec3f & v)
 }
 
 void RotationSlider::slidersListener(float & value)
+{
+    if (eventsEnabled)
+    {
+        callListenersWithSliderValues();
+    }
+}
+
+void RotationSlider::callListenersWithSliderValues()
 {
     ofVec3f values = ofVec3f(getFloatSlider("x"), getFloatSlider("y"), getFloatSlider("z"));
 
