@@ -79,7 +79,7 @@
     <ClCompile Include="src\texelFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\x-wing.cpp">
+    <ClCompile Include="src\model3D.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,7 +317,7 @@
     <ClInclude Include="src\texelFactory.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\x-wing.h">
+    <ClInclude Include="src\model3D.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

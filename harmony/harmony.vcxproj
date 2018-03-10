@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\millenium-falcon.cpp" />
+    <ClCompile Include="src\model3D.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
@@ -195,9 +196,9 @@
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp" />
-    <ClCompile Include="src\x-wing.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\model3D.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\gameobject.h" />
@@ -259,7 +260,6 @@
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h" />
-    <ClInclude Include="src\x-wing.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">
