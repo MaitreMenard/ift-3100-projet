@@ -37,10 +37,6 @@ void ofApp::setup()
     GUIIsDisplayed = true;
 }
 
-void ofApp::setupGUIInspector() {
-    setupGUIInspector(scene.getSelectedGameObjectID());
-}
-
 void ofApp::setupGUIInspector(size_t buttonID) {
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
@@ -65,7 +61,7 @@ void ofApp::setupGUIInspector(size_t buttonID) {
     position_z.addListener(this, &ofApp::zPositionChanged);
 
     ofVec3f selectedGameObjectRotation = scene.getEulerRotationSelectedGameObject();
-    guiInspector.add(rotation.setup(rotationText, selectedGameObjectRotation, ofVec3f(0, 0, 0), ofVec3f(360, 360, 360)));
+    guiInspector.add(rotation.setup(rotationText, selectedGameObjectRotation, ofVec3f(-180, -180, -180), ofVec3f(180, 180, 180)));
     rotation.setHeaderBackgroundColor(baseLabelColor);
 
     scale_label.setBackgroundColor(baseLabelColor);
@@ -124,10 +120,8 @@ void ofApp::setupGUIInspector(size_t buttonID) {
         this->rotationChanged(value);
     };
     rotation.addListener(listener);
-}
 
-void ofApp::updateGUIInspector() {
-    updateGUIInspector(scene.getSelectedGameObjectID());
+    guiIsSetup = true;
 }
 
 void ofApp::updateGUIInspector(size_t buttonID) {
@@ -147,16 +141,12 @@ void ofApp::updateGUIInspector(size_t buttonID) {
     position_x.addListener(this, &ofApp::xPositionChanged);
     position_y.addListener(this, &ofApp::yPositionChanged);
     position_z.addListener(this, &ofApp::zPositionChanged);
-    
-    std::function<void(ofVec3f)> listener = [=](ofVec3f value)
-    {
-        this->rotationChanged(value);
-    };
-    rotation.removeListener(listener);
+
+    rotation.disableEvents();
     ofVec3f selectedGameObjectRotation = scene.getEulerRotationSelectedGameObject();
     rotation = scene.getEulerRotationSelectedGameObject();
-    rotation.addListener(listener);
-    
+    rotation.enableEvents();
+
     scale_x.removeListener(this, &ofApp::xScaleChanged);
     scale_y.removeListener(this, &ofApp::yScaleChanged);
     scale_z.removeListener(this, &ofApp::zScaleChanged);
@@ -168,32 +158,20 @@ void ofApp::updateGUIInspector(size_t buttonID) {
     scale_y.addListener(this, &ofApp::yScaleChanged);
     scale_z.addListener(this, &ofApp::zScaleChanged);
 
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+    removeRGBListeners();
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
     RGB_r = selectedGameObjectColor.r;
     RGB_g = selectedGameObjectColor.g;
     RGB_b = selectedGameObjectColor.b;
     RGB_a = selectedGameObjectColor.a;
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    addRGBListeners();
 
-    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
+    removeHSBListeners();
     HSB_h = selectedGameObjectColor.getHue();
     HSB_s = selectedGameObjectColor.getSaturation();
     HSB_b = selectedGameObjectColor.getBrightness();
     HSB_a = selectedGameObjectColor.a;
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+    addHSBListeners();
 
     parent.removeListener(this, &ofApp::parentChanged);
     parent = scene.getSelectedGameObjectParentID();
@@ -215,13 +193,38 @@ void ofApp::parentChanged(int & newParentID) {
     }
 }
 
-void ofApp::colorChangedRGB(int & value) {
-    scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
+void ofApp::addRGBListeners() {
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+}
 
+void ofApp::addHSBListeners() {
+    HSB_h.addListener(this, &ofApp::colorChangedHSB);
+    HSB_s.addListener(this, &ofApp::colorChangedHSB);
+    HSB_b.addListener(this, &ofApp::colorChangedHSB);
+    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+}
+
+void ofApp::removeRGBListeners() {
+    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+}
+
+void ofApp::removeHSBListeners() {
     HSB_h.removeListener(this, &ofApp::colorChangedHSB);
     HSB_s.removeListener(this, &ofApp::colorChangedHSB);
     HSB_b.removeListener(this, &ofApp::colorChangedHSB);
     HSB_a.removeListener(this, &ofApp::colorChangedHSB);
+}
+
+void ofApp::colorChangedRGB(int & value) {
+    scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
+
+    removeHSBListeners();
 
     ofColor currentColor = scene.getColorSelectedGameObject();
     HSB_h = currentColor.getHue();
@@ -229,10 +232,7 @@ void ofApp::colorChangedRGB(int & value) {
     HSB_b = currentColor.getBrightness();
     HSB_a = currentColor.a;
 
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+    addHSBListeners();
 }
 
 void ofApp::colorChangedHSB(int & value) {
@@ -240,10 +240,7 @@ void ofApp::colorChangedHSB(int & value) {
     newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
     scene.setColorSelectedGameObject(newColor);
 
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+    removeRGBListeners();
 
     ofColor currentColor = scene.getColorSelectedGameObject();
     RGB_r = currentColor.r;
@@ -251,10 +248,7 @@ void ofApp::colorChangedHSB(int & value) {
     RGB_b = currentColor.b;
     RGB_a = currentColor.a;
 
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    addRGBListeners();
 }
 
 float ofApp::convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue) {
@@ -450,7 +444,7 @@ void ofApp::addNewGameObject(size_t shapeType) {
     else {
         setupGUIInspector(object_buttons.size() - 1);
     }
-    
+
 }
 
 void ofApp::keyReleased(int key)

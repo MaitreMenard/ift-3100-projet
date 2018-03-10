@@ -105,14 +105,16 @@ private:
 
     void colorChangedRGB(int & value);
     void colorChangedHSB(int & value);
+    void addRGBListeners();
+    void addHSBListeners();
+    void removeRGBListeners();
+    void removeHSBListeners();
 
     void parentChanged(int & newParentID);
 
     void addNewGameObject(size_t shapeType);
 
-    void setupGUIInspector();
     void setupGUIInspector(size_t buttonID);
-    void updateGUIInspector();
     void updateGUIInspector(size_t buttonID);
 
     void checkIfAButtonIsPressed();
