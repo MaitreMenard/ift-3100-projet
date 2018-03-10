@@ -75,6 +75,19 @@ void Transform::applyToModelViewMatrix()
     ofRotate(angle, x, y, z);
 }
 
+void Transform::setRelativeTo(Transform other)
+{
+    position.x -= other.position.x;
+    position.y -= other.position.y;
+    position.z -= other.position.z;
+
+    rotation *= other.rotation.inverse();
+
+    scale.x /= other.scale.x;
+    scale.y /= other.scale.y;
+    scale.z /= other.scale.z;
+}
+
 void Transform::setScale(float x, float y, float z)
 {
     if (x >= -100) {
