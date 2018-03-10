@@ -42,6 +42,10 @@ private:
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
     const string exceptionInvalidInput = " is not a valid input.";
 
+    const ofColor baseButtonColor = ofColor(24, 24, 24);
+    const ofColor baseLabelColor = ofColor(48, 48, 72);
+    const ofColor highlightedButtonColor = ofColor(24, 24, 240);
+
     bool shiftIsPressed;
     bool GUIIsDisplayed;
 
@@ -52,51 +56,6 @@ private:
     vector<ofxButton*> object_buttons;
 
     texelFactory tFac;
-
-    float convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue);
-
-public:
-    ~ofApp();
-    void setup();
-    void update();
-    void draw();
-
-    void exit();
-    void takeScreenShot();
-
-    void keyPressed(int key);
-    void keyReleased(int key);
-    void mouseMoved(int x, int y);
-    void mouseDragged(int x, int y, int button);
-    void mousePressed(int x, int y, int button);
-    void mouseReleased(int x, int y, int button);
-    void mouseEntered(int x, int y);
-    void mouseExited(int x, int y);
-    void windowResized(int w, int h);
-    void dragEvent(ofDragInfo dragInfo);
-    void gotMessage(ofMessage msg);
-
-    void xPositionChanged(string & value);
-    void yPositionChanged(string & value);
-    void zPositionChanged(string & value);
-
-    void rotationChanged(ofVec3f eulerAngles);
-
-    void xScaleChanged(string & value);
-    void yScaleChanged(string & value);
-    void zScaleChanged(string & value);
-
-    void colorChangedRGB(int & value);
-    void colorChangedHSB(int & value);
-
-    void parentChanged(int & newParentID);
-
-    void addNewGameObject(size_t shapeType);
-
-    void setupGUIInspector();
-    void setupGUIInspector(size_t buttonID);
-
-    void checkIfAButtonIsPressed();
 
     ofxTextField position_x;
     ofxTextField position_y;
@@ -127,6 +86,52 @@ public:
     ofxLabel position_label;
     ofxLabel rgb_label;
     ofxLabel hsb_label;
+
+    void takeScreenShot();
+
+    float convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue);
+
+    void xPositionChanged(string & value);
+    void yPositionChanged(string & value);
+    void zPositionChanged(string & value);
+
+    void rotationChanged(ofVec3f eulerAngles);
+
+    void xScaleChanged(string & value);
+    void yScaleChanged(string & value);
+    void zScaleChanged(string & value);
+
+    void colorChangedRGB(int & value);
+    void colorChangedHSB(int & value);
+
+    void parentChanged(int & newParentID);
+
+    void addNewGameObject(size_t shapeType);
+
+    void setupGUIInspector();
+    void setupGUIInspector(size_t buttonID);
+    void updateGUIInspector(size_t buttonID);
+
+    void checkIfAButtonIsPressed();
+
+public:
+    ~ofApp();
+    void setup();
+    void update();
+    void draw();
+    void exit();
+
+    void keyPressed(int key);
+    void keyReleased(int key);
+    void mouseMoved(int x, int y);
+    void mouseDragged(int x, int y, int button);
+    void mousePressed(int x, int y, int button);
+    void mouseReleased(int x, int y, int button);
+    void mouseEntered(int x, int y);
+    void mouseExited(int x, int y);
+    void windowResized(int w, int h);
+    void dragEvent(ofDragInfo dragInfo);
+    void gotMessage(ofMessage msg);
 };
 
 enum ShapeType {
