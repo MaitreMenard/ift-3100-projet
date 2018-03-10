@@ -145,11 +145,12 @@ int Scene::getSelectedGameObjectParentID() {
     return selectedGameObject->getParentGameObjectID();
 }
 
-void Scene::setSelectedGameObjectParent(int parentGameObjectID) {
+void Scene::setSelectedGameObjectParent(size_t parentGameObjectID) {
     //TODO: Make sure transform is modified when setting a new parent or having no parents
     if (selectedGameObject->getParentGameObjectID() > 0) {
         getGameObject(selectedGameObject->getParentGameObjectID() - 1)->removeChild(selectedGameObject);
     }
+
     if (parentGameObjectID > 0) {
         selectedGameObject->setParentGameObjectID(parentGameObjectID);
         getGameObject(parentGameObjectID - 1)->addChild(selectedGameObject);
@@ -160,11 +161,11 @@ void Scene::setSelectedGameObjectParent(int parentGameObjectID) {
     }
 }
 
-bool Scene::isNewParentIDInSelectedGameObjectChildren(int newParentID) {
+bool Scene::isNewParentIDInSelectedGameObjectChildren(size_t newParentID) {
     return recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, selectedGameObject->getChildren());
 }
 
-bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(int newParentID, vector<GameObject*> children) {
+bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*> children) {
     bool cannotBeItsNewParent = false;
     for (GameObject* child : children) {
         if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren())) {

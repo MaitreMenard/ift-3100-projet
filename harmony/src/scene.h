@@ -44,10 +44,10 @@ public:
     void setSelectedGameObject(size_t gameObjectID);
 
     int getSelectedGameObjectParentID();
-    void setSelectedGameObjectParent(int parentGameObjectID);
+    void setSelectedGameObjectParent(size_t parentGameObjectID);
 
-    bool isNewParentIDInSelectedGameObjectChildren(int newParentID);
-    bool recursiveIsNewParentIDInSelectedGameObjectChildren(int newParentID, vector<GameObject*>);
+    bool isNewParentIDInSelectedGameObjectChildren(size_t newParentID);
+    bool recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*>);
 
     Scene& operator=(const Scene& other);
 

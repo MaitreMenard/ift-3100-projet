@@ -45,7 +45,7 @@ void GameObject::drawDelimitationBox()
     ofBoxPrimitive delimitationBox = ofBoxPrimitive();
     delimitationBox.set(1);
 
-    for (int i = 0; i < 6; i++)
+    for (size_t i = 0; i < 6; i++)
     {
         delimitationBox.setSideColor(i, ofColor(0, 255, 0));
     }
@@ -111,7 +111,7 @@ ofColor GameObject::getColor() {
 
 void GameObject::setColor(ofColor color) {
     model.clearColors();
-    for (int i = 0; i < nbVertex; i++) {
+    for (size_t i = 0; i < nbVertex; i++) {
         model.addColor(color);
     }
 }

@@ -19,6 +19,29 @@ private:
     const float POSITION_MIN_VALUE = -1000;
     const float POSITION_MAX_VALUE = 1000;
 
+    const string aText = "A: ";
+    const string bText = "B: ";
+    const string gText = "G: ";
+    const string hText = "H: ";
+    const string rText = "R: ";
+    const string sText = "S: ";
+    const string xText = "X: ";
+    const string yText = "Y: ";
+    const string zText = "Z: ";
+    const string hsbText = "HSB";
+    const string rgbText = "RGB";
+    const string parentText = "Parent: ";
+    const string positionText = "Position: ";
+    const string rotationText = "Rotation: ";
+    const string scaleText = "Scale: ";
+
+    const string cubeText = "Cube";
+    const string sphereText = "Sphere";
+
+    const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
+    const string exceptionParentItself = "You cannot set the parent of an object to itself.";
+    const string exceptionInvalidInput = " is not a valid input.";
+
     bool shiftIsPressed;
     bool GUIIsDisplayed;
 
@@ -29,6 +52,8 @@ private:
     vector<ofxButton*> object_buttons;
 
     texelFactory tFac;
+
+    float convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue);
 
 public:
     ~ofApp();
@@ -66,10 +91,10 @@ public:
 
     void parentChanged(int & newParentID);
 
-    void addNewGameObject(int gameObjectType);
+    void addNewGameObject(size_t shapeType);
 
     void setupGUIInspector();
-    void setupGUIInspector(int buttonID);
+    void setupGUIInspector(size_t buttonID);
 
     void checkIfAButtonIsPressed();
 
@@ -102,4 +127,9 @@ public:
     ofxLabel position_label;
     ofxLabel rgb_label;
     ofxLabel hsb_label;
+};
+
+enum ShapeType {
+    Shape_Sphere,
+    Shape_Cube
 };
