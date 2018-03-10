@@ -26,6 +26,8 @@ private:
     Scene scene;
     texelFactory tFac;
 
+    void setupCamera();
+
 public:
     void setup();
     void update();
