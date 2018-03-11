@@ -64,6 +64,7 @@ ofPixels * texelFactory::setZoom(ofPixels * image, float zoom)
 {
     ofPixels * cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
+	setNoise(image);
     for (int x = 0; x < image->getWidth(); x++)
         for (int y = 0; y < image->getHeight(); y++)
         {
@@ -77,6 +78,7 @@ ofPixels * texelFactory::setTurbulenceImage(ofPixels * image, float size)
 {
     ofPixels *cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
+	setNoise(image);
     for (int x = 0; x < image->getWidth(); x++)
         for (int y = 0; y < image->getHeight(); y++)
         {

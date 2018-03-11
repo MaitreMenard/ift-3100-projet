@@ -35,6 +35,11 @@ void ofApp::setup()
     guiScene.setup();
     guiScene.add(scene_label.setup(ofParameter<string>(sceneText)));
 
+    for (int i = 0; i < textureTexts.size(); i++)
+    {
+        texture_buttons.push_back(new ofxButton());
+    }
+
     GUIIsDisplayed = true;
 }
 
@@ -104,7 +109,7 @@ void ofApp::setupGUIInspector(size_t buttonID)
 
     if (scene.isSelectedGameObject2D())
     {
-        setupGUITexture(0);//TODO: take actual texture
+        setupGUITexture(scene.getSelectedGameObjectTextureID());
     }
     else
     {
@@ -153,7 +158,7 @@ void ofApp::updateGUIInspector(size_t buttonID)
 
     if (scene.isSelectedGameObject2D())
     {
-        setupGUITexture(0);//TODO: take actual texture
+        setupGUITexture(scene.getSelectedGameObjectTextureID());
     }
     else
     {
@@ -163,52 +168,31 @@ void ofApp::updateGUIInspector(size_t buttonID)
 
 void ofApp::setupGUITexture(size_t textureID)
 {
-    if (texture_buttons.empty())
-    {
-        texture_buttons.push_back(none_button);
-        texture_buttons.push_back(cloud_button);
-        texture_buttons.push_back(marble_button);
-        texture_buttons.push_back(noise_button);
-        texture_buttons.push_back(turbulence_button);
-        texture_buttons.push_back(zoom_button);
-    }
-
     guiTexture.clear();
     guiTexture.setup();
 
     guiTexture.add(texture_label.setup(ofParameter<string>(textureText)));
 
-    none_button.setBackgroundColor(baseButtonColor);
-    cloud_button.setBackgroundColor(baseButtonColor);
-    marble_button.setBackgroundColor(baseButtonColor);
-    noise_button.setBackgroundColor(baseButtonColor);
-    turbulence_button.setBackgroundColor(baseButtonColor);
-    zoom_button.setBackgroundColor(baseButtonColor);
+    for (int i = 0; i < textureTexts.size(); i++)
+    {
+        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
+        guiTexture.add(texture_buttons.at(i)->setup(ofParameter<string>(textureTexts.at(i))));
+    }
 
-    scene.setSelectedGameObjectTexture(textureID);
-    texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
-
-    guiTexture.add(none_button.setup(ofParameter<string>(noneText)));
-    guiTexture.add(cloud_button.setup(ofParameter<string>(cloudText)));
-    guiTexture.add(marble_button.setup(ofParameter<string>(marbleText)));
-    guiTexture.add(noise_button.setup(ofParameter<string>(noiseText)));
-    guiTexture.add(turbulence_button.setup(ofParameter<string>(turbulenceText)));
-    guiTexture.add(zoom_button.setup(ofParameter<string>(zoomText)));
+    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
 
     guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
 }
 
 void ofApp::updateGUITexture(size_t textureID)
 {
-    none_button.setBackgroundColor(baseButtonColor);
-    cloud_button.setBackgroundColor(baseButtonColor);
-    marble_button.setBackgroundColor(baseButtonColor);
-    noise_button.setBackgroundColor(baseButtonColor);
-    turbulence_button.setBackgroundColor(baseButtonColor);
-    zoom_button.setBackgroundColor(baseButtonColor);
+    for (int i = 0; i < textureTexts.size(); i++)
+    {
+        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
+    }
 
     scene.setSelectedGameObjectTexture(textureID);
-    texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
+    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
 }
 
 void ofApp::exit()
@@ -312,7 +296,7 @@ void ofApp::checkIfATextureButtonIsPressed()
 {
     for (size_t i = 0; i < texture_buttons.size(); i++)
     {
-        if (texture_buttons[i])
+        if (*texture_buttons.at(i))
         {
             if (scene.getSelectedGameObjectTextureID() != i)
             {
@@ -597,5 +581,10 @@ ofApp::~ofApp()
     {
         delete button;
     }
+    for (ofxButton* button2 : texture_buttons)
+    {
+        delete button2;
+    }
     object_buttons.clear();
+    texture_buttons.clear();
 }
