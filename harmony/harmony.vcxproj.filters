@@ -100,8 +100,11 @@
     <ClCompile Include="src\gameobjects\triangle.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\cubemap.cpp">
+    <ClCompile Include="src\skybox.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\arrow.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -365,8 +368,11 @@
     <ClInclude Include="src\gameobjects\triangle.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
-    <ClInclude Include="src\cubemap.h">
+    <ClInclude Include="src\skybox.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\arrow.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
