@@ -1,9 +1,6 @@
 <group>
-	<UnknownName>Position</UnknownName>
-	<X:_>0</X:_>
-	<Y:_>0</Y:_>
-	<Z:_>0</Z:_>
-	<Rotation>0, 0, 0</Rotation>
-	<Color>100, 100, 140, 27</Color>
-	<textfield:>1024x768</textfield:>
+	<UnknownName>
+	Sphere 
+</UnknownName>
+<group/>
 </group>

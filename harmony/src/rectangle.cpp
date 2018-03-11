@@ -1,20 +1,20 @@
-#include "plan2D.h"
+#include "rectangle.h"
 
 
-plan2D::plan2D()
+Rektangle::Rektangle()
 {
     texture.allocate(1, 1, GL_RGB);
 
     nbVertex = 4;
     model.setMode(OF_PRIMITIVE_TRIANGLES);
-    model.addVertex(ofVec3f(0.f, 0.f, 0.f));
+    model.addVertex(ofVec3f(-0.5f, -0.5f, 0.f));
     model.addTexCoord(texture.getCoordFromPercent(0, 0));
-    model.addVertex(ofVec3f(0.f, 1.f, 0.f));
+    model.addVertex(ofVec3f(-0.5f, 0.5f, 0.f));
     model.addTexCoord(texture.getCoordFromPercent(0, 1));
-    model.addVertex(ofVec3f(1.f, 1.f, 0.f));
+    model.addVertex(ofVec3f(0.5f, 0.5f, 0.f));
     model.addTexCoord(texture.getCoordFromPercent(1, 1));
-    model.addVertex(ofVec3f(1.f, 0.f, 0.f));
-    model.addTexCoord(texture.getCoordFromPercent(0, 1));
+    model.addVertex(ofVec3f(0.5f, -0.5f, 0.f));
+    model.addTexCoord(texture.getCoordFromPercent(1, 0));
 
     model.addIndex(0);
     model.addIndex(1);
@@ -25,7 +25,7 @@ plan2D::plan2D()
     model.addIndex(2);
 }
 
-void plan2D::draw()
+void Rektangle::draw()
 {
     texture.bind();
     model.draw();

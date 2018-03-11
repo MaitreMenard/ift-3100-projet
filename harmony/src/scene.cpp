@@ -31,28 +31,51 @@ void Scene::update()
     }
 }
 
-void Scene::updateSelectedGameObjectColor(ofColor color)
+void Scene::setSelectedGameObject(size_t gameObjectID) {
+    selectedGameObjectID = gameObjectID;
+    selectedGameObject = gameObjects[gameObjectID];
+}
+
+size_t Scene::getSelectedGameObjectID() {
+    return selectedGameObjectID;
+}
+
+ofVec3f Scene::getEulerRotationSelectedGameObject() {
+    return selectedGameObject->getRotation().getEuler();
+}
+
+void Scene::setRotationSelectedGameObject(ofVec3f rotation)
 {
-    //TODO: Actually use the selected object in the scene, not the first
-    if (gameObjects.size() > 0 && gameObjects[0]->getColor() != color)
+    if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
     {
-        gameObjects[0]->setColor(color);
+        selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
     }
 }
 
-void Scene::updateSelectedGameObjectRotation(ofVec3f rotation) {
-    //TODO: Actually use the selected object in the scene, not the first
-    if (gameObjects.size() > 0 && gameObjects[0]->getRotation().getEuler() != rotation)
-    {
-        gameObjects[0]->setRotation(rotation.x, rotation.y, rotation.z);
-    }
+void Scene::setColorSelectedGameObject(ofColor color)
+{
+    selectedGameObject->setColor(color);
+}
+
+ofVec3f Scene::getPositionSelectedGameObject() {
+    return selectedGameObject->getPosition();
+}
+
+ofVec3f Scene::getScaleSelectedGameObject() {
+    return selectedGameObject->getScale();
+}
+
+ofColor Scene::getColorSelectedGameObject() {
+    return selectedGameObject->getColor();
 }
 
 void Scene::draw()
 {
     for (GameObject* gameObject : gameObjects)
     {
-        gameObject->draw();
+        if (gameObject->getParentGameObject() == nullptr) {
+            gameObject->draw();
+        }
     }
 
     if (selectedGameObject != nullptr)
@@ -71,21 +94,19 @@ GameObject * Scene::getGameObject(size_t index)
     return gameObjects.at(index);
 }
 
-void Scene::selectGameObject(size_t index)
-{
-    if (index >= gameObjects.size())
-    {
-        selectedGameObject = nullptr;
-    }
-    else
-    {
-        selectedGameObject = gameObjects.at(index);
-    }
-}
-
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
     gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
+}
+
+void Scene::removeNonChildGameObject(GameObject * gameObjectToRemove)
+{
+    nonChildrenGameObjects.erase(std::remove(nonChildrenGameObjects.begin(), nonChildrenGameObjects.end(), gameObjectToRemove), nonChildrenGameObjects.end());
+}
+
+bool Scene::isANonChildGameObject(GameObject * gameObjectToFind)
+{
+    return std::find(nonChildrenGameObjects.begin(), nonChildrenGameObjects.end(), gameObjectToFind) != nonChildrenGameObjects.end();
 }
 
 void Scene::removeGameObject(size_t index)
@@ -97,35 +118,71 @@ void Scene::removeGameObject(size_t index)
 
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 {
-    //TODO: modify this when gameObject selection will be implemented
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->translate(dx, dy, dz);
-    }
+    selectedGameObject->translate(dx, dy, dz);
 }
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->setPosition(x, y, z);
+    selectedGameObject->setPosition(x, y, z);
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->setScale(x, y, z);
+    selectedGameObject->setScale(x, y, z);
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
-    gameObjects[0]->reScale(x, y, z);
+    selectedGameObject->reScale(x, y, z);
 }
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
 {
-    //TODO: modify this when gameObject selection will be implemented
-    if (gameObjects.size() > 0)
-    {
-        gameObjects[0]->rotate(degrees, x, y, z);
+    selectedGameObject->rotate(degrees, x, y, z);
+}
+
+size_t Scene::getSelectedGameObjectParentID() {
+    if (selectedGameObject->getParentGameObject() != nullptr) {
+        return getGameObjectID(selectedGameObject->getParentGameObject()) + 1;
     }
+    return 0;
+}
+
+void Scene::setSelectedGameObjectParent(size_t parentGameObjectID) {
+    //TODO: Make sure transform is modified when setting a new parent or having no parents
+
+    if (selectedGameObject->getParentGameObject() != nullptr) {
+        selectedGameObject->getParentGameObject()->removeChild(selectedGameObject);
+    }
+    if (parentGameObjectID > 0) {
+        GameObject* parentGameObject = gameObjects.at(parentGameObjectID - 1);
+        selectedGameObject->setParentGameObject(parentGameObject);
+        parentGameObject->addChild(selectedGameObject);
+        removeNonChildGameObject(selectedGameObject);
+    }
+    else if (!isANonChildGameObject(selectedGameObject)) {
+        selectedGameObject->setParentGameObject(nullptr);
+        nonChildrenGameObjects.push_back(selectedGameObject);
+    }
+}
+
+bool Scene::isNewParentIDInSelectedGameObjectChildren(size_t newParentID) {
+    return recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, selectedGameObject->getChildren());
+}
+
+bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*> children) {
+    bool cannotBeItsNewParent = false;
+    for (GameObject* child : children) {
+        if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren())) {
+            cannotBeItsNewParent = true;
+            break;
+        }
+    }
+    return cannotBeItsNewParent;
+}
+
+size_t Scene::getGameObjectID(GameObject* gameObject) {
+    return find(gameObjects.begin(), gameObjects.end(), gameObject) - gameObjects.begin();
 }
 
 Scene& Scene::operator=(const Scene& other)
@@ -138,7 +195,7 @@ Scene& Scene::operator=(const Scene& other)
 
 void Scene::deleteAllGameObjects()
 {
-    for (GameObject* gameObject : gameObjects)
+    for (GameObject* gameObject : nonChildrenGameObjects)
     {
         delete gameObject;
     }
@@ -147,5 +204,6 @@ void Scene::deleteAllGameObjects()
 Scene::~Scene()
 {
     deleteAllGameObjects();
+    nonChildrenGameObjects.clear();
     gameObjects.clear();
 }

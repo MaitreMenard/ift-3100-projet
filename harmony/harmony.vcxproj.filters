@@ -70,10 +70,34 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp">
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\plan2D.cpp">
+    <ClCompile Include="src\grid_plane.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sphere.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\rotation_slider.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gui\vec3f_textfield.cpp">
+      <Filter>src\gui</Filter>
+	</ClCompile>
+    <ClCompile Include="src\triangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rectangle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\point.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\line.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\polygon.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\model3D.cpp">
@@ -119,6 +143,9 @@
     </Filter>
     <Filter Include="addons\ofxInputField\src">
       <UniqueIdentifier>{A25CD3D6-9534-BE4E-B514-C157}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gui">
+      <UniqueIdentifier>{defd50b7-50a5-4e95-8a27-edfdbd17848c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -299,16 +326,31 @@
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h">
       <Filter>addons\ofxInputField\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\grid_plane.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\sphere.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\plan2D.h">
+    <ClInclude Include="src\texelFactory.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\texelFactory.h">
+    <ClInclude Include="src\gui\rotation_slider.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\vec3f_textfield.h">
+      <Filter>src\gui</Filter>
+	</ClInclude>
+    <ClInclude Include="src\triangle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\rectangle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\point.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\line.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\polygon.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\model3D.h">

@@ -5,9 +5,11 @@
 class Scene
 {
 private:
-    std::vector<GameObject*> gameObjects;
-    GameObject* selectedGameObject;
+    vector<GameObject*> gameObjects;
+    vector<GameObject*> nonChildrenGameObjects;
     void deleteAllGameObjects();
+    size_t selectedGameObjectID;
+    GameObject* selectedGameObject;
 
 public:
     Scene();
@@ -15,21 +17,37 @@ public:
 
     void setup();
     void update();
-    void updateSelectedGameObjectColor(ofColor color);
-    void updateSelectedGameObjectRotation(ofVec3f rotation);
     void draw();
 
     void addGameObject(GameObject* gameObject);
+    void translateSelectedGameObject(float dx, float dy, float dz);
+    void rotateSelectedGameObject(float degrees, float x, float y, float z);
+    void rescaleSelectedGameObject(float x, float y, float z);
+    void setPositionSelectedGameObject(float x, float y, float z);
+    void setRotationSelectedGameObject(ofVec3f rotation);
+    void setScaleSelectedGameObject(float x, float y, float z);
+    void setColorSelectedGameObject(ofColor color);
+
+    ofVec3f getPositionSelectedGameObject();
+    ofVec3f getEulerRotationSelectedGameObject();
+    ofVec3f getScaleSelectedGameObject();
+    ofColor getColorSelectedGameObject();
+
     GameObject* getGameObject(size_t index);
-    void selectGameObject(size_t index);
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
+    void removeNonChildGameObject(GameObject * gameObjectToRemove);
+    bool isANonChildGameObject(GameObject * gameObjectToFind);
 
-    void translateSelectedGameObject(float dx, float dy, float dz);
-    void rescaleSelectedGameObject(float x, float y, float z);
-    void rotateSelectedGameObject(float degrees, float x, float y, float z);
-    void setPositionSelectedGameObject(float x, float y, float z);
-    void setScaleSelectedGameObject(float x, float y, float z);
+    size_t getSelectedGameObjectID();
+    size_t getGameObjectID(GameObject* gameObject);
+    void setSelectedGameObject(size_t gameObjectID);
+
+    size_t getSelectedGameObjectParentID();
+    void setSelectedGameObjectParent(size_t parentGameObjectID);
+
+    bool isNewParentIDInSelectedGameObjectChildren(size_t newParentID);
+    bool recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*>);
 
     Scene& operator=(const Scene& other);
 
