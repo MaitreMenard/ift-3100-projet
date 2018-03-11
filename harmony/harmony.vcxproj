@@ -171,7 +171,8 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\cubemap.cpp" />
+    <ClCompile Include="src\gameobjects\arrow.cpp" />
+    <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
@@ -205,7 +206,8 @@
     <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\cubemap.h" />
+    <ClInclude Include="src\gameobjects\arrow.h" />
+    <ClInclude Include="src\skybox.h" />
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
     <ClInclude Include="src\command.h" />
