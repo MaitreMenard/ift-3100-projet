@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
+#include "ofxSkyBox.h"
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
@@ -73,6 +74,7 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
+    //ofxSkyBox skyBox;
 
     vector<ofxButton*> object_buttons;
     vector<ofxButton*> texture_buttons;

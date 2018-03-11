@@ -14,6 +14,8 @@ void ofApp::setup()
     setupCamera();
     gridPlane.setup();
     scene.setup();
+    //skyBox.load();
+
     //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
     //    ofVec3f(-0.59, 0.17, 19.0),
     //    180,
@@ -329,6 +331,7 @@ void ofApp::draw()
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
+    //skyBox.draw();
     scene.draw();
     gridPlane.draw();
     camera.end();
