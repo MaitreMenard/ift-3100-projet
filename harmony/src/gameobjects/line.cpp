@@ -5,16 +5,12 @@ Line::Line()
 {
     texture.allocate(1, 1, GL_RGB);
 
-    nbVertex = 2;
-    model.addVertex(ofVec3f(-1.f, -0, 0.f));
-    model.addTexCoord(texture.getCoordFromPercent(0, 0));
-    model.addVertex(ofVec3f(1.f, 0, 0.f));
-    model.addTexCoord(texture.getCoordFromPercent(1, 1));
-
-    model.addIndex(0);
-    model.addIndex(1);
+    nbVertex = 0;
 
     gameObjectIs2D = true;
+    color = ofColor(255);
+    lineWidth = 5;
+    boundingBox.set(1, 0.01f, 0.01f);
 }
 
 void Line::draw()
@@ -23,10 +19,12 @@ void Line::draw()
     transform.applyToModelViewMatrix();
 
     texture.bind();
-    float lineWidth = 8976;
-    glGetFloatv(GL_LINE_WIDTH, &lineWidth);
-    ofLog() << lineWidth;
-    model.draw();
+    ofPushStyle();
+    ofSetLineWidth(lineWidth);
+    ofFill();
+    ofSetColor(color);
+    ofDrawLine(ofVec3f(-0.5f, 0.f, 0.f), ofVec3f(0.5f, 0.f, 0.f));
+    ofPopStyle();
     texture.unbind();
 
     for (GameObject* child : children)
@@ -40,4 +38,14 @@ void Line::draw()
     }
 
     ofPopMatrix();
+}
+
+ofColor Line::getColor()
+{
+    return color;
+}
+
+void Line::setColor(ofColor color)
+{
+    this->color = color;
 }

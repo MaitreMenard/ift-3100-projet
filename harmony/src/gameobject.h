@@ -42,7 +42,7 @@ public:
     void setScale(float x, float y, float z);
     void reScale(float x, float y, float z);
 
-    ofColor getColor();
+    virtual ofColor getColor();
     virtual void setColor(ofColor color);
 
     void addChild(GameObject* child);
