@@ -7,6 +7,7 @@ class RotationSlider : public ofxVec3Slider
 {
 public:
     RotationSlider();
+    RotationSlider* setup(const string labelText, ofVec3f value, ofVec3f minValues, ofVec3f maxValues);
     void addListener(std::function<void(ofVec3f)> method);
     void enableEvents();
     void disableEvents();
@@ -14,6 +15,8 @@ public:
     ~RotationSlider();
 
 private:
+    const ofColor labelColor = ofColor(48, 48, 72);
+
     std::vector<std::function<void(ofVec3f)>> listeners;
     bool eventsEnabled;
 

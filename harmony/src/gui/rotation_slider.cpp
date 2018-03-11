@@ -5,13 +5,21 @@ RotationSlider::RotationSlider()
     eventsEnabled = true;
 }
 
-void RotationSlider::addListener(std::function<void(ofVec3f)> method)
+RotationSlider * RotationSlider::setup(const string labelText, ofVec3f value, ofVec3f minValues, ofVec3f maxValues)
 {
-    listeners.push_back(method);
+    ofxVec3Slider::setup(labelText, value, minValues, maxValues);
+    setHeaderBackgroundColor(labelColor);
 
     getFloatSlider("x").addListener(this, &RotationSlider::slidersListener);
     getFloatSlider("y").addListener(this, &RotationSlider::slidersListener);
     getFloatSlider("z").addListener(this, &RotationSlider::slidersListener);
+
+    return this;
+}
+
+void RotationSlider::addListener(std::function<void(ofVec3f)> method)
+{
+    listeners.push_back(method);
 }
 
 void RotationSlider::enableEvents()

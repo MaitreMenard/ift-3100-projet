@@ -171,6 +171,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
     <ClCompile Include="src\main.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />

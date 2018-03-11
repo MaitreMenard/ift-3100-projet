@@ -67,6 +67,9 @@
     <ClCompile Include="src\gui\rotation_slider.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\vec3f_textfield.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -153,6 +156,9 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\gui\rotation_slider.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\vec3f_textfield.h">
       <Filter>src\gui</Filter>
     </ClInclude>
   </ItemGroup>

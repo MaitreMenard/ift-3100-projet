@@ -37,7 +37,8 @@ void ofApp::setup()
     GUIIsDisplayed = true;
 }
 
-void ofApp::setupGUIInspector(size_t buttonID) {
+void ofApp::setupGUIInspector(size_t buttonID)
+{
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
 
@@ -47,35 +48,29 @@ void ofApp::setupGUIInspector(size_t buttonID) {
     guiInspector.clear();
     guiInspector.setup();
 
-    position_label.setBackgroundColor(baseLabelColor);
-    position_x.removeListener(this, &ofApp::xPositionChanged);
-    position_y.removeListener(this, &ofApp::yPositionChanged);
-    position_z.removeListener(this, &ofApp::zPositionChanged);
-    guiInspector.add(position_label.setup(ofParameter<string>(positionText)));
-    ofVec3f selectedGameObjectPosition = scene.getPositionSelectedGameObject();
-    guiInspector.add(position_x.setup(xText, to_string(selectedGameObjectPosition.x)));
-    guiInspector.add(position_y.setup(yText, to_string(selectedGameObjectPosition.y)));
-    guiInspector.add(position_z.setup(zText, to_string(selectedGameObjectPosition.z)));
-    position_x.addListener(this, &ofApp::xPositionChanged);
-    position_y.addListener(this, &ofApp::yPositionChanged);
-    position_z.addListener(this, &ofApp::zPositionChanged);
+    guiInspector.add(positionFields.setup("Position: ", scene.getPositionSelectedGameObject(),
+        ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
+    std::function<void(ofVec3f)> positionListener = [=](ofVec3f value)
+    {
+        scene.setPositionSelectedGameObject(value.x, value.y, value.z);
+    };
+    positionFields.addListener(positionListener);
 
-    ofVec3f selectedGameObjectRotation = scene.getEulerRotationSelectedGameObject();
-    guiInspector.add(rotation.setup(rotationText, selectedGameObjectRotation, ofVec3f(-180, -180, -180), ofVec3f(180, 180, 180)));
-    rotation.setHeaderBackgroundColor(baseLabelColor);
+    guiInspector.add(rotation.setup(rotationText, scene.getEulerRotationSelectedGameObject(),
+        ofVec3f(ROTATION_MIN_VALUE), ofVec3f(ROTATION_MAX_VALUE)));
+    std::function<void(ofVec3f)> rotationListener = [=](ofVec3f value)
+    {
+        scene.setRotationSelectedGameObject(value);
+    };
+    rotation.addListener(rotationListener);
 
-    scale_label.setBackgroundColor(baseLabelColor);
-    scale_x.removeListener(this, &ofApp::xScaleChanged);
-    scale_y.removeListener(this, &ofApp::yScaleChanged);
-    scale_z.removeListener(this, &ofApp::zScaleChanged);
-    guiInspector.add(scale_label.setup(ofParameter<string>(scaleText)));
-    ofVec3f selectedGameObjectScale = scene.getScaleSelectedGameObject();
-    guiInspector.add(scale_x.setup(xText, to_string(selectedGameObjectScale.x)));
-    guiInspector.add(scale_y.setup(yText, to_string(selectedGameObjectScale.y)));
-    guiInspector.add(scale_z.setup(zText, to_string(selectedGameObjectScale.z)));
-    scale_x.addListener(this, &ofApp::xScaleChanged);
-    scale_y.addListener(this, &ofApp::yScaleChanged);
-    scale_z.addListener(this, &ofApp::zScaleChanged);
+    guiInspector.add(scaleFields.setup("Scale: ", scene.getScaleSelectedGameObject(),
+        ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE)));
+    std::function<void(ofVec3f)> scaleListener = [=](ofVec3f value)
+    {
+        scene.setScaleSelectedGameObject(value.x, value.y, value.z);
+    };
+    scaleFields.addListener(scaleListener);
 
     rgb_label.setBackgroundColor(baseLabelColor);
     RGB_r.removeListener(this, &ofApp::colorChangedRGB);
@@ -115,48 +110,28 @@ void ofApp::setupGUIInspector(size_t buttonID) {
 
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
 
-    std::function<void(ofVec3f)> listener = [=](ofVec3f value)
-    {
-        this->rotationChanged(value);
-    };
-    rotation.addListener(listener);
-
     guiIsSetup = true;
 }
 
-void ofApp::updateGUIInspector(size_t buttonID) {
+void ofApp::updateGUIInspector(size_t buttonID)
+{
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
 
     //INSPECTOR
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
-    position_x.removeListener(this, &ofApp::xPositionChanged);
-    position_y.removeListener(this, &ofApp::yPositionChanged);
-    position_z.removeListener(this, &ofApp::zPositionChanged);
-    ofVec3f selectedGameObjectPosition = scene.getPositionSelectedGameObject();
-    position_x = to_string(selectedGameObjectPosition.x);
-    position_y = to_string(selectedGameObjectPosition.y);
-    position_z = to_string(selectedGameObjectPosition.z);
-    position_x.addListener(this, &ofApp::xPositionChanged);
-    position_y.addListener(this, &ofApp::yPositionChanged);
-    position_z.addListener(this, &ofApp::zPositionChanged);
+    positionFields.disableEvents();
+    positionFields = scene.getPositionSelectedGameObject();
+    positionFields.enableEvents();
 
     rotation.disableEvents();
-    ofVec3f selectedGameObjectRotation = scene.getEulerRotationSelectedGameObject();
     rotation = scene.getEulerRotationSelectedGameObject();
     rotation.enableEvents();
 
-    scale_x.removeListener(this, &ofApp::xScaleChanged);
-    scale_y.removeListener(this, &ofApp::yScaleChanged);
-    scale_z.removeListener(this, &ofApp::zScaleChanged);
-    ofVec3f selectedGameObjectScale = scene.getScaleSelectedGameObject();
-    scale_x = to_string(selectedGameObjectScale.x);
-    scale_y = to_string(selectedGameObjectScale.y);
-    scale_z = to_string(selectedGameObjectScale.z);
-    scale_x.addListener(this, &ofApp::xScaleChanged);
-    scale_y.addListener(this, &ofApp::yScaleChanged);
-    scale_z.addListener(this, &ofApp::zScaleChanged);
+    scaleFields.disableEvents();
+    scaleFields = scene.getScaleSelectedGameObject();
+    scaleFields.enableEvents();
 
     removeRGBListeners();
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
@@ -181,47 +156,56 @@ void ofApp::updateGUIInspector(size_t buttonID) {
 void ofApp::exit()
 {}
 
-void ofApp::parentChanged(int & newParentID) {
-    if (newParentID - 1 == scene.getSelectedGameObjectID()) {
+void ofApp::parentChanged(int & newParentID)
+{
+    if (newParentID - 1 == scene.getSelectedGameObjectID())
+    {
         cout << exceptionParentItself << endl;
     }
-    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID)) {
+    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID))
+    {
         cout << exceptionChildParent << endl;
     }
-    else {
+    else
+    {
         scene.setSelectedGameObjectParent(newParentID);
     }
 }
 
-void ofApp::addRGBListeners() {
+void ofApp::addRGBListeners()
+{
     RGB_r.addListener(this, &ofApp::colorChangedRGB);
     RGB_g.addListener(this, &ofApp::colorChangedRGB);
     RGB_b.addListener(this, &ofApp::colorChangedRGB);
     RGB_a.addListener(this, &ofApp::colorChangedRGB);
 }
 
-void ofApp::addHSBListeners() {
+void ofApp::addHSBListeners()
+{
     HSB_h.addListener(this, &ofApp::colorChangedHSB);
     HSB_s.addListener(this, &ofApp::colorChangedHSB);
     HSB_b.addListener(this, &ofApp::colorChangedHSB);
     HSB_a.addListener(this, &ofApp::colorChangedHSB);
 }
 
-void ofApp::removeRGBListeners() {
+void ofApp::removeRGBListeners()
+{
     RGB_r.removeListener(this, &ofApp::colorChangedRGB);
     RGB_g.removeListener(this, &ofApp::colorChangedRGB);
     RGB_b.removeListener(this, &ofApp::colorChangedRGB);
     RGB_a.removeListener(this, &ofApp::colorChangedRGB);
 }
 
-void ofApp::removeHSBListeners() {
+void ofApp::removeHSBListeners()
+{
     HSB_h.removeListener(this, &ofApp::colorChangedHSB);
     HSB_s.removeListener(this, &ofApp::colorChangedHSB);
     HSB_b.removeListener(this, &ofApp::colorChangedHSB);
     HSB_a.removeListener(this, &ofApp::colorChangedHSB);
 }
 
-void ofApp::colorChangedRGB(int & value) {
+void ofApp::colorChangedRGB(int & value)
+{
     scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
 
     removeHSBListeners();
@@ -235,7 +219,8 @@ void ofApp::colorChangedRGB(int & value) {
     addHSBListeners();
 }
 
-void ofApp::colorChangedHSB(int & value) {
+void ofApp::colorChangedHSB(int & value)
+{
     ofColor newColor = ofColor(0);
     newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
     scene.setColorSelectedGameObject(newColor);
@@ -251,74 +236,20 @@ void ofApp::colorChangedHSB(int & value) {
     addRGBListeners();
 }
 
-float ofApp::convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue) {
-    float fValue;
-    try
-    {
-        fValue = stof(stringValue);
-        if (fValue < minValue)
-        {
-            fValue = minValue;
-        }
-        else if (fValue > maxValue)
-        {
-            fValue = maxValue;
-        }
-    }
-    catch (...)
-    {
-        cout << stringValue << exceptionInvalidInput << endl;
-        return 0;
-    }
-    return fValue;
-}
-
-void ofApp::xPositionChanged(string & value)
-{
-    scene.setPositionSelectedGameObject(convertTextFieldValueToFloat(value, POSITION_MIN_VALUE, POSITION_MAX_VALUE), POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1);
-}
-
-void ofApp::yPositionChanged(string & value)
-{
-    scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, convertTextFieldValueToFloat(value, POSITION_MIN_VALUE, POSITION_MAX_VALUE), POSITION_MIN_VALUE - 1);
-}
-
-void ofApp::zPositionChanged(string & value)
-{
-    scene.setPositionSelectedGameObject(POSITION_MIN_VALUE - 1, POSITION_MIN_VALUE - 1, convertTextFieldValueToFloat(value, POSITION_MIN_VALUE, POSITION_MAX_VALUE));
-}
-
-void ofApp::rotationChanged(ofVec3f eulerAngles)
-{
-    scene.setRotationSelectedGameObject(eulerAngles);
-}
-
-void ofApp::xScaleChanged(string & value)
-{
-    scene.setScaleSelectedGameObject(convertTextFieldValueToFloat(value, SCALE_MIN_VALUE, SCALE_MAX_VALUE), SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1);
-}
-
-void ofApp::yScaleChanged(string & value)
-{
-    scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, convertTextFieldValueToFloat(value, SCALE_MIN_VALUE, SCALE_MAX_VALUE), SCALE_MIN_VALUE - 1);
-}
-
-void ofApp::zScaleChanged(string & value)
-{
-    scene.setScaleSelectedGameObject(SCALE_MIN_VALUE - 1, SCALE_MIN_VALUE - 1, convertTextFieldValueToFloat(value, SCALE_MIN_VALUE, SCALE_MAX_VALUE));
-}
-
 void ofApp::update()
 {
     checkIfAButtonIsPressed();
     scene.update();
 }
 
-void ofApp::checkIfAButtonIsPressed() {
+void ofApp::checkIfAButtonIsPressed()
+{
     for (size_t i = 0; i < object_buttons.size(); i++)
     {
-        if (*object_buttons[i]) {
-            if (scene.getSelectedGameObjectID() != i) {
+        if (*object_buttons[i])
+        {
+            if (scene.getSelectedGameObjectID() != i)
+            {
                 updateGUIInspector(i);
             }
             break;
@@ -423,25 +354,30 @@ void ofApp::keyPressed(int key)
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType) {
+void ofApp::addNewGameObject(size_t shapeType)
+{
     ofxButton *object_button = new ofxButton();
     object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
-    if (shapeType == Shape_Sphere) {
+    if (shapeType == Shape_Sphere)
+    {
         gameObject = new Sphere();
         shapeName = sphereText;
     }
-    else if (shapeType == Shape_Cube) {
+    else if (shapeType == Shape_Cube)
+    {
         gameObject = new Cube();
         shapeName = cubeText;
     }
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
-    if (guiIsSetup) {
+    if (guiIsSetup)
+    {
         updateGUIInspector(object_buttons.size() - 1);
     }
-    else {
+    else
+    {
         setupGUIInspector(object_buttons.size() - 1);
     }
 
@@ -504,7 +440,8 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
 
 }
 
-ofApp::~ofApp() {
+ofApp::~ofApp()
+{
     for (ofxButton* button : object_buttons)
     {
         delete button;
