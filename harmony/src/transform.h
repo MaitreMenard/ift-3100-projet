@@ -4,13 +4,9 @@
 class Transform
 {
 private:
-    ofVec3f globalPosition;
-    ofQuaternion globalRotation;
-    ofVec3f globalScale;
-
-    ofVec3f localPosition;
-    ofQuaternion localRotation;
-    ofVec3f localScale;
+    ofVec3f position;
+    ofQuaternion rotation;
+    ofVec3f scale;
 
 public:
     Transform();
@@ -30,8 +26,6 @@ public:
 
     void applyToModelViewMatrix();
 
-    void setRelativeTo(Transform other);
     bool operator==(const Transform &obj);
     bool operator!=(const Transform &obj);
-    void setGlobal();
 };

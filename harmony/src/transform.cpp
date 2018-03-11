@@ -1,117 +1,88 @@
 #include "transform.h"
 
 
-Transform::Transform(const Transform &transf)
+Transform::Transform(const Transform &other)
 {
-    localPosition = ofVec3f(transf.getPosition());
-    localRotation = ofQuaternion(transf.getRotation());
-    localScale = ofVec3f(transf.getScale());
+    position = ofVec3f(other.position);
+    rotation = ofQuaternion(other.rotation);
+    scale = ofVec3f(other.scale);
 }
 
 Transform::Transform()
 {
-    globalPosition = localPosition = ofVec3f(0, 0, 0);
-
-    globalRotation.makeRotate(0, ofVec3f(1, 0, 0), 0, ofVec3f(0, 1, 0), 0, ofVec3f(0, 0, 1));
-    localRotation.makeRotate(0, ofVec3f(1, 0, 0), 0, ofVec3f(0, 1, 0), 0, ofVec3f(0, 0, 1));
-
-    globalScale = localScale = ofVec3f(1, 1, 1);
+    position = ofVec3f(0, 0, 0);
+    rotation.makeRotate(0, ofVec3f(1, 0, 0), 0, ofVec3f(0, 1, 0), 0, ofVec3f(0, 0, 1));
+    scale = ofVec3f(1, 1, 1);
 }
 
 ofVec3f Transform::getPosition() const
 {
-    return localPosition;
+    return position;
 }
 
 void Transform::setPosition(float x, float y, float z)
 {
-    ofVec3f newLocalPosition = ofVec3f(x, y, z);
-    ofLog() << localPosition << " -> " << newLocalPosition;
-    globalPosition += (newLocalPosition - localPosition);
-    localPosition = newLocalPosition;
+    position = ofVec3f(x, y, z);
 }
 
 void Transform::translate(float dx, float dy, float dz)
 {
-    ofVec3f delta = ofVec3f(dx, dy, dz);
-
-    localPosition += delta;
-    globalPosition += delta;
+    position += ofVec3f(dx, dy, dz);
 }
 
 ofQuaternion Transform::getRotation() const
 {
-    return localRotation;
+    return rotation;
 }
 
 void Transform::getRotate(float & angle, float & x, float & y, float & z)
 {
-    localRotation.getRotate(angle, x, y, z);
+    rotation.getRotate(angle, x, y, z);
 }
 
 void Transform::setRotation(float x, float y, float z)
 {
-    ofQuaternion newLocalRotation = ofQuaternion(x, ofVec3f(1, 0, 0), y, ofVec3f(0, 1, 0), z, ofVec3f(0, 0, 1));
-    ofQuaternion delta = localRotation.inverse() * newLocalRotation;
-    globalRotation *= delta;
-    localRotation = newLocalRotation;
+    rotation = ofQuaternion(x, ofVec3f(1, 0, 0), y, ofVec3f(0, 1, 0), z, ofVec3f(0, 0, 1));
 }
 
 void Transform::rotate(float degrees, float x, float y, float z)
 {
-    ofQuaternion rotation = ofQuaternion(degrees, ofVec3f(x, y, z));
-
-    localRotation *= rotation;
-    globalRotation *= rotation;
+    rotation *= ofQuaternion(degrees, ofVec3f(x, y, z));
 }
 
 ofVec3f Transform::getScale() const
 {
-    return localScale;
+    return scale;
 }
 
 void Transform::setScale(float x, float y, float z)
 {
-    ofVec3f newLocalScale = ofVec3f(x, y, z);
-    globalScale *= (newLocalScale / localScale);
-    localScale = newLocalScale;
+    scale = ofVec3f(x, y, z);
 }
 
 void Transform::reScale(float x, float y, float z)
 {
-    ofVec3f scaleFactors = ofVec3f(x, y, z);
-
-    localScale *= scaleFactors;
-    globalScale *= scaleFactors;
+    scale *= ofVec3f(x, y, z);
 }
 
 void Transform::applyToModelViewMatrix()
 {
-    ofTranslate(localPosition);
+    ofTranslate(position);
 
-    ofScale(localScale);
+    ofScale(scale);
 
     float angle, x, y, z;
-    localRotation.getRotate(angle, x, y, z);
+    rotation.getRotate(angle, x, y, z);
     ofRotate(angle, x, y, z);
-}
-
-void Transform::setRelativeTo(Transform other)
-{
-    localPosition = globalPosition - other.globalPosition;
-
-    localRotation *= other.globalRotation.inverse() * globalRotation;
-
-    localScale = globalScale / other.globalScale;
 }
 
 bool Transform::operator==(const Transform &obj1)
 {
-    if (localPosition != obj1.localPosition)
+    if (position != obj1.position)
         return false;
-    if (localRotation != obj1.localRotation)
+    if (rotation != obj1.rotation)
         return false;
-    if (localScale != obj1.localScale)
+    if (scale != obj1.scale)
         return false;
     return true;
 }
@@ -119,11 +90,4 @@ bool Transform::operator==(const Transform &obj1)
 bool Transform::operator!=(const Transform &obj1)
 {
     return !(*this == obj1);
-}
-
-void Transform::setGlobal()
-{
-    localPosition = globalPosition;
-    localRotation = globalRotation;
-    localScale = globalScale;
 }

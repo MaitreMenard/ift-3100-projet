@@ -1,7 +1,5 @@
 #include "ofApp.h"
 
-//TODO: transfer all the rendering details into an AppRenderer class
-
 void ofApp::setup()
 {
     scene.enableUndoRedo();
@@ -179,6 +177,7 @@ void ofApp::parentChanged(int & newParentID)
     }
     else
     {
+        ofLog() << "mopdifying parent hierarchy";
         scene.setSelectedGameObjectParent(newParentID);
     }
 }
