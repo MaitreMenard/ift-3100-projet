@@ -23,6 +23,9 @@ void Line::draw()
     transform.applyToModelViewMatrix();
 
     texture.bind();
+    float lineWidth = 8976;
+    glGetFloatv(GL_LINE_WIDTH, &lineWidth);
+    ofLog() << lineWidth;
     model.draw();
     texture.unbind();
 

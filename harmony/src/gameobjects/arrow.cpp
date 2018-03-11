@@ -40,4 +40,5 @@ Arrow::Arrow()
     model.addIndex(6);
 
     gameObjectIs2D = true;
+    boundingBox.set(1, 1, 0.01f);
 }
