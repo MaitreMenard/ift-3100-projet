@@ -255,6 +255,10 @@ void Scene::setSelectedGameObjectTexture(size_t textureID)
 
 size_t Scene::getSelectedGameObjectTextureID()
 {
+    if (selectedGameObject == nullptr)
+    {
+        return 0;
+    }
     return selectedGameObject->getTextureID();
 }
 

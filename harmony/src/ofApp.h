@@ -52,12 +52,7 @@ private:
     const string arrowText = "Arrow";
     const string starText = "Star";
 
-    const string noneText = "None";
-    const string cloudText = "Cloud";
-    const string marbleText = "Marble";
-    const string noiseText = "Noise";
-    const string turbulenceText = "Turbulence";
-    const string zoomText = "Zoom";
+    const vector<string> textureTexts = { "None" , "Cloud" , "Marble" , "Noise" , "Turbulence" , "Zoom" };
 
     const string inspectorText = "Inspector";
     const string sceneText = "Scene";
@@ -80,7 +75,7 @@ private:
     Scene scene;
 
     vector<ofxButton*> object_buttons;
-    vector<ofxButton> texture_buttons;
+    vector<ofxButton*> texture_buttons;
 
     Vec3fTextField positionFields;
     RotationSlider rotation;
@@ -107,13 +102,6 @@ private:
     ofxLabel inspector_label;
     ofxLabel scene_label;
     ofxLabel texture_label;
-
-    ofxButton none_button;
-    ofxButton cloud_button;
-    ofxButton marble_button;
-    ofxButton noise_button;
-    ofxButton turbulence_button;
-    ofxButton zoom_button;
 
     bool guiIsSetup = false;
 
