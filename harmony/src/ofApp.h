@@ -5,9 +5,13 @@
 #include "scene.h"
 #include "cube.h"
 #include "sphere.h"
+#include "triangle.h"
+#include "rectangle.h"
+#include "point.h"
+#include "line.h"
+#include "polygon.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
-#include "plan2D.h"
 #include "texelFactory.h"
 #include "gui/rotation_slider.h"
 #include "gui/vec3f_textfield.h"
@@ -37,6 +41,11 @@ private:
 
     const string cubeText = "Cube";
     const string sphereText = "Sphere";
+    const string rectangleText = "Rectangle";
+    const string triangleText = "Triangle";
+    const string pointText = "Point";
+    const string polygonText = "Polygon";
+    const string lineText = "Line";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
@@ -120,5 +129,10 @@ public:
 
 enum ShapeType {
     Shape_Sphere,
-    Shape_Cube
+    Shape_Cube,
+    Shape_Point,
+    Shape_Line,
+    Shape_Triangle,
+    Shape_Rectangle,
+    Shape_Polygon
 };

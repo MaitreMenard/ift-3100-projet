@@ -174,11 +174,14 @@
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
+    <ClCompile Include="src\line.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
-    <ClCompile Include="src\plan2D.cpp" />
+    <ClCompile Include="src\point.cpp" />
+    <ClCompile Include="src\polygon.cpp" />
+    <ClCompile Include="src\rectangle.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\sphere.cpp" />
     <ClCompile Include="src\texelFactory.cpp" />
@@ -192,15 +195,19 @@
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp" />
+    <ClCompile Include="src\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
+    <ClInclude Include="src\line.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\grid_plane.h" />
-    <ClInclude Include="src\plan2D.h" />
+    <ClInclude Include="src\point.h" />
+    <ClInclude Include="src\polygon.h" />
+    <ClInclude Include="src\rectangle.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\sphere.h" />
     <ClInclude Include="src\texelFactory.h" />
@@ -215,6 +222,7 @@
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h" />
+    <ClInclude Include="src\triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

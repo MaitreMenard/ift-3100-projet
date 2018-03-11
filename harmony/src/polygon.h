@@ -2,9 +2,9 @@
 #include "gameobject.h"
 #include "texelFactory.h"
 
-class plan2D : public GameObject
+class Polygone : public GameObject
 {
 public:
-    plan2D();
+    Polygone();
     void draw();
 };
