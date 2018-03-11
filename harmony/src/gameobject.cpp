@@ -39,11 +39,13 @@ void GameObject::update()
 
 void GameObject::draw()
 {
-    texture.bind();
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
+    texture.bind();
     model.draw();
+    texture.unbind();
+
     for (GameObject* child : children)
     {
         child->draw();
@@ -55,7 +57,6 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
-    texture.unbind();
 }
 
 void GameObject::drawBoundingBox()
