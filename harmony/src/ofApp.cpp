@@ -73,35 +73,23 @@ void ofApp::setupGUIInspector(size_t buttonID)
     scaleFields.addListener(scaleListener);
 
     rgb_label.setBackgroundColor(baseLabelColor);
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+    removeRGBListeners();
     guiInspector.add(rgb_label.setup(ofParameter<string>(rgbText)));
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
     guiInspector.add(RGB_r.setup(rText, selectedGameObjectColor.r, 0, 255));
     guiInspector.add(RGB_g.setup(gText, selectedGameObjectColor.g, 0, 255));
     guiInspector.add(RGB_b.setup(bText, selectedGameObjectColor.b, 0, 255));
     guiInspector.add(RGB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    addRGBListeners();
 
     hsb_label.setBackgroundColor(baseLabelColor);
-    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
+    removeHSBListeners();
     guiInspector.add(hsb_label.setup(ofParameter<string>(hsbText)));
     guiInspector.add(HSB_h.setup(hText, selectedGameObjectColor.getHue(), 0, 255));
     guiInspector.add(HSB_s.setup(sText, selectedGameObjectColor.getSaturation(), 0, 255));
     guiInspector.add(HSB_b.setup(bText, selectedGameObjectColor.getBrightness(), 0, 255));
     guiInspector.add(HSB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
+    addHSBListeners();
 
     parent.removeListener(this, &ofApp::parentChanged);
     parent.setBackgroundColor(baseLabelColor);
