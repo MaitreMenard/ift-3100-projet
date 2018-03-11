@@ -146,6 +146,7 @@ void ofApp::updateGUIInspector(size_t buttonID)
     addHSBListeners();
 
     parent.removeListener(this, &ofApp::parentChanged);
+    parent.setMax(object_buttons.size());
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
 }
