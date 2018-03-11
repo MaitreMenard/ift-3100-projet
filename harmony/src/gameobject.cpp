@@ -102,16 +102,20 @@ void GameObject::reScale(float x, float y, float z)
     transform.reScale(x, y, z);
 }
 
-ofColor GameObject::getColor() {
-    if (model.getColors().empty()) {
+ofColor GameObject::getColor()
+{
+    if (model.getColors().empty())
+    {
         return ofColor(255, 255, 255);
     }
     return model.getColor(0);
 }
 
-void GameObject::setColor(ofColor color) {
+void GameObject::setColor(ofColor color)
+{
     model.clearColors();
-    for (size_t i = 0; i < nbVertex; i++) {
+    for (size_t i = 0; i < nbVertex; i++)
+    {
         model.addColor(color);
     }
 }
@@ -143,21 +147,26 @@ void GameObject::removeChild(GameObject * childToRemove)
     children.erase(std::remove(children.begin(), children.end(), childToRemove), children.end());
 }
 
-GameObject* GameObject::getParentGameObject() {
+GameObject* GameObject::getParentGameObject()
+{
     return parentGameObject;
 }
 
-void GameObject::setParentGameObject(GameObject* parentGameObject) {
+void GameObject::setParentGameObject(GameObject* parentGameObject)
+{
     this->parentGameObject = parentGameObject;
-    if (parentGameObject != nullptr) {
+    if (parentGameObject != nullptr)
+    {
         transform.setRelativeTo(parentGameObject->transform);
     }
-    else {
+    else
+    {
         transform.setRelativeTo(Transform());
     }
 }
 
-bool GameObject::hasChildren() {
+bool GameObject::hasChildren()
+{
     return children.size() > 0;
 }
 
@@ -176,7 +185,8 @@ void GameObject::deleteAllChildren()
     }
 }
 
-void GameObject::setTexture(ofPixels * pixels) {
+void GameObject::setTexture(ofPixels * pixels)
+{
     texture.clear();
     texture.allocate(*pixels);
     texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
