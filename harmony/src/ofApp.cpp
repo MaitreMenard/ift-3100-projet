@@ -14,17 +14,6 @@ void ofApp::setup()
     setupCamera();
     gridPlane.setup();
     scene.setup();
-    //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
-    //    ofVec3f(-0.59, 0.17, 19.0),
-    //    180,
-    //    ofVec3f(0, 0, 1),
-    //    ofVec3f(0.01, 0.01, 0.01));
-    //scene.addGameObject(falcon);
-    //Model3D* xWing = new Model3D("/models/xwing/x-wing.obj",
-    //    ofVec3f(-14.59, 0.17, 19.0),
-    //    180, ofVec3f(0, 0, 1),
-    //    ofVec3f(0.01, 0.01, 0.01));
-    //scene.addGameObject(xWing);
 
     ofSetVerticalSync(true);
 
@@ -444,6 +433,12 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star);
         break;
+    case 'm':
+        addNewGameObject(Shape_Falcon);
+        break;
+    case 'x':
+        addNewGameObject(Shape_XWing);
+        break;
     default:
         break;
     }
@@ -501,6 +496,23 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         gameObject = new Star();
         shapeName = starText;
+    }
+    else if (shapeType == Shape_Falcon)
+    {
+        gameObject = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+            ofVec3f(-0.59, 0.17, 19.0),
+            180,
+            ofVec3f(0, 0, 1),
+            ofVec3f(0.01, 0.01, 0.01));
+        shapeName = falconText;
+    }
+    else if (shapeType == Shape_XWing)
+    {
+        gameObject = new Model3D("/models/xwing/x-wing.obj",
+                ofVec3f(-14.59, 0.17, 19.0),
+                180, ofVec3f(0, 0, 1),
+                ofVec3f(0.01, 0.01, 0.01));
+        shapeName = xwingText;
     }
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);

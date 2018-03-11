@@ -50,6 +50,8 @@ private:
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
+    const string falconText = "Millenium Falcon";
+    const string xwingText = "XWing";
 
     const vector<string> textureTexts = { "None" , "Cloud" , "Marble" , "Noise" , "Turbulence" , "Zoom" };
 
