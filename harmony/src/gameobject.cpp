@@ -13,13 +13,18 @@ GameObject::GameObject()
 
 GameObject::GameObject(const GameObject & other)
 {
+    texture = other.texture;
+    transform = other.transform;
+    model = other.model;
+    parentGameObject = other.parentGameObject;
+    boundingBox = other.boundingBox;
+    nbVertex = other.nbVertex;
+    isSelected = other.isSelected;
+
     for (GameObject* child : other.children)
     {
         children.push_back(child);
     }
-
-    boundingBox = other.boundingBox;
-    isSelected = other.isSelected;
 }
 
 void GameObject::setup()
@@ -168,15 +173,6 @@ GameObject* GameObject::getParentGameObject()
 void GameObject::setParentGameObject(GameObject* parentGameObject)
 {
     this->parentGameObject = parentGameObject;
-    if (parentGameObject != nullptr)
-    {
-        transform.setRelativeTo(parentGameObject->transform);
-    }
-    else
-    {
-        //transform.setRelativeTo(Transform());
-        transform.setGlobal();
-    }
 }
 
 void GameObject::setSelected(bool isSelected)
@@ -194,7 +190,12 @@ GameObject & GameObject::operator=(const GameObject & other)
     deleteAllChildren();
     children.assign(other.children.begin(), other.children.end());
 
+    texture = other.texture;
+    transform = other.transform;
+    model = other.model;
+    parentGameObject = other.parentGameObject;
     boundingBox = other.boundingBox;
+    nbVertex = other.nbVertex;
     isSelected = other.isSelected;
 
     return *this;

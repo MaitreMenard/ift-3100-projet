@@ -169,8 +169,6 @@ size_t Scene::getSelectedGameObjectParentID()
 
 void Scene::setSelectedGameObjectParent(size_t parentGameObjectID)
 {
-    //TODO: Make sure transform is modified when setting a new parent or having no parents
-
     if (selectedGameObject->getParentGameObject() != nullptr)
     {
         selectedGameObject->getParentGameObject()->removeChild(selectedGameObject);
