@@ -229,24 +229,6 @@ void ofApp::colorChangedRGB(int & value)
 
     addHSBListeners();
 }
-/**
-void ofApp::colorChangedHSB(int & value)
-{
-    ofColor newColor = ofColor(0);
-    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
-    scene.setColorSelectedGameObject(newColor);
-
-    removeRGBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    RGB_r = currentColor.r;
-    RGB_g = currentColor.g;
-    RGB_b = currentColor.b;
-    RGB_a = currentColor.a;
-
-    addRGBListeners();
-}
-*/
 
 void ofApp::update()
 {
