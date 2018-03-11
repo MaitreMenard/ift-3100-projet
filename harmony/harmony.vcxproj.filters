@@ -65,6 +65,8 @@
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
+	  <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
     </ClCompile>

@@ -14,14 +14,14 @@ private:
 
 public:
     Transform();
-	Transform(const Transform &transf);
+    Transform(const Transform &transf);
     ofVec3f getPosition() const;
     ofQuaternion getRotation() const;
     void getRotate(float& angle, float& x, float& y, float& z);
     ofVec3f getScale() const;
 
     void translate(float dx, float dy, float dz);
-	void rotate(float degrees, float x, float y, float z);
+    void rotate(float degrees, float x, float y, float z);
     void setPosition(float x, float y, float z);
     void setRotation(float x, float y, float z);
 
@@ -31,7 +31,7 @@ public:
     void applyToModelViewMatrix();
 
     void setRelativeTo(Transform other);
-	bool operator==(const Transform &obj);
-	bool operator!=(const Transform &obj);
+    bool operator==(const Transform &obj);
+    bool operator!=(const Transform &obj);
     void setGlobal();
 };

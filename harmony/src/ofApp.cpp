@@ -4,9 +4,9 @@
 
 void ofApp::setup()
 {
-	scene.enableUndoRedo();
+    scene.enableUndoRedo();
     shiftIsPressed = false;
-	CtrlIsPressed = false;
+    CtrlIsPressed = false;
 
     ofSetFrameRate(60);
     ofEnableDepthTest();
@@ -144,15 +144,13 @@ void ofApp::updateGUIInspector(size_t buttonID)
 void ofApp::exit()
 {}
 
-void ofApp::colorChangedHSB(int & value) {
+void ofApp::colorChangedHSB(int & value)
+{
     ofColor newColor = ofColor(0);
     newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
     scene.setColorSelectedGameObject(newColor);
 
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+    removeRGBListeners();
 
     ofColor currentColor = scene.getColorSelectedGameObject();
     RGB_r = currentColor.r;
@@ -160,10 +158,7 @@ void ofApp::colorChangedHSB(int & value) {
     RGB_b = currentColor.b;
     RGB_a = currentColor.a;
 
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+    addRGBListeners();
 }
 
 void ofApp::setupCamera()
@@ -315,14 +310,14 @@ void ofApp::keyPressed(int key)
 {
     switch (key)
     {
-	case -1: // CTRL_R + Z
-	case 26: // CTRL_L + Z
-		scene.undo();
-		break;
-	case 8592: // CTRL_R + Y
-	case 25: // CTRL_L + Y
-		scene.redo();
-		break;
+    case -1: // CTRL_R + Z
+    case 26: // CTRL_L + Z
+        scene.undo();
+        break;
+    case 8592: // CTRL_R + Y
+    case 25: // CTRL_L + Y
+        scene.redo();
+        break;
     case ' ':
         takeScreenShot();
         break;
@@ -359,9 +354,9 @@ void ofApp::keyPressed(int key)
     case 2304:  // shift
         shiftIsPressed = true;
         break;
-	case 768: // Ctrl L and R
-		CtrlIsPressed = true;
-		break;
+    case 768: // Ctrl L and R
+        CtrlIsPressed = true;
+        break;
     case 'h':
         GUIIsDisplayed = !GUIIsDisplayed;
         break;
@@ -386,15 +381,16 @@ void ofApp::keyPressed(int key)
     case '7':
         addNewGameObject(6);
         break;
-	case '8':
-		addNewGameObject(7);
-		break;
+    case '8':
+        addNewGameObject(7);
+        break;
     default:
         break;
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType) {
+void ofApp::addNewGameObject(size_t shapeType)
+{
     ofxButton *object_button = new ofxButton();
     object_buttons.push_back(object_button);
     string shapeName;
@@ -435,14 +431,15 @@ void ofApp::addNewGameObject(size_t shapeType) {
         gameObject = new Polygone();
         shapeName = polygonText;
     }
-	else if (shapeType == Shape_Texture) {
-		gameObject = new Rektangle();
-		ofPixels * pix = new ofPixels();
-		pix->allocate(250, 250, OF_PIXELS_RGB);
-		pix = tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0);
-		gameObject->setTexture(pix);
-		shapeName = textureText;
-	}
+    else if (shapeType == Shape_Texture)
+    {
+        gameObject = new Rektangle();
+        ofPixels * pix = new ofPixels();
+        pix->allocate(250, 250, OF_PIXELS_RGB);
+        pix = tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0);
+        gameObject->setTexture(pix);
+        shapeName = textureText;
+    }
 
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
@@ -463,10 +460,10 @@ void ofApp::keyReleased(int key)
     case 2304:  // shift
         shiftIsPressed = false;
         break;
-	case 769: // Ctrl L and R
-	case 770:
-		CtrlIsPressed = false;
-		break;
+    case 769: // Ctrl L and R
+    case 770:
+        CtrlIsPressed = false;
+        break;
     default:
         break;
     }

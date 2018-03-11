@@ -33,7 +33,7 @@ void GameObject::update()
 
 void GameObject::draw()
 {
-	texture.bind();
+    texture.bind();
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
@@ -49,7 +49,7 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
-	texture.unbind();
+    texture.unbind();
 }
 
 void GameObject::drawBoundingBox()
@@ -140,10 +140,11 @@ vector<GameObject *> GameObject::getChildren()
     return children;
 }
 
-void GameObject::setChildren(vector<GameObject *> child) {
-	children.clear();
-	for (vector<GameObject*>::iterator it = child.begin(); it != child.end(); ++it)
-		children.push_back(*it);
+void GameObject::setChildren(vector<GameObject *> child)
+{
+    children.clear();
+    for (vector<GameObject*>::iterator it = child.begin(); it != child.end(); ++it)
+        children.push_back(*it);
 }
 
 void GameObject::removeChild(size_t index)
@@ -211,7 +212,7 @@ void GameObject::setTexture(ofPixels * pixels)
     texture.clear();
     texture.allocate(*pixels);
     //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
-	texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 GameObject::~GameObject()

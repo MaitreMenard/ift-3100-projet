@@ -9,7 +9,7 @@ private:
     vector<GameObject*> gameObjects;
     vector<GameObject*> nonChildrenGameObjects;
     void deleteAllGameObjects();
-	CommandHandler history_;
+    CommandHandler history_;
     size_t selectedGameObjectID;
     GameObject* selectedGameObject;
 
@@ -29,10 +29,10 @@ public:
     void setRotationSelectedGameObject(ofVec3f rotation);
     void setScaleSelectedGameObject(float x, float y, float z);
 
-	void undo();
-	void redo();
-	void enableUndoRedo() { history_.enable(); };
-	void disableUndoRedo() { history_.disable(); };
+    void undo();
+    void redo();
+    void enableUndoRedo() { history_.enable(); };
+    void disableUndoRedo() { history_.disable(); };
     void setColorSelectedGameObject(ofColor color);
 
     ofVec3f getPositionSelectedGameObject();
