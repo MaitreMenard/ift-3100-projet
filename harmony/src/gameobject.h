@@ -14,6 +14,7 @@ protected:
     std::vector<GameObject*> children;
     ofMesh model;
     GameObject* parentGameObject;
+    ofBoxPrimitive boundingBox;
 
     int nbVertex;
 
@@ -25,7 +26,7 @@ public:
     virtual void update();
     virtual void draw();
 
-    void drawDelimitationBox();
+    void drawBoundingBox();
 
     ofVec3f getPosition();
     void setPosition(float x, float y, float z);

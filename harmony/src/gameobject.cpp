@@ -3,6 +3,9 @@
 GameObject::GameObject()
 {
     parentGameObject = nullptr;
+
+    boundingBox = ofBoxPrimitive();
+    boundingBox.set(1);
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -11,6 +14,8 @@ GameObject::GameObject(const GameObject & other)
     {
         children.push_back(child);
     }
+
+    boundingBox = other.boundingBox;
 }
 
 void GameObject::setup()
@@ -38,21 +43,18 @@ void GameObject::draw()
     ofPopMatrix();
 }
 
-void GameObject::drawDelimitationBox()
+void GameObject::drawBoundingBox()
 {
     ofPushMatrix();
 
-    ofBoxPrimitive delimitationBox = ofBoxPrimitive();
-    delimitationBox.set(1);
-
     for (size_t i = 0; i < 6; i++)
     {
-        delimitationBox.setSideColor(i, ofColor(0, 255, 0));
+        boundingBox.setSideColor(i, ofColor(0, 255, 0));
     }
 
     transform.applyToModelViewMatrix();
 
-    delimitationBox.drawWireframe();
+    boundingBox.drawWireframe();
 
     ofPopMatrix();
 }

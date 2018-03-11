@@ -87,7 +87,7 @@ void Scene::draw()
 
     if (selectedGameObject != nullptr)
     {
-        selectedGameObject->drawDelimitationBox();
+        selectedGameObject->drawBoundingBox();
     }
 }
 
