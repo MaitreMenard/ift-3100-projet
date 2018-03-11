@@ -10,6 +10,7 @@
 #include "point.h"
 #include "line.h"
 #include "polygon.h"
+#include "model3D.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
 #include "texelFactory.h"
@@ -26,7 +27,6 @@ private:
     const float ROTATION_MAX_VALUE = 180;
     const float SCALE_MIN_VALUE = -100;
     const float SCALE_MAX_VALUE = 100;
-    
 
     const string aText = "A: ";
     const string bText = "B: ";
@@ -37,7 +37,9 @@ private:
     const string hsbText = "HSB";
     const string rgbText = "RGB";
     const string parentText = "Parent: ";
+    const string positionText = "Position: ";
     const string rotationText = "Rotation: ";
+    const string scaleText = "Scale: ";
 
     const string cubeText = "Cube";
     const string sphereText = "Sphere";
@@ -107,6 +109,8 @@ private:
 
     void checkIfAButtonIsPressed();
 
+    void setupCamera();
+
 public:
     ~ofApp();
     void setup();
@@ -127,7 +131,8 @@ public:
     void gotMessage(ofMessage msg);
 };
 
-enum ShapeType {
+enum ShapeType
+{
     Shape_Sphere,
     Shape_Cube,
     Shape_Point,

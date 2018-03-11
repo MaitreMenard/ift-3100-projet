@@ -40,7 +40,7 @@ public:
     void reScale(float x, float y, float z);
 
     ofColor getColor();
-    void setColor(ofColor color);
+    virtual void setColor(ofColor color);
 
     void addChild(GameObject* child);
     GameObject* getChild(size_t index);

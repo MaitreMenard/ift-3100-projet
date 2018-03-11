@@ -11,10 +11,7 @@ void ofApp::setup()
     ofDisableArbTex();
     ofEnableAlphaBlending();
 
-    camera.setNearClip(0.1f);
-    camera.setPosition(0, 2, 5);
-    camera.lookAt(ofVec3f(0, 0, 0));
-
+    setupCamera();
     gridPlane.setup();
     scene.setup();
 
@@ -28,6 +25,18 @@ void ofApp::setup()
     ofPixels * pix = new ofPixels();
     pix->allocate(500, 500, OF_PIXELS_RGB);
     scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));*/
+
+    //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+    //    ofVec3f(-0.59, 0.17, 19.0),
+    //    180,
+    //    ofVec3f(0, 0, 1),
+    //    ofVec3f(0.01, 0.01, 0.01));
+    //scene.addGameObject(falcon);
+    //Model3D* xWing = new Model3D("/models/xwing/x-wing.obj",
+    //    ofVec3f(-14.59, 0.17, 19.0),
+    //    180, ofVec3f(0, 0, 1),
+    //    ofVec3f(0.01, 0.01, 0.01));
+    //scene.addGameObject(xWing);
 
     ofSetVerticalSync(true);
 
@@ -48,7 +57,7 @@ void ofApp::setupGUIInspector(size_t buttonID)
     guiInspector.clear();
     guiInspector.setup();
 
-    guiInspector.add(positionFields.setup("Position: ", scene.getPositionSelectedGameObject(),
+    guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
         ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
     std::function<void(ofVec3f)> positionListener = [=](ofVec3f value)
     {
@@ -64,7 +73,7 @@ void ofApp::setupGUIInspector(size_t buttonID)
     };
     rotation.addListener(rotationListener);
 
-    guiInspector.add(scaleFields.setup("Scale: ", scene.getScaleSelectedGameObject(),
+    guiInspector.add(scaleFields.setup(scaleText, scene.getScaleSelectedGameObject(),
         ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE)));
     std::function<void(ofVec3f)> scaleListener = [=](ofVec3f value)
     {
@@ -139,6 +148,12 @@ void ofApp::updateGUIInspector(size_t buttonID)
     parent.removeListener(this, &ofApp::parentChanged);
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
+}
+
+void ofApp::setupCamera()
+{
+    camera.setNearClip(0.1f);
+    camera.setPosition(0, 2, 5);
 }
 
 void ofApp::exit()
@@ -373,23 +388,28 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Cube();
         shapeName = cubeText;
     }
-    else if (shapeType == Shape_Point) {
+    else if (shapeType == Shape_Point)
+    {
         gameObject = new Point();
         shapeName = pointText;
     }
-    else if (shapeType == Shape_Line) {
+    else if (shapeType == Shape_Line)
+    {
         gameObject = new Line();
         shapeName = lineText;
     }
-    else if (shapeType == Shape_Triangle) {
+    else if (shapeType == Shape_Triangle)
+    {
         gameObject = new Triangle();
         shapeName = triangleText;
     }
-    else if (shapeType == Shape_Rectangle) {
+    else if (shapeType == Shape_Rectangle)
+    {
         gameObject = new Rektangle();
         shapeName = rectangleText;
     }
-    else if (shapeType == Shape_Polygon) {
+    else if (shapeType == Shape_Polygon)
+    {
         gameObject = new Polygone();
         shapeName = polygonText;
     }
@@ -403,7 +423,6 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupGUIInspector(object_buttons.size() - 1);
     }
-
 }
 
 void ofApp::keyReleased(int key)
