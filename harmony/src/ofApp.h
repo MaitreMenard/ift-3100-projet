@@ -74,7 +74,7 @@ private:
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
-    //ofxSkyBox skyBox;
+    ofxSkyBox skyBox;
 
     vector<ofxButton*> object_buttons;
     vector<ofxButton*> texture_buttons;

@@ -14,7 +14,7 @@ void ofApp::setup()
     setupCamera();
     gridPlane.setup();
     scene.setup();
-    //skyBox.load();
+    skyBox.load();
 
     //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
     //    ofVec3f(-0.59, 0.17, 19.0),
@@ -331,7 +331,7 @@ void ofApp::draw()
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
-    //skyBox.draw();
+    skyBox.draw();
     scene.draw();
     gridPlane.draw();
     camera.end();
@@ -383,9 +383,11 @@ void ofApp::keyPressed(int key)
         break;
     case '+':
         camera.dolly(-1);
+        skyBox.position.z += -1;
         break;
     case '-':
         camera.dolly(1);
+        skyBox.position.z += 1;
         break;
     case 356:   // left arrow
         camera.pan(5);
@@ -401,15 +403,19 @@ void ofApp::keyPressed(int key)
         break;
     case 'w':
         camera.boom(1);
+        skyBox.position.y += 1;
         break;
     case 'a':
         camera.truck(-1);
+        skyBox.position.x += -1;
         break;
     case 's':
         camera.boom(-1);
+        skyBox.position.y += -1;
         break;
     case 'd':
         camera.truck(1);
+        skyBox.position.x += 1;
         break;
     case 2304:  // shift
         shiftIsPressed = true;

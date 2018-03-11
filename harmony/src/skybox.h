@@ -6,10 +6,11 @@ class SkyBox
 private:
     ofVec3f position;
     ofMesh cube;
-    ofTexture texture[6];
+    GLuint textureID;
+    ofShader shader;
 
 public:
-    void setup(string fileName);
+    void setup(string fileNames[6]);
     void draw();
     void translate(float dx, float dy, float dz);
 };
