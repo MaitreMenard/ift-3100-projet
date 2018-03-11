@@ -29,12 +29,3 @@ Rektangle::Rektangle()
 
     gameObjectIs2D = true;
 }
-
-void Rektangle::setColor(ofColor color)
-{
-    model.clearColors();
-    for (int i = 0; i < nbVertex; i++)
-    {
-        model.addColor(color);
-    }
-}

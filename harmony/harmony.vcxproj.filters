@@ -85,12 +85,6 @@
     <ClCompile Include="src\gameobjects\model3D.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\point.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameobjects\polygon.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameobjects\rectangle.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
@@ -107,6 +101,9 @@
       <Filter>src\gameobjects</Filter>
     </ClCompile>
     <ClCompile Include="src\gameobjects\star.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\polygone.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -347,9 +344,6 @@
     <ClInclude Include="src\gameobjects\model3D.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameobjects\point.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
     <ClInclude Include="src\command.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -358,9 +352,6 @@
     </ClInclude>
     <ClInclude Include="src\model3D.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\polygon.h">
-      <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\rectangle.h">
       <Filter>src\gameobjects</Filter>
@@ -378,6 +369,9 @@
       <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\star.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\polygone.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>

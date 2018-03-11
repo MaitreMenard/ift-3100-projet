@@ -4,7 +4,8 @@
 
 class Polygone : public GameObject
 {
+private:
+    void createPoint(size_t index);
 public:
-    Polygone();
-    void draw();
+    Polygone(size_t nbVertex);
 };

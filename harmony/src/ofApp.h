@@ -9,9 +9,8 @@
 #include "gameobjects/sphere.h"
 #include "gameobjects/triangle.h"
 #include "gameobjects/rectangle.h"
-#include "gameobjects/point.h"
 #include "gameobjects/line.h"
-#include "gameobjects/polygon.h"
+#include "gameobjects/polygone.h"
 #include "gameobjects/model3D.h"
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
@@ -47,7 +46,7 @@ private:
     const string rectangleText = "Rectangle";
     const string triangleText = "Triangle";
     const string pointText = "Point";
-    const string polygonText = "Polygon";
+    const string pentagonText = "Pentagon";
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
@@ -152,11 +151,11 @@ enum ShapeType
 {
     Shape_Sphere,
     Shape_Cube,
-    Shape_Point,
     Shape_Line,
     Shape_Triangle,
     Shape_Rectangle,
-    Shape_Polygon,
+    Shape_Pentagon,
+    Shape_Circle,
     Shape_Arrow,
     Shape_Star,
     Shape_Falcon,

@@ -418,25 +418,25 @@ void ofApp::keyPressed(int key)
         GUIIsDisplayed = !GUIIsDisplayed;
         break;
     case '1':
-        addNewGameObject(0);
+        addNewGameObject(Shape_Sphere);
         break;
     case '2':
-        addNewGameObject(1);
+        addNewGameObject(Shape_Cube);
         break;
     case '3':
-        addNewGameObject(2);
+        addNewGameObject(Shape_Line);
         break;
     case '4':
-        addNewGameObject(3);
+        addNewGameObject(Shape_Triangle);
         break;
     case '5':
-        addNewGameObject(4);
+        addNewGameObject(Shape_Rectangle);
         break;
     case '6':
-        addNewGameObject(5);
+        addNewGameObject(Shape_Pentagon);
         break;
     case '7':
-        addNewGameObject(6);
+        addNewGameObject(Shape_Circle);
         break;
     case '8':
         addNewGameObject(Shape_Arrow);
@@ -467,11 +467,6 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Cube();
         shapeName = cubeText;
     }
-    else if (shapeType == Shape_Point)
-    {
-        gameObject = new Point();
-        shapeName = pointText;
-    }
     else if (shapeType == Shape_Line)
     {
         gameObject = new Line();
@@ -487,10 +482,15 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Rektangle();
         shapeName = rectangleText;
     }
-    else if (shapeType == Shape_Polygon)
+    else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone();
-        shapeName = polygonText;
+        gameObject = new Polygone(5);
+        shapeName = pentagonText;
+    }
+    else if (shapeType == Shape_Circle)
+    {
+        gameObject = new Polygone(90);
+        shapeName = pentagonText;
     }
     else if (shapeType == Shape_Arrow)
     {
