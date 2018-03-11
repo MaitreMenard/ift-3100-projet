@@ -65,7 +65,7 @@
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
-	  <Filter>src</Filter>
+      <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
@@ -99,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="src\gameobjects\triangle.cpp">
       <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cubemap.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="src\gameobjects\triangle.h">
       <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cubemap.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
