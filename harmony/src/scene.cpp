@@ -31,16 +31,19 @@ void Scene::update()
     }
 }
 
-void Scene::setSelectedGameObject(size_t gameObjectID) {
+void Scene::setSelectedGameObject(size_t gameObjectID)
+{
     selectedGameObjectID = gameObjectID;
     selectedGameObject = gameObjects[gameObjectID];
 }
 
-size_t Scene::getSelectedGameObjectID() {
+size_t Scene::getSelectedGameObjectID()
+{
     return selectedGameObjectID;
 }
 
-ofVec3f Scene::getEulerRotationSelectedGameObject() {
+ofVec3f Scene::getEulerRotationSelectedGameObject()
+{
     return selectedGameObject->getRotation().getEuler();
 }
 
@@ -57,15 +60,18 @@ void Scene::setColorSelectedGameObject(ofColor color)
     selectedGameObject->setColor(color);
 }
 
-ofVec3f Scene::getPositionSelectedGameObject() {
+ofVec3f Scene::getPositionSelectedGameObject()
+{
     return selectedGameObject->getPosition();
 }
 
-ofVec3f Scene::getScaleSelectedGameObject() {
+ofVec3f Scene::getScaleSelectedGameObject()
+{
     return selectedGameObject->getScale();
 }
 
-ofColor Scene::getColorSelectedGameObject() {
+ofColor Scene::getColorSelectedGameObject()
+{
     return selectedGameObject->getColor();
 }
 
@@ -73,7 +79,8 @@ void Scene::draw()
 {
     for (GameObject* gameObject : gameObjects)
     {
-        if (gameObject->getParentGameObject() == nullptr) {
+        if (gameObject->getParentGameObject() == nullptr)
+        {
             gameObject->draw();
         }
     }
@@ -141,39 +148,49 @@ void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
     selectedGameObject->rotate(degrees, x, y, z);
 }
 
-size_t Scene::getSelectedGameObjectParentID() {
-    if (selectedGameObject->getParentGameObject() != nullptr) {
+size_t Scene::getSelectedGameObjectParentID()
+{
+    if (selectedGameObject->getParentGameObject() != nullptr)
+    {
         return getGameObjectID(selectedGameObject->getParentGameObject()) + 1;
     }
     return 0;
 }
 
-void Scene::setSelectedGameObjectParent(size_t parentGameObjectID) {
+void Scene::setSelectedGameObjectParent(size_t parentGameObjectID)
+{
     //TODO: Make sure transform is modified when setting a new parent or having no parents
 
-    if (selectedGameObject->getParentGameObject() != nullptr) {
+    if (selectedGameObject->getParentGameObject() != nullptr)
+    {
         selectedGameObject->getParentGameObject()->removeChild(selectedGameObject);
     }
-    if (parentGameObjectID > 0) {
+    if (parentGameObjectID > 0)
+    {
         GameObject* parentGameObject = gameObjects.at(parentGameObjectID - 1);
         selectedGameObject->setParentGameObject(parentGameObject);
         parentGameObject->addChild(selectedGameObject);
         removeNonChildGameObject(selectedGameObject);
     }
-    else if (!isANonChildGameObject(selectedGameObject)) {
+    else if (!isANonChildGameObject(selectedGameObject))
+    {
         selectedGameObject->setParentGameObject(nullptr);
         nonChildrenGameObjects.push_back(selectedGameObject);
     }
 }
 
-bool Scene::isNewParentIDInSelectedGameObjectChildren(size_t newParentID) {
+bool Scene::isNewParentIDInSelectedGameObjectChildren(size_t newParentID)
+{
     return recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, selectedGameObject->getChildren());
 }
 
-bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*> children) {
+bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*> children)
+{
     bool cannotBeItsNewParent = false;
-    for (GameObject* child : children) {
-        if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren())) {
+    for (GameObject* child : children)
+    {
+        if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren()))
+        {
             cannotBeItsNewParent = true;
             break;
         }
@@ -181,7 +198,8 @@ bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentI
     return cannotBeItsNewParent;
 }
 
-size_t Scene::getGameObjectID(GameObject* gameObject) {
+size_t Scene::getGameObjectID(GameObject* gameObject)
+{
     return find(gameObjects.begin(), gameObjects.end(), gameObject) - gameObjects.begin();
 }
 
