@@ -234,9 +234,6 @@ void Scene::setSelectedGameObjectTexture(size_t textureID)
     pix->allocate(256, 256, OF_PIXELS_RGB);
     switch (textureID)
     {
-    case 0:
-        //Remove texture of selectedGameObject
-        break;
     case 1:
         pix = tFac.setCloudImage(pix, 5.f);
         break;
@@ -250,9 +247,6 @@ void Scene::setSelectedGameObjectTexture(size_t textureID)
         pix = tFac.setTurbulenceImage(pix, 5.f);
         break;
     case 5:
-        pix = tFac.setWoodTexture(pix, 7.f, 5.f, 5.f);
-        break;
-    case 6:
         pix = tFac.setZoom(pix, 5.f);
         break;
     }

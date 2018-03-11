@@ -54,7 +54,6 @@ private:
     const string marbleText = "Marble";
     const string noiseText = "Noise";
     const string turbulenceText = "Turbulence";
-    const string woodText = "Wood";
     const string zoomText = "Zoom";
 
     const string inspectorText = "Inspector";
@@ -111,7 +110,6 @@ private:
     ofxButton marble_button;
     ofxButton noise_button;
     ofxButton turbulence_button;
-    ofxButton wood_button;
     ofxButton zoom_button;
 
     bool guiIsSetup = false;

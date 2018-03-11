@@ -170,7 +170,6 @@ void ofApp::setupGUITexture(size_t textureID)
         texture_buttons.push_back(marble_button);
         texture_buttons.push_back(noise_button);
         texture_buttons.push_back(turbulence_button);
-        texture_buttons.push_back(wood_button);
         texture_buttons.push_back(zoom_button);
     }
 
@@ -184,9 +183,8 @@ void ofApp::setupGUITexture(size_t textureID)
     marble_button.setBackgroundColor(baseButtonColor);
     noise_button.setBackgroundColor(baseButtonColor);
     turbulence_button.setBackgroundColor(baseButtonColor);
-    wood_button.setBackgroundColor(baseButtonColor);
     zoom_button.setBackgroundColor(baseButtonColor);
-    
+
     scene.setSelectedGameObjectTexture(textureID);
     texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
 
@@ -195,7 +193,6 @@ void ofApp::setupGUITexture(size_t textureID)
     guiTexture.add(marble_button.setup(ofParameter<string>(marbleText)));
     guiTexture.add(noise_button.setup(ofParameter<string>(noiseText)));
     guiTexture.add(turbulence_button.setup(ofParameter<string>(turbulenceText)));
-    guiTexture.add(wood_button.setup(ofParameter<string>(woodText)));
     guiTexture.add(zoom_button.setup(ofParameter<string>(zoomText)));
 
     guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
@@ -208,9 +205,8 @@ void ofApp::updateGUITexture(size_t textureID)
     marble_button.setBackgroundColor(baseButtonColor);
     noise_button.setBackgroundColor(baseButtonColor);
     turbulence_button.setBackgroundColor(baseButtonColor);
-    wood_button.setBackgroundColor(baseButtonColor);
     zoom_button.setBackgroundColor(baseButtonColor);
-    
+
     scene.setSelectedGameObjectTexture(textureID);
     texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
 }
