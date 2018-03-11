@@ -16,6 +16,7 @@ Model3D::Model3D(string fileName, ofVec3f positionOffset, float rotationOffsetAn
 
     model = objModel.getMesh(0);
     nbVertex = model.getVertices().size();
+    gameObjectIs2D = false;
 }
 
 void Model3D::draw()
