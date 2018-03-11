@@ -38,4 +38,6 @@ Arrow::Arrow()
     model.addIndex(3);
     model.addIndex(5);
     model.addIndex(6);
+
+    gameObjectIs2D = true;
 }

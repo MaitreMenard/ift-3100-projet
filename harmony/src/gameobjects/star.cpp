@@ -66,4 +66,6 @@ Star::Star()
     model.addIndex(2);
     model.addIndex(5);
     model.addIndex(3);
+
+    gameObjectIs2D = true;
 }
