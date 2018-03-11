@@ -13,6 +13,8 @@ Line::Line()
 
     model.addIndex(0);
     model.addIndex(1);
+
+    gameObjectIs2D = true;
 }
 
 void Line::draw()

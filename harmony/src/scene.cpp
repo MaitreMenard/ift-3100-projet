@@ -107,7 +107,7 @@ GameObject * Scene::getGameObject(size_t index)
 
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
-	history_.add(new Command(gameObjectToRemove));
+    history_.add(new Command(gameObjectToRemove));
     gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
 }
 
@@ -219,6 +219,51 @@ Scene& Scene::operator=(const Scene& other)
     gameObjects.assign(other.gameObjects.begin(), other.gameObjects.end());
     selectedGameObject = other.selectedGameObject;
     return *this;
+}
+
+bool Scene::isSelectedGameObject2D()
+{
+    if (selectedGameObject == nullptr)
+    {
+        return false;
+    }
+    return selectedGameObject->is2D();
+}
+
+void Scene::setSelectedGameObjectTexture(size_t textureID)
+{
+    ofPixels * pix = new ofPixels();
+    pix->allocate(256, 256, OF_PIXELS_RGB);
+    switch (textureID)
+    {
+    case 0:
+        //Remove texture of selectedGameObject
+        break;
+    case 1:
+        pix = tFac.setCloudImage(pix, 5.f);
+        break;
+    case 2:
+        pix = tFac.setMarbleTexture(pix, 5.f, 5.f, 1.f, 16.f);
+        break;
+    case 3:
+        pix = tFac.setNoise(pix);
+        break;
+    case 4:
+        pix = tFac.setTurbulenceImage(pix, 5.f);
+        break;
+    case 5:
+        pix = tFac.setWoodTexture(pix, 7.f, 5.f, 5.f);
+        break;
+    case 6:
+        pix = tFac.setZoom(pix, 5.f);
+        break;
+    }
+    selectedGameObject->setTexture(textureID, pix);
+}
+
+size_t Scene::getSelectedGameObjectTextureID()
+{
+    return selectedGameObject->getTextureID();
 }
 
 void Scene::deleteAllGameObjects()

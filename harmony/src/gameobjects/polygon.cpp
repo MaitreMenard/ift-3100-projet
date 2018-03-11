@@ -11,6 +11,8 @@ Polygone::Polygone()
     nbVertex = 5;
 
     ofSetCircleResolution(nbVertex);
+
+    gameObjectIs2D = true;
 }
 
 void Polygone::draw()

@@ -66,6 +66,8 @@ Cube::Cube()
     model.addIndex(1);
     model.addIndex(4);
     model.addIndex(5);
+
+    gameObjectIs2D = false;
 }
 
 void Cube::setColor(ofColor color)

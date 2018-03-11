@@ -20,4 +20,6 @@ Triangle::Triangle()
     model.addIndex(0);
     model.addIndex(1);
     model.addIndex(2);
+
+    gameObjectIs2D = true;
 }
