@@ -5,11 +5,18 @@
 CommandHandler::CommandHandler()
 {}
 
-void CommandHandler::flush_fw_command()
+CommandHandler::~CommandHandler()
 {
-    while (!history_fw.empty())
+	flush_stack(&history_bw);
+	flush_stack(&history_fw);
+}
+
+void CommandHandler::flush_stack(stack<Command*> * pStack)
+{
+    while (!pStack->empty())
     {
-        history_fw.pop();
+		delete pStack->top();
+		pStack->pop();
     }
 }
 
@@ -18,7 +25,7 @@ void CommandHandler::add(Command * cmd)
     if (isEnable && (history_bw.empty() || *history_bw.top() != *cmd))
     {
         if (UNDO_REDO_VERBOSE) cout << "Cmd add" << endl;
-        flush_fw_command();
+        flush_stack(&history_fw);
         history_bw.push(cmd);
         history_bw.top()->exec();
     }
@@ -60,6 +67,7 @@ void CommandHandler::pop_back_bw()
         history_bw.pop();
     }
     // pop last object
+	delete temp_stack.top();
     temp_stack.pop();
     // restack rest of objects
     while (!temp_stack.empty())
