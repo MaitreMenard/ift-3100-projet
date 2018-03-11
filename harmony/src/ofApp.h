@@ -13,6 +13,7 @@
 #include "gameobjects/line.h"
 #include "gameobjects/polygon.h"
 #include "gameobjects/model3D.h"
+#include "gameobjects/arrow.h"
 #include "gui/rotation_slider.h"
 #include "gui/vec3f_textfield.h"
 
