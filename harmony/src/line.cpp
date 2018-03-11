@@ -17,7 +17,22 @@ Line::Line()
 
 void Line::draw()
 {
+    ofPushMatrix();
+    transform.applyToModelViewMatrix();
+
     texture.bind();
     model.draw();
     texture.unbind();
+
+    for (GameObject* child : children)
+    {
+        child->draw();
+    }
+
+    if (isSelected)
+    {
+        drawBoundingBox();
+    }
+
+    ofPopMatrix();
 }

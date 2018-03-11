@@ -6,6 +6,8 @@ GameObject::GameObject()
 
     boundingBox = ofBoxPrimitive();
     boundingBox.set(1);
+
+    isSelected = false;
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -16,6 +18,7 @@ GameObject::GameObject(const GameObject & other)
     }
 
     boundingBox = other.boundingBox;
+    isSelected = other.isSelected;
 }
 
 void GameObject::setup()
@@ -31,7 +34,6 @@ void GameObject::update()
 void GameObject::draw()
 {
     ofPushMatrix();
-
     transform.applyToModelViewMatrix();
 
     model.draw();
@@ -40,23 +42,22 @@ void GameObject::draw()
         child->draw();
     }
 
+    if (isSelected)
+    {
+        drawBoundingBox();
+    }
+
     ofPopMatrix();
 }
 
 void GameObject::drawBoundingBox()
 {
-    ofPushMatrix();
-
     for (size_t i = 0; i < 6; i++)
     {
         boundingBox.setSideColor(i, ofColor(0, 255, 0));
     }
 
-    transform.applyToModelViewMatrix();
-
     boundingBox.drawWireframe();
-
-    ofPopMatrix();
 }
 
 ofVec3f GameObject::getPosition()
@@ -167,6 +168,11 @@ void GameObject::setParentGameObject(GameObject* parentGameObject)
     }
 }
 
+void GameObject::setSelected(bool isSelected)
+{
+    this->isSelected = isSelected;
+}
+
 bool GameObject::hasChildren()
 {
     return children.size() > 0;
@@ -176,6 +182,10 @@ GameObject & GameObject::operator=(const GameObject & other)
 {
     deleteAllChildren();
     children.assign(other.children.begin(), other.children.end());
+
+    boundingBox = other.boundingBox;
+    isSelected = other.isSelected;
+
     return *this;
 }
 

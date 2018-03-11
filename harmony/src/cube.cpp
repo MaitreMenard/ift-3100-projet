@@ -63,9 +63,11 @@ Cube::Cube()
     model.addIndex(5);
 }
 
-void Cube::setColor(ofColor color) {
+void Cube::setColor(ofColor color)
+{
     model.clearColors();
-    for (int i = 0; i < nbVertex; i++) {
+    for (int i = 0; i < nbVertex; i++)
+    {
         model.addColor(color);
     }
 }

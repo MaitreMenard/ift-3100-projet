@@ -15,8 +15,10 @@ protected:
     ofMesh model;
     GameObject* parentGameObject;
     ofBoxPrimitive boundingBox;
-
     int nbVertex;
+    bool isSelected;
+
+    virtual void drawBoundingBox();
 
 public:
     GameObject();
@@ -25,8 +27,6 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-
-    void drawBoundingBox();
 
     ofVec3f getPosition();
     void setPosition(float x, float y, float z);
@@ -52,6 +52,8 @@ public:
 
     GameObject* getParentGameObject();
     void setParentGameObject(GameObject* parent);
+
+    void setSelected(bool isSelected);
 
     GameObject& operator=(const GameObject& other);
 

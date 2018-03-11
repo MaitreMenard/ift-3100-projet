@@ -33,8 +33,14 @@ void Scene::update()
 
 void Scene::setSelectedGameObject(size_t gameObjectID)
 {
+    if (selectedGameObject != nullptr)
+    {
+        selectedGameObject->setSelected(false);
+    }
+
     selectedGameObjectID = gameObjectID;
     selectedGameObject = gameObjects[gameObjectID];
+    selectedGameObject->setSelected(true);
 }
 
 size_t Scene::getSelectedGameObjectID()
@@ -83,11 +89,6 @@ void Scene::draw()
         {
             gameObject->draw();
         }
-    }
-
-    if (selectedGameObject != nullptr)
-    {
-        selectedGameObject->drawBoundingBox();
     }
 }
 
