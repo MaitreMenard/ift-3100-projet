@@ -12,4 +12,6 @@ Sphere::Sphere()
 
     model = spherePrimitive.getMesh();
     nbVertex = model.getVertices().size();
+
+    gameObjectIs2D = false;
 }

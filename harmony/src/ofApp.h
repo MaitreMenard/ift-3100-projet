@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxInputField.h"
-#include "texelFactory.h"
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
@@ -50,6 +49,16 @@ private:
     const string pointText = "Point";
     const string polygonText = "Polygon";
     const string lineText = "Line";
+
+    const string noneText = "None";
+    const string cloudText = "Cloud";
+    const string marbleText = "Marble";
+    const string noiseText = "Noise";
+    const string turbulenceText = "Turbulence";
+    const string zoomText = "Zoom";
+
+    const string inspectorText = "Inspector";
+    const string sceneText = "Scene";
     const string textureText = "Texture";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
@@ -57,6 +66,7 @@ private:
 
     const ofColor baseButtonColor = ofColor(24, 24, 24);
     const ofColor baseLabelColor = ofColor(48, 48, 72);
+    const ofColor headerLabelColor = ofColor(24, 120, 24);
     const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     bool shiftIsPressed;
@@ -68,8 +78,7 @@ private:
     Scene scene;
 
     vector<ofxButton*> object_buttons;
-
-    texelFactory tFac;
+    vector<ofxButton> texture_buttons;
 
     Vec3fTextField positionFields;
     RotationSlider rotation;
@@ -89,9 +98,20 @@ private:
 
     ofxPanel guiInspector;
     ofxPanel guiScene;
+    ofxPanel guiTexture;
 
     ofxLabel rgb_label;
     ofxLabel hsb_label;
+    ofxLabel inspector_label;
+    ofxLabel scene_label;
+    ofxLabel texture_label;
+
+    ofxButton none_button;
+    ofxButton cloud_button;
+    ofxButton marble_button;
+    ofxButton noise_button;
+    ofxButton turbulence_button;
+    ofxButton zoom_button;
 
     bool guiIsSetup = false;
 
@@ -110,8 +130,11 @@ private:
 
     void setupGUIInspector(size_t buttonID);
     void updateGUIInspector(size_t buttonID);
+    void setupGUITexture(size_t textureID);
+    void updateGUITexture(size_t textureID);
 
-    void checkIfAButtonIsPressed();
+    void checkIfASceneButtonIsPressed();
+    void checkIfATextureButtonIsPressed();
 
     void setupCamera();
 
@@ -143,6 +166,5 @@ enum ShapeType
     Shape_Line,
     Shape_Triangle,
     Shape_Rectangle,
-    Shape_Polygon,
-    Shape_Texture
+    Shape_Polygon
 };

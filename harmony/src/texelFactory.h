@@ -14,7 +14,7 @@ public:
     texelFactory();
     ~texelFactory();
 
-    ofPixels * setNoise(ofPixels * p_img);
+    ofPixels * setNoise(ofPixels * image);
     ofPixels * setZoom(ofPixels * image, float zoom);
     ofPixels * setTurbulenceImage(ofPixels * image, float size);
     ofPixels * setCloudImage(ofPixels * image, float size);

@@ -15,8 +15,10 @@ protected:
     ofMesh model;
     GameObject* parentGameObject;
     ofBoxPrimitive boundingBox;
-    int nbVertex;
+    size_t nbVertex;
     bool isSelected;
+    bool gameObjectIs2D;
+    size_t textureID;
 
     virtual void drawBoundingBox();
 
@@ -61,7 +63,10 @@ public:
 
     GameObject& operator=(const GameObject& other);
 
-    void setTexture(ofPixels * pixels);
+    size_t getTextureID();
+    void setTexture(size_t textureID, ofPixels * pixels);
+
+    bool is2D();
 
     virtual ~GameObject();
 };

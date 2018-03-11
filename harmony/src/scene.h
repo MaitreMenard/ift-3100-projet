@@ -2,6 +2,7 @@
 #include <vector>
 #include "gameobject.h"
 #include "command.h"
+#include "texelFactory.h"
 
 class Scene
 {
@@ -12,6 +13,7 @@ private:
     CommandHandler history_;
     size_t selectedGameObjectID;
     GameObject* selectedGameObject;
+    texelFactory tFac;
 
 public:
     Scene();
@@ -34,6 +36,7 @@ public:
     void enableUndoRedo() { history_.enable(); };
     void disableUndoRedo() { history_.disable(); };
     void setColorSelectedGameObject(ofColor color);
+    void setSelectedGameObjectTexture(size_t textureID);
 
     ofVec3f getPositionSelectedGameObject();
     ofVec3f getEulerRotationSelectedGameObject();
@@ -46,9 +49,12 @@ public:
     void removeNonChildGameObject(GameObject * gameObjectToRemove);
     bool isANonChildGameObject(GameObject * gameObjectToFind);
 
+    bool isSelectedGameObject2D();
+
     size_t getSelectedGameObjectID();
     size_t getGameObjectID(GameObject* gameObject);
     void setSelectedGameObject(size_t gameObjectID);
+    size_t getSelectedGameObjectTextureID();
 
     size_t getSelectedGameObjectParentID();
     void setSelectedGameObjectParent(size_t parentGameObjectID);

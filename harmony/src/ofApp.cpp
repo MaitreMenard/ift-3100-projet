@@ -28,8 +28,12 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    //SCENE
+    inspector_label.setBackgroundColor(headerLabelColor);
+    scene_label.setBackgroundColor(headerLabelColor);
+    texture_label.setBackgroundColor(headerLabelColor);
+
     guiScene.setup();
+    guiScene.add(scene_label.setup(ofParameter<string>(sceneText)));
 
     GUIIsDisplayed = true;
 }
@@ -39,11 +43,12 @@ void ofApp::setupGUIInspector(size_t buttonID)
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
 
-    //INSPECTOR
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
     guiInspector.clear();
     guiInspector.setup();
+
+    guiInspector.add(inspector_label.setup(ofParameter<string>(inspectorText)));
 
     guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
         ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
@@ -96,6 +101,15 @@ void ofApp::setupGUIInspector(size_t buttonID)
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
 
     guiIsSetup = true;
+
+    if (scene.isSelectedGameObject2D())
+    {
+        setupGUITexture(0);//TODO: take actual texture
+    }
+    else
+    {
+        guiTexture.clear();
+    }
 }
 
 void ofApp::updateGUIInspector(size_t buttonID)
@@ -103,7 +117,6 @@ void ofApp::updateGUIInspector(size_t buttonID)
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
 
-    //INSPECTOR
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
     positionFields.disableEvents();
@@ -137,6 +150,65 @@ void ofApp::updateGUIInspector(size_t buttonID)
     parent.setMax(object_buttons.size());
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
+
+    if (scene.isSelectedGameObject2D())
+    {
+        setupGUITexture(0);//TODO: take actual texture
+    }
+    else
+    {
+        guiTexture.clear();
+    }
+}
+
+void ofApp::setupGUITexture(size_t textureID)
+{
+    if (texture_buttons.empty())
+    {
+        texture_buttons.push_back(none_button);
+        texture_buttons.push_back(cloud_button);
+        texture_buttons.push_back(marble_button);
+        texture_buttons.push_back(noise_button);
+        texture_buttons.push_back(turbulence_button);
+        texture_buttons.push_back(zoom_button);
+    }
+
+    guiTexture.clear();
+    guiTexture.setup();
+
+    guiTexture.add(texture_label.setup(ofParameter<string>(textureText)));
+
+    none_button.setBackgroundColor(baseButtonColor);
+    cloud_button.setBackgroundColor(baseButtonColor);
+    marble_button.setBackgroundColor(baseButtonColor);
+    noise_button.setBackgroundColor(baseButtonColor);
+    turbulence_button.setBackgroundColor(baseButtonColor);
+    zoom_button.setBackgroundColor(baseButtonColor);
+
+    scene.setSelectedGameObjectTexture(textureID);
+    texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
+
+    guiTexture.add(none_button.setup(ofParameter<string>(noneText)));
+    guiTexture.add(cloud_button.setup(ofParameter<string>(cloudText)));
+    guiTexture.add(marble_button.setup(ofParameter<string>(marbleText)));
+    guiTexture.add(noise_button.setup(ofParameter<string>(noiseText)));
+    guiTexture.add(turbulence_button.setup(ofParameter<string>(turbulenceText)));
+    guiTexture.add(zoom_button.setup(ofParameter<string>(zoomText)));
+
+    guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
+}
+
+void ofApp::updateGUITexture(size_t textureID)
+{
+    none_button.setBackgroundColor(baseButtonColor);
+    cloud_button.setBackgroundColor(baseButtonColor);
+    marble_button.setBackgroundColor(baseButtonColor);
+    noise_button.setBackgroundColor(baseButtonColor);
+    turbulence_button.setBackgroundColor(baseButtonColor);
+    zoom_button.setBackgroundColor(baseButtonColor);
+
+    scene.setSelectedGameObjectTexture(textureID);
+    texture_buttons.at(textureID).setBackgroundColor(highlightedButtonColor);
 }
 
 void ofApp::exit()
@@ -231,11 +303,27 @@ void ofApp::colorChangedRGB(int & value)
 
 void ofApp::update()
 {
-    checkIfAButtonIsPressed();
+    checkIfATextureButtonIsPressed();
+    checkIfASceneButtonIsPressed();
     scene.update();
 }
 
-void ofApp::checkIfAButtonIsPressed()
+void ofApp::checkIfATextureButtonIsPressed()
+{
+    for (size_t i = 0; i < texture_buttons.size(); i++)
+    {
+        if (texture_buttons[i])
+        {
+            if (scene.getSelectedGameObjectTextureID() != i)
+            {
+                updateGUITexture(i);
+            }
+            break;
+        }
+    }
+}
+
+void ofApp::checkIfASceneButtonIsPressed()
 {
     for (size_t i = 0; i < object_buttons.size(); i++)
     {
@@ -266,6 +354,10 @@ void ofApp::draw()
         ofDisableDepthTest();
         guiInspector.draw();
         guiScene.draw();
+        if (scene.isSelectedGameObject2D())
+        {
+            guiTexture.draw();
+        }
         ofEnableDepthTest();
     }
 }
@@ -362,9 +454,6 @@ void ofApp::keyPressed(int key)
     case '7':
         addNewGameObject(6);
         break;
-    case '8':
-        addNewGameObject(7);
-        break;
     default:
         break;
     }
@@ -376,6 +465,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
+    guiTexture.clear();
 
     if (shapeType == Shape_Sphere)
     {
@@ -412,16 +502,6 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Polygone();
         shapeName = polygonText;
     }
-    else if (shapeType == Shape_Texture)
-    {
-        gameObject = new Rektangle();
-        ofPixels * pix = new ofPixels();
-        pix->allocate(250, 250, OF_PIXELS_RGB);
-        pix = tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0);
-        gameObject->setTexture(pix);
-        shapeName = textureText;
-    }
-
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
     if (guiIsSetup)

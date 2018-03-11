@@ -26,6 +26,8 @@ Rektangle::Rektangle()
     model.addIndex(3);
     model.addIndex(2);
     model.addIndex(1);
+
+    gameObjectIs2D = true;
 }
 
 void Rektangle::setColor(ofColor color)

@@ -7,6 +7,7 @@ GameObject::GameObject()
     boundingBox = ofBoxPrimitive();
     boundingBox.set(1);
 
+    textureID = 0;
     isSelected = false;
 }
 
@@ -209,12 +210,23 @@ void GameObject::deleteAllChildren()
     }
 }
 
-void GameObject::setTexture(ofPixels * pixels)
+void GameObject::setTexture(size_t textureID, ofPixels * pixels)
 {
+    this->textureID = textureID;
     texture.clear();
     texture.allocate(*pixels);
     //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
     texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+}
+
+size_t GameObject::getTextureID()
+{
+    return textureID;
+}
+
+bool GameObject::is2D() 
+{
+    return gameObjectIs2D;
 }
 
 GameObject::~GameObject()
