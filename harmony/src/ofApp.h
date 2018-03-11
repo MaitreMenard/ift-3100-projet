@@ -14,6 +14,7 @@
 #include "gameobjects/polygon.h"
 #include "gameobjects/model3D.h"
 #include "gameobjects/arrow.h"
+#include "gameobjects/star.h"
 #include "gui/rotation_slider.h"
 #include "gui/vec3f_textfield.h"
 
@@ -48,6 +49,8 @@ private:
     const string pointText = "Point";
     const string polygonText = "Polygon";
     const string lineText = "Line";
+    const string arrowText = "Arrow";
+    const string starText = "Star";
 
     const string noneText = "None";
     const string cloudText = "Cloud";
@@ -165,5 +168,9 @@ enum ShapeType
     Shape_Line,
     Shape_Triangle,
     Shape_Rectangle,
-    Shape_Polygon
+    Shape_Polygon,
+    Shape_Arrow,
+    Shape_Star,
+    Shape_Falcon,
+    Shape_XWing
 };

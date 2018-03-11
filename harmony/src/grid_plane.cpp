@@ -7,18 +7,18 @@ GridPlane::GridPlane()
 
 void GridPlane::setup()
 {
-    ofLoadImage(texture, "grid.png");
+    ofLoadImage(texture, "grid2.png");
     texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 
     mesh.setMode(OF_PRIMITIVE_TRIANGLE_STRIP);
-    mesh.addVertex(ofVec3f(-10, 0, 10));
+    mesh.addVertex(ofVec3f(-50, 0, 50));
     mesh.addTexCoord(texture.getCoordFromPercent(0, 0));
-    mesh.addVertex(ofVec3f(-10, 0, -10));
-    mesh.addTexCoord(texture.getCoordFromPercent(0, 5));
-    mesh.addVertex(ofVec3f(10, 0, 10));
-    mesh.addTexCoord(texture.getCoordFromPercent(5, 0));
-    mesh.addVertex(ofVec3f(10, 0, -10));
-    mesh.addTexCoord(texture.getCoordFromPercent(5, 5));
+    mesh.addVertex(ofVec3f(-50, 0, -50));
+    mesh.addTexCoord(texture.getCoordFromPercent(0, 10));
+    mesh.addVertex(ofVec3f(50, 0, 50));
+    mesh.addTexCoord(texture.getCoordFromPercent(10, 0));
+    mesh.addVertex(ofVec3f(50, 0, -50));
+    mesh.addTexCoord(texture.getCoordFromPercent(10, 10));
 }
 
 void GridPlane::draw()

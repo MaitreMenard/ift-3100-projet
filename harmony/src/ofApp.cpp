@@ -454,6 +454,12 @@ void ofApp::keyPressed(int key)
     case '7':
         addNewGameObject(6);
         break;
+    case '8':
+        addNewGameObject(Shape_Arrow);
+        break;
+    case '9':
+        addNewGameObject(Shape_Star);
+        break;
     default:
         break;
     }
@@ -501,6 +507,16 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         gameObject = new Polygone();
         shapeName = polygonText;
+    }
+    else if (shapeType == Shape_Arrow)
+    {
+        gameObject = new Arrow();
+        shapeName = arrowText;
+    }
+    else if (shapeType == Shape_Star)
+    {
+        gameObject = new Star();
+        shapeName = starText;
     }
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
