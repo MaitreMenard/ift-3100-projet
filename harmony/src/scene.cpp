@@ -107,6 +107,7 @@ GameObject * Scene::getGameObject(size_t index)
 
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
+	history_.add(new Command(gameObjectToRemove));
     gameObjects.erase(std::remove(gameObjects.begin(), gameObjects.end(), gameObjectToRemove), gameObjects.end());
 }
 
