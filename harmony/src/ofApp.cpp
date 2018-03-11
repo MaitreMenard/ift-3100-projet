@@ -4,7 +4,9 @@
 
 void ofApp::setup()
 {
+	scene.enableUndoRedo();
     shiftIsPressed = false;
+	CtrlIsPressed = false;
 
     ofSetFrameRate(60);
     ofEnableDepthTest();
@@ -14,18 +16,6 @@ void ofApp::setup()
     setupCamera();
     gridPlane.setup();
     scene.setup();
-
-    /*Sphere* sphere = new Sphere();
-    plan2D* plan = new plan2D();
-    sphere->translate(0.0f, 2.0f, 0.0f);
-    scene.addGameObject(sphere);
-    scene.addGameObject(plan);
-
-    // Test procedural texture
-    ofPixels * pix = new ofPixels();
-    pix->allocate(500, 500, OF_PIXELS_RGB);
-    scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0));*/
-
     //Model3D* falcon = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
     //    ofVec3f(-0.59, 0.17, 19.0),
     //    180,
@@ -151,14 +141,36 @@ void ofApp::updateGUIInspector(size_t buttonID)
     parent.addListener(this, &ofApp::parentChanged);
 }
 
+void ofApp::exit()
+{}
+
+void ofApp::colorChangedHSB(int & value) {
+    ofColor newColor = ofColor(0);
+    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
+    scene.setColorSelectedGameObject(newColor);
+
+    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
+    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
+
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    RGB_r = currentColor.r;
+    RGB_g = currentColor.g;
+    RGB_b = currentColor.b;
+    RGB_a = currentColor.a;
+
+    RGB_r.addListener(this, &ofApp::colorChangedRGB);
+    RGB_g.addListener(this, &ofApp::colorChangedRGB);
+    RGB_b.addListener(this, &ofApp::colorChangedRGB);
+    RGB_a.addListener(this, &ofApp::colorChangedRGB);
+}
+
 void ofApp::setupCamera()
 {
     camera.setNearClip(0.1f);
     camera.setPosition(0, 2, 5);
 }
-
-void ofApp::exit()
-{}
 
 void ofApp::parentChanged(int & newParentID)
 {
@@ -222,7 +234,7 @@ void ofApp::colorChangedRGB(int & value)
 
     addHSBListeners();
 }
-
+/**
 void ofApp::colorChangedHSB(int & value)
 {
     ofColor newColor = ofColor(0);
@@ -239,6 +251,7 @@ void ofApp::colorChangedHSB(int & value)
 
     addRGBListeners();
 }
+*/
 
 void ofApp::update()
 {
@@ -300,14 +313,16 @@ void ofApp::takeScreenShot()
 
 void ofApp::keyPressed(int key)
 {
-    ofPixels * pix;
     switch (key)
     {
-    case 'p':
-        /*pix = new ofPixels();
-        pix->allocate(500, 500, OF_PIXELS_RGB);
-        scene.getGameObject(1)->setTexture(tFac.setMarbleTexture(pix, 2.0, 2.0, 1.0, 16.0));*/
-        break;
+	case -1: // CTRL_R + Z
+	case 26: // CTRL_L + Z
+		scene.undo();
+		break;
+	case 8592: // CTRL_R + Y
+	case 25: // CTRL_L + Y
+		scene.redo();
+		break;
     case ' ':
         takeScreenShot();
         break;
@@ -344,6 +359,9 @@ void ofApp::keyPressed(int key)
     case 2304:  // shift
         shiftIsPressed = true;
         break;
+	case 768: // Ctrl L and R
+		CtrlIsPressed = true;
+		break;
     case 'h':
         GUIIsDisplayed = !GUIIsDisplayed;
         break;
@@ -368,17 +386,20 @@ void ofApp::keyPressed(int key)
     case '7':
         addNewGameObject(6);
         break;
+	case '8':
+		addNewGameObject(7);
+		break;
     default:
         break;
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType)
-{
+void ofApp::addNewGameObject(size_t shapeType) {
     ofxButton *object_button = new ofxButton();
     object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
+
     if (shapeType == Shape_Sphere)
     {
         gameObject = new Sphere();
@@ -414,6 +435,15 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Polygone();
         shapeName = polygonText;
     }
+	else if (shapeType == Shape_Texture) {
+		gameObject = new Rektangle();
+		ofPixels * pix = new ofPixels();
+		pix->allocate(250, 250, OF_PIXELS_RGB);
+		pix = tFac.setMarbleTexture(pix, 5.0, 5.0, 1.0, 16.0);
+		gameObject->setTexture(pix);
+		shapeName = textureText;
+	}
+
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
     if (guiIsSetup)
@@ -433,6 +463,10 @@ void ofApp::keyReleased(int key)
     case 2304:  // shift
         shiftIsPressed = false;
         break;
+	case 769: // Ctrl L and R
+	case 770:
+		CtrlIsPressed = false;
+		break;
     default:
         break;
     }

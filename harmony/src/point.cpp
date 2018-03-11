@@ -10,10 +10,3 @@ Point::Point()
     model.addVertex(ofVec3f(-1.f, -0, 0.f));
     model.addTexCoord(texture.getCoordFromPercent(0, 0));
 }
-
-void Point::draw()
-{
-    texture.bind();
-    model.draw();
-    texture.unbind();
-}

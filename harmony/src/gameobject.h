@@ -49,11 +49,15 @@ public:
     void removeChild(GameObject* childToRemove);
     bool hasChildren();
     vector<GameObject *> getChildren();
+	void setChildren(vector<GameObject *>);
 
     GameObject* getParentGameObject();
     void setParentGameObject(GameObject* parent);
 
     void setSelected(bool isSelected);
+
+	Transform getTransform() { return Transform(transform); };
+	void setTransform(const Transform &transf) { transform = Transform(transf); };
 
     GameObject& operator=(const GameObject& other);
 

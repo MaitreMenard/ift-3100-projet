@@ -3,7 +3,10 @@
 
 Polygone::Polygone()
 {
-    texture.allocate(1, 1, GL_RGB);
+	ofPixels * pix = new ofPixels();
+	pix->allocate(1, 1, OF_PIXELS_RGB);
+	pix->setColor(0, 0, ofColor(255, 255, 255));
+	texture.allocate(*pix);
 
     nbVertex = 5;
 

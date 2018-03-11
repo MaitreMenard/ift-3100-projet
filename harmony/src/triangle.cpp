@@ -3,7 +3,10 @@
 
 Triangle::Triangle()
 {
-    texture.allocate(1, 1, GL_RGB);
+	ofPixels * pix = new ofPixels();
+	pix->allocate(1, 1, OF_PIXELS_RGB);
+	pix->setColor(0, 0, ofColor(255, 255, 255));
+	texture.allocate(*pix);
 
     nbVertex = 3;
     model.setMode(OF_PRIMITIVE_TRIANGLES);
@@ -17,11 +20,4 @@ Triangle::Triangle()
     model.addIndex(0);
     model.addIndex(1);
     model.addIndex(2);
-}
-
-void Triangle::draw()
-{
-    texture.bind();
-    model.draw();
-    texture.unbind();
 }

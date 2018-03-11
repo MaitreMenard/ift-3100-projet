@@ -1,5 +1,12 @@
 #include "transform.h"
 
+
+Transform::Transform(const Transform &transf) {
+	localPosition = ofVec3f(transf.getPosition());
+	localRotation = ofQuaternion(transf.getRotation());
+	localScale = ofVec3f(transf.getScale());
+}
+
 Transform::Transform()
 {
     globalPosition = localPosition = ofVec3f(0, 0, 0);
@@ -10,7 +17,7 @@ Transform::Transform()
     globalScale = localScale = ofVec3f(1, 1, 1);
 }
 
-ofVec3f Transform::getPosition()
+ofVec3f Transform::getPosition() const
 {
     return localPosition;
 }
@@ -31,7 +38,7 @@ void Transform::translate(float dx, float dy, float dz)
     globalPosition += delta;
 }
 
-ofQuaternion Transform::getRotation()
+ofQuaternion Transform::getRotation() const
 {
     return localRotation;
 }
@@ -57,7 +64,7 @@ void Transform::rotate(float degrees, float x, float y, float z)
     globalRotation *= rotation;
 }
 
-ofVec3f Transform::getScale()
+ofVec3f Transform::getScale() const
 {
     return localScale;
 }
@@ -95,4 +102,18 @@ void Transform::setRelativeTo(Transform other)
     localRotation *= other.globalRotation.inverse() * globalRotation;
 
     localScale = globalScale / other.globalScale;
+}
+
+bool Transform::operator==(const Transform &obj1) {
+	if (localPosition != obj1.localPosition)
+		return false;
+	if (localRotation != obj1.localRotation)
+		return false;
+	if (localScale != obj1.localScale)
+		return false;
+	return true;
+}
+
+bool Transform::operator!=(const Transform &obj1) {
+	return !(*this == obj1);
 }

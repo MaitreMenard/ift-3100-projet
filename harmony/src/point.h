@@ -6,5 +6,4 @@ class Point : public GameObject
 {
 public:
     Point();
-    void draw();
 };

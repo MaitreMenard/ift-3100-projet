@@ -6,5 +6,4 @@ class Triangle : public GameObject
 {
 public:
     Triangle();
-    void draw();
 };

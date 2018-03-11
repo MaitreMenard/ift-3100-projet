@@ -6,5 +6,5 @@ class Rektangle : public GameObject
 {
 public:
     Rektangle();
-    void draw();
+	void setColor(ofColor color);
 };

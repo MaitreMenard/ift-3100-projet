@@ -48,6 +48,7 @@ private:
     const string pointText = "Point";
     const string polygonText = "Polygon";
     const string lineText = "Line";
+	const string textureText = "Texture";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
@@ -57,6 +58,7 @@ private:
     const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     bool shiftIsPressed;
+	bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
     ofCamera camera;
@@ -139,5 +141,6 @@ enum ShapeType
     Shape_Line,
     Shape_Triangle,
     Shape_Rectangle,
-    Shape_Polygon
+    Shape_Polygon,
+	Shape_Texture
 };

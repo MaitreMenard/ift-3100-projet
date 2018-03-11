@@ -175,6 +175,7 @@
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
     <ClCompile Include="src\line.cpp" />
+    <ClCompile Include="src\command.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\model3D.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -206,6 +207,7 @@
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
     <ClInclude Include="src\line.h" />
+    <ClInclude Include="src\command.h" />
     <ClInclude Include="src\model3D.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\cube.h" />

@@ -58,12 +58,14 @@ void Scene::setRotationSelectedGameObject(ofVec3f rotation)
     if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
     {
         selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
+		history_.add(new Command(selectedGameObject));
     }
 }
 
 void Scene::setColorSelectedGameObject(ofColor color)
 {
     selectedGameObject->setColor(color);
+	history_.add(new Command(selectedGameObject));
 }
 
 ofVec3f Scene::getPositionSelectedGameObject()
@@ -95,6 +97,7 @@ void Scene::draw()
 void Scene::addGameObject(GameObject* gameObject)
 {
     gameObjects.push_back(gameObject);
+	history_.add(new Command(gameObject));
 }
 
 GameObject * Scene::getGameObject(size_t index)
@@ -127,26 +130,31 @@ void Scene::removeGameObject(size_t index)
 void Scene::translateSelectedGameObject(float dx, float dy, float dz)
 {
     selectedGameObject->translate(dx, dy, dz);
+	history_.add(new Command(selectedGameObject));
 }
 
 void Scene::setPositionSelectedGameObject(float x, float y, float z)
 {
     selectedGameObject->setPosition(x, y, z);
+	history_.add(new Command(selectedGameObject));
 }
 
 void Scene::setScaleSelectedGameObject(float x, float y, float z)
 {
     selectedGameObject->setScale(x, y, z);
+	history_.add(new Command(selectedGameObject));
 }
 
 void Scene::rescaleSelectedGameObject(float x, float y, float z)
 {
     selectedGameObject->reScale(x, y, z);
+	history_.add(new Command(selectedGameObject));
 }
 
 void Scene::rotateSelectedGameObject(float degrees, float x, float y, float z)
 {
     selectedGameObject->rotate(degrees, x, y, z);
+	history_.add(new Command(selectedGameObject));
 }
 
 size_t Scene::getSelectedGameObjectParentID()
@@ -218,6 +226,28 @@ void Scene::deleteAllGameObjects()
     {
         delete gameObject;
     }
+}
+
+void Scene::undo() {
+	history_.undo();
+	GameObject * gobj = history_.getSelectedGameObject();
+	if (gobj != nullptr){
+		selectedGameObject->setSelected(false);
+		selectedGameObject = gobj;
+		selectedGameObjectID = getGameObjectID(selectedGameObject);
+		selectedGameObject->setSelected(true);
+	}
+}
+
+void Scene::redo(){
+	history_.redo();
+	GameObject * gobj = history_.getSelectedGameObject();
+	if (gobj != nullptr) {
+		selectedGameObject->setSelected(false);
+		selectedGameObject = gobj;
+		selectedGameObjectID = getGameObjectID(selectedGameObject);
+		selectedGameObject->setSelected(true);
+	}
 }
 
 Scene::~Scene()

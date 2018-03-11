@@ -77,6 +77,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
+    <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\gui\rotation_slider.cpp">
@@ -352,6 +353,12 @@
     </ClInclude>
     <ClInclude Include="src\polygon.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\command.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\rotation_slider.h">
+      <Filter>src\gui</Filter>
     </ClInclude>
     <ClInclude Include="src\model3D.h">
       <Filter>src</Filter>
