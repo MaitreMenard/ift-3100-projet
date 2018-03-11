@@ -28,4 +28,6 @@ Rektangle::Rektangle()
     model.addIndex(1);
 
     gameObjectIs2D = true;
+
+    boundingBox.set(1, 1, 0.01f);
 }

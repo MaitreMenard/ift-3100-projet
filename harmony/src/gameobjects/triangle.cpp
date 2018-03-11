@@ -22,4 +22,6 @@ Triangle::Triangle()
     model.addIndex(2);
 
     gameObjectIs2D = true;
+
+    boundingBox.set(1, 1, 0.01f);
 }

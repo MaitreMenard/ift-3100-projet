@@ -16,6 +16,8 @@ Polygone::Polygone(size_t nbVertex)
     }
 
     gameObjectIs2D = true;
+
+    boundingBox.set(1, 1, 0.01f);
 }
 
 void Polygone::createPoint(size_t index)
