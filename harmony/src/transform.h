@@ -31,4 +31,5 @@ public:
     void applyToModelViewMatrix();
 
     void setRelativeTo(Transform other);
+    void setGlobal();
 };

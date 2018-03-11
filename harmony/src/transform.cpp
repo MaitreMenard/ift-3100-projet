@@ -96,3 +96,10 @@ void Transform::setRelativeTo(Transform other)
 
     localScale = globalScale / other.globalScale;
 }
+
+void Transform::setGlobal()
+{
+    localPosition = globalPosition;
+    localRotation = globalRotation;
+    localScale = globalScale;
+}
