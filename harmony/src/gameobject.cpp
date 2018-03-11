@@ -172,7 +172,8 @@ void GameObject::setParentGameObject(GameObject* parentGameObject)
     }
     else
     {
-        transform.setRelativeTo(Transform());
+        //transform.setRelativeTo(Transform());
+        transform.setGlobal();
     }
 }
 

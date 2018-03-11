@@ -174,18 +174,18 @@
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
     <ClCompile Include="src\gui\rotation_slider.cpp" />
-    <ClCompile Include="src\line.cpp" />
     <ClCompile Include="src\command.cpp" />
+    <ClCompile Include="src\gameobjects\line.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\model3D.cpp" />
+    <ClCompile Include="src\gameobjects\model3D.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
-    <ClCompile Include="src\cube.cpp" />
+    <ClCompile Include="src\gameobjects\cube.cpp" />
     <ClCompile Include="src\gameobject.cpp" />
-    <ClCompile Include="src\point.cpp" />
-    <ClCompile Include="src\polygon.cpp" />
-    <ClCompile Include="src\rectangle.cpp" />
+    <ClCompile Include="src\gameobjects\point.cpp" />
+    <ClCompile Include="src\gameobjects\polygon.cpp" />
+    <ClCompile Include="src\gameobjects\rectangle.cpp" />
     <ClCompile Include="src\scene.cpp" />
-    <ClCompile Include="src\sphere.cpp" />
+    <ClCompile Include="src\gameobjects\sphere.cpp" />
     <ClCompile Include="src\texelFactory.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
@@ -201,23 +201,24 @@
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\addons\ofxGui\src\ofxToggle.cpp" />
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp" />
-    <ClCompile Include="src\triangle.cpp" />
+    <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
-    <ClInclude Include="src\line.h" />
     <ClInclude Include="src\command.h" />
     <ClInclude Include="src\model3D.h" />
+    <ClInclude Include="src\gameobjects\line.h" />
+    <ClInclude Include="src\gameobjects\model3D.h" />
     <ClInclude Include="src\ofApp.h" />
-    <ClInclude Include="src\cube.h" />
+    <ClInclude Include="src\gameobjects\cube.h" />
     <ClInclude Include="src\gameobject.h" />
     <ClInclude Include="src\grid_plane.h" />
-    <ClInclude Include="src\point.h" />
-    <ClInclude Include="src\polygon.h" />
-    <ClInclude Include="src\rectangle.h" />
+    <ClInclude Include="src\gameobjects\point.h" />
+    <ClInclude Include="src\gameobjects\polygon.h" />
+    <ClInclude Include="src\gameobjects\rectangle.h" />
     <ClInclude Include="src\scene.h" />
-    <ClInclude Include="src\sphere.h" />
+    <ClInclude Include="src\gameobjects\sphere.h" />
     <ClInclude Include="src\texelFactory.h" />
     <ClInclude Include="src\transform.h" />
     <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
@@ -271,7 +272,7 @@
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h" />
-    <ClInclude Include="src\triangle.h" />
+    <ClInclude Include="src\gameobjects\triangle.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

@@ -7,9 +7,6 @@
     <ClCompile Include="src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\cube.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameobject.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -23,9 +20,6 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\scene.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sphere.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\transform.cpp">
@@ -70,12 +64,6 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp">
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\grid_plane.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\sphere.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\texelFactory.cpp">
     <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
@@ -85,24 +73,30 @@
     </ClCompile>
     <ClCompile Include="src\gui\vec3f_textfield.cpp">
       <Filter>src\gui</Filter>
-	</ClCompile>
-    <ClCompile Include="src\triangle.cpp">
-      <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\rectangle.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\gameobjects\cube.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\point.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\gameobjects\line.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\line.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\gameobjects\model3D.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\polygon.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\gameobjects\point.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\model3D.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\gameobjects\polygon.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\rectangle.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\sphere.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\triangle.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,12 +142,12 @@
     <Filter Include="src\gui">
       <UniqueIdentifier>{defd50b7-50a5-4e95-8a27-edfdbd17848c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\gameobjects">
+      <UniqueIdentifier>{699dce23-d021-4259-bce8-e9ae848aeb76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\cube.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobject.h">
@@ -166,9 +160,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\scene.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\sphere.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\transform.h">
@@ -327,9 +318,6 @@
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h">
       <Filter>addons\ofxInputField\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\sphere.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\texelFactory.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -338,21 +326,18 @@
     </ClInclude>
     <ClInclude Include="src\gui\vec3f_textfield.h">
       <Filter>src\gui</Filter>
-	</ClInclude>
-    <ClInclude Include="src\triangle.h">
-      <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\rectangle.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\gameobjects\cube.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
-    <ClInclude Include="src\point.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\gameobjects\line.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
-    <ClInclude Include="src\line.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\gameobjects\model3D.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
-    <ClInclude Include="src\polygon.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\gameobjects\point.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\command.h">
       <Filter>src</Filter>
@@ -362,6 +347,18 @@
     </ClInclude>
     <ClInclude Include="src\model3D.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\polygon.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\rectangle.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\sphere.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\triangle.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

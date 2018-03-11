@@ -117,3 +117,10 @@ bool Transform::operator==(const Transform &obj1) {
 bool Transform::operator!=(const Transform &obj1) {
 	return !(*this == obj1);
 }
+
+void Transform::setGlobal()
+{
+    localPosition = globalPosition;
+    localRotation = globalRotation;
+    localScale = globalScale;
+}

@@ -33,4 +33,5 @@ public:
     void setRelativeTo(Transform other);
 	bool operator==(const Transform &obj);
 	bool operator!=(const Transform &obj);
+    void setGlobal();
 };
