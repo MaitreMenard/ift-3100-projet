@@ -487,7 +487,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     else if (shapeType == Shape_Circle)
     {
         gameObject = new Polygone(90);
-        shapeName = pentagonText;
+        shapeName = circleText;
     }
     else if (shapeType == Shape_Arrow)
     {

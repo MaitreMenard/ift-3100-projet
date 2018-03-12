@@ -45,8 +45,8 @@ private:
     const string sphereText = "Sphere";
     const string rectangleText = "Rectangle";
     const string triangleText = "Triangle";
-    const string pointText = "Point";
     const string pentagonText = "Pentagon";
+    const string circleText = "Circle";
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
