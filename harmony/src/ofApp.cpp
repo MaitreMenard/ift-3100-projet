@@ -359,10 +359,12 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
+        updateGUIInspector(scene.getSelectedGameObjectID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
+        updateGUIInspector(scene.getSelectedGameObjectID());
         break;
     case ' ':
         takeScreenShot();
