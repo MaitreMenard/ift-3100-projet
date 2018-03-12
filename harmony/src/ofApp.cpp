@@ -222,7 +222,7 @@ void ofApp::parentChanged(int & newParentID)
     }
     else
     {
-        ofLog() << "mopdifying parent hierarchy";
+        ofLog() << "Modifying parent hierarchy";
         scene.setSelectedGameObjectParent(newParentID);
     }
 }
