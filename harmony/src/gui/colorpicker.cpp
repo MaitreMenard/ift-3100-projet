@@ -5,7 +5,7 @@ ColorPicker::ColorPicker()
     eventsEnabled = true;
 }
 
-void ColorPicker::setup(ofColor initialColor)
+ColorPicker* ColorPicker::setup(ofColor initialColor)
 {
     ofxGuiGroup::setup(headerText, "", 0, 0);
     setName(headerText);
@@ -13,19 +13,31 @@ void ColorPicker::setup(ofColor initialColor)
 
     rgb_label.setBackgroundColor(labelColor);
     add(rgb_label.setup(ofParameter<string>(rgbText)));
+
     add(RGB_r.setup(rText, initialColor.r, 0, 255));
     add(RGB_g.setup(gText, initialColor.g, 0, 255));
     add(RGB_b.setup(bText, initialColor.b, 0, 255));
     add(RGB_a.setup(aText, initialColor.a, 0, 255));
-    addRGBListeners();
+    
+    RGB_r.addListener(this, &ColorPicker::rgbFieldsListener);
+    RGB_g.addListener(this, &ColorPicker::rgbFieldsListener);
+    RGB_b.addListener(this, &ColorPicker::rgbFieldsListener);
+    RGB_a.addListener(this, &ColorPicker::rgbFieldsListener);
 
     hsb_label.setBackgroundColor(labelColor);
     add(hsb_label.setup(ofParameter<string>(hsbText)));
+
     add(HSB_h.setup(hText, initialColor.getHue(), 0, 255));
     add(HSB_s.setup(sText, initialColor.getSaturation(), 0, 255));
     add(HSB_b.setup(bText, initialColor.getBrightness(), 0, 255));
     add(HSB_a.setup(aText, initialColor.a, 0, 255));
-    addHSBListeners();
+    
+    HSB_h.addListener(this, &ColorPicker::hsbFieldsListener);
+    HSB_s.addListener(this, &ColorPicker::hsbFieldsListener);
+    HSB_b.addListener(this, &ColorPicker::hsbFieldsListener);
+    HSB_a.addListener(this, &ColorPicker::hsbFieldsListener);
+
+    return this;
 }
 
 void ColorPicker::addListener(std::function<void(ofColor)> method)
@@ -35,43 +47,59 @@ void ColorPicker::addListener(std::function<void(ofColor)> method)
 
 void ColorPicker::setColor(ofColor color)
 {
-    disableEvents();
+    eventsEnabled = false;
 
+    updateRGBFields(color);
+    updateHSBFields(color);
+
+    eventsEnabled = true;
+}
+
+void ColorPicker::rgbFieldsListener(int& value)
+{
+    if (eventsEnabled)
+    {
+        ofColor newColor = ofColor(RGB_r, RGB_g, RGB_b, RGB_a);
+
+        updateHSBFields(newColor);
+
+        callListenersWithNewColor(newColor);
+    }
+}
+
+void ColorPicker::hsbFieldsListener(int& value)
+{
+    if (eventsEnabled)
+    {
+        ofColor newColor = ofColor(0);
+        newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
+
+        updateRGBFields(newColor);
+
+        callListenersWithNewColor(newColor);
+    }
+}
+
+void ColorPicker::updateRGBFields(ofColor color)
+{
     RGB_r = color.r;
     RGB_g = color.g;
     RGB_b = color.b;
     RGB_a = color.a;
+}
 
+void ColorPicker::updateHSBFields(ofColor color)
+{
     HSB_h = color.getHue();
     HSB_s = color.getSaturation();
     HSB_b = color.getBrightness();
     HSB_a = color.a;
-
-    enableEvents();
 }
 
-void ColorPicker::enableEvents()
-{
-    eventsEnabled = true;
-}
-
-void ColorPicker::disableEvents()
-{
-    eventsEnabled = false;
-}
-
-void ColorPicker::intFieldsListener(int & value)
-{
-    if (eventsEnabled)
-    {
-
-    }
-}
-
-void ColorPicker::callListenersWithIntFieldValues()
+void ColorPicker::callListenersWithNewColor(ofColor color)
 {
     for (std::function<void(ofColor)> listener : listeners)
     {
-        listener(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
+        listener(color);
     }
 }

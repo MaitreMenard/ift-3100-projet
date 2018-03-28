@@ -2,7 +2,6 @@
 #include <ctime>
 #include "ofMain.h"
 #include "ofxGui.h"
-//#include "ofxInputField.h"
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
@@ -14,6 +13,7 @@
 #include "gameobjects/model3D.h"
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
+#include "gui/colorpicker.h"
 #include "gui/rotation_slider.h"
 #include "gui/vec3f_textfield.h"
 
@@ -28,14 +28,6 @@ private:
     const float SCALE_MIN_VALUE = -100;
     const float SCALE_MAX_VALUE = 100;
 
-    const string aText = "A: ";
-    const string bText = "B: ";
-    const string gText = "G: ";
-    const string hText = "H: ";
-    const string rText = "R: ";
-    const string sText = "S: ";
-    const string hsbText = "HSB";
-    const string rgbText = "RGB";
     const string parentText = "Parent: ";
     const string positionText = "Position: ";
     const string rotationText = "Rotation: ";
@@ -81,16 +73,7 @@ private:
     Vec3fTextField positionFields;
     RotationSlider rotation;
     Vec3fTextField scaleFields;
-
-    ofxIntField RGB_r;
-    ofxIntField RGB_g;
-    ofxIntField RGB_b;
-    ofxIntField RGB_a;
-
-    ofxIntField HSB_h;
-    ofxIntField HSB_s;
-    ofxIntField HSB_b;
-    ofxIntField HSB_a;
+    ColorPicker colorPicker;
 
     ofxIntField parent;
 
@@ -98,19 +81,9 @@ private:
     ofxPanel guiScene;
     ofxPanel guiTexture;
 
-    ofxLabel rgb_label;
-    ofxLabel hsb_label;
-
     bool guiIsSetup = false;
 
     void takeScreenShot();
-
-    void colorChangedRGB(int & value);
-    void colorChangedHSB(int & value);
-    void addRGBListeners();
-    void addHSBListeners();
-    void removeRGBListeners();
-    void removeHSBListeners();
 
     void parentChanged(int & newParentID);
 

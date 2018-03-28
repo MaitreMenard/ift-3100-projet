@@ -64,24 +64,13 @@ void ofApp::setupGUIInspector(size_t buttonID)
     };
     scaleFields.addListener(scaleListener);
 
-
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-
-    rgb_label.setBackgroundColor(baseLabelColor);
-    guiInspector.add(rgb_label.setup(ofParameter<string>(rgbText)));
-    guiInspector.add(RGB_r.setup(rText, selectedGameObjectColor.r, 0, 255));
-    guiInspector.add(RGB_g.setup(gText, selectedGameObjectColor.g, 0, 255));
-    guiInspector.add(RGB_b.setup(bText, selectedGameObjectColor.b, 0, 255));
-    guiInspector.add(RGB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    addRGBListeners();
-
-    hsb_label.setBackgroundColor(baseLabelColor);
-    guiInspector.add(hsb_label.setup(ofParameter<string>(hsbText)));
-    guiInspector.add(HSB_h.setup(hText, selectedGameObjectColor.getHue(), 0, 255));
-    guiInspector.add(HSB_s.setup(sText, selectedGameObjectColor.getSaturation(), 0, 255));
-    guiInspector.add(HSB_b.setup(bText, selectedGameObjectColor.getBrightness(), 0, 255));
-    guiInspector.add(HSB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    addHSBListeners();
+    guiInspector.add(colorPicker.setup(selectedGameObjectColor));
+    std::function<void(ofColor)> colorListener = [=](ofColor color)
+    {
+        scene.setColorSelectedGameObject(color);
+    };
+    colorPicker.addListener(colorListener);
 
     parent.setBackgroundColor(baseLabelColor);
     guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, object_buttons.size()));
@@ -110,20 +99,7 @@ void ofApp::updateGUIInspector(size_t buttonID)
     scaleFields = scene.getScaleSelectedGameObject();
 
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-
-    removeRGBListeners();
-    RGB_r = selectedGameObjectColor.r;
-    RGB_g = selectedGameObjectColor.g;
-    RGB_b = selectedGameObjectColor.b;
-    RGB_a = selectedGameObjectColor.a;
-    addRGBListeners();
-
-    removeHSBListeners();
-    HSB_h = selectedGameObjectColor.getHue();
-    HSB_s = selectedGameObjectColor.getSaturation();
-    HSB_b = selectedGameObjectColor.getBrightness();
-    HSB_a = selectedGameObjectColor.a;
-    addHSBListeners();
+    colorPicker.setColor(selectedGameObjectColor);
 
     parent.removeListener(this, &ofApp::parentChanged);
     parent.setMax(object_buttons.size());
@@ -189,70 +165,6 @@ void ofApp::parentChanged(int & newParentID)
         ofLog() << "Modifying parent hierarchy";
         scene.setSelectedGameObjectParent(newParentID);
     }
-}
-
-void ofApp::addRGBListeners()
-{
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
-}
-
-void ofApp::addHSBListeners()
-{
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
-}
-
-void ofApp::removeRGBListeners()
-{
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
-}
-
-void ofApp::removeHSBListeners()
-{
-    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
-}
-
-void ofApp::colorChangedRGB(int & value)
-{
-    scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
-
-    removeHSBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    HSB_h = currentColor.getHue();
-    HSB_s = currentColor.getSaturation();
-    HSB_b = currentColor.getBrightness();
-    HSB_a = currentColor.a;
-
-    addHSBListeners();
-}
-
-void ofApp::colorChangedHSB(int & value)
-{
-    ofColor newColor = ofColor(0);
-    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
-    scene.setColorSelectedGameObject(newColor);
-
-    removeRGBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    RGB_r = currentColor.r;
-    RGB_g = currentColor.g;
-    RGB_b = currentColor.b;
-    RGB_a = currentColor.a;
-
-    addRGBListeners();
 }
 
 void ofApp::update()
