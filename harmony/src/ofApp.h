@@ -2,7 +2,7 @@
 #include <ctime>
 #include "ofMain.h"
 #include "ofxGui.h"
-#include "ofxInputField.h"
+//#include "ofxInputField.h"
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
@@ -28,14 +28,14 @@ private:
     const float SCALE_MIN_VALUE = -100;
     const float SCALE_MAX_VALUE = 100;
 
-    const string aText = "A: ";
-    const string bText = "B: ";
-    const string gText = "G: ";
-    const string hText = "H: ";
-    const string rText = "R: ";
-    const string sText = "S: ";
-    const string hsbText = "HSB";
-    const string rgbText = "RGB";
+    //const string aText = "A: ";
+    //const string bText = "B: ";
+    //const string gText = "G: ";
+    //const string hText = "H: ";
+    //const string rText = "R: ";
+    //const string sText = "S: ";
+    //const string hsbText = "HSB";
+    //const string rgbText = "RGB";
     const string parentText = "Parent: ";
     const string positionText = "Position: ";
     const string rotationText = "Rotation: ";
@@ -82,7 +82,7 @@ private:
     RotationSlider rotation;
     Vec3fTextField scaleFields;
 
-    ofxIntField RGB_r;
+    /*ofxIntField RGB_r;
     ofxIntField RGB_g;
     ofxIntField RGB_b;
     ofxIntField RGB_a;
@@ -90,7 +90,7 @@ private:
     ofxIntField HSB_h;
     ofxIntField HSB_s;
     ofxIntField HSB_b;
-    ofxIntField HSB_a;
+    ofxIntField HSB_a;*/
 
     ofxIntField parent;
 
@@ -98,8 +98,8 @@ private:
     ofxPanel guiScene;
     ofxPanel guiTexture;
 
-    ofxLabel rgb_label;
-    ofxLabel hsb_label;
+    //ofxLabel rgb_label;
+    //ofxLabel hsb_label;
 
     bool guiIsSetup = false;
 

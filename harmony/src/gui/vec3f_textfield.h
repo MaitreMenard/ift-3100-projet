@@ -28,7 +28,7 @@ private:
     const string exceptionInvalidInput = " is not a valid input.";
 
     bool eventsEnabled;
-    std::vector<std::function<void(ofVec3f)>> listeners;
+    std::vector<std::function<void(ofVec3f)>> listeners;    //TODO: check if a destructor is required
 
     void textFieldsListener(string & value);
     void callListenersWithTextFieldValues();

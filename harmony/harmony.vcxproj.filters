@@ -109,6 +109,9 @@
     <ClCompile Include="src\gui\inspector.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\colorpicker.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -378,6 +381,9 @@
       <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gui\inspector.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\colorpicker.h">
       <Filter>src\gui</Filter>
     </ClInclude>
   </ItemGroup>
