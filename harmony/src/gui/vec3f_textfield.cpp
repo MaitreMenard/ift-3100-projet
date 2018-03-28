@@ -30,21 +30,13 @@ void Vec3fTextField::addListener(std::function<void(ofVec3f)> method)
     listeners.push_back(method);
 }
 
-void Vec3fTextField::enableEvents()
-{
-    eventsEnabled = true;
-}
-
-void Vec3fTextField::disableEvents()
-{
-    eventsEnabled = false;
-}
-
 ofVec3f Vec3fTextField::operator=(const ofVec3f & v)
 {
+    eventsEnabled = false;
     x = to_string(v.x);
     y = to_string(v.y);
     z = to_string(v.z);
+    eventsEnabled = true;
 
     return v;
 }
@@ -83,4 +75,9 @@ float Vec3fTextField::convertTextFieldValueToFloat(string stringValue, float min
         return 0;
     }
     return fValue;
+}
+
+Vec3fTextField::~Vec3fTextField()
+{
+    listeners.clear();
 }

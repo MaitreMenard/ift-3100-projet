@@ -22,19 +22,12 @@ void RotationSlider::addListener(std::function<void(ofVec3f)> method)
     listeners.push_back(method);
 }
 
-void RotationSlider::enableEvents()
-{
-    eventsEnabled = true;
-}
-
-void RotationSlider::disableEvents()
-{
-    eventsEnabled = false;
-}
-
 ofVec3f RotationSlider::operator=(const ofVec3f & v)
 {
+    eventsEnabled = false;
     value = v;
+    eventsEnabled = true;
+
     return value;
 }
 

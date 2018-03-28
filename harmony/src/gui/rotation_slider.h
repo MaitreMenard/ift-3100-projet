@@ -9,8 +9,6 @@ public:
     RotationSlider();
     RotationSlider* setup(const string labelText, ofVec3f value, ofVec3f minValues, ofVec3f maxValues);
     void addListener(std::function<void(ofVec3f)> method);
-    void enableEvents();
-    void disableEvents();
     ofVec3f operator=(const ofVec3f & v);
     ~RotationSlider();
 

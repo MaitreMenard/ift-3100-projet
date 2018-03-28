@@ -105,17 +105,9 @@ void ofApp::updateGUIInspector(size_t buttonID)
     scene.setSelectedGameObject(buttonID);
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
-    positionFields.disableEvents();
     positionFields = scene.getPositionSelectedGameObject();
-    positionFields.enableEvents();
-
-    rotation.disableEvents();
     rotation = scene.getEulerRotationSelectedGameObject();
-    rotation.enableEvents();
-
-    scaleFields.disableEvents();
     scaleFields = scene.getScaleSelectedGameObject();
-    scaleFields.enableEvents();
 
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
 
@@ -175,23 +167,6 @@ void ofApp::updateGUITexture(size_t textureID)
 
 void ofApp::exit()
 {}
-
-void ofApp::colorChangedHSB(int & value)
-{
-    ofColor newColor = ofColor(0);
-    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
-    scene.setColorSelectedGameObject(newColor);
-
-    removeRGBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    RGB_r = currentColor.r;
-    RGB_g = currentColor.g;
-    RGB_b = currentColor.b;
-    RGB_a = currentColor.a;
-
-    addRGBListeners();
-}
 
 void ofApp::setupCamera()
 {
@@ -261,6 +236,23 @@ void ofApp::colorChangedRGB(int & value)
     HSB_a = currentColor.a;
 
     addHSBListeners();
+}
+
+void ofApp::colorChangedHSB(int & value)
+{
+    ofColor newColor = ofColor(0);
+    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
+    scene.setColorSelectedGameObject(newColor);
+
+    removeRGBListeners();
+
+    ofColor currentColor = scene.getColorSelectedGameObject();
+    RGB_r = currentColor.r;
+    RGB_g = currentColor.g;
+    RGB_b = currentColor.b;
+    RGB_a = currentColor.a;
+
+    addRGBListeners();
 }
 
 void ofApp::update()
