@@ -100,9 +100,6 @@ private:
 
     ofxLabel rgb_label;
     ofxLabel hsb_label;
-    ofxLabel inspector_label;
-    ofxLabel scene_label;
-    ofxLabel texture_label;
 
     bool guiIsSetup = false;
 

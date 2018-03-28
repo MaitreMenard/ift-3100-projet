@@ -17,12 +17,9 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    inspector_label.setBackgroundColor(headerLabelColor);
-    scene_label.setBackgroundColor(headerLabelColor);
-    texture_label.setBackgroundColor(headerLabelColor);
-
     guiScene.setup();
-    guiScene.add(scene_label.setup(ofParameter<string>(sceneText)));
+    guiScene.setName(sceneText);
+    guiScene.setHeaderBackgroundColor(headerLabelColor);
 
     for (int i = 0; i < textureTexts.size(); i++)
     {
@@ -34,15 +31,14 @@ void ofApp::setup()
 
 void ofApp::setupGUIInspector(size_t buttonID)
 {
+    //FIXME: these 3 lines dont go in this method
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
-
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
-    guiInspector.clear();
     guiInspector.setup();
-
-    guiInspector.add(inspector_label.setup(ofParameter<string>(inspectorText)));
+    guiInspector.setName(inspectorText);
+    guiInspector.setHeaderBackgroundColor(headerLabelColor);
 
     guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
         ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
@@ -68,10 +64,11 @@ void ofApp::setupGUIInspector(size_t buttonID)
     };
     scaleFields.addListener(scaleListener);
 
-    rgb_label.setBackgroundColor(baseLabelColor);
-    removeRGBListeners();
-    guiInspector.add(rgb_label.setup(ofParameter<string>(rgbText)));
+
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
+
+    rgb_label.setBackgroundColor(baseLabelColor);
+    guiInspector.add(rgb_label.setup(ofParameter<string>(rgbText)));
     guiInspector.add(RGB_r.setup(rText, selectedGameObjectColor.r, 0, 255));
     guiInspector.add(RGB_g.setup(gText, selectedGameObjectColor.g, 0, 255));
     guiInspector.add(RGB_b.setup(bText, selectedGameObjectColor.b, 0, 255));
@@ -79,7 +76,6 @@ void ofApp::setupGUIInspector(size_t buttonID)
     addRGBListeners();
 
     hsb_label.setBackgroundColor(baseLabelColor);
-    removeHSBListeners();
     guiInspector.add(hsb_label.setup(ofParameter<string>(hsbText)));
     guiInspector.add(HSB_h.setup(hText, selectedGameObjectColor.getHue(), 0, 255));
     guiInspector.add(HSB_s.setup(sText, selectedGameObjectColor.getSaturation(), 0, 255));
@@ -87,7 +83,6 @@ void ofApp::setupGUIInspector(size_t buttonID)
     guiInspector.add(HSB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
     addHSBListeners();
 
-    parent.removeListener(this, &ofApp::parentChanged);
     parent.setBackgroundColor(baseLabelColor);
     guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, object_buttons.size()));
     parent.addListener(this, &ofApp::parentChanged);
@@ -96,21 +91,18 @@ void ofApp::setupGUIInspector(size_t buttonID)
 
     guiIsSetup = true;
 
+    guiTexture.clear();
     if (scene.isSelectedGameObject2D())
     {
         setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
-    else
-    {
-        guiTexture.clear();
     }
 }
 
 void ofApp::updateGUIInspector(size_t buttonID)
 {
+    //FIXME: these 3 lines dont go in this method
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
     scene.setSelectedGameObject(buttonID);
-
     object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 
     positionFields.disableEvents();
@@ -125,8 +117,9 @@ void ofApp::updateGUIInspector(size_t buttonID)
     scaleFields = scene.getScaleSelectedGameObject();
     scaleFields.enableEvents();
 
-    removeRGBListeners();
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
+
+    removeRGBListeners();
     RGB_r = selectedGameObjectColor.r;
     RGB_g = selectedGameObjectColor.g;
     RGB_b = selectedGameObjectColor.b;
@@ -145,22 +138,18 @@ void ofApp::updateGUIInspector(size_t buttonID)
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
 
+    guiTexture.clear();
     if (scene.isSelectedGameObject2D())
     {
         setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
-    else
-    {
-        guiTexture.clear();
     }
 }
 
 void ofApp::setupGUITexture(size_t textureID)
 {
-    guiTexture.clear();
     guiTexture.setup();
-
-    guiTexture.add(texture_label.setup(ofParameter<string>(textureText)));
+    guiTexture.setName(textureText);
+    guiTexture.setHeaderBackgroundColor(headerLabelColor);
 
     for (int i = 0; i < textureTexts.size(); i++)
     {
