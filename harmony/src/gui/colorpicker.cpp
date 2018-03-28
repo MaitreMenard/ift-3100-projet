@@ -47,12 +47,8 @@ void ColorPicker::addListener(std::function<void(ofColor)> method)
 
 void ColorPicker::setColor(ofColor color)
 {
-    eventsEnabled = false;
-
     updateRGBFields(color);
     updateHSBFields(color);
-
-    eventsEnabled = true;
 }
 
 void ColorPicker::rgbFieldsListener(int& value)
@@ -82,18 +78,26 @@ void ColorPicker::hsbFieldsListener(int& value)
 
 void ColorPicker::updateRGBFields(ofColor color)
 {
+    eventsEnabled = false;
+
     RGB_r = color.r;
     RGB_g = color.g;
     RGB_b = color.b;
     RGB_a = color.a;
+
+    eventsEnabled = true;
 }
 
 void ColorPicker::updateHSBFields(ofColor color)
 {
+    eventsEnabled = false;
+
     HSB_h = color.getHue();
     HSB_s = color.getSaturation();
     HSB_b = color.getBrightness();
     HSB_a = color.a;
+
+    eventsEnabled = true;
 }
 
 void ColorPicker::callListenersWithNewColor(ofColor color)
