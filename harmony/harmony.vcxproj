@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
+    <ClCompile Include="src\gui\inspector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
@@ -208,6 +209,7 @@
   <ItemGroup>
     <ClInclude Include="src\gameobjects\arrow.h" />
     <ClInclude Include="src\gameobjects\star.h" />
+    <ClInclude Include="src\gui\inspector.h" />
     <ClInclude Include="src\skybox.h" />
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
