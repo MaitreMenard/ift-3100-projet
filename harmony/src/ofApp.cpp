@@ -85,13 +85,6 @@ void ofApp::setupGUIInspector()
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
 
     guiIsSetup = true;
-
-    //FIXME: this should be in another method
-    guiTexture.clear();
-    if (scene.isSelectedGameObject2D())
-    {
-        setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
 }
 
 void ofApp::updateGUIInspector()
@@ -107,8 +100,10 @@ void ofApp::updateGUIInspector()
     parent.setMax(object_buttons.size());
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
+}
 
-    //FIXME: this should be in another method
+void ofApp::resetGUITexture()
+{
     guiTexture.clear();
     if (scene.isSelectedGameObject2D())
     {
@@ -203,6 +198,7 @@ void ofApp::checkIfASceneButtonIsPressed()
             {
                 selectGameObject(i);
                 updateGUIInspector();
+                resetGUITexture();
             }
             break;
         }
@@ -259,12 +255,14 @@ void ofApp::keyPressed(int key)
         scene.undo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
+        resetGUITexture();
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
+        resetGUITexture();
         break;
     case ' ':
         takeScreenShot();
@@ -352,7 +350,6 @@ void ofApp::addNewGameObject(size_t shapeType)
     object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
-    guiTexture.clear();
 
     if (shapeType == Shape_Sphere)
     {
@@ -418,16 +415,16 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
     scene.addGameObject(gameObject);
+    selectGameObject(object_buttons.size() - 1);
     if (guiIsSetup)
     {
-        selectGameObject(object_buttons.size() - 1);
         updateGUIInspector();
     }
     else
     {
-        selectGameObject(object_buttons.size() - 1);
         setupGUIInspector();
     }
+    resetGUITexture();
 }
 
 void ofApp::keyReleased(int key)
