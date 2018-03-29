@@ -17,9 +17,7 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    guiScene.setup();
-    guiScene.setName(sceneText);
-    guiScene.setHeaderBackgroundColor(headerLabelColor);
+    setupGUIScene();
 
     for (int i = 0; i < textureTexts.size(); i++)
     {
@@ -27,6 +25,19 @@ void ofApp::setup()
     }
 
     GUIIsDisplayed = true;
+}
+
+void ofApp::setupCamera()
+{
+    camera.setNearClip(0.1f);
+    camera.setPosition(0, 2, 5);
+}
+
+void ofApp::setupGUIScene()
+{
+    guiScene.setup();
+    guiScene.setName(sceneText);
+    guiScene.setHeaderBackgroundColor(headerLabelColor);
 }
 
 void ofApp::setupGUIInspector(size_t buttonID)
@@ -143,12 +154,6 @@ void ofApp::updateGUITexture(size_t textureID)
 
 void ofApp::exit()
 {}
-
-void ofApp::setupCamera()
-{
-    camera.setNearClip(0.1f);
-    camera.setPosition(0, 2, 5);
-}
 
 void ofApp::parentChanged(int & newParentID)
 {

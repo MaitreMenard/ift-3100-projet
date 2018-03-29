@@ -98,6 +98,7 @@ private:
     void checkIfATextureButtonIsPressed();
 
     void setupCamera();
+    void setupGUIScene();
 
 public:
     ~ofApp();
