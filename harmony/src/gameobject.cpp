@@ -89,6 +89,11 @@ ofQuaternion GameObject::getRotation()
     return transform.getRotation();
 }
 
+ofVec3f GameObject::getEulerAngles()
+{
+    return transform.getRotation().getEuler();
+}
+
 void GameObject::setRotation(float x, float y, float z)
 {
     transform.setRotation(x, y, z);

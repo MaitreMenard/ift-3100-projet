@@ -50,12 +50,12 @@ size_t Scene::getSelectedGameObjectID()
 
 ofVec3f Scene::getEulerRotationSelectedGameObject()
 {
-    return selectedGameObject->getRotation().getEuler();
+    return selectedGameObject->getEulerAngles();
 }
 
 void Scene::setRotationSelectedGameObject(ofVec3f rotation)
 {
-    if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
+    if (selectedGameObject != nullptr && selectedGameObject->getEulerAngles() != rotation)
     {
         selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
         history_.add(new Command(selectedGameObject));
