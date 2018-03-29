@@ -40,13 +40,8 @@ void ofApp::setupGUIScene()
     guiScene.setHeaderBackgroundColor(headerLabelColor);
 }
 
-void ofApp::setupGUIInspector(size_t buttonID)
+void ofApp::setupGUIInspector()
 {
-    //FIXME: these 3 lines dont go in this method
-    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
-    scene.setSelectedGameObject(buttonID);
-    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
-
     guiInspector.setup();
     guiInspector.setName(inspectorText);
     guiInspector.setHeaderBackgroundColor(headerLabelColor);
@@ -91,6 +86,7 @@ void ofApp::setupGUIInspector(size_t buttonID)
 
     guiIsSetup = true;
 
+    //FIXME: this should be in another method
     guiTexture.clear();
     if (scene.isSelectedGameObject2D())
     {
@@ -98,13 +94,8 @@ void ofApp::setupGUIInspector(size_t buttonID)
     }
 }
 
-void ofApp::updateGUIInspector(size_t buttonID)
+void ofApp::updateGUIInspector()
 {
-    //FIXME: these 3 lines dont go in this method
-    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
-    scene.setSelectedGameObject(buttonID);
-    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
-
     positionFields = scene.getPositionSelectedGameObject();
     rotation = scene.getEulerRotationSelectedGameObject();
     scaleFields = scene.getScaleSelectedGameObject();
@@ -117,6 +108,7 @@ void ofApp::updateGUIInspector(size_t buttonID)
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
 
+    //FIXME: this should be in another method
     guiTexture.clear();
     if (scene.isSelectedGameObject2D())
     {
@@ -150,6 +142,13 @@ void ofApp::updateGUITexture(size_t textureID)
 
     scene.setSelectedGameObjectTexture(textureID);
     texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
+}
+
+void ofApp::selectGameObject(size_t buttonID)
+{
+    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
+    scene.setSelectedGameObject(buttonID);
+    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 }
 
 void ofApp::exit()
@@ -202,7 +201,8 @@ void ofApp::checkIfASceneButtonIsPressed()
         {
             if (scene.getSelectedGameObjectID() != i)
             {
-                updateGUIInspector(i);
+                selectGameObject(i);
+                updateGUIInspector();
             }
             break;
         }
@@ -257,12 +257,14 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
-        updateGUIInspector(scene.getSelectedGameObjectID());
+        selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
+        updateGUIInspector();
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
-        updateGUIInspector(scene.getSelectedGameObjectID());
+        selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
+        updateGUIInspector();
         break;
     case ' ':
         takeScreenShot();
@@ -418,11 +420,13 @@ void ofApp::addNewGameObject(size_t shapeType)
     scene.addGameObject(gameObject);
     if (guiIsSetup)
     {
-        updateGUIInspector(object_buttons.size() - 1);
+        selectGameObject(object_buttons.size() - 1);
+        updateGUIInspector();
     }
     else
     {
-        setupGUIInspector(object_buttons.size() - 1);
+        selectGameObject(object_buttons.size() - 1);
+        setupGUIInspector();
     }
 }
 

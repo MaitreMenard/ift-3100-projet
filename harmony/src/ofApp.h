@@ -88,9 +88,10 @@ private:
     void parentChanged(int & newParentID);
 
     void addNewGameObject(size_t shapeType);
+    void selectGameObject(size_t buttonID);
 
-    void setupGUIInspector(size_t buttonID);
-    void updateGUIInspector(size_t buttonID);
+    void setupGUIInspector();
+    void updateGUIInspector();
     void setupGUITexture(size_t textureID);
     void updateGUITexture(size_t textureID);
 
