@@ -92,8 +92,7 @@ private:
 
     void setupGUIInspector();
     void updateGUIInspector();
-    void resetGUITexture();
-    void setupGUITexture(size_t textureID);
+    void setupGUITexture();
     void updateGUITexture(size_t textureID);
 
     void checkIfASceneButtonIsPressed();

@@ -18,11 +18,7 @@ void ofApp::setup()
     ofSetVerticalSync(true);
 
     setupGUIScene();
-
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.push_back(new ofxButton());
-    }
+    setupGUITexture();
 
     GUIIsDisplayed = true;
 }
@@ -102,16 +98,7 @@ void ofApp::updateGUIInspector()
     parent.addListener(this, &ofApp::parentChanged);
 }
 
-void ofApp::resetGUITexture()
-{
-    guiTexture.clear();
-    if (scene.isSelectedGameObject2D())
-    {
-        setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
-}
-
-void ofApp::setupGUITexture(size_t textureID)
+void ofApp::setupGUITexture()
 {
     guiTexture.setup();
     guiTexture.setName(textureText);
@@ -119,11 +106,12 @@ void ofApp::setupGUITexture(size_t textureID)
 
     for (int i = 0; i < textureTexts.size(); i++)
     {
+        texture_buttons.push_back(new ofxButton());
         texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
         guiTexture.add(texture_buttons.at(i)->setup(ofParameter<string>(textureTexts.at(i))));
     }
 
-    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
+    texture_buttons.at(0)->setBackgroundColor(highlightedButtonColor);
 
     guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
 }
@@ -135,7 +123,6 @@ void ofApp::updateGUITexture(size_t textureID)
         texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
     }
 
-    scene.setSelectedGameObjectTexture(textureID);
     texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
 }
 
@@ -181,6 +168,7 @@ void ofApp::checkIfATextureButtonIsPressed()
         {
             if (scene.getSelectedGameObjectTextureID() != i)
             {
+                scene.setSelectedGameObjectTexture(i);
                 updateGUITexture(i);
             }
             break;
@@ -198,7 +186,7 @@ void ofApp::checkIfASceneButtonIsPressed()
             {
                 selectGameObject(i);
                 updateGUIInspector();
-                resetGUITexture();
+                updateGUITexture(scene.getSelectedGameObjectTextureID());
             }
             break;
         }
@@ -255,14 +243,14 @@ void ofApp::keyPressed(int key)
         scene.undo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
-        resetGUITexture();
+        updateGUITexture(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
-        resetGUITexture();
+        updateGUITexture(scene.getSelectedGameObjectTextureID());
         break;
     case ' ':
         takeScreenShot();
@@ -424,7 +412,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupGUIInspector();
     }
-    resetGUITexture();
+    updateGUITexture(scene.getSelectedGameObjectTextureID());
 }
 
 void ofApp::keyReleased(int key)
