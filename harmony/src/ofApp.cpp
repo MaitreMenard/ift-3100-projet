@@ -18,7 +18,7 @@ void ofApp::setup()
     ofSetVerticalSync(true);
 
     setupGUIScene();
-    setupGUITexture();
+    textureSelector.setup();
 
     GUIIsDisplayed = true;
 }
@@ -98,34 +98,6 @@ void ofApp::updateGUIInspector()
     parent.addListener(this, &ofApp::parentChanged);
 }
 
-void ofApp::setupGUITexture()
-{
-    guiTexture.setup();
-    guiTexture.setName(textureText);
-    guiTexture.setHeaderBackgroundColor(headerLabelColor);
-
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.push_back(new ofxButton());
-        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
-        guiTexture.add(texture_buttons.at(i)->setup(ofParameter<string>(textureTexts.at(i))));
-    }
-
-    texture_buttons.at(0)->setBackgroundColor(highlightedButtonColor);
-
-    guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
-}
-
-void ofApp::updateGUITexture(size_t textureID)
-{
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
-    }
-
-    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
-}
-
 void ofApp::selectGameObject(size_t buttonID)
 {
     object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
@@ -155,24 +127,19 @@ void ofApp::parentChanged(int & newParentID)
 
 void ofApp::update()
 {
-    checkIfATextureButtonIsPressed();
+    updateSelectedGameObjectTexture();
     checkIfASceneButtonIsPressed();
     scene.update();
 }
 
-void ofApp::checkIfATextureButtonIsPressed()
+void ofApp::updateSelectedGameObjectTexture()
 {
-    for (size_t i = 0; i < texture_buttons.size(); i++)
+    textureSelector.update();
+    size_t selectedTextureID = textureSelector.getSelectedTextureID();
+
+    if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
     {
-        if (*texture_buttons.at(i))
-        {
-            if (scene.getSelectedGameObjectTextureID() != i)
-            {
-                scene.setSelectedGameObjectTexture(i);
-                updateGUITexture(i);
-            }
-            break;
-        }
+        scene.setSelectedGameObjectTexture(selectedTextureID);
     }
 }
 
@@ -186,7 +153,7 @@ void ofApp::checkIfASceneButtonIsPressed()
             {
                 selectGameObject(i);
                 updateGUIInspector();
-                updateGUITexture(scene.getSelectedGameObjectTextureID());
+                textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
             }
             break;
         }
@@ -211,7 +178,7 @@ void ofApp::draw()
         guiScene.draw();
         if (scene.isSelectedGameObject2D())
         {
-            guiTexture.draw();
+            textureSelector.draw();
         }
         ofEnableDepthTest();
     }
@@ -243,14 +210,14 @@ void ofApp::keyPressed(int key)
         scene.undo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
-        updateGUITexture(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
         selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
         updateGUIInspector();
-        updateGUITexture(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
         break;
     case ' ':
         takeScreenShot();
@@ -412,7 +379,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupGUIInspector();
     }
-    updateGUITexture(scene.getSelectedGameObjectTextureID());
+    textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
 }
 
 void ofApp::keyReleased(int key)
@@ -482,10 +449,5 @@ ofApp::~ofApp()
     {
         delete button;
     }
-    for (ofxButton* button2 : texture_buttons)
-    {
-        delete button2;
-    }
     object_buttons.clear();
-    texture_buttons.clear();
 }

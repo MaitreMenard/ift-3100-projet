@@ -175,6 +175,7 @@
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
+    <ClCompile Include="src\gui\texture_selector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\inspector.h" />
+    <ClInclude Include="src\gui\texture_selector.h" />
     <ClInclude Include="src\skybox.h" />
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />

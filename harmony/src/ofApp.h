@@ -15,6 +15,7 @@
 #include "gameobjects/star.h"
 #include "gui/colorpicker.h"
 #include "gui/rotation_slider.h"
+#include "gui/texture_selector.h"
 #include "gui/vec3f_textfield.h"
 
 
@@ -45,11 +46,8 @@ private:
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
 
-    const vector<string> textureTexts = { "None" , "Cloud" , "Marble" , "Noise" , "Turbulence" , "Zoom" };
-
     const string inspectorText = "Inspector";
     const string sceneText = "Scene";
-    const string textureText = "Texture";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
@@ -68,7 +66,6 @@ private:
     Scene scene;
 
     vector<ofxButton*> object_buttons;
-    vector<ofxButton*> texture_buttons;
 
     Vec3fTextField positionFields;
     RotationSlider rotation;
@@ -79,7 +76,7 @@ private:
 
     ofxPanel guiInspector;
     ofxPanel guiScene;
-    ofxPanel guiTexture;
+    TextureSelector textureSelector;
 
     bool guiIsSetup = false;
 
@@ -92,11 +89,9 @@ private:
 
     void setupGUIInspector();
     void updateGUIInspector();
-    void setupGUITexture();
-    void updateGUITexture(size_t textureID);
 
     void checkIfASceneButtonIsPressed();
-    void checkIfATextureButtonIsPressed();
+    void updateSelectedGameObjectTexture();
 
     void setupCamera();
     void setupGUIScene();
