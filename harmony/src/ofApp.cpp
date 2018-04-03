@@ -18,7 +18,18 @@ void ofApp::setup()
     ofSetVerticalSync(true);
 
     gameObjectSelector.setup();
+    std::function<void(size_t)> gameObjectSelectorListener = [=](size_t selectedGameObjectID)
+    {
+        onSelectedGameObjectChange(selectedGameObjectID);
+    };
+    gameObjectSelector.addListener(gameObjectSelectorListener);
+
     textureSelector.setup();
+    std::function<void(size_t)> textureSelectorListener = [=](size_t textureID)
+    {
+        onSelectedGameObjectTextureChange(textureID);
+    };
+    textureSelector.addListener(textureSelectorListener);
 
     GUIIsDisplayed = true;
 }
@@ -113,34 +124,26 @@ void ofApp::parentChanged(int & newParentID)
 
 void ofApp::update()
 {
-    updateSelectedGameObject();
-    updateSelectedGameObjectTexture();
+    gameObjectSelector.update();
+    textureSelector.update();
     scene.update();
 }
 
-void ofApp::updateSelectedGameObjectTexture()
+void ofApp::onSelectedGameObjectChange(size_t selectedGameObjectID)
 {
-    textureSelector.update();
-    size_t selectedTextureID = textureSelector.getSelectedTextureID();
-
-    if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
+    if (scene.getSelectedGameObjectID() != selectedGameObjectID)
     {
-        scene.setSelectedGameObjectTexture(selectedTextureID);
+        scene.setSelectedGameObject(selectedGameObjectID);
+        updateGUIInspector();
+        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
     }
 }
 
-void ofApp::updateSelectedGameObject()
+void ofApp::onSelectedGameObjectTextureChange(size_t selectedTextureID)
 {
-    gameObjectSelector.update();
-    if (gameObjectSelector.isAnyGameObjectSelected())
+    if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
     {
-        size_t selectedGameObjectID = gameObjectSelector.getSelectedGameObjectID();
-        if (scene.getSelectedGameObjectID() != selectedGameObjectID)
-        {
-            scene.setSelectedGameObject(selectedGameObjectID);
-            updateGUIInspector();
-            textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
-        }
+        scene.setSelectedGameObjectTexture(selectedTextureID);
     }
 }
 

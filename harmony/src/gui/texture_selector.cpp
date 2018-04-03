@@ -28,20 +28,32 @@ void TextureSelector::draw()
 
 void TextureSelector::update()
 {
-    //TODO: use events instead of polling
+    /*
+    Note: we have to fake events by polling instead of adding listeners to the buttons, because a button listener is only called
+    when the button is released (see ofxButton::valueChanged in ofxButton.cpp, line 52). 
+    */
     for (size_t i = 0; i < texture_buttons.size(); i++)
     {
         if (*texture_buttons.at(i))
         {
             setSelectedTexture(i);
+            callListeners();
             break;
         }
     }
 }
 
-size_t TextureSelector::getSelectedTextureID()
+void TextureSelector::callListeners()
 {
-    return selectedTextureID;
+    for (std::function<void(size_t)> listener : listeners)
+    {
+        listener(selectedTextureID);
+    }
+}
+
+void TextureSelector::addListener(std::function<void(size_t)> method)
+{
+    listeners.push_back(method);
 }
 
 void TextureSelector::setSelectedTexture(size_t textureID)
@@ -53,9 +65,9 @@ void TextureSelector::setSelectedTexture(size_t textureID)
 
 TextureSelector::~TextureSelector()
 {
-    for (ofxButton* button2 : texture_buttons)
+    for (ofxButton* button : texture_buttons)
     {
-        delete button2;
+        delete button;
     }
     texture_buttons.clear();
 }

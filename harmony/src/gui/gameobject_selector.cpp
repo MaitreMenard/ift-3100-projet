@@ -11,20 +11,37 @@ void GameObjectSelector::setup()
 
 void GameObjectSelector::update()
 {
-    //TODO: use events instead of polling
+    /*
+    Note: we have to fake events by polling instead of adding listeners to the buttons, because a button listener is only called
+    when the button is released (see ofxButton::valueChanged in ofxButton.cpp, line 52).
+    */
     for (size_t i = 0; i < buttons.size(); i++)
     {
         if (*buttons[i])
         {
             setSelectedGameObject(i);
+            callListeners();
             break;
         }
+    }
+}
+
+void GameObjectSelector::callListeners()
+{
+    for (std::function<void(size_t)> listener : listeners)
+    {
+        listener(selectedGameObjectButtonIndex);
     }
 }
 
 void GameObjectSelector::draw()
 {
     panel.draw();
+}
+
+void GameObjectSelector::addListener(std::function<void(size_t)> method)
+{
+    listeners.push_back(method);
 }
 
 void GameObjectSelector::setSelectedGameObject(size_t gameObjectID)
@@ -41,11 +58,6 @@ void GameObjectSelector::setSelectedGameObject(size_t gameObjectID)
 bool GameObjectSelector::isAnyGameObjectSelected()
 {
     return selectedGameObjectButtonIndex != -1;
-}
-
-size_t GameObjectSelector::getSelectedGameObjectID()
-{
-    return selectedGameObjectButtonIndex;
 }
 
 void GameObjectSelector::addGameObject(string gameObjectName)
