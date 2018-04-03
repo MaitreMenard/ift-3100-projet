@@ -105,6 +105,11 @@ GameObject * Scene::getGameObject(size_t index)
     return gameObjects.at(index);
 }
 
+size_t Scene::getNumberOfGameObjects()
+{
+    return gameObjects.size();
+}
+
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
     history_.add(new Command(gameObjectToRemove));

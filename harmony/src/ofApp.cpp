@@ -17,7 +17,7 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    setupGUIScene();
+    gameObjectSelector.setup();
     textureSelector.setup();
 
     GUIIsDisplayed = true;
@@ -27,13 +27,6 @@ void ofApp::setupCamera()
 {
     camera.setNearClip(0.1f);
     camera.setPosition(0, 2, 5);
-}
-
-void ofApp::setupGUIScene()
-{
-    guiScene.setup();
-    guiScene.setName(sceneText);
-    guiScene.setHeaderBackgroundColor(headerLabelColor);
 }
 
 void ofApp::setupGUIInspector()
@@ -75,7 +68,7 @@ void ofApp::setupGUIInspector()
     colorPicker.addListener(colorListener);
 
     parent.setBackgroundColor(baseLabelColor);
-    guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, object_buttons.size()));
+    guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, scene.getNumberOfGameObjects()));
     parent.addListener(this, &ofApp::parentChanged);
 
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
@@ -93,16 +86,9 @@ void ofApp::updateGUIInspector()
     colorPicker.setColor(selectedGameObjectColor);
 
     parent.removeListener(this, &ofApp::parentChanged);
-    parent.setMax(object_buttons.size());
+    parent.setMax(scene.getNumberOfGameObjects());
     parent = scene.getSelectedGameObjectParentID();
     parent.addListener(this, &ofApp::parentChanged);
-}
-
-void ofApp::selectGameObject(size_t buttonID)
-{
-    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
-    scene.setSelectedGameObject(buttonID);
-    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
 }
 
 void ofApp::exit()
@@ -127,8 +113,8 @@ void ofApp::parentChanged(int & newParentID)
 
 void ofApp::update()
 {
+    updateSelectedGameObject();
     updateSelectedGameObjectTexture();
-    checkIfASceneButtonIsPressed();
     scene.update();
 }
 
@@ -143,19 +129,17 @@ void ofApp::updateSelectedGameObjectTexture()
     }
 }
 
-void ofApp::checkIfASceneButtonIsPressed()
+void ofApp::updateSelectedGameObject()
 {
-    for (size_t i = 0; i < object_buttons.size(); i++)
+    gameObjectSelector.update();
+    if (gameObjectSelector.isAnyGameObjectSelected())
     {
-        if (*object_buttons[i])
+        size_t selectedGameObjectID = gameObjectSelector.getSelectedGameObjectID();
+        if (scene.getSelectedGameObjectID() != selectedGameObjectID)
         {
-            if (scene.getSelectedGameObjectID() != i)
-            {
-                selectGameObject(i);
-                updateGUIInspector();
-                textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
-            }
-            break;
+            scene.setSelectedGameObject(selectedGameObjectID);
+            updateGUIInspector();
+            textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
         }
     }
 }
@@ -175,7 +159,7 @@ void ofApp::draw()
     {
         ofDisableDepthTest();
         guiInspector.draw();
-        guiScene.draw();
+        gameObjectSelector.draw();
         if (scene.isSelectedGameObject2D())
         {
             textureSelector.draw();
@@ -208,14 +192,14 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
-        selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
+        gameObjectSelector.setSelectedGameObject(scene.getSelectedGameObjectID());
         updateGUIInspector();
         textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
-        selectGameObject(scene.getSelectedGameObjectID()); //FIXME: just update UI, don't reselect
+        gameObjectSelector.setSelectedGameObject(scene.getSelectedGameObjectID());
         updateGUIInspector();
         textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
         break;
@@ -301,8 +285,6 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
-    ofxButton *object_button = new ofxButton();
-    object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
 
@@ -368,9 +350,11 @@ void ofApp::addNewGameObject(size_t shapeType)
                 ofVec3f(0.01, 0.01, 0.01));
         shapeName = xwingText;
     }
-    guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
+    gameObjectSelector.addGameObject(shapeName);
     scene.addGameObject(gameObject);
-    selectGameObject(object_buttons.size() - 1);
+    size_t selectedGameObjectID = scene.getNumberOfGameObjects() - 1;
+    gameObjectSelector.setSelectedGameObject(selectedGameObjectID);
+    scene.setSelectedGameObject(selectedGameObjectID);
     if (guiIsSetup)
     {
         updateGUIInspector();
@@ -441,13 +425,4 @@ void ofApp::gotMessage(ofMessage msg)
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
-}
-
-ofApp::~ofApp()
-{
-    for (ofxButton* button : object_buttons)
-    {
-        delete button;
-    }
-    object_buttons.clear();
 }

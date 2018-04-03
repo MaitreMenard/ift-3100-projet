@@ -14,6 +14,7 @@
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
 #include "gui/colorpicker.h"
+#include "gui/gameobject_selector.h"
 #include "gui/rotation_slider.h"
 #include "gui/texture_selector.h"
 #include "gui/vec3f_textfield.h"
@@ -47,15 +48,12 @@ private:
     const string xwingText = "XWing";
 
     const string inspectorText = "Inspector";
-    const string sceneText = "Scene";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
 
-    const ofColor baseButtonColor = ofColor(24, 24, 24);
     const ofColor baseLabelColor = ofColor(48, 48, 72);
     const ofColor headerLabelColor = ofColor(24, 120, 24);
-    const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     bool shiftIsPressed;
     bool CtrlIsPressed;
@@ -65,8 +63,6 @@ private:
     GridPlane gridPlane;
     Scene scene;
 
-    vector<ofxButton*> object_buttons;
-
     Vec3fTextField positionFields;
     RotationSlider rotation;
     Vec3fTextField scaleFields;
@@ -75,7 +71,7 @@ private:
     ofxIntField parent;
 
     ofxPanel guiInspector;
-    ofxPanel guiScene;
+    GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
 
     bool guiIsSetup = false;
@@ -85,19 +81,16 @@ private:
     void parentChanged(int & newParentID);
 
     void addNewGameObject(size_t shapeType);
-    void selectGameObject(size_t buttonID);
 
     void setupGUIInspector();
     void updateGUIInspector();
 
-    void checkIfASceneButtonIsPressed();
+    void updateSelectedGameObject();
     void updateSelectedGameObjectTexture();
 
     void setupCamera();
-    void setupGUIScene();
 
 public:
-    ~ofApp();
     void setup();
     void update();
     void draw();

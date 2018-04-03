@@ -28,6 +28,7 @@ void TextureSelector::draw()
 
 void TextureSelector::update()
 {
+    //TODO: use events instead of polling
     for (size_t i = 0; i < texture_buttons.size(); i++)
     {
         if (*texture_buttons.at(i))

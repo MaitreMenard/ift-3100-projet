@@ -174,6 +174,7 @@
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
+    <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
     <ClCompile Include="src\gui\texture_selector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
@@ -212,6 +213,7 @@
     <ClInclude Include="src\gameobjects\arrow.h" />
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
+    <ClInclude Include="src\gui\gameobject_selector.h" />
     <ClInclude Include="src\gui\inspector.h" />
     <ClInclude Include="src\gui\texture_selector.h" />
     <ClInclude Include="src\skybox.h" />

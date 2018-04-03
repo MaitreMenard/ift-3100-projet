@@ -115,6 +115,9 @@
     <ClCompile Include="src\gui\texture_selector.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gui\gameobject_selector.cpp">
+      <Filter>src\gui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -390,6 +393,9 @@
       <Filter>src\gui</Filter>
     </ClInclude>
     <ClInclude Include="src\gui\texture_selector.h">
+      <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gui\gameobject_selector.h">
       <Filter>src\gui</Filter>
     </ClInclude>
   </ItemGroup>

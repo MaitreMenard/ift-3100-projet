@@ -44,6 +44,7 @@ public:
     ofColor getColorSelectedGameObject();
 
     GameObject* getGameObject(size_t index);
+    size_t getNumberOfGameObjects();
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
     void removeNonChildGameObject(GameObject * gameObjectToRemove);
