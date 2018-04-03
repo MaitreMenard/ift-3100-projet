@@ -135,7 +135,7 @@ void ofApp::onSelectedGameObjectChange(size_t selectedGameObjectID)
     {
         scene.setSelectedGameObject(selectedGameObjectID);
         updateGUIInspector();
-        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
     }
 }
 
@@ -195,16 +195,16 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
-        gameObjectSelector.setSelectedGameObject(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
         updateGUIInspector();
-        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
-        gameObjectSelector.setSelectedGameObject(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
         updateGUIInspector();
-        textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case ' ':
         takeScreenShot();
@@ -353,10 +353,10 @@ void ofApp::addNewGameObject(size_t shapeType)
                 ofVec3f(0.01, 0.01, 0.01));
         shapeName = xwingText;
     }
-    gameObjectSelector.addGameObject(shapeName);
+    gameObjectSelector.addItem(shapeName);
     scene.addGameObject(gameObject);
     size_t selectedGameObjectID = scene.getNumberOfGameObjects() - 1;
-    gameObjectSelector.setSelectedGameObject(selectedGameObjectID);
+    gameObjectSelector.setSelectedItem(selectedGameObjectID);
     scene.setSelectedGameObject(selectedGameObjectID);
     if (guiIsSetup)
     {
@@ -366,7 +366,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupGUIInspector();
     }
-    textureSelector.setSelectedTexture(scene.getSelectedGameObjectTextureID());
+    textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
 }
 
 void ofApp::keyReleased(int key)
