@@ -1,4 +1,5 @@
 #pragma once
+#include "ofEventUtils.h"
 #include "ofxGui.h"
 
 class Selector
@@ -8,9 +9,14 @@ public:
     void update();
     void draw();
 
-    void addListener(std::function<void(size_t)> method);
-    void setSelectedItem(size_t itemID);
+    template<class ListenerClass, typename ListenerMethod>
+    void addListener(ListenerClass * listener, ListenerMethod method)
+    {
+        buttonPressedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
+    }
+
     void addItem(std::string itemName);
+    void setSelectedItem(size_t itemID);
 
     ~Selector();
 
@@ -24,8 +30,7 @@ private:
 
     size_t selectedButtonIndex;
     std::vector<ofxButton*> buttons;
-    std::vector<std::function<void(size_t)>> listeners;
+    ofEvent<size_t> buttonPressedEvent;
 
-    void callListeners();
     bool isAnyItemSelected();
 };

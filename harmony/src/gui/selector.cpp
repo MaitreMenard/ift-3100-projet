@@ -20,7 +20,7 @@ void Selector::update()
         if (*buttons.at(i))
         {
             setSelectedItem(i);
-            callListeners();
+            ofNotifyEvent(buttonPressedEvent, selectedButtonIndex);
             break;
         }
     }
@@ -31,9 +31,12 @@ void Selector::draw()
     panel.draw();
 }
 
-void Selector::addListener(std::function<void(size_t)> method)
+void Selector::addItem(std::string itemName)
 {
-    listeners.push_back(method);
+    ofxButton *newButton = new ofxButton();
+    buttons.push_back(newButton);
+    newButton->setBackgroundColor(baseButtonColor);
+    panel.add(newButton->setup(ofParameter<string>(itemName)));
 }
 
 void Selector::setSelectedItem(size_t itemID)
@@ -47,14 +50,6 @@ void Selector::setSelectedItem(size_t itemID)
     buttons.at(selectedButtonIndex)->setBackgroundColor(highlightedButtonColor);
 }
 
-void Selector::addItem(std::string itemName)
-{
-    ofxButton *newButton = new ofxButton();
-    buttons.push_back(newButton);
-    newButton->setBackgroundColor(baseButtonColor);
-    panel.add(newButton->setup(ofParameter<string>(itemName)));
-}
-
 Selector::~Selector()
 {
     for (ofxButton* button : buttons)
@@ -62,14 +57,6 @@ Selector::~Selector()
         delete button;
     }
     buttons.clear();
-}
-
-void Selector::callListeners()
-{
-    for (std::function<void(size_t)> listener : listeners)
-    {
-        listener(selectedButtonIndex);
-    }
 }
 
 bool Selector::isAnyItemSelected()

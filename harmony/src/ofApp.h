@@ -85,8 +85,8 @@ private:
     void setupGUIInspector();
     void updateGUIInspector();
 
-    void onSelectedGameObjectChange(size_t selectedGameObjectID);
-    void onSelectedGameObjectTextureChange(size_t selectedTextureID);
+    void onSelectedGameObjectChange(size_t& selectedGameObjectID);
+    void onSelectedGameObjectTextureChange(size_t& selectedTextureID);
 
     void setupCamera();
 

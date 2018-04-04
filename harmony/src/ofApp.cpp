@@ -18,18 +18,10 @@ void ofApp::setup()
     ofSetVerticalSync(true);
 
     gameObjectSelector.setup();
-    std::function<void(size_t)> gameObjectSelectorListener = [=](size_t selectedGameObjectID)
-    {
-        onSelectedGameObjectChange(selectedGameObjectID);
-    };
-    gameObjectSelector.addListener(gameObjectSelectorListener);
+    gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
 
     textureSelector.setup();
-    std::function<void(size_t)> textureSelectorListener = [=](size_t textureID)
-    {
-        onSelectedGameObjectTextureChange(textureID);
-    };
-    textureSelector.addListener(textureSelectorListener);
+    textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
     GUIIsDisplayed = true;
 }
@@ -129,7 +121,7 @@ void ofApp::update()
     scene.update();
 }
 
-void ofApp::onSelectedGameObjectChange(size_t selectedGameObjectID)
+void ofApp::onSelectedGameObjectChange(size_t& selectedGameObjectID)
 {
     if (scene.getSelectedGameObjectID() != selectedGameObjectID)
     {
@@ -139,7 +131,7 @@ void ofApp::onSelectedGameObjectChange(size_t selectedGameObjectID)
     }
 }
 
-void ofApp::onSelectedGameObjectTextureChange(size_t selectedTextureID)
+void ofApp::onSelectedGameObjectTextureChange(size_t& selectedTextureID)
 {
     if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
     {
