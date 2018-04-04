@@ -40,35 +40,19 @@ void ofApp::setupGUIInspector()
 
     guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
         ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
-    std::function<void(ofVec3f)> positionListener = [=](ofVec3f value)
-    {
-        scene.setPositionSelectedGameObject(value.x, value.y, value.z);
-    };
-    positionFields.addListener(positionListener);
+    positionFields.addListener(this, &ofApp::onSelectedGameObjectPositionChange);
 
     guiInspector.add(rotation.setup(rotationText, scene.getEulerRotationSelectedGameObject(),
         ofVec3f(ROTATION_MIN_VALUE), ofVec3f(ROTATION_MAX_VALUE)));
-    std::function<void(ofVec3f)> rotationListener = [=](ofVec3f value)
-    {
-        scene.setRotationSelectedGameObject(value);
-    };
-    rotation.addListener(rotationListener);
+    rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
 
     guiInspector.add(scaleFields.setup(scaleText, scene.getScaleSelectedGameObject(),
         ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE)));
-    std::function<void(ofVec3f)> scaleListener = [=](ofVec3f value)
-    {
-        scene.setScaleSelectedGameObject(value.x, value.y, value.z);
-    };
-    scaleFields.addListener(scaleListener);
+    scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
 
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
     guiInspector.add(colorPicker.setup(selectedGameObjectColor));
-    std::function<void(ofColor)> colorListener = [=](ofColor color)
-    {
-        scene.setColorSelectedGameObject(color);
-    };
-    colorPicker.addListener(colorListener);
+    colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
 
     parent.setBackgroundColor(baseLabelColor);
     guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, scene.getNumberOfGameObjects()));
@@ -137,6 +121,26 @@ void ofApp::onSelectedGameObjectTextureChange(size_t& selectedTextureID)
     {
         scene.setSelectedGameObjectTexture(selectedTextureID);
     }
+}
+
+void ofApp::onSelectedGameObjectPositionChange(ofVec3f& newPosition)
+{
+    scene.setPositionSelectedGameObject(newPosition.x, newPosition.y, newPosition.z);
+}
+
+void ofApp::onSelectedGameObjectRotationChange(ofVec3f & newRotation)
+{
+    scene.setRotationSelectedGameObject(newRotation);
+}
+
+void ofApp::onSelectedGameObjectScaleChange(ofVec3f& newScale)
+{
+    scene.setScaleSelectedGameObject(newScale.x, newScale.y, newScale.z);
+}
+
+void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
+{
+    scene.setColorSelectedGameObject(newColor);
 }
 
 void ofApp::draw()

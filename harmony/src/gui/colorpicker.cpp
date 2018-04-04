@@ -40,11 +40,6 @@ ColorPicker* ColorPicker::setup(ofColor initialColor)
     return this;
 }
 
-void ColorPicker::addListener(std::function<void(ofColor)> method)
-{
-    listeners.push_back(method);
-}
-
 void ColorPicker::setColor(ofColor color)
 {
     updateRGBFields(color);
@@ -102,8 +97,5 @@ void ColorPicker::updateHSBFields(ofColor color)
 
 void ColorPicker::callListenersWithNewColor(ofColor color)
 {
-    for (std::function<void(ofColor)> listener : listeners)
-    {
-        listener(color);
-    }
+    ofNotifyEvent(colorChangedEvent, color);
 }

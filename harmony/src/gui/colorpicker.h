@@ -8,7 +8,13 @@ class ColorPicker : public ofxGuiGroup
 public:
     ColorPicker();
     ColorPicker* setup(ofColor initialColor);
-    void addListener(std::function<void(ofColor)> method);
+
+    template<class ListenerClass, typename ListenerMethod>
+    void addListener(ListenerClass * listener, ListenerMethod method)
+    {
+        colorChangedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
+    }
+
     void setColor(ofColor color);
 
 private:
@@ -36,7 +42,7 @@ private:
     ofxIntField HSB_a;
 
     bool eventsEnabled;
-    std::vector<std::function<void(ofColor)>> listeners;
+    ofEvent<ofColor> colorChangedEvent;
 
     void rgbFieldsListener(int& value);
     void hsbFieldsListener(int& value);

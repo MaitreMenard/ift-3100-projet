@@ -25,11 +25,6 @@ Vec3fTextField* Vec3fTextField::setup(string labelText, ofVec3f values, ofVec3f 
     return this;
 }
 
-void Vec3fTextField::addListener(std::function<void(ofVec3f)> method)
-{
-    listeners.push_back(method);
-}
-
 ofVec3f Vec3fTextField::operator=(const ofVec3f & v)
 {
     eventsEnabled = false;
@@ -55,10 +50,9 @@ void Vec3fTextField::callListenersWithTextFieldValues()
     float yValue = convertTextFieldValueToFloat(y, minValues.y, maxValues.y);
     float zValue = convertTextFieldValueToFloat(z, minValues.z, maxValues.z);
 
-    for (std::function<void(ofVec3f)> listener : listeners)
-    {
-        listener(ofVec3f(xValue, yValue, zValue));
-    }
+    ofVec3f newVec = ofVec3f(xValue, yValue, zValue);
+
+    ofNotifyEvent(valueChangedEvent, newVec);
 }
 
 float Vec3fTextField::convertTextFieldValueToFloat(string stringValue, float minValue, float maxValue)
@@ -75,9 +69,4 @@ float Vec3fTextField::convertTextFieldValueToFloat(string stringValue, float min
         return 0;
     }
     return fValue;
-}
-
-Vec3fTextField::~Vec3fTextField()
-{
-    listeners.clear();
 }

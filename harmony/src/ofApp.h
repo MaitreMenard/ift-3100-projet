@@ -87,6 +87,10 @@ private:
 
     void onSelectedGameObjectChange(size_t& selectedGameObjectID);
     void onSelectedGameObjectTextureChange(size_t& selectedTextureID);
+    void onSelectedGameObjectPositionChange(ofVec3f& newPosition);
+    void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
+    void onSelectedGameObjectScaleChange(ofVec3f& newScale);
+    void onSelectedGameObjectColorChange(ofColor& newColor);
 
     void setupCamera();
 
