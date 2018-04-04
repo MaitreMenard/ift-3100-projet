@@ -54,9 +54,8 @@ void ofApp::setupGUIInspector()
     guiInspector.add(colorPicker.setup(selectedGameObjectColor));
     colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
 
-    parent.setBackgroundColor(baseLabelColor);
-    guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, scene.getNumberOfGameObjects()));
-    parent.addListener(this, &ofApp::parentChanged);
+    guiInspector.add(parentField.setup(scene.getSelectedGameObjectParentID(), scene.getNumberOfGameObjects()));
+    parentField.addListener(this, &ofApp::onParentChanged);
 
     guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
 
@@ -72,31 +71,11 @@ void ofApp::updateGUIInspector()
     ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
     colorPicker.setColor(selectedGameObjectColor);
 
-    parent.removeListener(this, &ofApp::parentChanged);
-    parent.setMax(scene.getNumberOfGameObjects());
-    parent = scene.getSelectedGameObjectParentID();
-    parent.addListener(this, &ofApp::parentChanged);
+    parentField.update(scene.getSelectedGameObjectParentID(), scene.getNumberOfGameObjects());
 }
 
 void ofApp::exit()
 {}
-
-void ofApp::parentChanged(int & newParentID)
-{
-    if (newParentID - 1 == scene.getSelectedGameObjectID())
-    {
-        cout << exceptionParentItself << endl;
-    }
-    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID))
-    {
-        cout << exceptionChildParent << endl;
-    }
-    else
-    {
-        ofLog() << "Modifying parent hierarchy";
-        scene.setSelectedGameObjectParent(newParentID);
-    }
-}
 
 void ofApp::update()
 {
@@ -141,6 +120,23 @@ void ofApp::onSelectedGameObjectScaleChange(ofVec3f& newScale)
 void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
 {
     scene.setColorSelectedGameObject(newColor);
+}
+
+void ofApp::onParentChanged(int & newParentID)
+{
+    if (newParentID - 1 == scene.getSelectedGameObjectID())
+    {
+        cout << exceptionParentItself << endl;
+    }
+    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID))
+    {
+        cout << exceptionChildParent << endl;
+    }
+    else
+    {
+        ofLog() << "Modifying parent hierarchy";
+        scene.setSelectedGameObjectParent(newParentID);
+    }
 }
 
 void ofApp::draw()

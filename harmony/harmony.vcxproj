@@ -176,6 +176,7 @@
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
+    <ClCompile Include="src\gui\parentIntField.cpp" />
     <ClCompile Include="src\gui\selector.cpp" />
     <ClCompile Include="src\gui\texture_selector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\gameobject_selector.h" />
     <ClInclude Include="src\gui\inspector.h" />
+    <ClInclude Include="src\gui\parentIntField.h" />
     <ClInclude Include="src\gui\selector.h" />
     <ClInclude Include="src\gui\texture_selector.h" />
     <ClInclude Include="src\skybox.h" />

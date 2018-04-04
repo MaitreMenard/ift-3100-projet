@@ -15,6 +15,7 @@
 #include "gameobjects/star.h"
 #include "gui/colorpicker.h"
 #include "gui/gameobject_selector.h"
+#include "gui/parentIntField.h"
 #include "gui/rotation_slider.h"
 #include "gui/texture_selector.h"
 #include "gui/vec3f_textfield.h"
@@ -30,7 +31,6 @@ private:
     const float SCALE_MIN_VALUE = -100;
     const float SCALE_MAX_VALUE = 100;
 
-    const string parentText = "Parent: ";
     const string positionText = "Position: ";
     const string rotationText = "Rotation: ";
     const string scaleText = "Scale: ";
@@ -52,7 +52,6 @@ private:
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
 
-    const ofColor baseLabelColor = ofColor(48, 48, 72);
     const ofColor headerLabelColor = ofColor(24, 120, 24);
 
     bool shiftIsPressed;
@@ -67,9 +66,8 @@ private:
     RotationSlider rotation;
     Vec3fTextField scaleFields;
     ColorPicker colorPicker;
-
-    ofxIntField parent;
-
+    ParentIntField parentField;
+    
     ofxPanel guiInspector;
     GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
@@ -77,8 +75,6 @@ private:
     bool guiIsSetup = false;
 
     void takeScreenShot();
-
-    void parentChanged(int & newParentID);
 
     void addNewGameObject(size_t shapeType);
 
@@ -91,6 +87,7 @@ private:
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
     void onSelectedGameObjectColorChange(ofColor& newColor);
+    void onParentChanged(int & newParentID);
 
     void setupCamera();
 
