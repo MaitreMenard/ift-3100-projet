@@ -74,9 +74,9 @@ ofVec3f GameObject::getPosition()
     return transform.getPosition();
 }
 
-void GameObject::setPosition(float x, float y, float z)
+void GameObject::setPosition(ofVec3f position)
 {
-    transform.setPosition(x, y, z);
+    transform.setPosition(position);
 }
 
 void GameObject::translate(float dx, float dy, float dz)
@@ -109,9 +109,9 @@ ofVec3f GameObject::getScale()
     return transform.getScale();
 }
 
-void GameObject::setScale(float x, float y, float z)
+void GameObject::setScale(ofVec3f scale)
 {
-    transform.setScale(x, y, z);
+    transform.setScale(scale);
 }
 
 void GameObject::reScale(float x, float y, float z)

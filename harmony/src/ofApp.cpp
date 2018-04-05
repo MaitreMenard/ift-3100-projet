@@ -75,7 +75,7 @@ void ofApp::onSelectedGameObjectTextureChange(size_t& selectedTextureID)
 
 void ofApp::onSelectedGameObjectPositionChange(ofVec3f& newPosition)
 {
-    scene.setPositionSelectedGameObject(newPosition.x, newPosition.y, newPosition.z);
+    scene.setPositionSelectedGameObject(newPosition);
 }
 
 void ofApp::onSelectedGameObjectRotationChange(ofVec3f & newRotation)
@@ -85,7 +85,7 @@ void ofApp::onSelectedGameObjectRotationChange(ofVec3f & newRotation)
 
 void ofApp::onSelectedGameObjectScaleChange(ofVec3f& newScale)
 {
-    scene.setScaleSelectedGameObject(newScale.x, newScale.y, newScale.z);
+    scene.setScaleSelectedGameObject(newScale);
 }
 
 void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)

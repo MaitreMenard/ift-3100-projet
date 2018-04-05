@@ -139,15 +139,15 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
     history_.add(new Command(selectedGameObject));
 }
 
-void Scene::setPositionSelectedGameObject(float x, float y, float z)
+void Scene::setPositionSelectedGameObject(ofVec3f position)
 {
-    selectedGameObject->setPosition(x, y, z);
+    selectedGameObject->setPosition(position);
     history_.add(new Command(selectedGameObject));
 }
 
-void Scene::setScaleSelectedGameObject(float x, float y, float z)
+void Scene::setScaleSelectedGameObject(ofVec3f scale)
 {
-    selectedGameObject->setScale(x, y, z);
+    selectedGameObject->setScale(scale);
     history_.add(new Command(selectedGameObject));
 }
 
