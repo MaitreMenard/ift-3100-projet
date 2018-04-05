@@ -32,46 +32,17 @@ void ofApp::setupCamera()
     camera.setPosition(0, 2, 5);
 }
 
-void ofApp::setupGUIInspector()
+void ofApp::setupInspector()
 {
-    guiInspector.setup();
-    guiInspector.setName(inspectorText);
-    guiInspector.setHeaderBackgroundColor(headerLabelColor);
+    inspector.setup(scene);
 
-    guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
-        ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
-    positionFields.addListener(this, &ofApp::onSelectedGameObjectPositionChange);
-
-    guiInspector.add(rotation.setup(rotationText, scene.getEulerRotationSelectedGameObject(),
-        ofVec3f(ROTATION_MIN_VALUE), ofVec3f(ROTATION_MAX_VALUE)));
-    rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
-
-    guiInspector.add(scaleFields.setup(scaleText, scene.getScaleSelectedGameObject(),
-        ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE)));
-    scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
-
-    ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-    guiInspector.add(colorPicker.setup(selectedGameObjectColor));
-    colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
-
-    guiInspector.add(parentField.setup(scene.getSelectedGameObjectParentID(), scene.getNumberOfGameObjects()));
-    parentField.addListener(this, &ofApp::onParentChanged);
-
-    guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
+    inspector.positionFields.addListener(this, &ofApp::onSelectedGameObjectPositionChange);
+    inspector.rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
+    inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
+    inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
+    inspector.parentField.addListener(this, &ofApp::onParentChanged);
 
     guiIsSetup = true;
-}
-
-void ofApp::updateGUIInspector()
-{
-    positionFields = scene.getPositionSelectedGameObject();
-    rotation = scene.getEulerRotationSelectedGameObject();
-    scaleFields = scene.getScaleSelectedGameObject();
-
-    ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-    colorPicker.setColor(selectedGameObjectColor);
-
-    parentField.update(scene.getSelectedGameObjectParentID(), scene.getNumberOfGameObjects());
 }
 
 void ofApp::exit()
@@ -89,7 +60,7 @@ void ofApp::onSelectedGameObjectChange(size_t& selectedGameObjectID)
     if (scene.getSelectedGameObjectID() != selectedGameObjectID)
     {
         scene.setSelectedGameObject(selectedGameObjectID);
-        updateGUIInspector();
+        inspector.update(scene);
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
     }
 }
@@ -153,7 +124,7 @@ void ofApp::draw()
     if (GUIIsDisplayed)
     {
         ofDisableDepthTest();
-        guiInspector.draw();
+        inspector.draw();
         gameObjectSelector.draw();
         if (scene.isSelectedGameObject2D())
         {
@@ -188,14 +159,14 @@ void ofApp::keyPressed(int key)
     case 26: // CTRL_L + Z
         scene.undo();
         gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
-        updateGUIInspector();
+        inspector.update(scene);
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
         gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
-        updateGUIInspector();
+        inspector.update(scene);
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case ' ':
@@ -352,11 +323,11 @@ void ofApp::addNewGameObject(size_t shapeType)
     scene.setSelectedGameObject(selectedGameObjectID);
     if (guiIsSetup)
     {
-        updateGUIInspector();
+        inspector.update(scene);
     }
     else
     {
-        setupGUIInspector();
+        setupInspector();
     }
     textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
 }

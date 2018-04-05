@@ -13,28 +13,14 @@
 #include "gameobjects/model3D.h"
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
-#include "gui/colorpicker.h"
 #include "gui/gameobject_selector.h"
-#include "gui/parentIntField.h"
-#include "gui/rotation_slider.h"
+#include "gui/inspector.h"
 #include "gui/texture_selector.h"
-#include "gui/vec3f_textfield.h"
 
 
 class ofApp : public ofBaseApp
 {
 private:
-    const float POSITION_MIN_VALUE = -1000;
-    const float POSITION_MAX_VALUE = 1000;
-    const float ROTATION_MIN_VALUE = -180;
-    const float ROTATION_MAX_VALUE = 180;
-    const float SCALE_MIN_VALUE = -100;
-    const float SCALE_MAX_VALUE = 100;
-
-    const string positionText = "Position: ";
-    const string rotationText = "Rotation: ";
-    const string scaleText = "Scale: ";
-
     const string cubeText = "Cube";
     const string sphereText = "Sphere";
     const string rectangleText = "Rectangle";
@@ -47,12 +33,8 @@ private:
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
 
-    const string inspectorText = "Inspector";
-
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
-
-    const ofColor headerLabelColor = ofColor(24, 120, 24);
 
     bool shiftIsPressed;
     bool CtrlIsPressed;
@@ -62,13 +44,7 @@ private:
     GridPlane gridPlane;
     Scene scene;
 
-    Vec3fTextField positionFields;
-    RotationSlider rotation;
-    Vec3fTextField scaleFields;
-    ColorPicker colorPicker;
-    ParentIntField parentField;
-    
-    ofxPanel guiInspector;
+    Inspector inspector;
     GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
 
@@ -78,8 +54,7 @@ private:
 
     void addNewGameObject(size_t shapeType);
 
-    void setupGUIInspector();
-    void updateGUIInspector();
+    void setupInspector();
 
     void onSelectedGameObjectChange(size_t& selectedGameObjectID);
     void onSelectedGameObjectTextureChange(size_t& selectedTextureID);
