@@ -17,24 +17,12 @@ RotationSlider * RotationSlider::setup(const string labelText, ofVec3f value, of
     return this;
 }
 
-void RotationSlider::addListener(std::function<void(ofVec3f)> method)
-{
-    listeners.push_back(method);
-}
-
-void RotationSlider::enableEvents()
-{
-    eventsEnabled = true;
-}
-
-void RotationSlider::disableEvents()
-{
-    eventsEnabled = false;
-}
-
 ofVec3f RotationSlider::operator=(const ofVec3f & v)
 {
+    eventsEnabled = false;
     value = v;
+    eventsEnabled = true;
+
     return value;
 }
 
@@ -50,13 +38,5 @@ void RotationSlider::callListenersWithSliderValues()
 {
     ofVec3f values = ofVec3f(getFloatSlider("x"), getFloatSlider("y"), getFloatSlider("z"));
 
-    for (std::function<void(ofVec3f)> listener : listeners)
-    {
-        listener(values);
-    }
-}
-
-RotationSlider::~RotationSlider()
-{
-    listeners.clear();
+    ofNotifyEvent(valueChangedEvent, values);
 }

@@ -20,9 +20,9 @@ ofVec3f Transform::getPosition() const
     return position;
 }
 
-void Transform::setPosition(float x, float y, float z)
+void Transform::setPosition(ofVec3f position)
 {
-    position = ofVec3f(x, y, z);
+    this->position = position;
 }
 
 void Transform::translate(float dx, float dy, float dz)
@@ -55,9 +55,9 @@ ofVec3f Transform::getScale() const
     return scale;
 }
 
-void Transform::setScale(float x, float y, float z)
+void Transform::setScale(ofVec3f scale)
 {
-    scale = ofVec3f(x, y, z);
+    this->scale = scale;
 }
 
 void Transform::reScale(float x, float y, float z)

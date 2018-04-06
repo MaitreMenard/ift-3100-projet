@@ -50,12 +50,12 @@ size_t Scene::getSelectedGameObjectID()
 
 ofVec3f Scene::getEulerRotationSelectedGameObject()
 {
-    return selectedGameObject->getRotation().getEuler();
+    return selectedGameObject->getEulerAngles();
 }
 
 void Scene::setRotationSelectedGameObject(ofVec3f rotation)
 {
-    if (selectedGameObject != nullptr && selectedGameObject->getRotation().getEuler() != rotation)
+    if (selectedGameObject != nullptr && selectedGameObject->getEulerAngles() != rotation)
     {
         selectedGameObject->setRotation(rotation.x, rotation.y, rotation.z);
         history_.add(new Command(selectedGameObject));
@@ -105,6 +105,11 @@ GameObject * Scene::getGameObject(size_t index)
     return gameObjects.at(index);
 }
 
+size_t Scene::getNumberOfGameObjects()
+{
+    return gameObjects.size();
+}
+
 void Scene::removeGameObject(GameObject * gameObjectToRemove)
 {
     history_.add(new Command(gameObjectToRemove));
@@ -134,15 +139,15 @@ void Scene::translateSelectedGameObject(float dx, float dy, float dz)
     history_.add(new Command(selectedGameObject));
 }
 
-void Scene::setPositionSelectedGameObject(float x, float y, float z)
+void Scene::setPositionSelectedGameObject(ofVec3f position)
 {
-    selectedGameObject->setPosition(x, y, z);
+    selectedGameObject->setPosition(position);
     history_.add(new Command(selectedGameObject));
 }
 
-void Scene::setScaleSelectedGameObject(float x, float y, float z)
+void Scene::setScaleSelectedGameObject(ofVec3f scale)
 {
-    selectedGameObject->setScale(x, y, z);
+    selectedGameObject->setScale(scale);
     history_.add(new Command(selectedGameObject));
 }
 

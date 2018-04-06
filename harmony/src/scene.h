@@ -27,9 +27,9 @@ public:
     void translateSelectedGameObject(float dx, float dy, float dz);
     void rotateSelectedGameObject(float degrees, float x, float y, float z);
     void rescaleSelectedGameObject(float x, float y, float z);
-    void setPositionSelectedGameObject(float x, float y, float z);
+    void setPositionSelectedGameObject(ofVec3f position);
     void setRotationSelectedGameObject(ofVec3f rotation);
-    void setScaleSelectedGameObject(float x, float y, float z);
+    void setScaleSelectedGameObject(ofVec3f scale);
 
     void undo();
     void redo();
@@ -44,6 +44,7 @@ public:
     ofColor getColorSelectedGameObject();
 
     GameObject* getGameObject(size_t index);
+    size_t getNumberOfGameObjects();
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
     void removeNonChildGameObject(GameObject * gameObjectToRemove);

@@ -17,191 +17,13 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
-    inspector_label.setBackgroundColor(headerLabelColor);
-    scene_label.setBackgroundColor(headerLabelColor);
-    texture_label.setBackgroundColor(headerLabelColor);
+    gameObjectSelector.setup();
+    gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
 
-    guiScene.setup();
-    guiScene.add(scene_label.setup(ofParameter<string>(sceneText)));
-
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.push_back(new ofxButton());
-    }
+    textureSelector.setup();
+    textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
     GUIIsDisplayed = true;
-}
-
-void ofApp::setupGUIInspector(size_t buttonID)
-{
-    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
-    scene.setSelectedGameObject(buttonID);
-
-    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
-
-    guiInspector.clear();
-    guiInspector.setup();
-
-    guiInspector.add(inspector_label.setup(ofParameter<string>(inspectorText)));
-
-    guiInspector.add(positionFields.setup(positionText, scene.getPositionSelectedGameObject(),
-        ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE)));
-    std::function<void(ofVec3f)> positionListener = [=](ofVec3f value)
-    {
-        scene.setPositionSelectedGameObject(value.x, value.y, value.z);
-    };
-    positionFields.addListener(positionListener);
-
-    guiInspector.add(rotation.setup(rotationText, scene.getEulerRotationSelectedGameObject(),
-        ofVec3f(ROTATION_MIN_VALUE), ofVec3f(ROTATION_MAX_VALUE)));
-    std::function<void(ofVec3f)> rotationListener = [=](ofVec3f value)
-    {
-        scene.setRotationSelectedGameObject(value);
-    };
-    rotation.addListener(rotationListener);
-
-    guiInspector.add(scaleFields.setup(scaleText, scene.getScaleSelectedGameObject(),
-        ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE)));
-    std::function<void(ofVec3f)> scaleListener = [=](ofVec3f value)
-    {
-        scene.setScaleSelectedGameObject(value.x, value.y, value.z);
-    };
-    scaleFields.addListener(scaleListener);
-
-    rgb_label.setBackgroundColor(baseLabelColor);
-    removeRGBListeners();
-    guiInspector.add(rgb_label.setup(ofParameter<string>(rgbText)));
-    ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-    guiInspector.add(RGB_r.setup(rText, selectedGameObjectColor.r, 0, 255));
-    guiInspector.add(RGB_g.setup(gText, selectedGameObjectColor.g, 0, 255));
-    guiInspector.add(RGB_b.setup(bText, selectedGameObjectColor.b, 0, 255));
-    guiInspector.add(RGB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    addRGBListeners();
-
-    hsb_label.setBackgroundColor(baseLabelColor);
-    removeHSBListeners();
-    guiInspector.add(hsb_label.setup(ofParameter<string>(hsbText)));
-    guiInspector.add(HSB_h.setup(hText, selectedGameObjectColor.getHue(), 0, 255));
-    guiInspector.add(HSB_s.setup(sText, selectedGameObjectColor.getSaturation(), 0, 255));
-    guiInspector.add(HSB_b.setup(bText, selectedGameObjectColor.getBrightness(), 0, 255));
-    guiInspector.add(HSB_a.setup(aText, selectedGameObjectColor.a, 0, 255));
-    addHSBListeners();
-
-    parent.removeListener(this, &ofApp::parentChanged);
-    parent.setBackgroundColor(baseLabelColor);
-    guiInspector.add(parent.setup(parentText, scene.getSelectedGameObjectParentID(), 0, object_buttons.size()));
-    parent.addListener(this, &ofApp::parentChanged);
-
-    guiInspector.setPosition(ofGetWidth() - guiInspector.getWidth() - 2, 2);
-
-    guiIsSetup = true;
-
-    if (scene.isSelectedGameObject2D())
-    {
-        setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
-    else
-    {
-        guiTexture.clear();
-    }
-}
-
-void ofApp::updateGUIInspector(size_t buttonID)
-{
-    object_buttons.at(scene.getSelectedGameObjectID())->setBackgroundColor(baseButtonColor);
-    scene.setSelectedGameObject(buttonID);
-
-    object_buttons.at(buttonID)->setBackgroundColor(highlightedButtonColor);
-
-    positionFields.disableEvents();
-    positionFields = scene.getPositionSelectedGameObject();
-    positionFields.enableEvents();
-
-    rotation.disableEvents();
-    rotation = scene.getEulerRotationSelectedGameObject();
-    rotation.enableEvents();
-
-    scaleFields.disableEvents();
-    scaleFields = scene.getScaleSelectedGameObject();
-    scaleFields.enableEvents();
-
-    removeRGBListeners();
-    ofColor selectedGameObjectColor = scene.getColorSelectedGameObject();
-    RGB_r = selectedGameObjectColor.r;
-    RGB_g = selectedGameObjectColor.g;
-    RGB_b = selectedGameObjectColor.b;
-    RGB_a = selectedGameObjectColor.a;
-    addRGBListeners();
-
-    removeHSBListeners();
-    HSB_h = selectedGameObjectColor.getHue();
-    HSB_s = selectedGameObjectColor.getSaturation();
-    HSB_b = selectedGameObjectColor.getBrightness();
-    HSB_a = selectedGameObjectColor.a;
-    addHSBListeners();
-
-    parent.removeListener(this, &ofApp::parentChanged);
-    parent.setMax(object_buttons.size());
-    parent = scene.getSelectedGameObjectParentID();
-    parent.addListener(this, &ofApp::parentChanged);
-
-    if (scene.isSelectedGameObject2D())
-    {
-        setupGUITexture(scene.getSelectedGameObjectTextureID());
-    }
-    else
-    {
-        guiTexture.clear();
-    }
-}
-
-void ofApp::setupGUITexture(size_t textureID)
-{
-    guiTexture.clear();
-    guiTexture.setup();
-
-    guiTexture.add(texture_label.setup(ofParameter<string>(textureText)));
-
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
-        guiTexture.add(texture_buttons.at(i)->setup(ofParameter<string>(textureTexts.at(i))));
-    }
-
-    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
-
-    guiTexture.setPosition(2, ofGetHeight() - guiTexture.getHeight() - 2);
-}
-
-void ofApp::updateGUITexture(size_t textureID)
-{
-    for (int i = 0; i < textureTexts.size(); i++)
-    {
-        texture_buttons.at(i)->setBackgroundColor(baseButtonColor);
-    }
-
-    scene.setSelectedGameObjectTexture(textureID);
-    texture_buttons.at(textureID)->setBackgroundColor(highlightedButtonColor);
-}
-
-void ofApp::exit()
-{}
-
-void ofApp::colorChangedHSB(int & value)
-{
-    ofColor newColor = ofColor(0);
-    newColor.setHsb(HSB_h, HSB_s, HSB_b, HSB_a);
-    scene.setColorSelectedGameObject(newColor);
-
-    removeRGBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    RGB_r = currentColor.r;
-    RGB_g = currentColor.g;
-    RGB_b = currentColor.b;
-    RGB_a = currentColor.a;
-
-    addRGBListeners();
 }
 
 void ofApp::setupCamera()
@@ -210,7 +32,68 @@ void ofApp::setupCamera()
     camera.setPosition(0, 2, 5);
 }
 
-void ofApp::parentChanged(int & newParentID)
+void ofApp::setupInspector()
+{
+    inspector.setup(scene);
+
+    inspector.positionFields.addListener(this, &ofApp::onSelectedGameObjectPositionChange);
+    inspector.rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
+    inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
+    inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
+    inspector.parentField.addListener(this, &ofApp::onParentChanged);
+
+    guiIsSetup = true;
+}
+
+void ofApp::exit()
+{}
+
+void ofApp::update()
+{
+    gameObjectSelector.update();
+    textureSelector.update();
+    scene.update();
+}
+
+void ofApp::onSelectedGameObjectChange(size_t& selectedGameObjectID)
+{
+    if (scene.getSelectedGameObjectID() != selectedGameObjectID)
+    {
+        scene.setSelectedGameObject(selectedGameObjectID);
+        inspector.update(scene);
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
+    }
+}
+
+void ofApp::onSelectedGameObjectTextureChange(size_t& selectedTextureID)
+{
+    if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
+    {
+        scene.setSelectedGameObjectTexture(selectedTextureID);
+    }
+}
+
+void ofApp::onSelectedGameObjectPositionChange(ofVec3f& newPosition)
+{
+    scene.setPositionSelectedGameObject(newPosition);
+}
+
+void ofApp::onSelectedGameObjectRotationChange(ofVec3f & newRotation)
+{
+    scene.setRotationSelectedGameObject(newRotation);
+}
+
+void ofApp::onSelectedGameObjectScaleChange(ofVec3f& newScale)
+{
+    scene.setScaleSelectedGameObject(newScale);
+}
+
+void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
+{
+    scene.setColorSelectedGameObject(newColor);
+}
+
+void ofApp::onParentChanged(int & newParentID)
 {
     if (newParentID - 1 == scene.getSelectedGameObjectID())
     {
@@ -224,90 +107,6 @@ void ofApp::parentChanged(int & newParentID)
     {
         ofLog() << "Modifying parent hierarchy";
         scene.setSelectedGameObjectParent(newParentID);
-    }
-}
-
-void ofApp::addRGBListeners()
-{
-    RGB_r.addListener(this, &ofApp::colorChangedRGB);
-    RGB_g.addListener(this, &ofApp::colorChangedRGB);
-    RGB_b.addListener(this, &ofApp::colorChangedRGB);
-    RGB_a.addListener(this, &ofApp::colorChangedRGB);
-}
-
-void ofApp::addHSBListeners()
-{
-    HSB_h.addListener(this, &ofApp::colorChangedHSB);
-    HSB_s.addListener(this, &ofApp::colorChangedHSB);
-    HSB_b.addListener(this, &ofApp::colorChangedHSB);
-    HSB_a.addListener(this, &ofApp::colorChangedHSB);
-}
-
-void ofApp::removeRGBListeners()
-{
-    RGB_r.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_g.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_b.removeListener(this, &ofApp::colorChangedRGB);
-    RGB_a.removeListener(this, &ofApp::colorChangedRGB);
-}
-
-void ofApp::removeHSBListeners()
-{
-    HSB_h.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_s.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_b.removeListener(this, &ofApp::colorChangedHSB);
-    HSB_a.removeListener(this, &ofApp::colorChangedHSB);
-}
-
-void ofApp::colorChangedRGB(int & value)
-{
-    scene.setColorSelectedGameObject(ofColor(RGB_r, RGB_g, RGB_b, RGB_a));
-
-    removeHSBListeners();
-
-    ofColor currentColor = scene.getColorSelectedGameObject();
-    HSB_h = currentColor.getHue();
-    HSB_s = currentColor.getSaturation();
-    HSB_b = currentColor.getBrightness();
-    HSB_a = currentColor.a;
-
-    addHSBListeners();
-}
-
-void ofApp::update()
-{
-    checkIfATextureButtonIsPressed();
-    checkIfASceneButtonIsPressed();
-    scene.update();
-}
-
-void ofApp::checkIfATextureButtonIsPressed()
-{
-    for (size_t i = 0; i < texture_buttons.size(); i++)
-    {
-        if (*texture_buttons.at(i))
-        {
-            if (scene.getSelectedGameObjectTextureID() != i)
-            {
-                updateGUITexture(i);
-            }
-            break;
-        }
-    }
-}
-
-void ofApp::checkIfASceneButtonIsPressed()
-{
-    for (size_t i = 0; i < object_buttons.size(); i++)
-    {
-        if (*object_buttons[i])
-        {
-            if (scene.getSelectedGameObjectID() != i)
-            {
-                updateGUIInspector(i);
-            }
-            break;
-        }
     }
 }
 
@@ -325,11 +124,11 @@ void ofApp::draw()
     if (GUIIsDisplayed)
     {
         ofDisableDepthTest();
-        guiInspector.draw();
-        guiScene.draw();
+        inspector.draw();
+        gameObjectSelector.draw();
         if (scene.isSelectedGameObject2D())
         {
-            guiTexture.draw();
+            textureSelector.draw();
         }
         ofEnableDepthTest();
     }
@@ -359,12 +158,16 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
-        updateGUIInspector(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
+        inspector.update(scene);
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
-        updateGUIInspector(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
+        inspector.update(scene);
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
         break;
     case ' ':
         takeScreenShot();
@@ -448,11 +251,8 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
-    ofxButton *object_button = new ofxButton();
-    object_buttons.push_back(object_button);
     string shapeName;
     GameObject *gameObject;
-    guiTexture.clear();
 
     if (shapeType == Shape_Sphere)
     {
@@ -516,16 +316,20 @@ void ofApp::addNewGameObject(size_t shapeType)
                 ofVec3f(0.01, 0.01, 0.01));
         shapeName = xwingText;
     }
-    guiScene.add(object_button->setup(ofParameter<string>(shapeName)));
+    gameObjectSelector.addItem(shapeName);
     scene.addGameObject(gameObject);
+    size_t selectedGameObjectID = scene.getNumberOfGameObjects() - 1;
+    gameObjectSelector.setSelectedItem(selectedGameObjectID);
+    scene.setSelectedGameObject(selectedGameObjectID);
     if (guiIsSetup)
     {
-        updateGUIInspector(object_buttons.size() - 1);
+        inspector.update(scene);
     }
     else
     {
-        setupGUIInspector(object_buttons.size() - 1);
+        setupInspector();
     }
+    textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
 }
 
 void ofApp::keyReleased(int key)
@@ -587,18 +391,4 @@ void ofApp::gotMessage(ofMessage msg)
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
-}
-
-ofApp::~ofApp()
-{
-    for (ofxButton* button : object_buttons)
-    {
-        delete button;
-    }
-    for (ofxButton* button2 : texture_buttons)
-    {
-        delete button2;
-    }
-    object_buttons.clear();
-    texture_buttons.clear();
 }

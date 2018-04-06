@@ -18,10 +18,10 @@ public:
 
     void translate(float dx, float dy, float dz);
     void rotate(float degrees, float x, float y, float z);
-    void setPosition(float x, float y, float z);
+    void setPosition(ofVec3f position);
     void setRotation(float x, float y, float z);
 
-    void setScale(float x, float y, float z);
+    void setScale(ofVec3f scale);
     void reScale(float x, float y, float z);
 
     void applyToModelViewMatrix();

@@ -7,9 +7,13 @@ class Vec3fTextField : public ofxGuiGroup
 public:
     Vec3fTextField();
     Vec3fTextField* setup(const string labelText, ofVec3f values, ofVec3f minValues, ofVec3f maxValues);
-    void addListener(std::function<void(ofVec3f)> method);
-    void enableEvents();
-    void disableEvents();
+
+    template<class ListenerClass, typename ListenerMethod>
+    void addListener(ListenerClass * listener, ListenerMethod method)
+    {
+        valueChangedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
+    }
+
     ofVec3f operator=(const ofVec3f & v);
 
 private:
@@ -28,7 +32,7 @@ private:
     const string exceptionInvalidInput = " is not a valid input.";
 
     bool eventsEnabled;
-    std::vector<std::function<void(ofVec3f)>> listeners;
+    ofEvent<ofVec3f> valueChangedEvent;
 
     void textFieldsListener(string & value);
     void callListenersWithTextFieldValues();
