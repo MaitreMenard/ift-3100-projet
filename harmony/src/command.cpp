@@ -86,11 +86,7 @@ GameObject * CommandHandler::getSelectedGameObject()
 Command::Command(GameObject * gobj)
 {
     gobj_ = gobj;
-    color_ = ofColor(gobj->getColor());
     transf_ = Transform(gobj->getTransform());
-    vector<GameObject*> gobj_children = gobj->getChildren();
-    for (vector<GameObject*>::iterator it = gobj_children.begin(); it != gobj_children.end(); ++it)
-        child_.push_back(*it);
 }
 
 Command::~Command()
@@ -99,8 +95,6 @@ Command::~Command()
 void Command::exec()
 {
     gobj_->setTransform(transf_);
-    gobj_->setColor(color_);
-    gobj_->setChildren(child_);
 }
 
 bool Command::operator==(const Command &cmd)
@@ -108,7 +102,6 @@ bool Command::operator==(const Command &cmd)
     // TODO check children / id GameObject
     if (gobj_ != cmd.gobj_) return false;
     if (transf_ != cmd.transf_) return false;
-    if (color_ != cmd.color_) return false;
     return true;
 }
 

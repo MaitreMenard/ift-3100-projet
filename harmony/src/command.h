@@ -3,7 +3,7 @@
 #include <stack>
 #include <vector>
 
-#define UNDO_REDO_VERBOSE 0
+#define UNDO_REDO_VERBOSE 1
 #define QUEUE_LIMIT 500
 
 #pragma once
@@ -11,10 +11,7 @@ class Command
 {
 private:
     GameObject * gobj_;
-    ofTexture texture_;
-    ofColor color_;
     Transform transf_;
-    vector<GameObject*> child_;
 
 public:
     Command(GameObject * gob);
