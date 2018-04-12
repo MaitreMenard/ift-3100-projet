@@ -10,6 +10,14 @@ private:
     ofColor texelFactory::convertHslToHsb(int h, int s, int l);
     float linearInterpolation(const ofPixels & image, float x, float y);
     float turbulence(const ofPixels & image, float x, float y, float size);
+	ofPixels * noise(ofPixels * image);
+
+	ofPixels * textureNoise_;
+	ofPixels * textureZoom_;
+	ofPixels * textureTurbulence_;
+	ofPixels * textureCloud_;
+	ofPixels * textureMarble_;
+	ofPixels * textureWood_;
 public:
     texelFactory();
     ~texelFactory();
