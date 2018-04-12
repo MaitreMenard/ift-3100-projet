@@ -3,7 +3,7 @@
 #include <stack>
 #include <vector>
 
-#define UNDO_REDO_VERBOSE 1
+#define UNDO_REDO_VERBOSE 0
 #define QUEUE_LIMIT 500
 
 #pragma once
