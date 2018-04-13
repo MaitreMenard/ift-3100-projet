@@ -5,6 +5,7 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
+#include "gameobjects/cubeRelief.h"
 #include "gameobjects/sphere.h"
 #include "gameobjects/triangle.h"
 #include "gameobjects/rectangle.h"
@@ -21,6 +22,7 @@
 class ofApp : public ofBaseApp
 {
 private:
+	ofLight spotlight;
     const string cubeText = "Cube";
     const string sphereText = "Sphere";
     const string rectangleText = "Rectangle";
@@ -32,6 +34,7 @@ private:
     const string starText = "Star";
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
+	const string cubeReliefText = "CubeRelief";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
@@ -97,5 +100,6 @@ enum ShapeType
     Shape_Arrow,
     Shape_Star,
     Shape_Falcon,
-    Shape_XWing
+    Shape_XWing,
+	Shape_CubeRelief
 };

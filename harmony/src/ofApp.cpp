@@ -2,6 +2,10 @@
 
 void ofApp::setup()
 {
+	spotlight.setup();
+	spotlight.setPointLight();
+	spotlight.setPosition(1.5, 1.5, 1.5);
+
     scene.enableUndoRedo();
     shiftIsPressed = false;
     CtrlIsPressed = false;
@@ -117,8 +121,11 @@ void ofApp::draw()
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
+	spotlight.enable();
+	ofSphere(0, 0, 0, 0.5);
     scene.draw();
     gridPlane.draw();
+	spotlight.disable();
     camera.end();
 
     if (GUIIsDisplayed)
@@ -238,6 +245,9 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star);
         break;
+	case '0':
+		addNewGameObject(Shape_CubeRelief);
+		break;
     case 'm':
         addNewGameObject(Shape_Falcon);
         break;
@@ -299,6 +309,11 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Star();
         shapeName = starText;
     }
+	else if (shapeType == Shape_CubeRelief)
+	{
+		gameObject = new CubeRelief();
+		shapeName = cubeReliefText;
+	}
     else if (shapeType == Shape_Falcon)
     {
         gameObject = new Model3D("/models/millenium-falcon/millenium-falcon.obj",

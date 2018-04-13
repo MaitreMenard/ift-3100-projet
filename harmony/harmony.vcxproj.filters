@@ -124,6 +124,9 @@
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\cubeRelief.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -170,6 +173,9 @@
     </Filter>
     <Filter Include="src\gameobjects">
       <UniqueIdentifier>{699dce23-d021-4259-bce8-e9ae848aeb76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\img">
+      <UniqueIdentifier>{6aa434ee-6a03-4d32-9b72-0796d34dfe2f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -410,8 +416,22 @@
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
     </ClInclude>
+    <ClInclude Include="src\gameobjects\cubeRelief.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\img\chesterfield-sofa-albedo.png">
+      <Filter>src\img</Filter>
+    </Image>
+    <Image Include="src\img\chesterfield-sofa-normal-map.png">
+      <Filter>src\img</Filter>
+    </Image>
+    <Image Include="src\img\test.JPG">
+      <Filter>src\img</Filter>
+    </Image>
   </ItemGroup>
 </Project>

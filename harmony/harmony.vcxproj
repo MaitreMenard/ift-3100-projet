@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\gameobjects\arrow.cpp" />
+    <ClCompile Include="src\gameobjects\cubeRelief.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
@@ -213,6 +214,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\gameobjects\arrow.h" />
+    <ClInclude Include="src\gameobjects\cubeRelief.h" />
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\gameobject_selector.h" />
@@ -301,6 +303,11 @@
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/D_DEBUG %(AdditionalOptions)</AdditionalOptions>
       <AdditionalIncludeDirectories>$(OF_ROOT)\libs\openFrameworksCompiled\project\vs</AdditionalIncludeDirectories>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\img\chesterfield-sofa-albedo.png" />
+    <Image Include="src\img\chesterfield-sofa-normal-map.png" />
+    <Image Include="src\img\test.JPG" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ProjectExtensions>

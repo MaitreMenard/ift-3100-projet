@@ -65,7 +65,7 @@ public:
     GameObject& operator=(const GameObject& other);
 
     size_t getTextureID();
-    void setTexture(size_t textureID, ofPixels * pixels);
+	virtual void setTexture(size_t textureID, ofPixels * pixels);
 
     bool is2D();
 
