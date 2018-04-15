@@ -29,7 +29,7 @@ void ofApp::setup()
 void ofApp::setupCamera()
 {
     camera.setNearClip(0.1f);
-    camera.setPosition(0, 2, 5);
+    camera.setPosition(initialCameraPosition);
 }
 
 void ofApp::setupInspector()
@@ -202,6 +202,9 @@ void ofApp::keyPressed(int key)
     case 'd':
         camera.truck(1);
         break;
+    case 'r':
+        camera.setPosition(initialCameraPosition);
+        camera.setOrientation(ofVec3f(0, 0, 0));
     case 2304:  // shift
         shiftIsPressed = true;
         break;

@@ -40,6 +40,7 @@ private:
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
+    const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
     GridPlane gridPlane;
     Scene scene;
