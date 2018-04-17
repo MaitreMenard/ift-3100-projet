@@ -247,6 +247,9 @@ void ofApp::keyPressed(int key)
     case 'x':
         addNewGameObject(Shape_XWing);
         break;
+    case 'b':
+        addNewGameObject(Shape_Bezier);
+        break;
     default:
         break;
     }
@@ -318,6 +321,11 @@ void ofApp::addNewGameObject(size_t shapeType)
                 180, ofVec3f(0, 0, 1),
                 ofVec3f(0.01, 0.01, 0.01));
         shapeName = xwingText;
+    }
+    else if (shapeType == Shape_Bezier)
+    {
+        gameObject = new BezierCurve();
+        shapeName = bezierCurveText;
     }
     gameObjectSelector.addItem(shapeName);
     scene.addGameObject(gameObject);

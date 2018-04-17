@@ -124,6 +124,9 @@
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\bezier_curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -409,6 +412,9 @@
     </ClInclude>
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\bezier_curve.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
