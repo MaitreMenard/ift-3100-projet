@@ -22,14 +22,10 @@ Model3D::Model3D(string fileName, ofVec3f positionOffset, float rotationOffsetAn
 void Model3D::draw()
 {
     ofPushMatrix();
-
     transform.applyToModelViewMatrix();
 
     objModel.draw(OF_MESH_FILL);
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     ofPopMatrix();
 }

@@ -46,10 +46,7 @@ void GameObject::draw()
     model.draw();
     texture.unbind();
 
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     if (isSelected)
     {
@@ -57,6 +54,14 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
+}
+
+void GameObject::drawChildren()
+{
+    for (GameObject* child : children)
+    {
+        child->draw();
+    }
 }
 
 void GameObject::drawBoundingBox()

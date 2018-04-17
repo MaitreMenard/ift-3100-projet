@@ -20,6 +20,7 @@ protected:
     bool gameObjectIs2D;
     size_t textureID;
 
+    void drawChildren();
     virtual void drawBoundingBox();
 
 public:

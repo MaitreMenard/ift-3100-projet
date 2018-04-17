@@ -27,10 +27,7 @@ void Line::draw()
     ofPopStyle();
     texture.unbind();
 
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     if (isSelected)
     {
