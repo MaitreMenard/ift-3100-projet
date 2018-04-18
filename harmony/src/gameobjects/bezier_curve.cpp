@@ -2,41 +2,21 @@
 
 BezierCurve::BezierCurve()
 {
-    texture.allocate(1, 1, GL_RGB);
-    nbVertex = 0;
-    gameObjectIs2D = false; //todo: true
-
-    curveColor = ofColor(0, 255, 0);
-
-    for (int i = 0; i <= resolution; i++)
-    {
-        curvePoints.addVertex(ofVec3f());
-    }
-
-    controlPoints.push_back(ofVec3f(-0.5, 0, 1));
-    controlPoints.push_back(ofVec3f(0, 0.3, 0));
-    controlPoints.push_back(ofVec3f(0.5, 0, -1));
-
-    updateCurvePoints();
-
     //todo: update boundingBox
+    updateCurvePoints();
 }
 
-void BezierCurve::updateCurvePoints()
+ofVec3f BezierCurve::interpolate(float t)
 {
-    for (int i = 0; i <= resolution; i++)
+    ofVec3f point = ofVec3f(0);
+    int n = controlPoints.size() - 1;
+
+    for (int k = 0; k <= n; k++)
     {
-        float t = i / (float)resolution;
-        ofVec3f point = ofVec3f(0);
-        int n = controlPoints.size() - 1;
-
-        for (int k = 0; k <= n; k++)
-        {
-            point += combinations(n, k) * std::powf(t, k) * std::powf(1 - t, n - k) * controlPoints[k];
-        }
-
-        curvePoints[i] = point;
+        point += combinations(n, k) * std::powf(t, k) * std::powf(1 - t, n - k) * controlPoints[k];
     }
+
+    return point;
 }
 
 int BezierCurve::combinations(int n, int k)
@@ -58,61 +38,9 @@ int BezierCurve::combinations(int n, int k)
     return result;
 }
 
-void BezierCurve::draw()
+void BezierCurve::drawOutline()
 {
-    ofPushMatrix();
-    transform.applyToModelViewMatrix();
-
-    //TODO: texture.bind();
-    drawCurve();
-    //TODO: texture.unbind();
-
-    drawChildren();
-
-    if (isSelected)
-    {
-        drawBoundingBox();
-        drawControlPoints();
-    }
-
-    ofPopMatrix();
+    //TODO: draw line between all consecutive control points
+    //TODO: decide what to do with delimitationBox
 }
 
-void BezierCurve::drawCurve()
-{
-    ofPushStyle();
-
-    ofSetColor(curveColor);
-    ofSetLineWidth(curveWidth);
-    curvePoints.draw();
-
-    ofPopStyle();
-}
-
-void BezierCurve::drawControlPoints()
-{
-    ofPushStyle();
-
-    ofSetColor(controlPointsColor);
-    for (ofVec3f controlPoint : controlPoints)
-    {
-        ofDrawSphere(controlPoint, controlPointsRadius);
-    }
-
-    ofPopStyle();
-}
-
-ofColor BezierCurve::getColor()
-{
-    return curveColor;
-}
-
-void BezierCurve::setColor(ofColor color)
-{
-    curveColor = color;
-}
-
-BezierCurve::~BezierCurve()
-{
-    curvePoints.clear();
-}

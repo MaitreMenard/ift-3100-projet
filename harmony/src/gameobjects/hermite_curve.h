@@ -2,13 +2,12 @@
 #include "ofMain.h"
 #include "curve.h"
 
-class BezierCurve : public Curve
+class HermiteCurve : public Curve
 {
 public:
-    BezierCurve();
+    HermiteCurve();
 
 private:
     ofVec3f interpolate(float t);
-    int combinations(int n, int k);
     void drawOutline();
 };

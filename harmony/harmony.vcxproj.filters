@@ -127,6 +127,12 @@
     <ClCompile Include="src\gameobjects\bezier_curve.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\hermite_curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -414,6 +420,12 @@
       <Filter>src\gui</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\bezier_curve.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\hermite_curve.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\curve.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
