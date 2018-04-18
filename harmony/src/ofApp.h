@@ -63,7 +63,7 @@ private:
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
     void onSelectedGameObjectColorChange(ofColor& newColor);
-    void onParentChanged(int & newParentID);
+    void onParentChanged(int& newParentID);
 
     void setupCamera();
 
