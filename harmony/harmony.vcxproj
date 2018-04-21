@@ -171,6 +171,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\fboRenderer.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\cubeRelief.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\fboRenderer.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
     <ClInclude Include="src\gameobjects\cubeRelief.h" />
     <ClInclude Include="src\gameobjects\star.h" />

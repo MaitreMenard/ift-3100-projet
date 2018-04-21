@@ -17,12 +17,16 @@
 #include "gui/gameobject_selector.h"
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
+#include "fboRenderer.h"
 
 
 class ofApp : public ofBaseApp
 {
 private:
 	ofLight spotlight;
+	ofFbo fbo;
+	fboRenderer renderer_;
+
     const string cubeText = "Cube";
     const string sphereText = "Sphere";
     const string rectangleText = "Rectangle";

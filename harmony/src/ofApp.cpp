@@ -6,6 +6,9 @@ void ofApp::setup()
 	spotlight.setPointLight();
 	spotlight.setPosition(1.5, 1.5, 1.5);
 
+	renderer_.setup();
+	fbo.allocate(ofGetWidth(), ofGetHeight());
+
     scene.enableUndoRedo();
     shiftIsPressed = false;
     CtrlIsPressed = false;
@@ -116,17 +119,25 @@ void ofApp::onParentChanged(int & newParentID)
 
 void ofApp::draw()
 {
-    ofClear(0);
+	//ofBackgroundGradient(ofColor::white, ofColor::gray);
+	//ofBackground(ofColor::red);
+	float blur = ofMap(mouseX, 0, ofGetWidth(), 0, 10, true);
+	int iteration = ofMap(mouseY, 0, ofGetHeight(), 0, 10, true);
 
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
-
-    camera.begin();
-	spotlight.enable();
-	ofSphere(0, 0, 0, 0.5);
+	fbo.begin();
+	ofClear(0);
+	camera.begin();
+	//spotlight.enable();
+	ofSphere(0, 0, 0, 400);
     scene.draw();
-    gridPlane.draw();
-	spotlight.disable();
+	gridPlane.draw();
+	//spotlight.disable();
     camera.end();
+	fbo.end();
+
+	renderer_.apply(&fbo);
+
+	fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
     if (GUIIsDisplayed)
     {
@@ -254,6 +265,12 @@ void ofApp::keyPressed(int key)
     case 'x':
         addNewGameObject(Shape_XWing);
         break;
+	case 'v':
+		if (renderer_.isBlurSet())
+			renderer_.disableBlur();
+		else
+			renderer_.enableBlur();
+		break;
     default:
         break;
     }
