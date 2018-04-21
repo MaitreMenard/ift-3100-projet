@@ -40,7 +40,16 @@ int BezierCurve::combinations(int n, int k)
 
 void BezierCurve::drawOutline()
 {
-    //TODO: draw line between all consecutive control points
-    //TODO: decide what to do with delimitationBox
+    ofPushStyle();
+    ofSetColor(ofColor::blue);
+    ofSetLineWidth(2);
+
+    for (int i = 0; i < controlPoints.size() - 1; i++)
+    {
+        ofDrawLine(controlPoints[i], controlPoints[i + 1]);
+    }
+    ofDrawLine(controlPoints[controlPoints.size() - 1], controlPoints[0]);
+
+    ofPopStyle();
 }
 
