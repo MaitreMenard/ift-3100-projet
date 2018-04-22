@@ -65,5 +65,7 @@ public:
 
     Scene& operator=(const Scene& other);
 
+	void setBlurParam(float pBlurValue, int pBlurIterations);
+
     ~Scene();
 };

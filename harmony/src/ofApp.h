@@ -25,7 +25,7 @@ class ofApp : public ofBaseApp
 private:
 	ofLight spotlight;
 	ofFbo fbo;
-	fboRenderer renderer_;
+	fboRenderer renderer;
 
     const string cubeText = "Cube";
     const string sphereText = "Sphere";

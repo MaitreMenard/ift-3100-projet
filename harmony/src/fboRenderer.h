@@ -4,13 +4,22 @@
 class fboRenderer
 {
 private:
-	ofFbo fboBlur;
-	ofShader shaderBlurX, shaderBlurY;
+	ofFbo fboFirstPass, fboSecondPass;
+	ofShader shaderBlurX, shaderBlurY, shaderBlackWhite, shaderSepia, shaderEdgeDetect, shaderGray;
 	
 	// Blur parameters
 	bool blurIsSet_;
 	float blurValue_;
 	int blurIterations_;
+
+	// Black and White
+	bool blackWhiteIsSet_;
+
+	// Sepia
+	bool sepiaIsSet_;
+
+	// EdgeDetection
+	bool edgeDetectionIsSet_;
 
 public:
 	fboRenderer();
@@ -22,5 +31,14 @@ public:
 	void enableBlur();
 	void disableBlur();
 	bool isBlurSet();
+	void enableBW();
+	void disableBW();
+	bool isBlackWhiteSet();
+	void enableSepia();
+	void disableSepia();
+	bool isSepiaSet();
+	void enableEdgeDetection();
+	void disableEdgeDetection();
+	bool isEdgeDetectionSet();
 	void resize();
 };

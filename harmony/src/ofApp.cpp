@@ -6,7 +6,7 @@ void ofApp::setup()
 	spotlight.setPointLight();
 	spotlight.setPosition(1.5, 1.5, 1.5);
 
-	renderer_.setup();
+	renderer.setup();
 	fbo.allocate(ofGetWidth(), ofGetHeight());
 
     scene.enableUndoRedo();
@@ -135,7 +135,7 @@ void ofApp::draw()
     camera.end();
 	fbo.end();
 
-	renderer_.apply(&fbo);
+	renderer.apply(&fbo);
 
 	fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
@@ -265,11 +265,29 @@ void ofApp::keyPressed(int key)
     case 'x':
         addNewGameObject(Shape_XWing);
         break;
-	case 'v':
-		if (renderer_.isBlurSet())
-			renderer_.disableBlur();
+	case 'c':
+		if (renderer.isEdgeDetectionSet())
+			renderer.disableEdgeDetection();
 		else
-			renderer_.enableBlur();
+			renderer.enableEdgeDetection();
+		break;
+	case 'v':
+		if (renderer.isBlurSet())
+			renderer.disableBlur();
+		else
+			renderer.enableBlur();
+		break;
+	case 'b':
+		if (renderer.isBlackWhiteSet())
+			renderer.disableBW();
+		else
+			renderer.enableBW();
+		break;
+	case 'n':
+		if (renderer.isSepiaSet())
+			renderer.disableSepia();
+		else
+			renderer.enableSepia();
 		break;
     default:
         break;

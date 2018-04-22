@@ -5,15 +5,11 @@ fboRenderer::fboRenderer(){}
 fboRenderer::~fboRenderer(){}
 
 void fboRenderer::setup() {
-	// setup blur param
+	// setup blur param / shaders
 	blurValue_ = 2;
 	blurIterations_ = 2;
 	blurIsSet_ = false;
 
-	// setup fbo allocation
-	fboBlur.allocate(ofGetWidth(), ofGetHeight());
-
-	// setup sharders
 #ifdef TARGET_OPENGLES
 	shaderBlurX.load("shadersES2/shaderBlurX");
 	shaderBlurY.load("shadersES2/shaderBlurY");
@@ -27,27 +23,88 @@ void fboRenderer::setup() {
 		shaderBlurY.load("shadersGL2/shaderBlurY");
 	}
 #endif
+
+	// setup black and white shaders
+	blackWhiteIsSet_ = false;
+	shaderBlackWhite.load("shaders/blackwhite");
+
+	// setup sepia shaders
+	sepiaIsSet_ = false;
+	shaderSepia.load("shaders/sepia");
+
+	// setup edge detection shaders
+	edgeDetectionIsSet_ = false;
+	shaderEdgeDetect.load("shaders/edgedetection");
+	shaderGray.load("shaders/gray");
+
+	// setup fbo allocation
+	fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
+	fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
 }
 
 void fboRenderer::apply(ofFbo * pFbo) {
-	if(blurIsSet_){
+	if (edgeDetectionIsSet_) {
+		fboFirstPass.begin();
+		ofClear(0, 0, 0);
+		shaderGray.begin();
+		pFbo->draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderGray.end();
+		fboFirstPass.end();
+
+		pFbo->begin();
+		shaderEdgeDetect.begin();
+		ofClear(0, 0, 0);
+		fboFirstPass.draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderEdgeDetect.end();
+		pFbo->end();
+	}
+
+	if (blurIsSet_) {
 		for (int i = 0; i < blurIterations_; i++) {
-			fboBlur.begin();
-			ofClear(0);
+			fboFirstPass.begin();
+			ofClear(0, 0, 0);
 			shaderBlurX.begin();
 			shaderBlurX.setUniform1f("blurAmnt", blurValue_);
 			pFbo->draw(0, 0, ofGetWidth(), ofGetHeight());
 			shaderBlurX.end();
-			fboBlur.end();
+			fboFirstPass.end();
 
 			pFbo->begin();
 			ofClear(0);
 			shaderBlurY.begin();
 			shaderBlurY.setUniform1f("blurAmnt", blurValue_);
-			fboBlur.draw(0, 0, ofGetWidth(), ofGetHeight());
+			fboFirstPass.draw(0, 0, ofGetWidth(), ofGetHeight());
 			shaderBlurY.end();
 			pFbo->end();
 		}
+	}
+
+	if (blackWhiteIsSet_) {
+		fboSecondPass.begin();
+		ofClear(0, 0, 0);
+		shaderBlackWhite.begin();
+		pFbo->draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderBlackWhite.end();
+		fboSecondPass.end();
+
+		pFbo->begin();
+		ofClear(0, 0, 0);
+		fboSecondPass.draw(0, 0, ofGetWidth(), ofGetHeight());
+		pFbo->end();
+	}
+
+	if (sepiaIsSet_) {
+		fboSecondPass.begin();
+		ofClear(0, 0, 0);
+		shaderSepia.begin();
+		pFbo->draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderSepia.end();
+		fboSecondPass.end();
+
+		pFbo->begin();
+		ofClear(0, 0, 0);
+		fboSecondPass.draw(0, 0, ofGetWidth(), ofGetHeight());
+		pFbo->end();
 	}
 }
 
@@ -68,6 +125,38 @@ bool fboRenderer::isBlurSet() {
 	return blurIsSet_;
 }
 
+void fboRenderer::enableBW() {
+	blackWhiteIsSet_ = true;
+}
+
+void fboRenderer::disableBW() {
+	blackWhiteIsSet_ = false;
+}
+
+bool fboRenderer::isBlackWhiteSet() {
+	return blackWhiteIsSet_;
+}
+
+void fboRenderer::enableSepia() {
+	sepiaIsSet_ = true;
+}
+void fboRenderer::disableSepia() {
+	sepiaIsSet_ = false;
+}
+bool fboRenderer::isSepiaSet() {
+	return sepiaIsSet_;
+}
+
+void fboRenderer::enableEdgeDetection() {
+	edgeDetectionIsSet_ = true;
+}
+void fboRenderer::disableEdgeDetection() {
+	edgeDetectionIsSet_ = false;
+}
+bool fboRenderer::isEdgeDetectionSet() {
+	return edgeDetectionIsSet_;
+}
+
 void fboRenderer::resize() {
-	fboBlur.allocate(ofGetWidth(), ofGetHeight());
+	fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
 }

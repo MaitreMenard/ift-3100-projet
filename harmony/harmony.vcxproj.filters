@@ -127,6 +127,9 @@
     <ClCompile Include="src\gameobjects\cubeRelief.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\fboRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -418,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="src\gameobjects\cubeRelief.h">
       <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fboRenderer.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
