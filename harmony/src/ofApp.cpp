@@ -211,7 +211,7 @@ void ofApp::keyPressed(int key)
     case 768: // Ctrl L and R
         CtrlIsPressed = true;
         break;
-    case 'h':
+    case 'h':   //todo: make this some other key
         GUIIsDisplayed = !GUIIsDisplayed;
         break;
     case '1':
@@ -249,6 +249,9 @@ void ofApp::keyPressed(int key)
         break;
     case 'b':
         addNewGameObject(Shape_Bezier);
+        break;
+    case 'n':   //todo: make this h
+        addNewGameObject(Shape_Hermite);
         break;
     default:
         break;
@@ -326,6 +329,11 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         gameObject = new BezierCurve();
         shapeName = bezierCurveText;
+    }
+    else if (shapeType == Shape_Hermite)
+    {
+        gameObject = new HermiteCurve();
+        shapeName = hermiteCurveText;
     }
     gameObjectSelector.addItem(shapeName);
     scene.addGameObject(gameObject);

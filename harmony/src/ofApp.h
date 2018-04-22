@@ -14,6 +14,7 @@
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
 #include "gameobjects/bezier_curve.h"
+#include "gameobjects/hermite_curve.h"
 #include "gui/gameobject_selector.h"
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
@@ -34,6 +35,7 @@ private:
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
     const string bezierCurveText = "Bezier Curve";
+    const string hermiteCurveText = "Hermite Curve";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";
@@ -101,5 +103,6 @@ enum ShapeType
     Shape_Star,
     Shape_Falcon,
     Shape_XWing,
-    Shape_Bezier
+    Shape_Bezier,
+    Shape_Hermite
 };
