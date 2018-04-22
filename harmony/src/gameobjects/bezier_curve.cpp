@@ -2,7 +2,6 @@
 
 BezierCurve::BezierCurve()
 {
-    //todo: update boundingBox
     updateCurvePoints();
 }
 
@@ -41,8 +40,8 @@ int BezierCurve::combinations(int n, int k)
 void BezierCurve::drawOutline()
 {
     ofPushStyle();
-    ofSetColor(ofColor::blue);
-    ofSetLineWidth(2);
+    ofSetColor(outlineColor);
+    ofSetLineWidth(outlineWidth);
 
     for (int i = 0; i < controlPoints.size() - 1; i++)
     {

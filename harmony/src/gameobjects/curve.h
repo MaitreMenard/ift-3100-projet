@@ -14,6 +14,8 @@ public:
     ~Curve();
 
 protected:
+    const int outlineWidth = 2;
+    const ofColor outlineColor = ofColor(0, 255, 0);
     std::vector<ofVec3f> controlPoints;
 
     void updateCurvePoints();
@@ -22,7 +24,7 @@ protected:
 
 private:
     const int curveWidth = 3;
-    const ofColor controlPointsColor = ofColor(255, 0, 0);
+    const ofColor controlPointsColor = ofColor(0, 160, 0);
     const float controlPointsRadius = 0.05;
     const int resolution = 100;
 

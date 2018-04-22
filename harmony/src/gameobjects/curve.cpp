@@ -6,7 +6,7 @@ Curve::Curve()
     nbVertex = 0;
     gameObjectIs2D = false;
 
-    curveColor = ofColor(0, 255, 0);
+    curveColor = ofColor(255, 0, 0);
 
     for (int i = 0; i <= resolution; i++)
     {
