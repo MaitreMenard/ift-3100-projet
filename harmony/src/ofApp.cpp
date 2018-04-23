@@ -113,13 +113,18 @@ void ofApp::onParentChanged(int & newParentID)
 void ofApp::draw()
 {
     ofClear(0);
+    ofPushMatrix();
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     camera.begin();
+    if (camera.getOrtho()) {
+        ofScale(ofVec3f(100));
+    }
     scene.draw();
     gridPlane.draw();
     camera.end();
+    ofPopMatrix();
 
     if (GUIIsDisplayed)
     {
@@ -205,6 +210,13 @@ void ofApp::keyPressed(int key)
     case 'r':
         camera.setPosition(initialCameraPosition);
         camera.setOrientation(ofVec3f(0, 0, 0));
+    case 'c':
+        if (camera.getOrtho()) {
+            camera.disableOrtho();
+        }
+        else {
+            camera.enableOrtho();
+        }
     case 2304:  // shift
         shiftIsPressed = true;
         break;
