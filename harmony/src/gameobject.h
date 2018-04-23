@@ -25,7 +25,7 @@ protected:
     virtual void drawBoundingBox();
 
 public:
-    GameObject(std::string name);
+    GameObject(std::string name, Texture* texture);
     GameObject(const GameObject& other);
 
     virtual void setup();

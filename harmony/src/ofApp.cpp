@@ -251,42 +251,43 @@ void ofApp::keyPressed(int key)
 void ofApp::addNewGameObject(size_t shapeType)
 {
     GameObject *gameObject;
+    Texture* emptyTexture = textureFactory.getEmptyTexture();
 
     if (shapeType == Shape_Sphere)
     {
-        gameObject = new Sphere(sphereText);
+        gameObject = new Sphere(sphereText, emptyTexture);
     }
     else if (shapeType == Shape_Cube)
     {
-        gameObject = new Cube(cubeText);
+        gameObject = new Cube(cubeText, emptyTexture);
     }
     else if (shapeType == Shape_Line)
     {
-        gameObject = new Line(lineText);
+        gameObject = new Line(lineText, emptyTexture);
     }
     else if (shapeType == Shape_Triangle)
     {
-        gameObject = new Triangle(triangleText);
+        gameObject = new Triangle(triangleText, emptyTexture);
     }
     else if (shapeType == Shape_Rectangle)
     {
-        gameObject = new Rektangle(rectangleText);
+        gameObject = new Rektangle(rectangleText, emptyTexture);
     }
     else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone(pentagonText, 5);
+        gameObject = new Polygone(pentagonText, emptyTexture, 5);
     }
     else if (shapeType == Shape_Circle)
     {
-        gameObject = new Polygone(circleText, 90);
+        gameObject = new Polygone(circleText, emptyTexture, 90);
     }
     else if (shapeType == Shape_Arrow)
     {
-        gameObject = new Arrow(arrowText);
+        gameObject = new Arrow(arrowText, emptyTexture);
     }
     else if (shapeType == Shape_Star)
     {
-        gameObject = new Star(starText);
+        gameObject = new Star(starText, emptyTexture);
     }
     else if (shapeType == Shape_Falcon)
     {

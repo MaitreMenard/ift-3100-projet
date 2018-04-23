@@ -1,8 +1,10 @@
 #include "gameobject.h"
 
-GameObject::GameObject(std::string name)
+GameObject::GameObject(std::string name, Texture* texture)
 {
     this->name = name;
+    this->texture = texture;
+
     parentGameObject = nullptr;
 
     boundingBox = ofBoxPrimitive();

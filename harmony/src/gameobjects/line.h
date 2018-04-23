@@ -1,11 +1,11 @@
 #pragma once
 #include "gameobject.h"
-#include "texelFactory.h"
+#include "texture.h"
 
 class Line : public GameObject
 {
 public:
-    Line(std::string name);
+    Line(std::string name, Texture* texture);
     void draw();
     ofColor getColor();
     void setColor(ofColor color);

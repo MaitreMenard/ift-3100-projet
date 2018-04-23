@@ -254,24 +254,6 @@ bool Scene::isSelectedGameObject2D()
 
 void Scene::setSelectedGameObjectTexture(Texture* texture)
 {
-    switch (textureID)
-    {
-    case 1:
-        pix = tFac.setCloudImage(pix, 5.f);
-        break;
-    case 2:
-        pix = tFac.setMarbleTexture(pix, 5.f, 5.f, 1.f, 16.f);
-        break;
-    case 3:
-        pix = tFac.setNoise(pix);
-        break;
-    case 4:
-        pix = tFac.setTurbulenceImage(pix, 5.f);
-        break;
-    case 5:
-        pix = tFac.setZoom(pix, 5.f);
-        break;
-    }
     selectedGameObject->setTexture(texture);
 }
 

@@ -194,6 +194,7 @@
     <ClCompile Include="src\gameobjects\rectangle.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\gameobjects\sphere.cpp" />
+    <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureFactory.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
