@@ -3,20 +3,71 @@
 
 TextureFactory::TextureFactory()
 {
-    this->textureNoise_ = nullptr;
-    this->textureZoom_ = nullptr;
-    this->textureTurbulence_ = nullptr;
-    this->textureCloud_ = nullptr;
-    this->textureMarble_ = nullptr;
+    ofPixels emptyPixels = initPixels();
+    textures.push_back(new Texture("None", emptyPixels));
+
+    ofPixels cloudPixels = initPixels();
+    cloudPixels = setCloud(cloudPixels, 5.f);
+    textures.push_back(new Texture("Cloud", cloudPixels));
+
+    ofPixels marblePixels = initPixels();
+    marblePixels = setMarble(marblePixels, 5.f, 5.f, 1.f, 16.f);
+    textures.push_back(new Texture("Marble", marblePixels));
+
+    ofPixels noisePixels = initPixels();
+    noisePixels = setNoise(noisePixels);
+    textures.push_back(new Texture("Noise", noisePixels));
+
+    ofPixels turbulencePixels = initPixels();
+    turbulencePixels = setTurbulence(turbulencePixels, 5.f);
+    textures.push_back(new Texture("Turbulence", turbulencePixels));
+
+    ofPixels zoomPixels = initPixels();
+    zoomPixels = setZoom(zoomPixels, 5.f);
+    textures.push_back(new Texture("Zoom", zoomPixels));
 }
 
+ofPixels TextureFactory::initPixels()
+{
+    ofPixels pixels = ofPixels();
+    pixels.allocate(256, 256, OF_PIXELS_RGB);
+    pixels.setColor(0, 0, ofColor(255, 255, 255));
+    return pixels;
+}
 
-TextureFactory::~TextureFactory()
-{}
+ofPixels& TextureFactory::setNoise(ofPixels& image)
+{
+    int temp;
+    for (int x = 0; x < image.getWidth(); x++)
+    {
+        for (int y = 0; y < image.getHeight(); y++)
+        {
+            temp = int(255 * ofRandom(1.0));
+            image.setColor(x, y, ofColor(temp, temp, temp));
+        }
+    }
 
-/***** PRIVATE *****/
+    return image;
+}
 
-float TextureFactory::linearInterpolation(const ofPixels & image, float x, float y)
+ofPixels& TextureFactory::setZoom(ofPixels& image, float zoom)
+{
+    ofPixels cimage = ofPixels();
+    cimage.allocate(image.getWidth(), image.getHeight(), OF_PIXELS_RGB);
+    setNoise(image);
+    for (int x = 0; x < image.getWidth(); x++)
+    {
+        for (int y = 0; y < image.getHeight(); y++)
+        {
+            int color = int(255 * linearInterpolation(image, x / zoom, y / zoom));
+            cimage.setColor(x, y, ofColor(color, color, color));
+        }
+    }
+
+    return cimage;
+}
+
+float TextureFactory::linearInterpolation(const ofPixels& image, float x, float y)
 {
     int width = int(image.getWidth()), height = int(image.getHeight());
     float fractX = x - int(x), fractY = y - int(y);
@@ -30,6 +81,23 @@ float TextureFactory::linearInterpolation(const ofPixels & image, float x, float
     return value;
 }
 
+ofPixels& TextureFactory::setTurbulence(ofPixels& image, float size)
+{
+    ofPixels cimage = ofPixels();
+    cimage.allocate(image.getWidth(), image.getHeight(), OF_PIXELS_RGB);
+    setNoise(image);
+    for (int x = 0; x < image.getWidth(); x++)
+    {
+        for (int y = 0; y < image.getHeight(); y++)
+        {
+            int color = int(turbulence(image, x, y, size));
+            cimage.setColor(x, y, ofColor(color, color, color));
+        }
+    }
+
+    return cimage;
+}
+
 float TextureFactory::turbulence(const ofPixels &image, float x, float y, float size)
 {
     float value = 0.f, initSize = size;
@@ -41,34 +109,23 @@ float TextureFactory::turbulence(const ofPixels &image, float x, float y, float 
     return 128.f * value / initSize;
 }
 
-ofPixels * TextureFactory::noise(ofPixels * image)
+ofPixels& TextureFactory::setCloud(ofPixels& image, float size)
 {
-    int temp;
-    for (int x = 0; x < image->getWidth(); x++)
-        for (int y = 0; y < image->getHeight(); y++)
+    ofPixels cimage = ofPixels();
+    cimage.allocate(image.getWidth(), image.getHeight(), OF_PIXELS_RGB);
+    setNoise(cimage);
+    cimage = setTurbulence(cimage, size);
+    ofColor color;
+    for (int x = 0; x < image.getWidth(); x++)
+    {
+        for (int y = 0; y < image.getHeight(); y++)
         {
-            temp = int(255 * ofRandom(1.0));
-            image->setColor(x, y, ofColor(temp, temp, temp));
+            color = convertHslToHsb(169, 255, 192 + cimage.getColor(x, y).r / 4);
+            cimage.setColor(x, y, color);
         }
-    return image;
-}
-/***** PUBLIC *****/
+    }
 
-ofPixels * TextureFactory::setNoise(ofPixels * image)
-{
-    if (textureNoise_ != nullptr)
-        return textureNoise_;
-
-    int temp;
-    for (int x = 0; x < image->getWidth(); x++)
-        for (int y = 0; y < image->getHeight(); y++)
-        {
-            temp = int(255 * ofRandom(1.0));
-            image->setColor(x, y, ofColor(temp, temp, temp));
-        }
-
-    textureNoise_ = image;
-    return textureNoise_;
+    return cimage;
 }
 
 ofColor TextureFactory::convertHslToHsb(int pH, int pS, int pL)
@@ -82,117 +139,57 @@ ofColor TextureFactory::convertHslToHsb(int pH, int pS, int pL)
     return color;
 }
 
-/***** PUBLIC *****/
-
-ofPixels * TextureFactory::setZoom(ofPixels * image, float zoom)
+ofPixels& TextureFactory::setMarble(ofPixels& image, float xPeriod, float yPeriod, float TurbPower, float TurbSize)
 {
-    if (textureZoom_ != nullptr)
-        return textureZoom_;
-
-    ofPixels * cimage = new ofPixels();
-    cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-    noise(image);
-    for (int x = 0; x < image->getWidth(); x++)
-        for (int y = 0; y < image->getHeight(); y++)
+    setNoise(image);
+    ofPixels cimage = ofPixels();
+    cimage.allocate(image.getWidth(), image.getHeight(), OF_PIXELS_RGB);
+    for (int x = 0; x < cimage.getWidth(); x++)
+    {
+        for (int y = 0; y < cimage.getHeight(); y++)
         {
-            int color = int(255 * linearInterpolation(*image, x / zoom, y / zoom));
-            cimage->setColor(x, y, ofColor(color, color, color));
-        }
-
-    textureZoom_ = cimage;
-    return textureZoom_;
-}
-
-ofPixels * TextureFactory::setTurbulenceImage(ofPixels * image, float size)
-{
-    if (textureTurbulence_ != nullptr)
-        return textureTurbulence_;
-
-    ofPixels *cimage = new ofPixels();
-    cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-    noise(image);
-    for (int x = 0; x < image->getWidth(); x++)
-        for (int y = 0; y < image->getHeight(); y++)
-        {
-            int color = int(turbulence(*image, x, y, size));
-            cimage->setColor(x, y, ofColor(color, color, color));
-        }
-
-    textureTurbulence_ = cimage;
-    return textureTurbulence_;
-}
-
-ofPixels * TextureFactory::setCloudImage(ofPixels * image, float size)
-{
-    if (textureCloud_ != nullptr)
-        return textureCloud_;
-
-    ofPixels *cimage = new ofPixels();
-    cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-    noise(cimage);
-    cimage = setTurbulenceImage(cimage, size);
-    ofColor color;
-    for (int x = 0; x < image->getWidth(); x++)
-        for (int y = 0; y < image->getHeight(); y++)
-        {
-            color = convertHslToHsb(169, 255, 192 + cimage->getColor(x, y).r / 4);
-            cimage->setColor(x, y, color);
-        }
-
-    textureCloud_ = cimage;
-    return textureCloud_;
-}
-
-ofPixels * TextureFactory::setMarbleTexture(ofPixels * image, float xPeriod, float yPeriod, float TurbPower, float TurbSize)
-{
-    if (textureMarble_ != nullptr)
-        return textureMarble_;
-
-    noise(image);
-    ofPixels *cimage = new ofPixels();
-    cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-    for (int x = 0; x < cimage->getWidth(); x++)
-        for (int y = 0; y < cimage->getHeight(); y++)
-        {
-            float xyValue = x * xPeriod / cimage->getWidth() + y * yPeriod / cimage->getHeight() + TurbPower * turbulence(*image, x, y, TurbSize) / 255.f;
+            float xyValue = x * xPeriod / cimage.getWidth() + y * yPeriod / cimage.getHeight() + TurbPower * turbulence(image, x, y, TurbSize) / 255.f;
             float sineValue = 255 * fabs(sin(xyValue * PI));
-            cimage->setColor(x, y, ofColor(sineValue, sineValue, sineValue));
+            cimage.setColor(x, y, ofColor(sineValue, sineValue, sineValue));
         }
+    }
 
-    textureMarble_ = cimage;
-    return textureMarble_;
+    return cimage;
 }
 
-ofPixels * TextureFactory::setWoodTexture(ofPixels * image, float numberRings, float TurbPower, float TurbSize)
+ofPixels& TextureFactory::setWood(ofPixels& image, float numberRings, float TurbPower, float TurbSize)
 {
-    if (textureWood_ != nullptr)
-        return textureWood_;
-
-    ofPixels *cimage = new ofPixels();
-    cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-    noise(image);
-    for (int x = 0; x < cimage->getWidth(); x++)
-        for (int y = 0; y < cimage->getHeight(); y++)
+    ofPixels cimage = ofPixels();
+    cimage.allocate(image.getWidth(), image.getHeight(), OF_PIXELS_RGB);
+    setNoise(image);
+    for (int x = 0; x < cimage.getWidth(); x++)
+        for (int y = 0; y < cimage.getHeight(); y++)
         {
-            float xValue = (x - cimage->getWidth() / 2) / float(cimage->getWidth());
-            float yValue = (y - cimage->getHeight() / 2) / float(cimage->getHeight());
-            float distValue = sqrt(pow(xValue, 2) + pow(yValue, 2)) + TurbPower * turbulence(*image, x, y, TurbSize) / 255.f;
+            float xValue = (x - cimage.getWidth() / 2) / float(cimage.getWidth());
+            float yValue = (y - cimage.getHeight() / 2) / float(cimage.getHeight());
+            float distValue = sqrt(pow(xValue, 2) + pow(yValue, 2)) + TurbPower * turbulence(image, x, y, TurbSize) / 255.f;
             float sineValue = 127.f * fabs(sin(2 * numberRings * distValue * PI));
-            cimage->setColor(x, y, ofColor(80 + sineValue, 30 + sineValue, 30));
+            cimage.setColor(x, y, ofColor(80 + sineValue, 30 + sineValue, 30));
         }
 
-    textureWood_ = cimage;
-    return textureWood_;
+    return cimage;
 }
 
-std::vector<Texture> TextureFactory::getAllTextures()
+TextureFactory::~TextureFactory()
 {
-    //TODO
-    return std::vector<Texture>();
+    for (Texture* texture : textures)
+    {
+        delete texture;
+    }
+    textures.clear();
 }
 
-Texture TextureFactory::getUntextured()
+std::vector<Texture*> TextureFactory::getAllTextures()
 {
-    //TODO
-    return Texture();
+    return textures;
+}
+
+Texture* TextureFactory::getEmptyTexture()
+{
+    return textures[0];
 }

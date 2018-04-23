@@ -8,7 +8,6 @@ GameObject::GameObject(std::string name)
     boundingBox = ofBoxPrimitive();
     boundingBox.set(1);
 
-    textureID = 0;
     isSelected = false;
 }
 
@@ -226,10 +225,6 @@ void GameObject::deleteAllChildren()
 void GameObject::setTexture(Texture* texture)
 {
     this->texture = texture;
-    texture.clear();
-    texture.allocate(*pixels);
-    //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
-    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
 Texture* GameObject::getTexture()

@@ -223,7 +223,7 @@ void Scene::removeSelectedGameObjectParent()
 {
     removeSelectedGameObjectFromItsParentChildren();
 
-    if (!isANonChildGameObject(selectedGameObject))
+    if (!isANonChildGameObject(selectedGameObject)) //TODO: is this really necessary?
     {
         selectedGameObject->setParentGameObject(nullptr);
         nonChildrenGameObjects.push_back(selectedGameObject);
@@ -254,8 +254,6 @@ bool Scene::isSelectedGameObject2D()
 
 void Scene::setSelectedGameObjectTexture(Texture* texture)
 {
-    ofPixels * pix = new ofPixels();
-    pix->allocate(256, 256, OF_PIXELS_RGB);
     switch (textureID)
     {
     case 1:

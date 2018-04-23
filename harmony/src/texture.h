@@ -4,8 +4,9 @@
 class Texture : public ofTexture
 {
 public:
-    std::string name;
-
-    Texture(std::string name, ofPixels* pixels);
+    Texture(std::string name, ofPixels pixels);
     std::string getName();
+
+private:
+    std::string name;
 };

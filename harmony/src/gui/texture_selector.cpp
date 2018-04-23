@@ -9,7 +9,7 @@ void TextureSelector::setup(TextureFactory& textureFactory)
         addItem(texture);
     }
 
-    setSelectedItem(textureFactory.getUntextured());
+    setSelectedItem(textureFactory.getEmptyTexture());
 
     panel.setPosition(2, ofGetHeight() - panel.getHeight() - 2);
 }
