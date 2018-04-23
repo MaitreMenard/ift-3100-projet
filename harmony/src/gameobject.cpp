@@ -239,6 +239,11 @@ bool GameObject::is2D()
     return gameObjectIs2D;
 }
 
+void GameObject::accept(GameObjectVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 GameObject::~GameObject()
 {
     deleteAllChildren();

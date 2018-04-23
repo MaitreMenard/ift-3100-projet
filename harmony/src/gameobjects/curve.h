@@ -10,6 +10,7 @@ public:
     void draw();
     ofColor getColor();
     void setColor(ofColor color);
+    void accept(GameObjectVisitor& visitor);
 
     ~Curve();
 

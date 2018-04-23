@@ -2,6 +2,7 @@
 #include <vector>
 #include "ofMain.h"
 #include "transform.h"
+#include "gameobject_visitor.h"
 
 class GameObject
 {
@@ -69,6 +70,8 @@ public:
     void setTexture(size_t textureID, ofPixels * pixels);
 
     bool is2D();
+
+    virtual void accept(GameObjectVisitor& visitor);
 
     virtual ~GameObject();
 };

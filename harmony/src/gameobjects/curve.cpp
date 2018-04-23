@@ -81,6 +81,11 @@ void Curve::setColor(ofColor color)
     curveColor = color;
 }
 
+void Curve::accept(GameObjectVisitor & visitor)
+{
+    visitor.visit(this);
+}
+
 Curve::~Curve()
 {
     curvePoints.clear();
