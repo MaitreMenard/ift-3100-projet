@@ -1,21 +1,22 @@
-#include "texelFactory.h"
+#include "textureFactory.h"
 
 
-texelFactory::texelFactory(){
-	this->textureNoise_ = nullptr;
-	this->textureZoom_ = nullptr;
-	this->textureTurbulence_ = nullptr;
-	this->textureCloud_ = nullptr;
-	this->textureMarble_ = nullptr;
+TextureFactory::TextureFactory()
+{
+    this->textureNoise_ = nullptr;
+    this->textureZoom_ = nullptr;
+    this->textureTurbulence_ = nullptr;
+    this->textureCloud_ = nullptr;
+    this->textureMarble_ = nullptr;
 }
 
 
-texelFactory::~texelFactory()
+TextureFactory::~TextureFactory()
 {}
 
 /***** PRIVATE *****/
 
-float texelFactory::linearInterpolation(const ofPixels & image, float x, float y)
+float TextureFactory::linearInterpolation(const ofPixels & image, float x, float y)
 {
     int width = int(image.getWidth()), height = int(image.getHeight());
     float fractX = x - int(x), fractY = y - int(y);
@@ -29,7 +30,7 @@ float texelFactory::linearInterpolation(const ofPixels & image, float x, float y
     return value;
 }
 
-float texelFactory::turbulence(const ofPixels &image, float x, float y, float size)
+float TextureFactory::turbulence(const ofPixels &image, float x, float y, float size)
 {
     float value = 0.f, initSize = size;
     while (size >= 1)
@@ -40,23 +41,23 @@ float texelFactory::turbulence(const ofPixels &image, float x, float y, float si
     return 128.f * value / initSize;
 }
 
-ofPixels * texelFactory::noise(ofPixels * image)
+ofPixels * TextureFactory::noise(ofPixels * image)
 {
-	int temp;
-	for (int x = 0; x < image->getWidth(); x++)
-		for (int y = 0; y < image->getHeight(); y++)
-		{
-			temp = int(255 * ofRandom(1.0));
-			image->setColor(x, y, ofColor(temp, temp, temp));
-		}
-	return image;
+    int temp;
+    for (int x = 0; x < image->getWidth(); x++)
+        for (int y = 0; y < image->getHeight(); y++)
+        {
+            temp = int(255 * ofRandom(1.0));
+            image->setColor(x, y, ofColor(temp, temp, temp));
+        }
+    return image;
 }
 /***** PUBLIC *****/
 
-ofPixels * texelFactory::setNoise(ofPixels * image)
+ofPixels * TextureFactory::setNoise(ofPixels * image)
 {
-	if (textureNoise_ != nullptr)
-		return textureNoise_;
+    if (textureNoise_ != nullptr)
+        return textureNoise_;
 
     int temp;
     for (int x = 0; x < image->getWidth(); x++)
@@ -66,11 +67,11 @@ ofPixels * texelFactory::setNoise(ofPixels * image)
             image->setColor(x, y, ofColor(temp, temp, temp));
         }
 
-	textureNoise_ = image;
+    textureNoise_ = image;
     return textureNoise_;
 }
 
-ofColor texelFactory::convertHslToHsb(int pH, int pS, int pL)
+ofColor TextureFactory::convertHslToHsb(int pH, int pS, int pL)
 {
     float h = pH / 255.f, s = pS / 255.f, l = pL / 255.f, hh, ss, bb;
     ofColor color;
@@ -83,14 +84,14 @@ ofColor texelFactory::convertHslToHsb(int pH, int pS, int pL)
 
 /***** PUBLIC *****/
 
-ofPixels * texelFactory::setZoom(ofPixels * image, float zoom)
+ofPixels * TextureFactory::setZoom(ofPixels * image, float zoom)
 {
-	if (textureZoom_ != nullptr)
-		return textureZoom_;
+    if (textureZoom_ != nullptr)
+        return textureZoom_;
 
     ofPixels * cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-	noise(image);
+    noise(image);
     for (int x = 0; x < image->getWidth(); x++)
         for (int y = 0; y < image->getHeight(); y++)
         {
@@ -98,18 +99,18 @@ ofPixels * texelFactory::setZoom(ofPixels * image, float zoom)
             cimage->setColor(x, y, ofColor(color, color, color));
         }
 
-	textureZoom_ = cimage;
+    textureZoom_ = cimage;
     return textureZoom_;
 }
 
-ofPixels * texelFactory::setTurbulenceImage(ofPixels * image, float size)
+ofPixels * TextureFactory::setTurbulenceImage(ofPixels * image, float size)
 {
-	if (textureTurbulence_ != nullptr)
-		return textureTurbulence_;
+    if (textureTurbulence_ != nullptr)
+        return textureTurbulence_;
 
     ofPixels *cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-	noise(image);
+    noise(image);
     for (int x = 0; x < image->getWidth(); x++)
         for (int y = 0; y < image->getHeight(); y++)
         {
@@ -117,18 +118,18 @@ ofPixels * texelFactory::setTurbulenceImage(ofPixels * image, float size)
             cimage->setColor(x, y, ofColor(color, color, color));
         }
 
-	textureTurbulence_ = cimage;
+    textureTurbulence_ = cimage;
     return textureTurbulence_;
 }
 
-ofPixels * texelFactory::setCloudImage(ofPixels * image, float size)
+ofPixels * TextureFactory::setCloudImage(ofPixels * image, float size)
 {
-	if (textureCloud_ != nullptr)
-		return textureCloud_;
+    if (textureCloud_ != nullptr)
+        return textureCloud_;
 
     ofPixels *cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-	noise(cimage);
+    noise(cimage);
     cimage = setTurbulenceImage(cimage, size);
     ofColor color;
     for (int x = 0; x < image->getWidth(); x++)
@@ -138,16 +139,16 @@ ofPixels * texelFactory::setCloudImage(ofPixels * image, float size)
             cimage->setColor(x, y, color);
         }
 
-	textureCloud_ = cimage;
+    textureCloud_ = cimage;
     return textureCloud_;
 }
 
-ofPixels * texelFactory::setMarbleTexture(ofPixels * image, float xPeriod, float yPeriod, float TurbPower, float TurbSize)
+ofPixels * TextureFactory::setMarbleTexture(ofPixels * image, float xPeriod, float yPeriod, float TurbPower, float TurbSize)
 {
-	if (textureMarble_ != nullptr)
-		return textureMarble_;
+    if (textureMarble_ != nullptr)
+        return textureMarble_;
 
-	noise(image);
+    noise(image);
     ofPixels *cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
     for (int x = 0; x < cimage->getWidth(); x++)
@@ -158,18 +159,18 @@ ofPixels * texelFactory::setMarbleTexture(ofPixels * image, float xPeriod, float
             cimage->setColor(x, y, ofColor(sineValue, sineValue, sineValue));
         }
 
-	textureMarble_ = cimage;
+    textureMarble_ = cimage;
     return textureMarble_;
 }
 
-ofPixels * texelFactory::setWoodTexture(ofPixels * image, float numberRings, float TurbPower, float TurbSize)
+ofPixels * TextureFactory::setWoodTexture(ofPixels * image, float numberRings, float TurbPower, float TurbSize)
 {
-	if (textureWood_ != nullptr)
-		return textureWood_;
+    if (textureWood_ != nullptr)
+        return textureWood_;
 
     ofPixels *cimage = new ofPixels();
     cimage->allocate(image->getWidth(), image->getHeight(), OF_PIXELS_RGB);
-	noise(image);
+    noise(image);
     for (int x = 0; x < cimage->getWidth(); x++)
         for (int y = 0; y < cimage->getHeight(); y++)
         {
@@ -180,6 +181,18 @@ ofPixels * texelFactory::setWoodTexture(ofPixels * image, float numberRings, flo
             cimage->setColor(x, y, ofColor(80 + sineValue, 30 + sineValue, 30));
         }
 
-	textureWood_ = cimage;
+    textureWood_ = cimage;
     return textureWood_;
+}
+
+std::vector<Texture> TextureFactory::getAllTextures()
+{
+    //TODO
+    return std::vector<Texture>();
+}
+
+Texture TextureFactory::getUntextured()
+{
+    //TODO
+    return Texture();
 }

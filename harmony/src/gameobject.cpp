@@ -44,9 +44,9 @@ void GameObject::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    texture.bind();
+    texture->bind();
     model.draw();
-    texture.unbind();
+    texture->unbind();
 
     for (GameObject* child : children)
     {
@@ -223,18 +223,18 @@ void GameObject::deleteAllChildren()
     }
 }
 
-void GameObject::setTexture(size_t textureID, ofPixels * pixels)
+void GameObject::setTexture(Texture* texture)
 {
-    this->textureID = textureID;
+    this->texture = texture;
     texture.clear();
     texture.allocate(*pixels);
     //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
     texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
 }
 
-size_t GameObject::getTextureID()
+Texture* GameObject::getTexture()
 {
-    return textureID;
+    return texture;
 }
 
 bool GameObject::is2D() 

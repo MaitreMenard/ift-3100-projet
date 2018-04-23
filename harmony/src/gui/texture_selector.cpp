@@ -1,15 +1,15 @@
 #include "texture_selector.h"
 
-void TextureSelector::setup()
+void TextureSelector::setup(TextureFactory& textureFactory)
 {
     Selector::setup(headerText);
 
-    for (std::string textureName : textureTexts)
+    for (Texture* texture : textureFactory.getAllTextures())
     {
-        addItem(textureName);
+        addItem(texture);
     }
 
-    setSelectedItem(0);
+    setSelectedItem(textureFactory.getUntextured());
 
     panel.setPosition(2, ofGetHeight() - panel.getHeight() - 2);
 }

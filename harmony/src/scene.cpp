@@ -31,21 +31,20 @@ void Scene::update()
     }
 }
 
-void Scene::setSelectedGameObject(size_t gameObjectID)
+void Scene::setSelectedGameObject(GameObject* gameObject)
 {
     if (selectedGameObject != nullptr)
     {
         selectedGameObject->setSelected(false);
     }
 
-    selectedGameObjectID = gameObjectID;
-    selectedGameObject = gameObjects[gameObjectID];
+    selectedGameObject = gameObject;
     selectedGameObject->setSelected(true);
 }
 
-size_t Scene::getSelectedGameObjectID()
+GameObject* Scene::getSelectedGameObject()
 {
-    return selectedGameObjectID;
+    return selectedGameObject;
 }
 
 ofVec3f Scene::getEulerRotationSelectedGameObject()
@@ -172,43 +171,63 @@ size_t Scene::getSelectedGameObjectParentID()
     return 0;
 }
 
-void Scene::setSelectedGameObjectParent(size_t parentGameObjectID)
+void Scene::setSelectedGameObjectParent(GameObject* parentGameObject)
 {
-    if (selectedGameObject->getParentGameObject() != nullptr)
+    if (parentGameObject == selectedGameObject)
     {
-        selectedGameObject->getParentGameObject()->removeChild(selectedGameObject);
+        ofLog() << exceptionParentItself;
     }
-    if (parentGameObjectID > 0)
+    else if (isNewParentInSelectedGameObjectChildren(parentGameObject))
     {
-        GameObject* parentGameObject = gameObjects.at(parentGameObjectID - 1);
+        ofLog() << exceptionChildParent;
+    }
+    else
+    {
+        removeSelectedGameObjectFromItsParentChildren();
+
         selectedGameObject->setParentGameObject(parentGameObject);
         parentGameObject->addChild(selectedGameObject);
         removeNonChildGameObject(selectedGameObject);
     }
-    else if (!isANonChildGameObject(selectedGameObject))
-    {
-        selectedGameObject->setParentGameObject(nullptr);
-        nonChildrenGameObjects.push_back(selectedGameObject);
-    }
 }
 
-bool Scene::isNewParentIDInSelectedGameObjectChildren(size_t newParentID)
+bool Scene::isNewParentInSelectedGameObjectChildren(GameObject* newParent)
 {
-    return recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, selectedGameObject->getChildren());
+    return recursiveIsNewParentInSelectedGameObjectChildren(newParent, selectedGameObject->getChildren());
 }
 
-bool Scene::recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*> children)
+bool Scene::recursiveIsNewParentInSelectedGameObjectChildren(GameObject* newParent, vector<GameObject*> children)
 {
     bool cannotBeItsNewParent = false;
     for (GameObject* child : children)
     {
-        if (getGameObjectID(child) + 1 == newParentID || recursiveIsNewParentIDInSelectedGameObjectChildren(newParentID, child->getChildren()))
+        if (newParent == child || recursiveIsNewParentInSelectedGameObjectChildren(newParent, child->getChildren()))
         {
             cannotBeItsNewParent = true;
             break;
         }
     }
     return cannotBeItsNewParent;
+}
+
+void Scene::removeSelectedGameObjectFromItsParentChildren()
+{
+    ofLog() << "Modifying parent hierarchy";
+    if (selectedGameObject->getParentGameObject() != nullptr)
+    {
+        selectedGameObject->getParentGameObject()->removeChild(selectedGameObject);
+    }
+}
+
+void Scene::removeSelectedGameObjectParent()
+{
+    removeSelectedGameObjectFromItsParentChildren();
+
+    if (!isANonChildGameObject(selectedGameObject))
+    {
+        selectedGameObject->setParentGameObject(nullptr);
+        nonChildrenGameObjects.push_back(selectedGameObject);
+    }
 }
 
 size_t Scene::getGameObjectID(GameObject* gameObject)
@@ -233,7 +252,7 @@ bool Scene::isSelectedGameObject2D()
     return selectedGameObject->is2D();
 }
 
-void Scene::setSelectedGameObjectTexture(size_t textureID)
+void Scene::setSelectedGameObjectTexture(Texture* texture)
 {
     ofPixels * pix = new ofPixels();
     pix->allocate(256, 256, OF_PIXELS_RGB);
@@ -255,16 +274,16 @@ void Scene::setSelectedGameObjectTexture(size_t textureID)
         pix = tFac.setZoom(pix, 5.f);
         break;
     }
-    selectedGameObject->setTexture(textureID, pix);
+    selectedGameObject->setTexture(texture);
 }
 
-size_t Scene::getSelectedGameObjectTextureID()
+Texture* Scene::getSelectedGameObjectTexture()
 {
     if (selectedGameObject == nullptr)
     {
-        return 0;
+        return nullptr;
     }
-    return selectedGameObject->getTextureID();
+    return selectedGameObject->getTexture();
 }
 
 void Scene::deleteAllGameObjects()
@@ -281,10 +300,7 @@ void Scene::undo()
     GameObject * gobj = history_.getSelectedGameObject();
     if (gobj != nullptr)
     {
-        selectedGameObject->setSelected(false);
-        selectedGameObject = gobj;
-        selectedGameObjectID = getGameObjectID(selectedGameObject);
-        selectedGameObject->setSelected(true);
+        setSelectedGameObject(gobj);
     }
 }
 
@@ -294,10 +310,7 @@ void Scene::redo()
     GameObject * gobj = history_.getSelectedGameObject();
     if (gobj != nullptr)
     {
-        selectedGameObject->setSelected(false);
-        selectedGameObject = gobj;
-        selectedGameObjectID = getGameObjectID(selectedGameObject);
-        selectedGameObject->setSelected(true);
+        setSelectedGameObject(gobj);
     }
 }
 
