@@ -254,72 +254,60 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
-    string shapeName;
     GameObject *gameObject;
 
     if (shapeType == Shape_Sphere)
     {
-        gameObject = new Sphere();
-        shapeName = sphereText;
+        gameObject = new Sphere(sphereText);
     }
     else if (shapeType == Shape_Cube)
     {
-        gameObject = new Cube();
-        shapeName = cubeText;
+        gameObject = new Cube(cubeText);
     }
     else if (shapeType == Shape_Line)
     {
-        gameObject = new Line();
-        shapeName = lineText;
+        gameObject = new Line(lineText);
     }
     else if (shapeType == Shape_Triangle)
     {
-        gameObject = new Triangle();
-        shapeName = triangleText;
+        gameObject = new Triangle(triangleText);
     }
     else if (shapeType == Shape_Rectangle)
     {
-        gameObject = new Rektangle();
-        shapeName = rectangleText;
+        gameObject = new Rektangle(rectangleText);
     }
     else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone(5);
-        shapeName = pentagonText;
+        gameObject = new Polygone(pentagonText, 5);
     }
     else if (shapeType == Shape_Circle)
     {
-        gameObject = new Polygone(90);
-        shapeName = circleText;
+        gameObject = new Polygone(circleText, 90);
     }
     else if (shapeType == Shape_Arrow)
     {
-        gameObject = new Arrow();
-        shapeName = arrowText;
+        gameObject = new Arrow(arrowText);
     }
     else if (shapeType == Shape_Star)
     {
-        gameObject = new Star();
-        shapeName = starText;
+        gameObject = new Star(starText);
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
-        shapeName = falconText;
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D("/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, "/models/xwing/x-wing.obj",
                 ofVec3f(-14.59, 0.17, 19.0),
                 180, ofVec3f(0, 0, 1),
                 ofVec3f(0.01, 0.01, 0.01));
-        shapeName = xwingText;
     }
-    gameObjectSelector.addItem(shapeName);
+    gameObjectSelector.addItem(gameObject->getName());
     scene.addGameObject(gameObject);
     size_t selectedGameObjectID = scene.getNumberOfGameObjects() - 1;
     gameObjectSelector.setSelectedItem(selectedGameObjectID);

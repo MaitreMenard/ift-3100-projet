@@ -1,6 +1,6 @@
 #include "arrow.h"
 
-Arrow::Arrow()
+Arrow::Arrow(std::string name) : GameObject(name)
 {
     ofPixels * pix = new ofPixels();
     pix->allocate(1, 1, OF_PIXELS_RGB);

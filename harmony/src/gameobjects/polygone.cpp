@@ -1,7 +1,6 @@
 #include "polygone.h"
 
-
-Polygone::Polygone(size_t nbVertex)
+Polygone::Polygone(std::string name, size_t nbVertex) : GameObject(name)
 {
     ofPixels * pix = new ofPixels();
     pix->allocate(1, 1, OF_PIXELS_RGB);

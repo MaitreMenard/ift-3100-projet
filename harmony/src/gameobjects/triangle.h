@@ -5,5 +5,5 @@
 class Triangle : public GameObject
 {
 public:
-    Triangle();
+    Triangle(std::string name);
 };

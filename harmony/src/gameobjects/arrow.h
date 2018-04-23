@@ -5,5 +5,5 @@
 class Arrow : public GameObject
 {
 public:
-    Arrow();
+    Arrow(std::string name);
 };

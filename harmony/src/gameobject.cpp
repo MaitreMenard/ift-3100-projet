@@ -1,7 +1,8 @@
 #include "gameobject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(std::string name)
 {
+    this->name = name;
     parentGameObject = nullptr;
 
     boundingBox = ofBoxPrimitive();
@@ -13,6 +14,7 @@ GameObject::GameObject()
 
 GameObject::GameObject(const GameObject & other)
 {
+    name = other.name;
     texture = other.texture;
     transform = other.transform;
     model = other.model;
@@ -57,6 +59,11 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
+}
+
+std::string GameObject::getName()
+{
+    return name;
 }
 
 void GameObject::drawBoundingBox()
@@ -196,6 +203,7 @@ GameObject & GameObject::operator=(const GameObject & other)
     deleteAllChildren();
     children.assign(other.children.begin(), other.children.end());
 
+    name = other.name;
     texture = other.texture;
     transform = other.transform;
     model = other.model;

@@ -5,5 +5,5 @@
 class Rektangle : public GameObject
 {
 public:
-    Rektangle();
+    Rektangle(std::string name);
 };

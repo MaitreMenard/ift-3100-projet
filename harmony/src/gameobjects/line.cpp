@@ -1,7 +1,7 @@
 #include "line.h"
 
 
-Line::Line()
+Line::Line(std::string name) : GameObject(name)
 {
     texture.allocate(1, 1, GL_RGB);
 

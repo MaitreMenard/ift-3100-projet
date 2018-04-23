@@ -6,6 +6,8 @@
 class GameObject
 {
 private:
+    std::string name;
+
     void deleteAllChildren();
 
 protected:
@@ -23,12 +25,14 @@ protected:
     virtual void drawBoundingBox();
 
 public:
-    GameObject();
+    GameObject(std::string name);
     GameObject(const GameObject& other);
 
     virtual void setup();
     virtual void update();
     virtual void draw();
+
+    std::string getName();
 
     ofVec3f getPosition();
     void setPosition(ofVec3f position);

@@ -31,7 +31,7 @@ private:
     const string arrowText = "Arrow";
     const string starText = "Star";
     const string falconText = "Millenium Falcon";
-    const string xwingText = "XWing";
+    const string xwingText = "X-Wing";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";

@@ -1,6 +1,6 @@
 #include "cube.h"
 
-Cube::Cube()
+Cube::Cube(std::string name) : GameObject(name)
 {
 	ofPixels * pix = new ofPixels();
 	pix->allocate(1, 1, OF_PIXELS_RGB);

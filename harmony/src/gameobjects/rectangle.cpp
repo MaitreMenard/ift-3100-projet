@@ -1,7 +1,7 @@
 #include "rectangle.h"
 
 
-Rektangle::Rektangle()
+Rektangle::Rektangle(std::string name) : GameObject(name)
 {
     ofPixels * pix = new ofPixels();
     pix->allocate(1, 1, OF_PIXELS_RGB);

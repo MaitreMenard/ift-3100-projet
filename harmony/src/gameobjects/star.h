@@ -5,5 +5,5 @@
 class Star : public GameObject
 {
 public:
-    Star();
+    Star(std::string name);
 };

@@ -5,6 +5,6 @@
 class Cube : public GameObject
 {
 public:
-    Cube();
+    Cube(std::string name);
     void setColor(ofColor color);
 };

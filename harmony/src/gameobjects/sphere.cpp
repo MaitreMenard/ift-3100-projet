@@ -1,6 +1,6 @@
 #include "sphere.h"
 
-Sphere::Sphere()
+Sphere::Sphere(std::string name) : GameObject(name)
 {
     ofSpherePrimitive spherePrimitive = ofSpherePrimitive();
     spherePrimitive.setRadius(defaultRadius);

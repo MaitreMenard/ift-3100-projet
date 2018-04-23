@@ -1,6 +1,6 @@
 #include "star.h"
 
-Star::Star()
+Star::Star(std::string name) : GameObject(name)
 {
     ofPixels * pix = new ofPixels();
     pix->allocate(1, 1, OF_PIXELS_RGB);
