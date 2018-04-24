@@ -101,7 +101,7 @@ void ofApp::onParentChanged(int & newParentButtonID)
     }
     else
     {
-        GameObject* parentGameObject = scene.getGameObject(newParentButtonID - 1);
+        GameObject* parentGameObject = scene.getGameObjectByIndex(newParentButtonID - 1);
         scene.setSelectedGameObjectParent(parentGameObject);
     }
 }

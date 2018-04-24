@@ -99,7 +99,7 @@ void Scene::addGameObject(GameObject* gameObject)
     history_.add(new Command(gameObject));
 }
 
-GameObject * Scene::getGameObject(size_t index)
+GameObject * Scene::getGameObjectByIndex(size_t index)
 {
     return gameObjects.at(index);
 }

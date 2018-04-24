@@ -16,6 +16,8 @@ private:
 
     void deleteAllGameObjects();
     void removeSelectedGameObjectFromItsParentChildren();
+    bool isNewParentInSelectedGameObjectChildren(GameObject* newParent);
+    bool recursiveIsNewParentInSelectedGameObjectChildren(GameObject* newParent, vector<GameObject*>);
 
 public:
     Scene();
@@ -44,7 +46,7 @@ public:
     ofVec3f getScaleSelectedGameObject();
     ofColor getColorSelectedGameObject();
 
-    GameObject* getGameObject(size_t index);    //TODO: rename ByIndex
+    GameObject* getGameObjectByIndex(size_t index);
     size_t getNumberOfGameObjects();
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
@@ -62,9 +64,6 @@ public:
     size_t getSelectedGameObjectParentID();
     void setSelectedGameObjectParent(GameObject* parentGameObject);
     void removeSelectedGameObjectParent();
-
-    bool isNewParentInSelectedGameObjectChildren(GameObject* newParent);    //TODO: make private
-    bool recursiveIsNewParentInSelectedGameObjectChildren(GameObject* newParent, vector<GameObject*>);  //TODO: make private
 
     Scene& operator=(const Scene& other);
 
