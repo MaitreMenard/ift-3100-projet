@@ -6,3 +6,13 @@ void GameObjectSelector::setup()
 
     panel.setPosition(xOffset, yOffset);
 }
+
+void GameObjectSelector::visit(GameObject * gameObject)
+{
+    //todo
+}
+
+void GameObjectSelector::visit(Curve * curve)
+{
+    //todo
+}

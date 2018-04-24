@@ -2,8 +2,9 @@
 #include <vector>
 #include "ofMain.h"
 #include "transform.h"
-#include "gameobject_visitor.h"
 #include "texture.h"
+
+class GameObjectVisitor;
 
 class GameObject
 {

@@ -1,6 +1,7 @@
 #pragma once
-#include "gameobject.h"
-#include "gameobjects/curve.h"
+
+class GameObject;
+class Curve;
 
 class GameObjectVisitor
 {

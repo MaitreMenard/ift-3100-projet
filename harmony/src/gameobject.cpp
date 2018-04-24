@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "gameobject_visitor.h"
 
 GameObject::GameObject(std::string name, Texture* texture)
 {

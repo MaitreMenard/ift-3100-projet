@@ -1,4 +1,5 @@
 #include "curve.h"
+#include "gameobject_visitor.h"
 
 Curve::Curve(std::string name, Texture* texture) : GameObject(name, texture)
 {

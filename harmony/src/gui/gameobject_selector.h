@@ -1,6 +1,7 @@
 #pragma once
 #include "selector.h"
 #include "gameobject.h"
+#include "gameobjects/curve.h"
 #include "gameobject_visitor.h"
 
 class GameObjectSelector : public Selector<GameObject*>, public GameObjectVisitor

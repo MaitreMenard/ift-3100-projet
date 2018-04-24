@@ -324,11 +324,11 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     else if (shapeType == Shape_Bezier)
     {
-        gameObject = new BezierCurve();
+        gameObject = new BezierCurve(bezierCurveText, emptyTexture);
     }
     else if (shapeType == Shape_Hermite)
     {
-        gameObject = new HermiteCurve();
+        gameObject = new HermiteCurve(hermiteCurveText, emptyTexture);
     }
     gameObjectSelector.addItem(gameObject);
     scene.addGameObject(gameObject);
