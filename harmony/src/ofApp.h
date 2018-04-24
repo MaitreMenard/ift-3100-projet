@@ -32,7 +32,7 @@ private:
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
-    const string mirrorText = "Mirror";
+    const string portalText = "Portal";
     const string falconText = "Millenium Falcon";
     const string xwingText = "X-Wing";
 
@@ -40,11 +40,12 @@ private:
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
-    bool currentlyDrawingMirror;
+    bool currentlyDrawingPortal1;
+    bool currentlyDrawingPortal2;
 
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
-    ofCamera cameraMirror;
+    ofCamera cameraPortal;
     GridPlane gridPlane;
     TextureFactory textureFactory;
     Scene scene;
@@ -58,6 +59,8 @@ private:
     void takeScreenShot();
 
     void addNewGameObject(size_t shapeType);
+    void addNewGameObject(size_t shapeType, Texture* texture);
+    void setupNewGameObject(GameObject* gameObject);
 
     void setupInspector();
 
@@ -72,7 +75,8 @@ private:
     void setupCamera();
     void setGUI();
 
-    ofPixels getCameraMirrorImage();
+    ofPixels getCameraPortalImage();
+    void createPortal(size_t portalId);
 
 public:
     void setup();
@@ -106,5 +110,5 @@ enum ShapeType
     Shape_Star,
     Shape_Falcon,
     Shape_XWing,
-    Shape_Mirror
+    Shape_Portal
 };

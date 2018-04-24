@@ -31,9 +31,8 @@ void ofApp::setupCamera()
     camera.setNearClip(0.1f);
     camera.setPosition(initialCameraPosition);
 
-    cameraMirror.setNearClip(0.1f);
-    cameraMirror.setPosition(ofVec3f(0, 0, 0));
-    cameraMirror.setOrientation(ofVec3f(0, -180, 90));
+    cameraPortal.setNearClip(0.1f);
+    cameraPortal.setOrientation(ofVec3f(0, -180, 90));
 }
 
 void ofApp::setupInspector()
@@ -118,7 +117,13 @@ void ofApp::draw()
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
-    if (!currentlyDrawingMirror) {
+    if (currentlyDrawingPortal1) {
+        createPortal(1);
+    }
+    else if (currentlyDrawingPortal2) {
+        createPortal(2);
+    }
+    else {
         ofPushMatrix();
         camera.begin();
         if (camera.getOrtho()) {
@@ -141,14 +146,24 @@ void ofApp::draw()
             ofEnableDepthTest();
         }
     }
-    else {
-        currentlyDrawingMirror = false;
-        cameraMirror.begin();
-        scene.draw();
-        gridPlane.draw();
-        cameraMirror.end();
-        ((Mirror*)scene.getSelectedGameObject())->setTexturePixels(getCameraMirrorImage());
+}
+
+void ofApp::createPortal(size_t portalId) {
+    if (portalId == 1) {
+        currentlyDrawingPortal1 = false;
+        currentlyDrawingPortal2 = true;
+        cameraPortal.setPosition(ofVec3f(-2, 2, 0));
     }
+    else if (portalId == 2) {
+        currentlyDrawingPortal2 = false;
+        cameraPortal.setPosition(ofVec3f(2, 2, 0));
+    }
+    cameraPortal.begin();
+    scene.draw();
+    gridPlane.draw();
+    cameraPortal.end();
+    addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
+    scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
 }
 
 void ofApp::takeScreenShot()
@@ -168,7 +183,7 @@ void ofApp::takeScreenShot()
     ofLog() << "screenshot saved to: " << fileName;
 }
 
-ofPixels ofApp::getCameraMirrorImage() {
+ofPixels ofApp::getCameraPortalImage() {
     ofImage image;
     image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
 
@@ -277,7 +292,7 @@ void ofApp::keyPressed(int key)
         addNewGameObject(Shape_Star);
         break;
     case 'p':
-        addNewGameObject(Shape_Mirror);
+        currentlyDrawingPortal1 = true;
         break;
     case 'm':
         addNewGameObject(Shape_Falcon);
@@ -292,53 +307,56 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
+    addNewGameObject(shapeType, textureFactory.getEmptyTexture());
+}
+
+void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
+{
     GameObject *gameObject;
-    Texture* emptyTexture = textureFactory.getEmptyTexture();
 
     if (shapeType == Shape_Sphere)
     {
-        gameObject = new Sphere(sphereText, emptyTexture);
+        gameObject = new Sphere(sphereText, texture);
     }
     else if (shapeType == Shape_Cube)
     {
-        gameObject = new Cube(cubeText, emptyTexture);
+        gameObject = new Cube(cubeText, texture);
     }
     else if (shapeType == Shape_Line)
     {
-        gameObject = new Line(lineText, emptyTexture);
+        gameObject = new Line(lineText, texture);
     }
     else if (shapeType == Shape_Triangle)
     {
-        gameObject = new Triangle(triangleText, emptyTexture);
+        gameObject = new Triangle(triangleText, texture);
     }
     else if (shapeType == Shape_Rectangle)
     {
-        gameObject = new Rektangle(rectangleText, emptyTexture);
+        gameObject = new Rektangle(rectangleText, texture);
     }
     else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone(pentagonText, emptyTexture, 5);
+        gameObject = new Polygone(pentagonText, texture, 5);
     }
     else if (shapeType == Shape_Circle)
     {
-        gameObject = new Polygone(circleText, emptyTexture, 90);
+        gameObject = new Polygone(circleText, texture, 90);
     }
     else if (shapeType == Shape_Arrow)
     {
-        gameObject = new Arrow(arrowText, emptyTexture);
+        gameObject = new Arrow(arrowText, texture);
     }
     else if (shapeType == Shape_Star)
     {
-        gameObject = new Star(starText, emptyTexture);
+        gameObject = new Star(starText, texture);
     }
-    else if (shapeType == Shape_Mirror)
+    else if (shapeType == Shape_Portal)
     {
-        gameObject = new Mirror(mirrorText, emptyTexture);
-        currentlyDrawingMirror = true;
+        gameObject = new Mirror(portalText, texture);
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D(falconText, emptyTexture, "/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, texture, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
@@ -346,11 +364,15 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D(xwingText, emptyTexture, "/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, texture, "/models/xwing/x-wing.obj",
             ofVec3f(-14.59, 0.17, 19.0),
             180, ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
     }
+    setupNewGameObject(gameObject);
+}
+
+void ofApp::setupNewGameObject(GameObject* gameObject) {
     gameObjectSelector.addItem(gameObject);
     scene.addGameObject(gameObject);
     gameObjectSelector.setSelectedItem(gameObject);
