@@ -15,17 +15,16 @@ public:
     Texture* getEmptyTexture();
 
 private:
-    const std::vector<string> textureNames = { "None" , "Cloud" , "Marble" , "Noise" , "Turbulence" , "Zoom" };
     std::vector<Texture*> textures;
 
     ofPixels initPixels();
 
-    ofPixels& setNoise(ofPixels& image);
-    ofPixels& setZoom(ofPixels& image, float zoom);
-    ofPixels& setTurbulence(ofPixels& image, float size);
-    ofPixels& setCloud(ofPixels& image, float size);
-    ofPixels& setMarble(ofPixels& image, float xPeriod, float yPeriod, float TurbPower, float TurbSize);
-    ofPixels& setWood(ofPixels& image, float numberRings, float TurbPower, float TurbSize);
+    void setNoise(ofPixels& image);
+    void setZoom(ofPixels& image, float zoom);
+    void setTurbulence(ofPixels& image, float size);
+    void setCloud(ofPixels& image, float size);
+    void setMarble(ofPixels& image, float xPeriod, float yPeriod, float TurbPower, float TurbSize);
+    void setWood(ofPixels& image, float numberRings, float TurbPower, float TurbSize);
 
     ofColor convertHslToHsb(int h, int s, int l);
     float linearInterpolation(const ofPixels & image, float x, float y);
