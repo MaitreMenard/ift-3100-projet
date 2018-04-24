@@ -1,11 +1,12 @@
 #pragma once
 #include "ofMain.h"
 #include "gameobject.h"
+#include "texture.h"
 
 class Curve : public GameObject
 {
 public:
-    Curve();
+    Curve(std::string name, Texture* texture);
 
     void draw();
     ofColor getColor();

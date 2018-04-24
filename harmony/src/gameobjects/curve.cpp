@@ -1,8 +1,7 @@
 #include "curve.h"
 
-Curve::Curve()
+Curve::Curve(std::string name, Texture* texture) : GameObject(name, texture)
 {
-    texture.allocate(1, 1, GL_RGB);
     nbVertex = 0;
     gameObjectIs2D = false;
 
