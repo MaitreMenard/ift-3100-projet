@@ -20,7 +20,7 @@ void ofApp::setup()
     gameObjectSelector.setup();
     gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
 
-    textureSelector.setup();
+    textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
     GUIIsDisplayed = true;
@@ -31,9 +31,9 @@ void ofApp::setupCamera()
     camera.setNearClip(0.1f);
     camera.setPosition(initialCameraPosition);
 
-    cameraPortail.setNearClip(0.1f);
-    cameraPortail.setPosition(ofVec3f(0, 2, -5));
-    cameraPortail.setOrientation(ofVec3f(0, 0, 90));
+    cameraMirror.setNearClip(0.1f);
+    cameraMirror.setPosition(ofVec3f(0, 0, 0));
+    cameraMirror.setOrientation(ofVec3f(0, -180, 90));
 }
 
 void ofApp::setupInspector()
@@ -59,21 +59,23 @@ void ofApp::update()
     scene.update();
 }
 
-void ofApp::onSelectedGameObjectChange(size_t& selectedGameObjectID)
+void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
 {
-    if (scene.getSelectedGameObjectID() != selectedGameObjectID)
+    if (scene.getSelectedGameObject() != selectedGameObject)
     {
-        scene.setSelectedGameObject(selectedGameObjectID);
+        scene.setSelectedGameObject(selectedGameObject);
         inspector.update(scene);
-        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
+        if (selectedGameObject->is2D()) {
+            textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+        }
     }
 }
 
-void ofApp::onSelectedGameObjectTextureChange(size_t& selectedTextureID)
+void ofApp::onSelectedGameObjectTextureChange(Texture*& texture)
 {
-    if (scene.getSelectedGameObjectTextureID() != selectedTextureID)
+    if (scene.getSelectedGameObjectTexture() != texture)
     {
-        scene.setSelectedGameObjectTexture(selectedTextureID);
+        scene.setSelectedGameObjectTexture(texture);
     }
 }
 
@@ -97,20 +99,16 @@ void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
     scene.setColorSelectedGameObject(newColor);
 }
 
-void ofApp::onParentChanged(int & newParentID)
+void ofApp::onParentChanged(int & newParentButtonID)
 {
-    if (newParentID - 1 == scene.getSelectedGameObjectID())
+    if (newParentButtonID == 0)
     {
-        cout << exceptionParentItself << endl;
-    }
-    else if (scene.isNewParentIDInSelectedGameObjectChildren(newParentID))
-    {
-        cout << exceptionChildParent << endl;
+        scene.removeSelectedGameObjectParent();
     }
     else
     {
-        ofLog() << "Modifying parent hierarchy";
-        scene.setSelectedGameObjectParent(newParentID);
+        GameObject* parentGameObject = scene.getGameObjectByIndex(newParentButtonID - 1);
+        scene.setSelectedGameObjectParent(parentGameObject);
     }
 }
 
@@ -145,14 +143,12 @@ void ofApp::draw()
     }
     else {
         currentlyDrawingMirror = false;
-        cameraPortail.begin();
+        cameraMirror.begin();
         scene.draw();
         gridPlane.draw();
-        cameraPortail.end();
-        scene.setMirrorTexture(getCameraMirrorImage());
+        cameraMirror.end();
+        ((Mirror*)scene.getSelectedGameObject())->setTexturePixels(getCameraMirrorImage());
     }
-
-    
 }
 
 void ofApp::takeScreenShot()
@@ -174,9 +170,7 @@ void ofApp::takeScreenShot()
 
 ofPixels ofApp::getCameraMirrorImage() {
     ofImage image;
-    cameraPortail.begin();
     image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
-    cameraPortail.end();
 
     return image.getPixels();
 }
@@ -192,16 +186,16 @@ void ofApp::keyPressed(int key)
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
         scene.undo();
-        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObject());
         inspector.update(scene);
-        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
         scene.redo();
-        gameObjectSelector.setSelectedItem(scene.getSelectedGameObjectID());
+        gameObjectSelector.setSelectedItem(scene.getSelectedGameObject());
         inspector.update(scene);
-        textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         break;
     case ' ':
         takeScreenShot();
@@ -298,82 +292,69 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
-    string shapeName;
     GameObject *gameObject;
+    Texture* emptyTexture = textureFactory.getEmptyTexture();
 
     if (shapeType == Shape_Sphere)
     {
-        gameObject = new Sphere();
-        shapeName = sphereText;
+        gameObject = new Sphere(sphereText, emptyTexture);
     }
     else if (shapeType == Shape_Cube)
     {
-        gameObject = new Cube();
-        shapeName = cubeText;
+        gameObject = new Cube(cubeText, emptyTexture);
     }
     else if (shapeType == Shape_Line)
     {
-        gameObject = new Line();
-        shapeName = lineText;
+        gameObject = new Line(lineText, emptyTexture);
     }
     else if (shapeType == Shape_Triangle)
     {
-        gameObject = new Triangle();
-        shapeName = triangleText;
+        gameObject = new Triangle(triangleText, emptyTexture);
     }
     else if (shapeType == Shape_Rectangle)
     {
-        gameObject = new Rektangle();
-        shapeName = rectangleText;
+        gameObject = new Rektangle(rectangleText, emptyTexture);
     }
     else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone(5);
-        shapeName = pentagonText;
+        gameObject = new Polygone(pentagonText, emptyTexture, 5);
     }
     else if (shapeType == Shape_Circle)
     {
-        gameObject = new Polygone(90);
-        shapeName = circleText;
+        gameObject = new Polygone(circleText, emptyTexture, 90);
     }
     else if (shapeType == Shape_Arrow)
     {
-        gameObject = new Arrow();
-        shapeName = arrowText;
+        gameObject = new Arrow(arrowText, emptyTexture);
     }
     else if (shapeType == Shape_Star)
     {
-        gameObject = new Star();
-        shapeName = starText;
+        gameObject = new Star(starText, emptyTexture);
     }
     else if (shapeType == Shape_Mirror)
     {
-        gameObject = new Rektangle();
-        shapeName = mirrorText;
+        gameObject = new Mirror(mirrorText, emptyTexture);
         currentlyDrawingMirror = true;
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, emptyTexture, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
-        shapeName = falconText;
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D("/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, emptyTexture, "/models/xwing/x-wing.obj",
             ofVec3f(-14.59, 0.17, 19.0),
             180, ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
-        shapeName = xwingText;
     }
-    gameObjectSelector.addItem(shapeName);
+    gameObjectSelector.addItem(gameObject);
     scene.addGameObject(gameObject);
-    size_t selectedGameObjectID = scene.getNumberOfGameObjects() - 1;
-    gameObjectSelector.setSelectedItem(selectedGameObjectID);
-    scene.setSelectedGameObject(selectedGameObjectID);
+    gameObjectSelector.setSelectedItem(gameObject);
+    scene.setSelectedGameObject(gameObject);
     if (guiIsSetup)
     {
         inspector.update(scene);
@@ -382,8 +363,11 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupInspector();
     }
-    textureSelector.setSelectedItem(scene.getSelectedGameObjectTextureID());
+    if (gameObject->is2D()) {
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+    }
 }
+
 
 void ofApp::keyReleased(int key)
 {

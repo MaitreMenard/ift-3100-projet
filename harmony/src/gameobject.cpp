@@ -1,18 +1,21 @@
 #include "gameobject.h"
 
-GameObject::GameObject()
+GameObject::GameObject(std::string name, Texture* texture)
 {
+    this->name = name;
+    this->texture = texture;
+
     parentGameObject = nullptr;
 
     boundingBox = ofBoxPrimitive();
     boundingBox.set(1);
 
-    textureID = 0;
     isSelected = false;
 }
 
 GameObject::GameObject(const GameObject & other)
 {
+    name = other.name;
     texture = other.texture;
     transform = other.transform;
     model = other.model;
@@ -42,9 +45,7 @@ void GameObject::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    texture.bind();
-    model.draw();
-    texture.unbind();
+    drawTexture();
 
     for (GameObject* child : children)
     {
@@ -57,6 +58,17 @@ void GameObject::draw()
     }
 
     ofPopMatrix();
+}
+
+void GameObject::drawTexture() {
+    texture->bind();
+    model.draw();
+    texture->unbind();
+}
+
+std::string GameObject::getName()
+{
+    return name;
 }
 
 void GameObject::drawBoundingBox()
@@ -196,6 +208,7 @@ GameObject & GameObject::operator=(const GameObject & other)
     deleteAllChildren();
     children.assign(other.children.begin(), other.children.end());
 
+    name = other.name;
     texture = other.texture;
     transform = other.transform;
     model = other.model;
@@ -215,18 +228,14 @@ void GameObject::deleteAllChildren()
     }
 }
 
-void GameObject::setTexture(size_t textureID, ofPixels * pixels)
+void GameObject::setTexture(Texture* texture)
 {
-    this->textureID = textureID;
-    texture.clear();
-    texture.allocate(*pixels);
-    //texture.setTextureWrap(GL_MIRRORED_REPEAT, GL_MIRRORED_REPEAT);
-    texture.setTextureWrap(GL_REPEAT, GL_REPEAT);
+    this->texture = texture;
 }
 
-size_t GameObject::getTextureID()
+Texture* GameObject::getTexture()
 {
-    return textureID;
+    return texture;
 }
 
 bool GameObject::is2D() 

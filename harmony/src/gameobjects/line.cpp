@@ -1,10 +1,8 @@
 #include "line.h"
 
 
-Line::Line()
+Line::Line(std::string name, Texture* texture) : GameObject(name, texture)
 {
-    texture.allocate(1, 1, GL_RGB);
-
     nbVertex = 0;
 
     gameObjectIs2D = true;
@@ -18,14 +16,14 @@ void Line::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    texture.bind();
+    texture->bind();
     ofPushStyle();
     ofSetLineWidth(lineWidth);
     ofFill();
     ofSetColor(color);
     ofDrawLine(ofVec3f(-0.5f, 0.f, 0.f), ofVec3f(0.5f, 0.f, 0.f));
     ofPopStyle();
-    texture.unbind();
+    texture->unbind();
 
     for (GameObject* child : children)
     {

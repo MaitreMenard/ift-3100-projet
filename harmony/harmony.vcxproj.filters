@@ -64,9 +64,6 @@
     <ClCompile Include="..\..\..\addons\ofxInputField\src\ofxInputField.cpp">
       <Filter>addons\ofxInputField\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\texelFactory.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\command.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -118,11 +115,17 @@
     <ClCompile Include="src\gui\gameobject_selector.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\selector.cpp">
-      <Filter>src\gui</Filter>
-    </ClCompile>
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\textureFactory.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texture.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\mirror.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -344,9 +347,6 @@
     <ClInclude Include="..\..\..\addons\ofxInputField\src\ofxInputField.h">
       <Filter>addons\ofxInputField\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\texelFactory.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\gui\rotation_slider.h">
       <Filter>src\gui</Filter>
     </ClInclude>
@@ -409,6 +409,15 @@
     </ClInclude>
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texture.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\textureFactory.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\mirror.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

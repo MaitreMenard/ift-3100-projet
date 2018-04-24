@@ -1,9 +1,9 @@
 #pragma once
 #include "gameobject.h"
-#include "texelFactory.h"
+#include "texture.h"
 
 class Triangle : public GameObject
 {
 public:
-    Triangle();
+    Triangle(std::string name, Texture* texture);
 };
