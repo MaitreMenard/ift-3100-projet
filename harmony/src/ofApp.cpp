@@ -119,7 +119,7 @@ void ofApp::onParentChanged(int & newParentID)
 
 void ofApp::draw()
 {
-	//ofBackgroundGradient(ofColor::white, ofColor::gray);
+	ofBackgroundGradient(ofColor::white, ofColor::gray);
 	//ofBackground(ofColor::red);
 	float blur = ofMap(mouseX, 0, ofGetWidth(), 0, 10, true);
 	int iteration = ofMap(mouseY, 0, ofGetHeight(), 0, 10, true);
@@ -127,11 +127,10 @@ void ofApp::draw()
 	fbo.begin();
 	ofClear(0);
 	camera.begin();
-	//spotlight.enable();
-	ofSphere(0, 0, 0, 400);
+	spotlight.enable();
     scene.draw();
 	gridPlane.draw();
-	//spotlight.disable();
+	spotlight.disable();
     camera.end();
 	fbo.end();
 
@@ -346,7 +345,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
 	else if (shapeType == Shape_CubeRelief)
 	{
-		gameObject = new CubeRelief();
+		gameObject = new planeRelief();
 		shapeName = cubeReliefText;
 	}
     else if (shapeType == Shape_Falcon)

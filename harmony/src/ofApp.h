@@ -5,7 +5,7 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "gameobjects/cube.h"
-#include "gameobjects/cubeRelief.h"
+#include "gameobjects/planeRelief.h"
 #include "gameobjects/sphere.h"
 #include "gameobjects/triangle.h"
 #include "gameobjects/rectangle.h"
@@ -38,7 +38,7 @@ private:
     const string starText = "Star";
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
-	const string cubeReliefText = "CubeRelief";
+	const string cubeReliefText = "PlanRelieft";
 
     const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
     const string exceptionParentItself = "You cannot set the parent of an object to itself.";

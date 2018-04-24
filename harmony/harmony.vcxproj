@@ -173,7 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\fboRenderer.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
-    <ClCompile Include="src\gameobjects\cubeRelief.cpp" />
+    <ClCompile Include="src\gameobjects\planeRelief.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
@@ -216,7 +216,7 @@
   <ItemGroup>
     <ClInclude Include="src\fboRenderer.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
-    <ClInclude Include="src\gameobjects\cubeRelief.h" />
+    <ClInclude Include="src\gameobjects\planeRelief.h" />
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\gameobject_selector.h" />

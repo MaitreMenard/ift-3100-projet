@@ -124,11 +124,11 @@
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\cubeRelief.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\fboRenderer.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\planeRelief.cpp">
+      <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -419,11 +419,11 @@
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameobjects\cubeRelief.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
     <ClInclude Include="src\fboRenderer.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\planeRelief.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
