@@ -1,11 +1,7 @@
 #include "model3D.h"
 
-Model3D::Model3D(string fileName)
-{
-    Model3D(fileName, ofVec3f(0, 0, 0), 0, ofVec3f(0, 0, 0), ofVec3f(1, 1, 1));
-}
-
-Model3D::Model3D(string fileName, ofVec3f positionOffset, float rotationOffsetAngle, ofVec3f rotationOffsetAxis, ofVec3f scaleFactor)
+Model3D::Model3D(std::string name, Texture* texture, std::string fileName, ofVec3f positionOffset=ofVec3f(0, 0, 0),
+    float rotationOffsetAngle=0, ofVec3f rotationOffsetAxis=ofVec3f(0, 0, 0), ofVec3f scaleFactor=ofVec3f(1, 1, 1)) : GameObject(name, texture)
 {
     objModel = ofxAssimpModelLoader();
     objModel.loadModel(fileName);

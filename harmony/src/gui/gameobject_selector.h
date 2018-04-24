@@ -1,8 +1,9 @@
 #pragma once
 #include "selector.h"
+#include "gameobject.h"
 #include "gameobject_visitor.h"
 
-class GameObjectSelector : public Selector, public GameObjectVisitor
+class GameObjectSelector : public Selector<GameObject*>, public GameObjectVisitor
 {
 public:
     void setup();

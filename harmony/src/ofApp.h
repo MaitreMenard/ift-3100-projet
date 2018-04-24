@@ -4,6 +4,7 @@
 #include "ofxGui.h"
 #include "grid_plane.h"
 #include "scene.h"
+#include "textureFactory.h"
 #include "gameobjects/cube.h"
 #include "gameobjects/sphere.h"
 #include "gameobjects/triangle.h"
@@ -33,12 +34,9 @@ private:
     const string arrowText = "Arrow";
     const string starText = "Star";
     const string falconText = "Millenium Falcon";
-    const string xwingText = "XWing";
+    const string xwingText = "X-Wing";
     const string bezierCurveText = "Bezier Curve";
     const string hermiteCurveText = "Hermite Curve";
-
-    const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
-    const string exceptionParentItself = "You cannot set the parent of an object to itself.";
 
     bool shiftIsPressed;
     bool CtrlIsPressed;
@@ -47,6 +45,7 @@ private:
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
     GridPlane gridPlane;
+    TextureFactory textureFactory;
     Scene scene;
 
     Inspector inspector;
@@ -61,8 +60,8 @@ private:
 
     void setupInspector();
 
-    void onSelectedGameObjectChange(size_t& selectedGameObjectID);
-    void onSelectedGameObjectTextureChange(size_t& selectedTextureID);
+    void onSelectedGameObjectChange(GameObject*& selectedGameObject);
+    void onSelectedGameObjectTextureChange(Texture*& texture);
     void onSelectedGameObjectPositionChange(ofVec3f& newPosition);
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
