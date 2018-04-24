@@ -158,6 +158,7 @@ void ofApp::createPortal(size_t portalId) {
         currentlyDrawingPortal2 = false;
         cameraPortal.setPosition(ofVec3f(2, 2, 0));
     }
+    scene.setSelectedGameObject(nullptr);
     cameraPortal.begin();
     scene.draw();
     gridPlane.draw();
