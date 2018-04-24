@@ -291,7 +291,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D(falconText, "/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, emptyTexture, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
@@ -299,7 +299,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D(xwingText, "/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, emptyTexture, "/models/xwing/x-wing.obj",
             ofVec3f(-14.59, 0.17, 19.0),
             180, ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
