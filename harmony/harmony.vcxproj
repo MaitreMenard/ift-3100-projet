@@ -177,7 +177,6 @@
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
     <ClCompile Include="src\gui\parentIntField.cpp" />
-    <ClCompile Include="src\gui\selector.cpp" />
     <ClCompile Include="src\gui\texture_selector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
@@ -194,7 +193,8 @@
     <ClCompile Include="src\gameobjects\rectangle.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\gameobjects\sphere.cpp" />
-    <ClCompile Include="src\texelFactory.cpp" />
+    <ClCompile Include="src\texture.cpp" />
+    <ClCompile Include="src\textureFactory.cpp" />
     <ClCompile Include="src\transform.cpp" />
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.cpp" />
     <ClCompile Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.cpp" />
@@ -235,7 +235,8 @@
     <ClInclude Include="src\gameobjects\rectangle.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\gameobjects\sphere.h" />
-    <ClInclude Include="src\texelFactory.h" />
+    <ClInclude Include="src\textureFactory.h" />
+    <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\transform.h" />
     <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpAnimation.h" />
     <ClInclude Include="..\..\..\addons\ofxAssimpModelLoader\src\ofxAssimpMeshHelper.h" />

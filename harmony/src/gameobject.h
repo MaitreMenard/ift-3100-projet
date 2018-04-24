@@ -2,14 +2,17 @@
 #include <vector>
 #include "ofMain.h"
 #include "transform.h"
+#include "texture.h"
 
 class GameObject
 {
 private:
+    std::string name;
+
     void deleteAllChildren();
 
 protected:
-    ofTexture texture;
+    Texture* texture;
     Transform transform;
     std::vector<GameObject*> children;
     ofMesh model;
@@ -18,17 +21,18 @@ protected:
     size_t nbVertex;
     bool isSelected;
     bool gameObjectIs2D;
-    size_t textureID;
 
     virtual void drawBoundingBox();
 
 public:
-    GameObject();
+    GameObject(std::string name, Texture* texture);
     GameObject(const GameObject& other);
 
     virtual void setup();
     virtual void update();
     virtual void draw();
+
+    std::string getName();
 
     ofVec3f getPosition();
     void setPosition(ofVec3f position);
@@ -64,8 +68,8 @@ public:
 
     GameObject& operator=(const GameObject& other);
 
-    size_t getTextureID();
-    void setTexture(size_t textureID, ofPixels * pixels);
+    Texture* getTexture();
+    void setTexture(Texture* texture);
 
     bool is2D();
 

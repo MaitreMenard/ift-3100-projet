@@ -2,18 +2,22 @@
 #include <vector>
 #include "gameobject.h"
 #include "command.h"
-#include "texelFactory.h"
 
 class Scene
 {
 private:
+    const string exceptionChildParent = "You cannot set the parent of an object to one of its children.";
+    const string exceptionParentItself = "You cannot set the parent of an object to itself.";
+
     vector<GameObject*> gameObjects;
     vector<GameObject*> nonChildrenGameObjects;
-    void deleteAllGameObjects();
     CommandHandler history_;
-    size_t selectedGameObjectID;
     GameObject* selectedGameObject;
-    texelFactory tFac;
+
+    void deleteAllGameObjects();
+    void removeSelectedGameObjectFromItsParentChildren();
+    bool isNewParentInSelectedGameObjectChildren(GameObject* newParent);
+    bool recursiveIsNewParentInSelectedGameObjectChildren(GameObject* newParent, vector<GameObject*>);
 
 public:
     Scene();
@@ -36,14 +40,13 @@ public:
     void enableUndoRedo() { history_.enable(); };
     void disableUndoRedo() { history_.disable(); };
     void setColorSelectedGameObject(ofColor color);
-    void setSelectedGameObjectTexture(size_t textureID);
 
     ofVec3f getPositionSelectedGameObject();
     ofVec3f getEulerRotationSelectedGameObject();
     ofVec3f getScaleSelectedGameObject();
     ofColor getColorSelectedGameObject();
 
-    GameObject* getGameObject(size_t index);
+    GameObject* getGameObjectByIndex(size_t index);
     size_t getNumberOfGameObjects();
     void removeGameObject(GameObject* gameObjectToRemove);
     void removeGameObject(size_t index);
@@ -52,16 +55,15 @@ public:
 
     bool isSelectedGameObject2D();
 
-    size_t getSelectedGameObjectID();
+    GameObject* getSelectedGameObject();
     size_t getGameObjectID(GameObject* gameObject);
-    void setSelectedGameObject(size_t gameObjectID);
-    size_t getSelectedGameObjectTextureID();
+    void setSelectedGameObject(GameObject* gameObject);
+    Texture* getSelectedGameObjectTexture();
+    void setSelectedGameObjectTexture(Texture* texture);
 
     size_t getSelectedGameObjectParentID();
-    void setSelectedGameObjectParent(size_t parentGameObjectID);
-
-    bool isNewParentIDInSelectedGameObjectChildren(size_t newParentID);
-    bool recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*>);
+    void setSelectedGameObjectParent(GameObject* parentGameObject);
+    void removeSelectedGameObjectParent();
 
     Scene& operator=(const Scene& other);
 

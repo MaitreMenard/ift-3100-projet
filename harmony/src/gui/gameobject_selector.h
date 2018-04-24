@@ -1,7 +1,8 @@
 #pragma once
 #include "selector.h"
+#include "gameobject.h"
 
-class GameObjectSelector : public Selector
+class GameObjectSelector : public Selector<GameObject*>
 {
 private:
     const std::string headerText = "Scene";
