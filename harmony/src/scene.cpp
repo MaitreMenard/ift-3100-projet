@@ -233,6 +233,10 @@ bool Scene::isSelectedGameObject2D()
     return selectedGameObject->is2D();
 }
 
+void Scene::setMirrorTexture(ofPixels pix) {
+    selectedGameObject->setTexture(0, &pix);
+}
+
 void Scene::setSelectedGameObjectTexture(size_t textureID)
 {
     ofPixels * pix = new ofPixels();

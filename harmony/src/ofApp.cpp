@@ -30,6 +30,10 @@ void ofApp::setupCamera()
 {
     camera.setNearClip(0.1f);
     camera.setPosition(initialCameraPosition);
+
+    cameraPortail.setNearClip(0.1f);
+    cameraPortail.setPosition(ofVec3f(0, 2, -5));
+    cameraPortail.setOrientation(ofVec3f(0, 0, 90));
 }
 
 void ofApp::setupInspector()
@@ -113,30 +117,42 @@ void ofApp::onParentChanged(int & newParentID)
 void ofApp::draw()
 {
     ofClear(0);
-    ofPushMatrix();
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
-    camera.begin();
-    if (camera.getOrtho()) {
-        ofScale(ofVec3f(100));
-    }
-    scene.draw();
-    gridPlane.draw();
-    camera.end();
-    ofPopMatrix();
-
-    if (GUIIsDisplayed)
-    {
-        ofDisableDepthTest();
-        inspector.draw();
-        gameObjectSelector.draw();
-        if (scene.isSelectedGameObject2D())
-        {
-            textureSelector.draw();
+    if (!currentlyDrawingMirror) {
+        ofPushMatrix();
+        camera.begin();
+        if (camera.getOrtho()) {
+            ofScale(ofVec3f(100));
         }
-        ofEnableDepthTest();
+        scene.draw();
+        gridPlane.draw();
+        camera.end();
+        ofPopMatrix();
+
+        if (GUIIsDisplayed)
+        {
+            ofDisableDepthTest();
+            inspector.draw();
+            gameObjectSelector.draw();
+            if (scene.isSelectedGameObject2D())
+            {
+                textureSelector.draw();
+            }
+            ofEnableDepthTest();
+        }
     }
+    else {
+        currentlyDrawingMirror = false;
+        cameraPortail.begin();
+        scene.draw();
+        gridPlane.draw();
+        cameraPortail.end();
+        scene.setMirrorTexture(getCameraMirrorImage());
+    }
+
+    
 }
 
 void ofApp::takeScreenShot()
@@ -154,6 +170,19 @@ void ofApp::takeScreenShot()
     image.save(fileName);
 
     ofLog() << "screenshot saved to: " << fileName;
+}
+
+ofPixels ofApp::getCameraMirrorImage() {
+    ofImage image;
+    cameraPortail.begin();
+    image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
+    cameraPortail.end();
+
+    return image.getPixels();
+}
+
+void ofApp::setGUI() {
+    GUIIsDisplayed = !GUIIsDisplayed;
 }
 
 void ofApp::keyPressed(int key)
@@ -224,7 +253,7 @@ void ofApp::keyPressed(int key)
         CtrlIsPressed = true;
         break;
     case 'h':
-        GUIIsDisplayed = !GUIIsDisplayed;
+        setGUI();
         break;
     case '1':
         addNewGameObject(Shape_Sphere);
@@ -252,6 +281,9 @@ void ofApp::keyPressed(int key)
         break;
     case '9':
         addNewGameObject(Shape_Star);
+        break;
+    case 'p':
+        addNewGameObject(Shape_Mirror);
         break;
     case 'm':
         addNewGameObject(Shape_Falcon);
@@ -314,6 +346,12 @@ void ofApp::addNewGameObject(size_t shapeType)
         gameObject = new Star();
         shapeName = starText;
     }
+    else if (shapeType == Shape_Mirror)
+    {
+        gameObject = new Rektangle();
+        shapeName = mirrorText;
+        currentlyDrawingMirror = true;
+    }
     else if (shapeType == Shape_Falcon)
     {
         gameObject = new Model3D("/models/millenium-falcon/millenium-falcon.obj",
@@ -326,9 +364,9 @@ void ofApp::addNewGameObject(size_t shapeType)
     else if (shapeType == Shape_XWing)
     {
         gameObject = new Model3D("/models/xwing/x-wing.obj",
-                ofVec3f(-14.59, 0.17, 19.0),
-                180, ofVec3f(0, 0, 1),
-                ofVec3f(0.01, 0.01, 0.01));
+            ofVec3f(-14.59, 0.17, 19.0),
+            180, ofVec3f(0, 0, 1),
+            ofVec3f(0.01, 0.01, 0.01));
         shapeName = xwingText;
     }
     gameObjectSelector.addItem(shapeName);

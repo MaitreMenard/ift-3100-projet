@@ -63,6 +63,8 @@ public:
     bool isNewParentIDInSelectedGameObjectChildren(size_t newParentID);
     bool recursiveIsNewParentIDInSelectedGameObjectChildren(size_t newParentID, vector<GameObject*>);
 
+    void setMirrorTexture(ofPixels pix);
+
     Scene& operator=(const Scene& other);
 
     ~Scene();

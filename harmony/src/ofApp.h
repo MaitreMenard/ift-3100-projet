@@ -30,6 +30,7 @@ private:
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
+    const string mirrorText = "Mirror";
     const string falconText = "Millenium Falcon";
     const string xwingText = "XWing";
 
@@ -40,8 +41,11 @@ private:
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
+    bool currentlyDrawingMirror;
+
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
+    ofCamera cameraPortail;
     GridPlane gridPlane;
     Scene scene;
 
@@ -66,6 +70,9 @@ private:
     void onParentChanged(int& newParentID);
 
     void setupCamera();
+    void setGUI();
+
+    ofPixels getCameraMirrorImage();
 
 public:
     void setup();
@@ -98,5 +105,6 @@ enum ShapeType
     Shape_Arrow,
     Shape_Star,
     Shape_Falcon,
-    Shape_XWing
+    Shape_XWing,
+    Shape_Mirror
 };
