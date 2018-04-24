@@ -115,9 +115,6 @@
     <ClCompile Include="src\gui\gameobject_selector.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
-    <ClCompile Include="src\gui\selector.cpp">
-      <Filter>src\gui</Filter>
-    </ClCompile>
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>

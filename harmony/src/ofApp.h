@@ -56,8 +56,8 @@ private:
 
     void setupInspector();
 
-    void onSelectedGameObjectChange(GameObject* selectedGameObject);
-    void onSelectedGameObjectTextureChange(Texture* texture);
+    void onSelectedGameObjectChange(GameObject*& selectedGameObject);
+    void onSelectedGameObjectTextureChange(Texture*& texture);
     void onSelectedGameObjectPositionChange(ofVec3f& newPosition);
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);

@@ -177,7 +177,6 @@
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
     <ClCompile Include="src\gui\parentIntField.cpp" />
-    <ClCompile Include="src\gui\selector.cpp" />
     <ClCompile Include="src\gui\texture_selector.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />

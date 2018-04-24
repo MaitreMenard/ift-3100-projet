@@ -55,7 +55,7 @@ void ofApp::update()
     scene.update();
 }
 
-void ofApp::onSelectedGameObjectChange(GameObject* selectedGameObject)
+void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
 {
     if (scene.getSelectedGameObject() != selectedGameObject)
     {
@@ -65,7 +65,7 @@ void ofApp::onSelectedGameObjectChange(GameObject* selectedGameObject)
     }
 }
 
-void ofApp::onSelectedGameObjectTextureChange(Texture* texture)
+void ofApp::onSelectedGameObjectTextureChange(Texture*& texture)
 {
     if (scene.getSelectedGameObjectTexture() != texture)
     {

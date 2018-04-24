@@ -20,12 +20,12 @@ public:
         Note: we have to fake events by polling instead of adding listeners to the buttons, because a button listener is only called
         when the button is released (see ofxButton::valueChanged in ofxButton.cpp, line 52).
         */
-        for (std::pair<T, ofxButton*> &p : itemButtons)
+        for (const auto& pair : itemButtons)
         {
-            if (*p[1])
+            if (*pair.second)
             {
-                setSelectedItem(p[0]);
-                ofNotifyEvent(buttonPressedEvent, p[0]);
+                setSelectedItem(pair.first);
+                ofNotifyEvent(buttonPressedEvent, (T)pair.first);
                 break;
             }
         }
@@ -45,7 +45,7 @@ public:
     void addItem(T item)
     {
         ofxButton *newButton = new ofxButton();
-        itemButtons.insert(std::pair<T, ofxButton>(item, newButton));
+        itemButtons.insert(std::make_pair(item, newButton));
         newButton->setBackgroundColor(baseButtonColor);
         panel.add(newButton->setup(ofParameter<string>(item->getName())));  //FIXME: getName might not work here -> make abstract method
     }
@@ -63,9 +63,9 @@ public:
 
     ~Selector()
     {
-        for (const std::pair<T, ofxButton*> &p : itemButtons)
+        for (const auto& pair : itemButtons)
         {
-            delete p[1];
+            delete pair.second;
         }
         itemButtons.clear();
     }
@@ -84,6 +84,6 @@ private:
 
     bool isAnyItemSelected()
     {
-        selectedItem != nullptr;
+        return selectedItem != nullptr;
     }
 };
