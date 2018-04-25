@@ -5,54 +5,35 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "textureFactory.h"
-#include "gameobjects/cube.h"
-#include "gameobjects/sphere.h"
-#include "gameobjects/triangle.h"
-#include "gameobjects/rectangle.h"
-#include "gameobjects/line.h"
-#include "gameobjects/polygone.h"
-#include "gameobjects/model3D.h"
-#include "gameobjects/arrow.h"
-#include "gameobjects/star.h"
-#include "gameobjects/bezier_curve.h"
-#include "gameobjects/hermite_curve.h"
-#include "gameobjects/controlpoint.h"
-#include "gameobjects/mirror.h"
 #include "gui/gameobject_selector.h"
+#include "gameobjects/light.h"
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
+#include "gameobjectFactory.h"
 
 
 class ofApp : public ofBaseApp
 {
 private:
-    const string cubeText = "Cube";
-    const string sphereText = "Sphere";
-    const string rectangleText = "Rectangle";
-    const string triangleText = "Triangle";
-    const string pentagonText = "Pentagon";
-    const string circleText = "Circle";
-    const string lineText = "Line";
-    const string arrowText = "Arrow";
-    const string starText = "Star";
-    const string portalText = "Portal";
-    const string falconText = "Millenium Falcon";
-    const string xwingText = "X-Wing";
-    const string bezierCurveText = "Bezier Curve";
-    const string hermiteCurveText = "Hermite Curve";
-
     bool shiftIsPressed;
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
+    bool lightIsActive;
+
+    const string lightText = "Light";
+
     bool currentlyDrawingPortal1;
     bool currentlyDrawingPortal2;
+
+    Light* light;
 
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
     ofCamera cameraPortal;
     GridPlane gridPlane;
     TextureFactory textureFactory;
+    GameObjectFactory gameobjectFactory;
     Scene scene;
 
     Inspector inspector;
@@ -63,7 +44,6 @@ private:
 
     void takeScreenShot();
 
-    void addNewGameObject(size_t shapeType);
     void addNewGameObject(size_t shapeType, Texture* texture);
     void setupNewGameObject(GameObject* gameObject);
 
@@ -81,6 +61,8 @@ private:
 
     void setupCamera();
     void toggleGUIVisibility();
+
+    void setupLight(bool enableOrDisable);
 
     ofPixels getCameraPortalImage();
     void createPortal(size_t portalId);
@@ -102,22 +84,4 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
-};
-
-enum ShapeType
-{
-    Shape_Sphere,
-    Shape_Cube,
-    Shape_Line,
-    Shape_Triangle,
-    Shape_Rectangle,
-    Shape_Pentagon,
-    Shape_Circle,
-    Shape_Arrow,
-    Shape_Star,
-    Shape_Falcon,
-    Shape_XWing,
-    Shape_Bezier,
-    Shape_Hermite,
-    Shape_Portal
 };
