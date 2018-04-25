@@ -49,11 +49,6 @@ GameObject* Scene::getSelectedGameObject()
     return selectedGameObject;
 }
 
-ofVec3f Scene::getEulerRotationSelectedGameObject()
-{
-    return selectedGameObject->getEulerAngles();
-}
-
 void Scene::setRotationSelectedGameObject(ofVec3f rotation)
 {
     if (selectedGameObject != nullptr && selectedGameObject->getEulerAngles() != rotation)
@@ -67,21 +62,6 @@ void Scene::setColorSelectedGameObject(ofColor color)
 {
     selectedGameObject->setColor(color);
     history_.add(new Command(selectedGameObject));
-}
-
-ofVec3f Scene::getPositionSelectedGameObject()
-{
-    return selectedGameObject->getPosition();
-}
-
-ofVec3f Scene::getScaleSelectedGameObject()
-{
-    return selectedGameObject->getScale();
-}
-
-ofColor Scene::getColorSelectedGameObject()
-{
-    return selectedGameObject->getColor();
 }
 
 void Scene::draw()

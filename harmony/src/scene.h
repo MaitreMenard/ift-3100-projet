@@ -41,11 +41,6 @@ public:
     void disableUndoRedo() { history_.disable(); };
     void setColorSelectedGameObject(ofColor color);
 
-    ofVec3f getPositionSelectedGameObject();
-    ofVec3f getEulerRotationSelectedGameObject();
-    ofVec3f getScaleSelectedGameObject();
-    ofColor getColorSelectedGameObject();
-
     GameObject* getGameObjectByIndex(size_t index);
     size_t getNumberOfGameObjects();
     void removeGameObject(GameObject* gameObjectToRemove);

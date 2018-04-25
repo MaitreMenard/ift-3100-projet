@@ -9,6 +9,7 @@ public:
         float rotationOffsetAngle, ofVec3f rotationOffsetAxis, ofVec3f scaleFactor);
     void draw();
     void setColor(ofColor color);
+    void accept(GameObjectVisitor& visitor);
 
 private:
     ofxAssimpModelLoader objModel;

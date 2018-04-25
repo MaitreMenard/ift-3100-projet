@@ -12,6 +12,7 @@ public:
     Curve* getCurve();
     void setPosition(ofVec3f position);
     void setSelected(bool isSelected);
+    void accept(GameObjectVisitor& visitor);
 
 private:
     const ofColor color = ofColor(0, 160, 0);

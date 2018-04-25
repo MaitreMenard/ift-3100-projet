@@ -73,6 +73,16 @@ void GameObjectSelector::visit(Curve * curve)
     }
 }
 
+void GameObjectSelector::visit(ControlPoint * controlPoint)
+{
+    visit((GameObject*)controlPoint);
+}
+
+void GameObjectSelector::visit(Model3D * model3D)
+{
+    visit((GameObject*)model3D);
+}
+
 GameObjectSelector::~GameObjectSelector()
 {
     for (const auto& pair : controlPointsButtons)

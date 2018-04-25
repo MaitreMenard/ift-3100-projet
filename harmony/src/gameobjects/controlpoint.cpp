@@ -1,5 +1,6 @@
 #include "controlpoint.h"
 #include "curve.h"
+#include "gameobject_visitor.h"
 
 ControlPoint::ControlPoint(std::string name, ofVec3f position, Curve* curve) : GameObject(name, nullptr)
 {
@@ -44,4 +45,9 @@ void ControlPoint::setSelected(bool isSelected)
     GameObject::setSelected(isSelected);
 
     curve->setSelected(isSelected);
+}
+
+void ControlPoint::accept(GameObjectVisitor & visitor)
+{
+    visitor.visit(this);
 }

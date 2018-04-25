@@ -1,12 +1,15 @@
 #pragma once
 #include "ofxGui.h"
 #include "scene.h"
+#include "gameobject_visitor.h"
+#include "gameobjects/curve.h"
+#include "gameobjects/model3D.h"
 #include "gui/colorpicker.h"
 #include "gui/parentIntField.h"
 #include "gui/rotation_slider.h"
 #include "gui/vec3f_textfield.h"
 
-class Inspector
+class Inspector : public GameObjectVisitor
 {
 public:
     Vec3fTextField positionFields;
@@ -18,6 +21,11 @@ public:
     void setup();
     void update(Scene& scene);
     void draw();
+
+    void visit(GameObject* gameObject);
+    void visit(Curve* curve);
+    void visit(ControlPoint* controlPoint);
+    void visit(Model3D* model3D);
 
 private:
     const float POSITION_MIN_VALUE = -1000;

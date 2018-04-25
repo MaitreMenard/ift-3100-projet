@@ -1,4 +1,5 @@
 #include "model3D.h"
+#include "gameobject_visitor.h"
 
 Model3D::Model3D(std::string name, std::string fileName, ofVec3f positionOffset=ofVec3f(0, 0, 0), float rotationOffsetAngle=0,
     ofVec3f rotationOffsetAxis=ofVec3f(0, 0, 0), ofVec3f scaleFactor=ofVec3f(1, 1, 1)) : GameObject(name, nullptr)
@@ -27,3 +28,8 @@ void Model3D::draw()
 
 void Model3D::setColor(ofColor color)
 {}
+
+void Model3D::accept(GameObjectVisitor & visitor)
+{
+    visitor.visit(this);
+}

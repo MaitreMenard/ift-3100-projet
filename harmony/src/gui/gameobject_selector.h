@@ -22,6 +22,8 @@ public:
 
     void visit(GameObject* gameObject);
     void visit(Curve* curve);
+    void visit(ControlPoint* controlPoint);
+    void visit(Model3D* model3D);
 
     ~GameObjectSelector();
 

@@ -24,20 +24,50 @@ void Inspector::update(Scene& scene)
     panel.clear();
     setupPanel();
 
-    panel.add(&positionFields);
-    panel.add(&rotation);
-    panel.add(&scaleFields);
-    panel.add(&colorPicker);
-    panel.add(&parentField);
+    GameObject* selectedGameObject = scene.getSelectedGameObject();
+    selectedGameObject->accept(*this);
 
-    positionFields = scene.getPositionSelectedGameObject();
-    rotation = scene.getEulerRotationSelectedGameObject();
-    scaleFields = scene.getScaleSelectedGameObject();
-    colorPicker.setColor(scene.getColorSelectedGameObject());
     parentField.update(scene.getSelectedGameObjectParentID(), scene.getNumberOfGameObjects());
 }
 
 void Inspector::draw()
 {
     panel.draw();
+}
+
+void Inspector::visit(GameObject * gameObject)
+{
+    panel.add(&positionFields);
+    panel.add(&rotation);
+    panel.add(&scaleFields);
+    panel.add(&colorPicker);
+    panel.add(&parentField);
+
+    positionFields = gameObject->getPosition();
+    rotation = gameObject->getEulerAngles();
+    scaleFields = gameObject->getScale();
+    colorPicker.setColor(gameObject->getColor());
+}
+
+void Inspector::visit(Curve * curve)
+{
+    visit((GameObject*)curve);
+}
+
+void Inspector::visit(ControlPoint * controlPoint)
+{
+    panel.add(&positionFields);
+    positionFields = controlPoint->getPosition();
+}
+
+void Inspector::visit(Model3D * model3D)
+{
+    panel.add(&positionFields);
+    panel.add(&rotation);
+    panel.add(&scaleFields);
+    panel.add(&parentField);
+
+    positionFields = model3D->getPosition();
+    rotation = model3D->getEulerAngles();
+    scaleFields = model3D->getScale();
 }
