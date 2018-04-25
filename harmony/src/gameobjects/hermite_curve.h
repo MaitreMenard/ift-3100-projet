@@ -6,7 +6,7 @@
 class HermiteCurve : public Curve
 {
 public:
-    HermiteCurve(std::string name, Texture* texture);
+    HermiteCurve(std::string name);
 
 private:
     ofVec3f interpolate(float t);

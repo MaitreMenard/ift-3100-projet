@@ -1,6 +1,6 @@
 #include "bezier_curve.h"
 
-BezierCurve::BezierCurve(std::string name, Texture* texture) : Curve(name, texture)
+BezierCurve::BezierCurve(std::string name) : Curve(name)
 {
     updateCurvePoints();
 }

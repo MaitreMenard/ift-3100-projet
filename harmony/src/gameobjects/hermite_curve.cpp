@@ -1,6 +1,6 @@
 #include "hermite_curve.h"
 
-HermiteCurve::HermiteCurve(std::string name, Texture* texture) : Curve(name, texture)
+HermiteCurve::HermiteCurve(std::string name) : Curve(name)
 {
     updateCurvePoints();
 }

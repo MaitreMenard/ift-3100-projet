@@ -377,7 +377,7 @@ void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D(falconText, texture, "/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
@@ -385,18 +385,18 @@ void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D(xwingText, texture, "/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, "/models/xwing/x-wing.obj",
             ofVec3f(-14.59, 0.17, 19.0),
             180, ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
     }
     else if (shapeType == Shape_Bezier)
     {
-        gameObject = new BezierCurve(bezierCurveText, texture);
+        gameObject = new BezierCurve(bezierCurveText);
     }
     else if (shapeType == Shape_Hermite)
     {
-        gameObject = new HermiteCurve(hermiteCurveText, texture);
+        gameObject = new HermiteCurve(hermiteCurveText);
     }
     setupNewGameObject(gameObject);
 }

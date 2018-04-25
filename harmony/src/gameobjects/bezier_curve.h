@@ -6,7 +6,7 @@
 class BezierCurve : public Curve
 {
 public:
-    BezierCurve(std::string name, Texture* texture);
+    BezierCurve(std::string name);
 
 private:
     ofVec3f interpolate(float t);

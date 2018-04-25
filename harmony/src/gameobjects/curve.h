@@ -7,7 +7,7 @@
 class Curve : public GameObject
 {
 public:
-    Curve(std::string name, Texture* texture);
+    Curve(std::string name);
 
     void draw();
     ofColor getColor();
