@@ -1,12 +1,15 @@
 #include "light.h"
 
 Light::Light(string name, Texture* texture) : GameObject(name, texture) {
-    light = new ofLight();
     setLightMode(Ambient);
     gameObjectIs2D = false;
 }
 
 void Light::setLightMode(size_t lightMode) {
+    if (light != nullptr) {
+        delete light;
+    }
+    light = new ofLight();
     if (lightMode == Point) {
         light->setPointLight();
         setPosition(ofVec3f(-2, 0, 0));
