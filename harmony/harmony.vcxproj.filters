@@ -117,7 +117,7 @@
     </ClCompile>
     <ClCompile Include="src\gameobjectFactory.cpp">
       <Filter>src</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="src\gameobjects\bezier_curve.cpp">
       <Filter>src\gameobjects\curves</Filter>
     </ClCompile>
@@ -144,6 +144,12 @@
     </ClCompile>
     <ClCompile Include="src\gameobjects\triangle.cpp">
       <Filter>src\gameobjects\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\planeBump.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fboRenderer.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -433,7 +439,7 @@
     </ClInclude>
     <ClInclude Include="src\gameobjectFactory.h">
       <Filter>src</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="src\gameobjects\bezier_curve.h">
       <Filter>src\gameobjects\curves</Filter>
     </ClInclude>
@@ -460,6 +466,12 @@
     </ClInclude>
     <ClInclude Include="src\gameobjects\triangle.h">
       <Filter>src\gameobjects\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\planeBump.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fboRenderer.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
