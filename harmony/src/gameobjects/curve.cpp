@@ -13,10 +13,11 @@ Curve::Curve(std::string name) : GameObject(name, nullptr)
         curvePoints.addVertex(ofVec3f());
     }
 
-    controlPoints.push_back(ofVec3f(-0.5, 0, 0));
-    controlPoints.push_back(ofVec3f(-0.3, 0.3, 0));
-    controlPoints.push_back(ofVec3f(0.3, 0.3, 0));
-    controlPoints.push_back(ofVec3f(0.5, 0, 0));
+    //TODO: fix name
+    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(-0.5, 0, 0)));
+    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(-0.3, 0.3, 0)));
+    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(0.3, 0.3, 0)));
+    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(0.5, 0, 0)));
 }
 
 void Curve::updateCurvePoints()
@@ -35,7 +36,6 @@ void Curve::draw()
     transform.applyToModelViewMatrix();
 
     drawCurve();
-
     drawChildren();
 
     if (isSelected)
@@ -60,15 +60,10 @@ void Curve::drawCurve()
 
 void Curve::drawControlPoints()
 {
-    ofPushStyle();
-
-    ofSetColor(controlPointsColor);
-    for (ofVec3f controlPoint : controlPoints)
+    for (ControlPoint* controlPoint : controlPoints)
     {
-        ofDrawSphere(controlPoint, controlPointsRadius);
+        controlPoint->draw();
     }
-
-    ofPopStyle();
 }
 
 ofColor Curve::getColor()
@@ -88,11 +83,14 @@ void Curve::accept(GameObjectVisitor & visitor)
 
 std::vector<ControlPoint*> Curve::getControlPoints()
 {
-    //TODO
-    return std::vector<ControlPoint*>();
+    return controlPoints;
 }
 
 Curve::~Curve()
 {
+    for (ControlPoint* controlPoint : controlPoints)
+    {
+        delete controlPoint;
+    }
     curvePoints.clear();
 }

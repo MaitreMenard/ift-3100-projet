@@ -173,6 +173,7 @@
   <ItemGroup>
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\bezier_curve.cpp" />
+    <ClCompile Include="src\gameobjects\controlpoint.cpp" />
     <ClCompile Include="src\gameobjects\curve.cpp" />
     <ClCompile Include="src\gameobjects\hermite_curve.cpp" />
     <ClCompile Include="src\gameobjects\mirror.cpp" />

@@ -12,7 +12,7 @@ ofVec3f BezierCurve::interpolate(float t)
 
     for (int k = 0; k <= n; k++)
     {
-        point += combinations(n, k) * std::powf(t, k) * std::powf(1 - t, n - k) * controlPoints[k];
+        point += combinations(n, k) * std::powf(t, k) * std::powf(1 - t, n - k) * controlPoints[k]->getPosition();
     }
 
     return point;
@@ -45,9 +45,9 @@ void BezierCurve::drawOutline()
 
     for (int i = 0; i < controlPoints.size() - 1; i++)
     {
-        ofDrawLine(controlPoints[i], controlPoints[i + 1]);
+        ofDrawLine(controlPoints[i]->getPosition(), controlPoints[i + 1]->getPosition());
     }
-    ofDrawLine(controlPoints[controlPoints.size() - 1], controlPoints[0]);
+    ofDrawLine(controlPoints[controlPoints.size() - 1]->getPosition(), controlPoints[0]->getPosition());
 
     ofPopStyle();
 }

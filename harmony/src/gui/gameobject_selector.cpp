@@ -24,8 +24,8 @@ void GameObjectSelector::visit(Curve * curve)
 void GameObjectSelector::addControlPoint(Curve * curve, ControlPoint* controlPoint)
 {
     ofxButton *newButton = new ofxButton();
-    itemButtons.insert(std::make_pair(controlPoint, newButton));
+    //itemButtons.insert(std::make_pair(controlPoint, newButton)); TODO
     newButton->setBackgroundColor(baseButtonColor);
     panel.add(newButton->setup(ofParameter<string>(controlPoint->getName())));
-    newButton->setPosition(newButton->getPosition() + ofVec3f(10, 0));
+    newButton->setPosition(newButton->getPosition() + ofVec3f(controlPointButtonXOffset, 0));
 }

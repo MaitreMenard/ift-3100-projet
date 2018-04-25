@@ -6,6 +6,10 @@
 class ControlPoint : public GameObject
 {
 public:
-    ControlPoint(std::string name, Texture* texture, ofVec3f position, ofColor color);
+    ControlPoint(std::string name, ofVec3f position);
     void draw();
+
+private:
+    const ofColor color = ofColor(0, 160, 0);
+    const float radius = 0.05;
 };

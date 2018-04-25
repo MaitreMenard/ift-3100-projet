@@ -20,7 +20,7 @@ public:
 protected:
     const int outlineWidth = 2;
     const ofColor outlineColor = ofColor(0, 255, 0);
-    std::vector<ofVec3f> controlPoints;
+    std::vector<ControlPoint*> controlPoints;
 
     void updateCurvePoints();
     virtual ofVec3f interpolate(float t) = 0;
@@ -28,9 +28,8 @@ protected:
 
 private:
     const int curveWidth = 3;
-    const ofColor controlPointsColor = ofColor(0, 160, 0);
-    const float controlPointsRadius = 0.05;
     const int resolution = 100;
+    const std::string baseControlPointName = "Ctrl Pt ";
 
     ofPolyline curvePoints;
     ofColor curveColor;

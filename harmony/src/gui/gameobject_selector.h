@@ -17,4 +17,5 @@ private:
     const std::string headerText = "Scene";
     const int xOffset = 2;
     const int yOffset = 2;
+    const int controlPointButtonXOffset = 15;
 };

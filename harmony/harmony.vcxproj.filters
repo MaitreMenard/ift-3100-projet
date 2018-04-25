@@ -136,6 +136,9 @@
     <ClCompile Include="src\gameobjects\mirror.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\controlpoint.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -435,7 +438,7 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\controlpoint.h">
-	  <Filter>src\gameobjects</Filter>
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\mirror.h">
       <Filter>src\gameobjects</Filter>
