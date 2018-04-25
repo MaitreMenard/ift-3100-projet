@@ -23,7 +23,7 @@ void Light::setLightMode(size_t lightMode) {
     }
     else if (lightMode == Ambient) {
         light->setDiffuseColor(0);
-        light->setAmbientColor(ofColor(255, 0, 0));        //TODO: changing light type: delete light at start of setLightMode
+        light->setAmbientColor(ofColor(255, 0, 0));
     }
     else {
         light->setDirectional();
