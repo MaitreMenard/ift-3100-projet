@@ -1,31 +1,37 @@
 #include "light.h"
 
-Light::Light(string name, Texture* texture) : GameObject(name, texture) {
+Light::Light(string name) : GameObject(name, nullptr)
+{
     setLightMode(Ambient);
-    gameObjectIs2D = false;
 }
 
-void Light::setLightMode(size_t lightMode) {
-    if (light != nullptr) {
+void Light::setLightMode(size_t lightMode)
+{
+    if (light != nullptr)
+    {
         delete light;
     }
     light = new ofLight();
-    if (lightMode == Point) {
+    if (lightMode == Point)
+    {
         light->setPointLight();
         setPosition(ofVec3f(-2, 0, 0));
     }
-    else if (lightMode == Spot) {
+    else if (lightMode == Spot)
+    {
         light->setSpotlight();
         light->setDiffuseColor(ofColor(255, 100, 100));
         setPosition(ofVec3f(0, 3, 0));
         light->lookAt(ofVec3f(0, 0, 0));
         light->setSpotlightCutOff(15);
     }
-    else if (lightMode == Ambient) {
+    else if (lightMode == Ambient)
+    {
         light->setDiffuseColor(0);
         light->setAmbientColor(ofColor(255, 0, 0));
     }
-    else {
+    else
+    {
         light->setDirectional();
         setPosition(ofVec3f(0, 0, 0));
         light->lookAt(ofVec3f(1, 1, 0));
@@ -42,10 +48,12 @@ void Light::setPosition(ofVec3f position)
     light->setPosition(position);
 }
 
-void Light::disable() {
+void Light::disable()
+{
     light->disable();
 }
-void Light::enable() {
+void Light::enable()
+{
     light->enable();
 }
 
@@ -58,6 +66,7 @@ ofColor Light::getColor()
 
 void Light::setColor(ofColor color) {}
 
-Light::~Light() {
+Light::~Light()
+{
     delete light;
 }

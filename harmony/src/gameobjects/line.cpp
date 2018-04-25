@@ -1,7 +1,7 @@
 #include "line.h"
 
 
-Line::Line(std::string name, Texture* texture) : GameObject(name, texture)
+Line::Line(std::string name) : GameObject(name, nullptr)
 {
     nbVertex = 0;
 

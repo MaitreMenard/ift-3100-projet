@@ -26,7 +26,7 @@ void ofApp::setup()
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
-    light = new Light(lightText, textureFactory.getEmptyTexture());
+    light = new Light(lightText);
     setupNewGameObject(light);
 
     lightIsActive = true;
@@ -55,12 +55,15 @@ void ofApp::setupInspector()
     inspector.parentField.addListener(this, &ofApp::onParentChanged);
 }
 
-void ofApp::setupLight(bool enableOrDisable) {
+void ofApp::setupLight(bool enableOrDisable)
+{
     lightIsActive = enableOrDisable;
-    if (lightIsActive) {
+    if (lightIsActive)
+    {
         ofEnableLighting();
     }
-    else {
+    else
+    {
         ofDisableLighting();
     }
 }
@@ -162,12 +165,14 @@ void ofApp::draw()
         {
             ofScale(ofVec3f(100));
         }
-        if (lightIsActive) {
+        if (lightIsActive)
+        {
             light->enable();
         }
         scene.draw();
         gridPlane.draw();
-        if (lightIsActive) {
+        if (lightIsActive)
+        {
             light->disable();
         }
         camera.end();
@@ -175,7 +180,8 @@ void ofApp::draw()
 
         if (GUIIsDisplayed)
         {
-            if (lightIsActive) {
+            if (lightIsActive)
+            {
                 ofDisableLighting();
             }
             ofDisableDepthTest();
@@ -186,7 +192,8 @@ void ofApp::draw()
                 textureSelector.draw();
             }
             ofEnableDepthTest();
-            if (lightIsActive) {
+            if (lightIsActive)
+            {
                 ofEnableLighting();
             }
         }
@@ -208,12 +215,14 @@ void ofApp::createPortal(size_t portalId)
     }
     scene.setSelectedGameObject(nullptr);
     cameraPortal.begin();
-    if (lightIsActive) {
+    if (lightIsActive)
+    {
         light->enable();
     }
     scene.draw();
     gridPlane.draw();
-    if (lightIsActive) {
+    if (lightIsActive)
+    {
         light->disable();
     }
     cameraPortal.end();

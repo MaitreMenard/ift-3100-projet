@@ -5,7 +5,7 @@
 class Line : public GameObject
 {
 public:
-    Line(std::string name, Texture* texture);
+    Line(std::string name);
     void draw();
     ofColor getColor();
     void setColor(ofColor color);

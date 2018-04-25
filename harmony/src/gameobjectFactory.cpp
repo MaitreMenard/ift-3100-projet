@@ -11,7 +11,7 @@ GameObject* GameObjectFactory::createNewGameObject(size_t shapeType, Texture* te
     }
     else if (shapeType == Shape_Line)
     {
-        return new Line(lineText, texture);
+        return new Line(lineText);
     }
     else if (shapeType == Shape_Triangle)
     {

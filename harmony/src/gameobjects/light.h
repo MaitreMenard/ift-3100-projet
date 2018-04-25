@@ -7,7 +7,7 @@ class Light : public GameObject
 private:
     ofLight* light;
 public:
-    Light(string name, Texture* texture);
+    Light(string name);
     ~Light();
 
     ofColor getColor();
@@ -24,9 +24,10 @@ public:
     void enable();
 };
 
-enum LightMode {
+enum LightMode
+{
     Point,
     Spot,
-    Ambient, 
+    Ambient,
     Directional
 };
