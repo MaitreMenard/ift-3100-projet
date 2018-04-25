@@ -1,7 +1,7 @@
 #include "model3D.h"
 
-Model3D::Model3D(std::string name, Texture* texture, std::string fileName, ofVec3f positionOffset=ofVec3f(0, 0, 0),
-    float rotationOffsetAngle=0, ofVec3f rotationOffsetAxis=ofVec3f(0, 0, 0), ofVec3f scaleFactor=ofVec3f(1, 1, 1)) : GameObject(name, texture)
+Model3D::Model3D(std::string name, std::string fileName, ofVec3f positionOffset=ofVec3f(0, 0, 0), float rotationOffsetAngle=0,
+    ofVec3f rotationOffsetAxis=ofVec3f(0, 0, 0), ofVec3f scaleFactor=ofVec3f(1, 1, 1)) : GameObject(name, nullptr)
 {
     objModel = ofxAssimpModelLoader();
     objModel.loadModel(fileName);
@@ -18,14 +18,10 @@ Model3D::Model3D(std::string name, Texture* texture, std::string fileName, ofVec
 void Model3D::draw()
 {
     ofPushMatrix();
-
     transform.applyToModelViewMatrix();
 
     objModel.draw(OF_MESH_FILL);
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     ofPopMatrix();
 }

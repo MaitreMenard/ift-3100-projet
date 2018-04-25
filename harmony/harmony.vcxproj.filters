@@ -118,6 +118,15 @@
     <ClCompile Include="src\gui\parentIntField.cpp">
       <Filter>src\gui</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\bezier_curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\hermite_curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\curve.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
     <ClCompile Include="src\textureFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -125,6 +134,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\gameobjects\mirror.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\controlpoint.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -368,9 +380,6 @@
     <ClInclude Include="src\gui\rotation_slider.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\model3D.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\gameobjects\rectangle.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
@@ -410,11 +419,26 @@
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
     </ClInclude>
+    <ClInclude Include="src\gameobjects\bezier_curve.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\hermite_curve.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\curve.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobject_visitor.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\texture.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\textureFactory.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\controlpoint.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobjects\mirror.h">
       <Filter>src\gameobjects</Filter>

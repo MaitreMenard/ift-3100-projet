@@ -4,6 +4,8 @@
 #include "transform.h"
 #include "texture.h"
 
+class GameObjectVisitor;
+
 class GameObject
 {
 private:
@@ -22,6 +24,7 @@ protected:
     bool isSelected;
     bool gameObjectIs2D;
 
+    void drawChildren();
     virtual void drawBoundingBox();
 
 public:
@@ -36,7 +39,7 @@ public:
     std::string getName();
 
     ofVec3f getPosition();
-    void setPosition(ofVec3f position);
+    virtual void setPosition(ofVec3f position);
     void translate(float dx, float dy, float dz);
 
     ofQuaternion getRotation();
@@ -62,7 +65,7 @@ public:
     GameObject* getParentGameObject();
     void setParentGameObject(GameObject* parent);
 
-    void setSelected(bool isSelected);
+    virtual void setSelected(bool isSelected);
 
     Transform getTransform() { return Transform(transform); };
     void setTransform(const Transform &transf) { transform = Transform(transf); };
@@ -73,6 +76,8 @@ public:
     void setTexture(Texture* texture);
 
     bool is2D();
+
+    virtual void accept(GameObjectVisitor& visitor);
 
     virtual ~GameObject();
 };
