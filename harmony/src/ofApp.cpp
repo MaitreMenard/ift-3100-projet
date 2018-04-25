@@ -23,6 +23,12 @@ void ofApp::setup()
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
+    light = new Light(lightText, textureFactory.getEmptyTexture());
+    setupNewGameObject(light);
+
+    lightIsActive = true;
+    setupLight(lightIsActive);
+
     GUIIsDisplayed = true;
 }
 
@@ -46,6 +52,16 @@ void ofApp::setupInspector()
     inspector.parentField.addListener(this, &ofApp::onParentChanged);
 
     guiIsSetup = true;
+}
+
+void ofApp::setupLight(bool enableOrDisable) {
+    lightIsActive = enableOrDisable;
+    if (lightIsActive) {
+        ofEnableLighting();
+    }
+    else {
+        ofDisableLighting();
+    }
 }
 
 void ofApp::exit()
@@ -129,13 +145,22 @@ void ofApp::draw()
         if (camera.getOrtho()) {
             ofScale(ofVec3f(100));
         }
+        if (lightIsActive) {
+            light->enable();
+        }
         scene.draw();
         gridPlane.draw();
+        if (lightIsActive) {
+            light->disable();
+        }
         camera.end();
         ofPopMatrix();
 
         if (GUIIsDisplayed)
         {
+            if (lightIsActive) {
+                ofDisableLighting();
+            }
             ofDisableDepthTest();
             inspector.draw();
             gameObjectSelector.draw();
@@ -144,6 +169,9 @@ void ofApp::draw()
                 textureSelector.draw();
             }
             ofEnableDepthTest();
+            if (lightIsActive) {
+                ofEnableLighting();
+            }
         }
     }
 }
@@ -160,8 +188,14 @@ void ofApp::createPortal(size_t portalId) {
     }
     scene.setSelectedGameObject(nullptr);
     cameraPortal.begin();
+    if (lightIsActive) {
+        light->enable();
+    }
     scene.draw();
     gridPlane.draw();
+    if (lightIsActive) {
+        light->disable();
+    }
     cameraPortal.end();
     addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
     scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
@@ -266,111 +300,49 @@ void ofApp::keyPressed(int key)
         setGUI();
         break;
     case '1':
-        addNewGameObject(Shape_Sphere);
+        addNewGameObject(Shape_Sphere, textureFactory.getEmptyTexture());
         break;
     case '2':
-        addNewGameObject(Shape_Cube);
+        addNewGameObject(Shape_Cube, textureFactory.getEmptyTexture());
         break;
     case '3':
-        addNewGameObject(Shape_Line);
+        addNewGameObject(Shape_Line, textureFactory.getEmptyTexture());
         break;
     case '4':
-        addNewGameObject(Shape_Triangle);
+        addNewGameObject(Shape_Triangle, textureFactory.getEmptyTexture());
         break;
     case '5':
-        addNewGameObject(Shape_Rectangle);
+        addNewGameObject(Shape_Rectangle, textureFactory.getEmptyTexture());
         break;
     case '6':
-        addNewGameObject(Shape_Pentagon);
+        addNewGameObject(Shape_Pentagon, textureFactory.getEmptyTexture());
         break;
     case '7':
-        addNewGameObject(Shape_Circle);
+        addNewGameObject(Shape_Circle, textureFactory.getEmptyTexture());
         break;
     case '8':
-        addNewGameObject(Shape_Arrow);
+        addNewGameObject(Shape_Arrow, textureFactory.getEmptyTexture());
         break;
     case '9':
-        addNewGameObject(Shape_Star);
+        addNewGameObject(Shape_Star, textureFactory.getEmptyTexture());
         break;
     case 'p':
         currentlyDrawingPortal1 = true;
         break;
     case 'm':
-        addNewGameObject(Shape_Falcon);
+        addNewGameObject(Shape_Falcon, textureFactory.getEmptyTexture());
         break;
     case 'x':
-        addNewGameObject(Shape_XWing);
+        addNewGameObject(Shape_XWing, textureFactory.getEmptyTexture());
         break;
     default:
         break;
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType)
-{
-    addNewGameObject(shapeType, textureFactory.getEmptyTexture());
-}
-
 void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
 {
-    GameObject *gameObject;
-
-    if (shapeType == Shape_Sphere)
-    {
-        gameObject = new Sphere(sphereText, texture);
-    }
-    else if (shapeType == Shape_Cube)
-    {
-        gameObject = new Cube(cubeText, texture);
-    }
-    else if (shapeType == Shape_Line)
-    {
-        gameObject = new Line(lineText, texture);
-    }
-    else if (shapeType == Shape_Triangle)
-    {
-        gameObject = new Triangle(triangleText, texture);
-    }
-    else if (shapeType == Shape_Rectangle)
-    {
-        gameObject = new Rektangle(rectangleText, texture);
-    }
-    else if (shapeType == Shape_Pentagon)
-    {
-        gameObject = new Polygone(pentagonText, texture, 5);
-    }
-    else if (shapeType == Shape_Circle)
-    {
-        gameObject = new Polygone(circleText, texture, 90);
-    }
-    else if (shapeType == Shape_Arrow)
-    {
-        gameObject = new Arrow(arrowText, texture);
-    }
-    else if (shapeType == Shape_Star)
-    {
-        gameObject = new Star(starText, texture);
-    }
-    else if (shapeType == Shape_Portal)
-    {
-        gameObject = new Mirror(portalText, texture);
-    }
-    else if (shapeType == Shape_Falcon)
-    {
-        gameObject = new Model3D(falconText, texture, "/models/millenium-falcon/millenium-falcon.obj",
-            ofVec3f(-0.59, 0.17, 19.0),
-            180,
-            ofVec3f(0, 0, 1),
-            ofVec3f(0.01, 0.01, 0.01));
-    }
-    else if (shapeType == Shape_XWing)
-    {
-        gameObject = new Model3D(xwingText, texture, "/models/xwing/x-wing.obj",
-            ofVec3f(-14.59, 0.17, 19.0),
-            180, ofVec3f(0, 0, 1),
-            ofVec3f(0.01, 0.01, 0.01));
-    }
-    setupNewGameObject(gameObject);
+    setupNewGameObject(gameobjectFactory.createNewGameObject(shapeType, texture));
 }
 
 void ofApp::setupNewGameObject(GameObject* gameObject) {

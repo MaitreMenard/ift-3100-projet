@@ -171,7 +171,9 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjectFactory.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
+    <ClCompile Include="src\gameobjects\light.cpp" />
     <ClCompile Include="src\gameobjects\mirror.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
@@ -213,7 +215,9 @@
     <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameobjectFactory.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
+    <ClInclude Include="src\gameobjects\light.h" />
     <ClInclude Include="src\gameobjects\mirror.h" />
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
