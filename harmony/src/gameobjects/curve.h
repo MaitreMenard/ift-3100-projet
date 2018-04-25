@@ -13,7 +13,7 @@ public:
     void draw();
     ofColor getColor();
     void setColor(ofColor color);
-    void accept(GameObjectVisitor& visitor);
+    virtual void accept(GameObjectVisitor& visitor);
     std::vector<ControlPoint*> getControlPoints();
 
     ~Curve();
@@ -25,6 +25,7 @@ protected:
 
     virtual ofVec3f interpolate(float t) = 0;
     virtual void drawOutline() = 0;
+    ControlPoint* createControlPoint(ofVec3f position);
 
 private:
     const int curveWidth = 3;
@@ -34,7 +35,6 @@ private:
     ofPolyline curvePoints;
     ofColor curveColor;
 
-    ControlPoint* createControlPoint(ofVec3f position);
     void drawCurve();
     void drawControlPoints();
 };
