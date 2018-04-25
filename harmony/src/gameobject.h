@@ -38,7 +38,7 @@ public:
 
     std::string getName();
 
-    ofVec3f getPosition();
+    virtual ofVec3f getPosition();
     virtual void setPosition(ofVec3f position);
     void translate(float dx, float dy, float dz);
 

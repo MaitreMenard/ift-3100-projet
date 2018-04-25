@@ -171,7 +171,9 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameobjectFactory.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
+    <ClCompile Include="src\gameobjects\light.cpp" />
     <ClCompile Include="src\gameobjects\bezier_curve.cpp" />
     <ClCompile Include="src\gameobjects\controlpoint.cpp" />
     <ClCompile Include="src\gameobjects\curve.cpp" />
@@ -217,7 +219,9 @@
     <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameobjectFactory.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
+    <ClInclude Include="src\gameobjects\light.h" />
     <ClInclude Include="src\gameobjects\bezier_curve.h" />
     <ClInclude Include="src\gameobjects\controlpoint.h" />
     <ClInclude Include="src\gameobjects\curve.h" />

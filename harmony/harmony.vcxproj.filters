@@ -112,6 +112,12 @@
     <ClCompile Include="src\gameobjects\mirror.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\light.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjectFactory.cpp">
+      <Filter>src</Filter>
+	</ClCompile>
     <ClCompile Include="src\gameobjects\bezier_curve.cpp">
       <Filter>src\gameobjects\curves</Filter>
     </ClCompile>
@@ -422,6 +428,12 @@
     <ClInclude Include="src\gameobjects\mirror.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
+    <ClInclude Include="src\gameobjects\light.h">
+      <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjectFactory.h">
+      <Filter>src</Filter>
+	</ClInclude>
     <ClInclude Include="src\gameobjects\bezier_curve.h">
       <Filter>src\gameobjects\curves</Filter>
     </ClInclude>
