@@ -37,9 +37,11 @@ void Scene::setSelectedGameObject(GameObject* gameObject)
     {
         selectedGameObject->setSelected(false);
     }
-
-    selectedGameObject = gameObject;
-    selectedGameObject->setSelected(true);
+    if (gameObject != nullptr)
+    {
+        selectedGameObject = gameObject;
+        selectedGameObject->setSelected(true);
+    }
 }
 
 GameObject* Scene::getSelectedGameObject()

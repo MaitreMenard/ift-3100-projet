@@ -30,6 +30,9 @@ void ofApp::setupCamera()
 {
     camera.setNearClip(0.1f);
     camera.setPosition(initialCameraPosition);
+
+    cameraPortal.setNearClip(0.1f);
+    cameraPortal.setOrientation(ofVec3f(0, -180, 90));
 }
 
 void ofApp::setupInspector()
@@ -61,7 +64,10 @@ void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
     {
         scene.setSelectedGameObject(selectedGameObject);
         inspector.update(scene);
-        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+        if (selectedGameObject->is2D())
+        {
+            textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+        }
     }
 }
 
@@ -109,30 +115,64 @@ void ofApp::onParentChanged(int & newParentButtonID)
 void ofApp::draw()
 {
     ofClear(0);
-    ofPushMatrix();
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
-    camera.begin();
-    if (camera.getOrtho()) {
-        ofScale(ofVec3f(100));
+    if (currentlyDrawingPortal1)
+    {
+        createPortal(1);
     }
+    else if (currentlyDrawingPortal2)
+    {
+        createPortal(2);
+    }
+    else
+    {
+        ofPushMatrix();
+        camera.begin();
+        if (camera.getOrtho())
+        {
+            ofScale(ofVec3f(100));
+        }
+        scene.draw();
+        gridPlane.draw();
+        camera.end();
+        ofPopMatrix();
+
+        if (GUIIsDisplayed)
+        {
+            ofDisableDepthTest();
+            inspector.draw();
+            gameObjectSelector.draw();
+            if (scene.isSelectedGameObject2D())
+            {
+                textureSelector.draw();
+            }
+            ofEnableDepthTest();
+        }
+    }
+}
+
+void ofApp::createPortal(size_t portalId)
+{
+    if (portalId == 1)
+    {
+        currentlyDrawingPortal1 = false;
+        currentlyDrawingPortal2 = true;
+        cameraPortal.setPosition(ofVec3f(-2, 2, 0));
+    }
+    else if (portalId == 2)
+    {
+        currentlyDrawingPortal2 = false;
+        cameraPortal.setPosition(ofVec3f(2, 2, 0));
+    }
+    scene.setSelectedGameObject(nullptr);
+    cameraPortal.begin();
     scene.draw();
     gridPlane.draw();
-    camera.end();
-    ofPopMatrix();
-
-    if (GUIIsDisplayed)
-    {
-        ofDisableDepthTest();
-        inspector.draw();
-        gameObjectSelector.draw();
-        if (scene.isSelectedGameObject2D())
-        {
-            textureSelector.draw();
-        }
-        ofEnableDepthTest();
-    }
+    cameraPortal.end();
+    addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
+    scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
 }
 
 void ofApp::takeScreenShot()
@@ -150,6 +190,19 @@ void ofApp::takeScreenShot()
     image.save(fileName);
 
     ofLog() << "screenshot saved to: " << fileName;
+}
+
+ofPixels ofApp::getCameraPortalImage()
+{
+    ofImage image;
+    image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
+
+    return image.getPixels();
+}
+
+void ofApp::toggleGUIVisibility()
+{
+    GUIIsDisplayed = !GUIIsDisplayed;
 }
 
 void ofApp::keyPressed(int key)
@@ -206,13 +259,17 @@ void ofApp::keyPressed(int key)
     case 'r':
         camera.setPosition(initialCameraPosition);
         camera.setOrientation(ofVec3f(0, 0, 0));
+        break;
     case 'c':
-        if (camera.getOrtho()) {
+        if (camera.getOrtho())
+        {
             camera.disableOrtho();
         }
-        else {
+        else
+        {
             camera.enableOrtho();
         }
+        break;
     case 2304:  // shift
         shiftIsPressed = true;
         break;
@@ -220,7 +277,7 @@ void ofApp::keyPressed(int key)
         CtrlIsPressed = true;
         break;
     case 'h':   //todo: make this some other key
-        GUIIsDisplayed = !GUIIsDisplayed;
+        toggleGUIVisibility();
         break;
     case '1':
         addNewGameObject(Shape_Sphere);
@@ -249,6 +306,9 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star);
         break;
+    case 'p':
+        currentlyDrawingPortal1 = true;
+        break;
     case 'm':
         addNewGameObject(Shape_Falcon);
         break;
@@ -268,48 +328,56 @@ void ofApp::keyPressed(int key)
 
 void ofApp::addNewGameObject(size_t shapeType)
 {
+    addNewGameObject(shapeType, textureFactory.getEmptyTexture());
+}
+
+void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
+{
     GameObject *gameObject;
-    Texture* emptyTexture = textureFactory.getEmptyTexture();
 
     if (shapeType == Shape_Sphere)
     {
-        gameObject = new Sphere(sphereText, emptyTexture);
+        gameObject = new Sphere(sphereText, texture);
     }
     else if (shapeType == Shape_Cube)
     {
-        gameObject = new Cube(cubeText, emptyTexture);
+        gameObject = new Cube(cubeText, texture);
     }
     else if (shapeType == Shape_Line)
     {
-        gameObject = new Line(lineText, emptyTexture);
+        gameObject = new Line(lineText, texture);
     }
     else if (shapeType == Shape_Triangle)
     {
-        gameObject = new Triangle(triangleText, emptyTexture);
+        gameObject = new Triangle(triangleText, texture);
     }
     else if (shapeType == Shape_Rectangle)
     {
-        gameObject = new Rektangle(rectangleText, emptyTexture);
+        gameObject = new Rektangle(rectangleText, texture);
     }
     else if (shapeType == Shape_Pentagon)
     {
-        gameObject = new Polygone(pentagonText, emptyTexture, 5);
+        gameObject = new Polygone(pentagonText, texture, 5);
     }
     else if (shapeType == Shape_Circle)
     {
-        gameObject = new Polygone(circleText, emptyTexture, 90);
+        gameObject = new Polygone(circleText, texture, 90);
     }
     else if (shapeType == Shape_Arrow)
     {
-        gameObject = new Arrow(arrowText, emptyTexture);
+        gameObject = new Arrow(arrowText, texture);
     }
     else if (shapeType == Shape_Star)
     {
-        gameObject = new Star(starText, emptyTexture);
+        gameObject = new Star(starText, texture);
+    }
+    else if (shapeType == Shape_Portal)
+    {
+        gameObject = new Mirror(portalText, texture);
     }
     else if (shapeType == Shape_Falcon)
     {
-        gameObject = new Model3D(falconText, emptyTexture, "/models/millenium-falcon/millenium-falcon.obj",
+        gameObject = new Model3D(falconText, texture, "/models/millenium-falcon/millenium-falcon.obj",
             ofVec3f(-0.59, 0.17, 19.0),
             180,
             ofVec3f(0, 0, 1),
@@ -317,19 +385,24 @@ void ofApp::addNewGameObject(size_t shapeType)
     }
     else if (shapeType == Shape_XWing)
     {
-        gameObject = new Model3D(xwingText, emptyTexture, "/models/xwing/x-wing.obj",
+        gameObject = new Model3D(xwingText, texture, "/models/xwing/x-wing.obj",
             ofVec3f(-14.59, 0.17, 19.0),
             180, ofVec3f(0, 0, 1),
             ofVec3f(0.01, 0.01, 0.01));
     }
     else if (shapeType == Shape_Bezier)
     {
-        gameObject = new BezierCurve(bezierCurveText, emptyTexture);
+        gameObject = new BezierCurve(bezierCurveText, texture);
     }
     else if (shapeType == Shape_Hermite)
     {
-        gameObject = new HermiteCurve(hermiteCurveText, emptyTexture);
+        gameObject = new HermiteCurve(hermiteCurveText, texture);
     }
+    setupNewGameObject(gameObject);
+}
+
+void ofApp::setupNewGameObject(GameObject* gameObject)
+{
     gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
     gameObjectSelector.setSelectedItem(gameObject);
@@ -342,7 +415,10 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         setupInspector();
     }
-    textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+    if (gameObject->is2D())
+    {
+        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+    }
 }
 
 void ofApp::keyReleased(int key)

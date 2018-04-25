@@ -16,6 +16,7 @@
 #include "gameobjects/star.h"
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/hermite_curve.h"
+#include "gameobjects/mirror.h"
 #include "gui/gameobject_selector.h"
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
@@ -33,6 +34,7 @@ private:
     const string lineText = "Line";
     const string arrowText = "Arrow";
     const string starText = "Star";
+    const string portalText = "Portal";
     const string falconText = "Millenium Falcon";
     const string xwingText = "X-Wing";
     const string bezierCurveText = "Bezier Curve";
@@ -42,8 +44,12 @@ private:
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
 
+    bool currentlyDrawingPortal1;
+    bool currentlyDrawingPortal2;
+
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
+    ofCamera cameraPortal;
     GridPlane gridPlane;
     TextureFactory textureFactory;
     Scene scene;
@@ -57,6 +63,8 @@ private:
     void takeScreenShot();
 
     void addNewGameObject(size_t shapeType);
+    void addNewGameObject(size_t shapeType, Texture* texture);
+    void setupNewGameObject(GameObject* gameObject);
 
     void setupInspector();
 
@@ -69,6 +77,10 @@ private:
     void onParentChanged(int& newParentID);
 
     void setupCamera();
+    void toggleGUIVisibility();
+
+    ofPixels getCameraPortalImage();
+    void createPortal(size_t portalId);
 
 public:
     void setup();
@@ -103,5 +115,6 @@ enum ShapeType
     Shape_Falcon,
     Shape_XWing,
     Shape_Bezier,
-    Shape_Hermite
+    Shape_Hermite,
+    Shape_Portal
 };

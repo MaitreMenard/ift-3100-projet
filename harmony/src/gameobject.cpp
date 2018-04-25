@@ -46,10 +46,7 @@ void GameObject::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    texture->bind();
-    model.draw();
-    texture->unbind();
-
+    drawTexture();
     drawChildren();
 
     if (isSelected)
@@ -66,6 +63,13 @@ void GameObject::drawChildren()
     {
         child->draw();
     }
+}
+
+void GameObject::drawTexture()
+{
+    texture->bind();
+    model.draw();
+    texture->unbind();
 }
 
 std::string GameObject::getName()
@@ -240,7 +244,7 @@ Texture* GameObject::getTexture()
     return texture;
 }
 
-bool GameObject::is2D() 
+bool GameObject::is2D()
 {
     return gameObjectIs2D;
 }
