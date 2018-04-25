@@ -50,6 +50,8 @@ private:
     void setupInspector();
 
     void onSelectedGameObjectChange(GameObject*& selectedGameObject);
+    void onSelectedControlPointChange(ControlPoint*& controlPoint);
+    void setSelectedGameObject(GameObject* selectedGameObject);
     void onSelectedGameObjectTextureChange(Texture*& texture);
     void onSelectedGameObjectPositionChange(ofVec3f& newPosition);
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
@@ -58,7 +60,7 @@ private:
     void onParentChanged(int& newParentID);
 
     void setupCamera();
-    void setGUI();
+    void toggleGUIVisibility();
 
     void setupLight(bool enableOrDisable);
 

@@ -82,26 +82,11 @@
     <ClCompile Include="src\gameobjects\model3D.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameobjects\rectangle.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameobjects\sphere.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameobjects\triangle.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
     <ClCompile Include="src\skybox.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameobjects\arrow.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameobjects\star.cpp">
-      <Filter>src\gameobjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\gameobjects\polygone.cpp">
-      <Filter>src\gameobjects</Filter>
     </ClCompile>
     <ClCompile Include="src\gui\inspector.cpp">
       <Filter>src\gui</Filter>
@@ -132,6 +117,33 @@
     </ClCompile>
     <ClCompile Include="src\gameobjectFactory.cpp">
       <Filter>src</Filter>
+	</ClCompile>
+    <ClCompile Include="src\gameobjects\bezier_curve.cpp">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\controlpoint.cpp">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\curve.cpp">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\hermite_curve.cpp">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\arrow.cpp">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\polygone.cpp">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\rectangle.cpp">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\star.cpp">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\triangle.cpp">
+      <Filter>src\gameobjects\2d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +191,12 @@
     </Filter>
     <Filter Include="src\gameobjects">
       <UniqueIdentifier>{699dce23-d021-4259-bce8-e9ae848aeb76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gameobjects\curves">
+      <UniqueIdentifier>{4d3f4f25-77c0-4f07-a459-a35e15a9471d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\gameobjects\2d">
+      <UniqueIdentifier>{7b728466-70b3-4c74-8661-a49c0b4791d4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -374,29 +392,11 @@
     <ClInclude Include="src\gui\rotation_slider.h">
       <Filter>src\gui</Filter>
     </ClInclude>
-    <ClInclude Include="src\model3D.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\rectangle.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
     <ClInclude Include="src\gameobjects\sphere.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\triangle.h">
       <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\skybox.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\arrow.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\star.h">
-      <Filter>src\gameobjects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\gameobjects\polygone.h">
-      <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gui\inspector.h">
       <Filter>src\gui</Filter>
@@ -416,6 +416,9 @@
     <ClInclude Include="src\gui\parentIntField.h">
       <Filter>src\gui</Filter>
     </ClInclude>
+    <ClInclude Include="src\gameobject_visitor.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\texture.h">
       <Filter>src</Filter>
     </ClInclude>
@@ -430,6 +433,33 @@
     </ClInclude>
     <ClInclude Include="src\gameobjectFactory.h">
       <Filter>src</Filter>
+	</ClInclude>
+    <ClInclude Include="src\gameobjects\bezier_curve.h">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\controlpoint.h">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\curve.h">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\hermite_curve.h">
+      <Filter>src\gameobjects\curves</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\arrow.h">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\polygone.h">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\rectangle.h">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\star.h">
+      <Filter>src\gameobjects\2d</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\triangle.h">
+      <Filter>src\gameobjects\2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

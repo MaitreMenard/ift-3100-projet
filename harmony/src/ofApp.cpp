@@ -19,6 +19,7 @@ void ofApp::setup()
 
     gameObjectSelector.setup();
     gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
+    gameObjectSelector.addControlPointListener(this, &ofApp::onSelectedControlPointChange);
 
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
@@ -76,14 +77,26 @@ void ofApp::update()
 
 void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
 {
+    setSelectedGameObject(selectedGameObject);
+}
+
+void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
+{
     if (scene.getSelectedGameObject() != selectedGameObject)
     {
         scene.setSelectedGameObject(selectedGameObject);
         inspector.update(scene);
-        if (selectedGameObject->is2D()) {
+        if (selectedGameObject->is2D())
+        {
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
     }
+}
+
+void ofApp::onSelectedControlPointChange(ControlPoint*& controlPoint)
+{
+    setSelectedGameObject(controlPoint);
+    controlPoint->getCurve()->setSelected(true);
 }
 
 void ofApp::onSelectedGameObjectTextureChange(Texture*& texture)
@@ -133,16 +146,20 @@ void ofApp::draw()
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
-    if (currentlyDrawingPortal1) {
+    if (currentlyDrawingPortal1)
+    {
         createPortal(1);
     }
-    else if (currentlyDrawingPortal2) {
+    else if (currentlyDrawingPortal2)
+    {
         createPortal(2);
     }
-    else {
+    else
+    {
         ofPushMatrix();
         camera.begin();
-        if (camera.getOrtho()) {
+        if (camera.getOrtho())
+        {
             ofScale(ofVec3f(100));
         }
         if (lightIsActive) {
@@ -176,13 +193,16 @@ void ofApp::draw()
     }
 }
 
-void ofApp::createPortal(size_t portalId) {
-    if (portalId == 1) {
+void ofApp::createPortal(size_t portalId)
+{
+    if (portalId == 1)
+    {
         currentlyDrawingPortal1 = false;
         currentlyDrawingPortal2 = true;
         cameraPortal.setPosition(ofVec3f(-2, 2, 0));
     }
-    else if (portalId == 2) {
+    else if (portalId == 2)
+    {
         currentlyDrawingPortal2 = false;
         cameraPortal.setPosition(ofVec3f(2, 2, 0));
     }
@@ -218,14 +238,16 @@ void ofApp::takeScreenShot()
     ofLog() << "screenshot saved to: " << fileName;
 }
 
-ofPixels ofApp::getCameraPortalImage() {
+ofPixels ofApp::getCameraPortalImage()
+{
     ofImage image;
     image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
 
     return image.getPixels();
 }
 
-void ofApp::setGUI() {
+void ofApp::toggleGUIVisibility()
+{
     GUIIsDisplayed = !GUIIsDisplayed;
 }
 
@@ -283,21 +305,25 @@ void ofApp::keyPressed(int key)
     case 'r':
         camera.setPosition(initialCameraPosition);
         camera.setOrientation(ofVec3f(0, 0, 0));
+        break;
     case 'c':
-        if (camera.getOrtho()) {
+        if (camera.getOrtho())
+        {
             camera.disableOrtho();
         }
-        else {
+        else
+        {
             camera.enableOrtho();
         }
+        break;
     case 2304:  // shift
         shiftIsPressed = true;
         break;
     case 768: // Ctrl L and R
         CtrlIsPressed = true;
         break;
-    case 'h':
-        setGUI();
+    case 'h':   //todo: make this some other key
+        toggleGUIVisibility();
         break;
     case '1':
         addNewGameObject(Shape_Sphere, textureFactory.getEmptyTexture());
@@ -335,6 +361,12 @@ void ofApp::keyPressed(int key)
     case 'x':
         addNewGameObject(Shape_XWing, textureFactory.getEmptyTexture());
         break;
+    case 'b':
+        addNewGameObject(Shape_Bezier, textureFactory.getEmptyTexture());
+        break;
+    case 'n':   //todo: make this h
+        addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
+        break;
     default:
         break;
     }
@@ -345,8 +377,9 @@ void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
     setupNewGameObject(gameobjectFactory.createNewGameObject(shapeType, texture));
 }
 
-void ofApp::setupNewGameObject(GameObject* gameObject) {
-    gameObjectSelector.addItem(gameObject);
+void ofApp::setupNewGameObject(GameObject* gameObject)
+{
+    gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
     gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);
@@ -358,11 +391,11 @@ void ofApp::setupNewGameObject(GameObject* gameObject) {
     {
         setupInspector();
     }
-    if (gameObject->is2D()) {
+    if (gameObject->is2D())
+    {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
 }
-
 
 void ofApp::keyReleased(int key)
 {

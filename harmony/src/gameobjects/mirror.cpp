@@ -21,8 +21,6 @@ Mirror::Mirror(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(2);
     model.addIndex(1);
 
-    gameObjectIs2D = false;
-
     boundingBox.set(1, 1, 0.01f);
 }
 

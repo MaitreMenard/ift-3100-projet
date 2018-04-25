@@ -8,6 +8,4 @@ Sphere::Sphere(std::string name, Texture* texture) : GameObject(name, texture)
 
     model = spherePrimitive.getMesh();
     nbVertex = model.getVertices().size();
-
-    gameObjectIs2D = false;
 }

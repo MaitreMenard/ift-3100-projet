@@ -1,4 +1,5 @@
 #include "gameobject.h"
+#include "gameobject_visitor.h"
 
 GameObject::GameObject(std::string name, Texture* texture)
 {
@@ -11,6 +12,7 @@ GameObject::GameObject(std::string name, Texture* texture)
     boundingBox.set(1);
 
     isSelected = false;
+    gameObjectIs2D = false;
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -46,11 +48,7 @@ void GameObject::draw()
     transform.applyToModelViewMatrix();
 
     drawTexture();
-
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     if (isSelected)
     {
@@ -60,7 +58,16 @@ void GameObject::draw()
     ofPopMatrix();
 }
 
-void GameObject::drawTexture() {
+void GameObject::drawChildren()
+{
+    for (GameObject* child : children)
+    {
+        child->draw();
+    }
+}
+
+void GameObject::drawTexture()
+{
     texture->bind();
     model.draw();
     texture->unbind();
@@ -238,9 +245,14 @@ Texture* GameObject::getTexture()
     return texture;
 }
 
-bool GameObject::is2D() 
+bool GameObject::is2D()
 {
     return gameObjectIs2D;
+}
+
+void GameObject::accept(GameObjectVisitor& visitor)
+{
+    visitor.visit(this);
 }
 
 GameObject::~GameObject()

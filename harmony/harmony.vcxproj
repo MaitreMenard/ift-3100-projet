@@ -174,6 +174,10 @@
     <ClCompile Include="src\gameobjectFactory.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\light.cpp" />
+    <ClCompile Include="src\gameobjects\bezier_curve.cpp" />
+    <ClCompile Include="src\gameobjects\controlpoint.cpp" />
+    <ClCompile Include="src\gameobjects\curve.cpp" />
+    <ClCompile Include="src\gameobjects\hermite_curve.cpp" />
     <ClCompile Include="src\gameobjects\mirror.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
@@ -218,8 +222,13 @@
     <ClInclude Include="src\gameobjectFactory.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
     <ClInclude Include="src\gameobjects\light.h" />
+    <ClInclude Include="src\gameobjects\bezier_curve.h" />
+    <ClInclude Include="src\gameobjects\controlpoint.h" />
+    <ClInclude Include="src\gameobjects\curve.h" />
+    <ClInclude Include="src\gameobjects\hermite_curve.h" />
     <ClInclude Include="src\gameobjects\mirror.h" />
     <ClInclude Include="src\gameobjects\star.h" />
+    <ClInclude Include="src\gameobject_visitor.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\gameobject_selector.h" />
     <ClInclude Include="src\gui\inspector.h" />
@@ -230,7 +239,6 @@
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />
     <ClInclude Include="src\command.h" />
-    <ClInclude Include="src\model3D.h" />
     <ClInclude Include="src\gameobjects\line.h" />
     <ClInclude Include="src\gameobjects\model3D.h" />
     <ClInclude Include="src\ofApp.h" />

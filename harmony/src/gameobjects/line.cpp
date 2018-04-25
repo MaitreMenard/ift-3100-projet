@@ -5,7 +5,6 @@ Line::Line(std::string name, Texture* texture) : GameObject(name, texture)
 {
     nbVertex = 0;
 
-    gameObjectIs2D = true;
     color = ofColor(255);
     lineWidth = 5;
     boundingBox.set(1, 0.01f, 0.01f);
@@ -25,10 +24,7 @@ void Line::draw()
     ofPopStyle();
     texture->unbind();
 
-    for (GameObject* child : children)
-    {
-        child->draw();
-    }
+    drawChildren();
 
     if (isSelected)
     {

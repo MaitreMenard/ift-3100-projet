@@ -20,11 +20,11 @@ Cube::Cube(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(2);
 
     model.addIndex(1);
-    model.addIndex(2);
     model.addIndex(3);
+    model.addIndex(2);
 
-    model.addIndex(4);
     model.addIndex(5);
+    model.addIndex(4);
     model.addIndex(6);
 
     model.addIndex(5);
@@ -36,34 +36,32 @@ Cube::Cube(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(4);
 
     model.addIndex(2);
-    model.addIndex(4);
     model.addIndex(6);
+    model.addIndex(4);
 
     model.addIndex(2);
     model.addIndex(3);
     model.addIndex(6);
 
     model.addIndex(3);
-    model.addIndex(6);
     model.addIndex(7);
+    model.addIndex(6);
 
     model.addIndex(1);
-    model.addIndex(3);
     model.addIndex(5);
+    model.addIndex(3);
 
     model.addIndex(3);
     model.addIndex(5);
     model.addIndex(7);
 
     model.addIndex(0);
-    model.addIndex(1);
     model.addIndex(4);
+    model.addIndex(1);
 
     model.addIndex(1);
     model.addIndex(4);
     model.addIndex(5);
-
-    gameObjectIs2D = false;
 }
 
 void Cube::setColor(ofColor color)

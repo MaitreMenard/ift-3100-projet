@@ -10,7 +10,9 @@
 #include "gameobjects/model3D.h"
 #include "gameobjects/arrow.h"
 #include "gameobjects/star.h"
-#include "gameobjects/mirror.h";
+#include "gameobjects/mirror.h"
+#include "gameobjects/bezier_curve.h"
+#include "gameobjects/hermite_curve.h"
 
 class GameObjectFactory
 {
@@ -29,6 +31,8 @@ private:
     const string portalText = "Portal";
     const string falconText = "Millenium Falcon";
     const string xwingText = "X-Wing";
+    const string bezierCurveText = "Bezier Curve";
+    const string hermiteCurveText = "Hermite Curve";
 };
 
 enum ShapeType
@@ -44,5 +48,7 @@ enum ShapeType
     Shape_Star,
     Shape_Falcon,
     Shape_XWing,
-    Shape_Portal
+    Shape_Portal,
+    Shape_Bezier,
+    Shape_Hermite
 };
