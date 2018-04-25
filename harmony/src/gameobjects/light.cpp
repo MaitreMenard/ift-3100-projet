@@ -2,6 +2,7 @@
 
 Light::Light(string name) : GameObject(name, nullptr)
 {
+    light = new ofLight();
     setLightMode(Ambient);
 }
 
