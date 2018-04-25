@@ -27,6 +27,9 @@ private:
     bool currentlyDrawingPortal2;
 
     Light* light;
+    Light* light2;
+    Light* light3;
+    Light* light4;
 
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;

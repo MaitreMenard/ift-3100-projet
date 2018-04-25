@@ -27,7 +27,17 @@ void ofApp::setup()
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
     light = new Light(lightText);
+    light->setLightMode(Point);
+    /*light2 = new Light(lightText);
+    light2->setLightMode(Spot);
+    light3 = new Light(lightText);
+    light3->setLightMode(Directional);
+    light4 = new Light(lightText);
+    light4->setLightMode(Point);*/
     setupNewGameObject(light);
+    /*setupNewGameObject(light2);
+    setupNewGameObject(light3);
+    setupNewGameObject(light4);*/
 
     lightIsActive = true;
     setupLight(lightIsActive);
@@ -168,12 +178,18 @@ void ofApp::draw()
         if (lightIsActive)
         {
             light->enable();
+            /*light2->enable();
+            light3->enable();
+            light4->enable();*/
         }
         scene.draw();
         gridPlane.draw();
         if (lightIsActive)
         {
             light->disable();
+            /*light2->disable();
+            light3->disable();
+            light4->disable();*/
         }
         camera.end();
         ofPopMatrix();
@@ -218,12 +234,18 @@ void ofApp::createPortal(size_t portalId)
     if (lightIsActive)
     {
         light->enable();
+        /*light2->enable();
+        light3->enable();
+        light4->enable();*/
     }
     scene.draw();
     gridPlane.draw();
     if (lightIsActive)
     {
         light->disable();
+        /*light2->disable();
+        light3->disable();
+        light4->disable();*/
     }
     cameraPortal.end();
     addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));

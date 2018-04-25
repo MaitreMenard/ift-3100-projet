@@ -37,7 +37,7 @@ void Mirror::setTexturePixels(ofPixels pix) {
     addTexCoords();
 }
 
-void Mirror::drawTexture() {
+void Mirror::drawTextureAndMaterial() {
     mirrorTexture->bind();
     model.draw();
     mirrorTexture->unbind();

@@ -9,5 +9,5 @@ public:
     Sphere(std::string name, Texture* texture);
 
 private:
-    const float defaultRadius = 0.5;
+    const float defaultRadius = 0.5f;
 };

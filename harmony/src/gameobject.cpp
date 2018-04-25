@@ -47,7 +47,7 @@ void GameObject::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    drawTexture();
+    drawTextureAndMaterial();
     drawChildren();
 
     if (isSelected)
@@ -66,11 +66,41 @@ void GameObject::drawChildren()
     }
 }
 
-void GameObject::drawTexture()
+void GameObject::drawTextureAndMaterial()
 {
+    if (hasMaterial) {
+        material.begin();
+    }
     texture->bind();
     model.draw();
     texture->unbind();
+    if (hasMaterial) {
+        material.end();
+    }
+}
+
+void GameObject::setMaterialShininess(size_t shininess) {
+    if (hasMaterial) {
+        material.setShininess(shininess);
+    }
+}
+
+void GameObject::setMaterialDiffuseColor(ofColor diffuseColor) {
+    if (hasMaterial) {
+        material.setDiffuseColor(diffuseColor);
+    }
+}
+
+void GameObject::setMaterialSpecularColor(ofColor specularColor) {
+    if (hasMaterial) {
+        material.setSpecularColor(specularColor);
+    }
+}
+
+void GameObject::setMaterialAmbientColor(ofColor ambientColor) {
+    if (hasMaterial) {
+        material.setAmbientColor(ambientColor);
+    }
 }
 
 std::string GameObject::getName()

@@ -16,6 +16,8 @@ private:
 protected:
     Texture* texture;
     Transform transform;
+    ofMaterial material;
+    bool hasMaterial = false;
     std::vector<GameObject*> children;
     ofMesh model;
     GameObject* parentGameObject;
@@ -34,7 +36,12 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-    virtual void drawTexture();
+    virtual void drawTextureAndMaterial();
+
+    void setMaterialShininess(size_t shininess);
+    void setMaterialDiffuseColor(ofColor diffuseColor);
+    void setMaterialSpecularColor(ofColor specularColor);
+    void setMaterialAmbientColor(ofColor ambientColor);
 
     std::string getName();
 

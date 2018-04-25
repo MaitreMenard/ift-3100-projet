@@ -3,7 +3,7 @@
 Light::Light(string name) : GameObject(name, nullptr)
 {
     light = new ofLight();
-    setLightMode(Ambient);
+    setLightMode(Spot);
 }
 
 void Light::setLightMode(size_t lightMode)
@@ -16,20 +16,20 @@ void Light::setLightMode(size_t lightMode)
     if (lightMode == Point)
     {
         light->setPointLight();
-        setPosition(ofVec3f(-2, 0, 0));
+        //light->setDiffuseColor(ofColor(255, 0, 0));
+        setPosition(ofVec3f(-5, 0, 0));
     }
     else if (lightMode == Spot)
     {
         light->setSpotlight();
-        light->setDiffuseColor(ofColor(255, 100, 100));
+        //light->setDiffuseColor(ofColor(255, 100, 100));
         setPosition(ofVec3f(0, 3, 0));
         light->lookAt(ofVec3f(0, 0, 0));
         light->setSpotlightCutOff(15);
     }
     else if (lightMode == Ambient)
     {
-        light->setDiffuseColor(0);
-        light->setAmbientColor(ofColor(255, 0, 0));
+        light->setAmbientColor(ofColor(255, 255, 255));
     }
     else
     {
