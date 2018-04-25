@@ -3,7 +3,6 @@
 void GameObjectSelector::setup()
 {
     Selector::setup(headerText);
-
     panel.setPosition(xOffset, yOffset);
 
     selectedControlPoint = nullptr;
@@ -50,27 +49,72 @@ bool GameObjectSelector::isAnyControlPointSelected()
 
 void GameObjectSelector::addControlPoint(Curve * curve, ControlPoint* controlPoint)
 {
-    ofxButton *newButton = new ofxButton();
-    controlPointsButtons.insert(std::make_pair(controlPoint, newButton));
-    panel.add(newButton->setup(ofParameter<string>(controlPoint->getName())));
+    createControlPointButton(controlPoint);
 
+    panel.clear();
+    setupPanel();
+    panel.setPosition(xOffset, yOffset);
+
+    addAllGameObjectButtonsToPanel();
+}
+
+ofxButton* GameObjectSelector::createControlPointButton(ControlPoint* controlPoint)
+{
+    ofxButton *newButton = new ofxButton();
+    newButton->setup(ofParameter<string>(controlPoint->getName()));
     newButton->setBackgroundColor(baseButtonColor);
-    newButton->setPosition(newButton->getPosition() + ofVec3f(controlPointButtonXOffset, 0));
     newButton->setSize(newButton->getWidth() - controlPointButtonXOffset, newButton->getHeight());
+    controlPointsButtons.insert(std::make_pair(controlPoint, newButton));
+    return newButton;
+}
+
+void GameObjectSelector::addAllGameObjectButtonsToPanel()
+{
+    for (GameObject* gameObject : gameObjectList)
+    {
+        panel.add(itemButtons.at(gameObject));
+        Curve* curve = dynamic_cast <Curve*>(gameObject);
+        if (curve != nullptr)
+        {
+            addCurveControlPointsButtonsToPanel(curve);
+        }
+    }
+}
+
+void GameObjectSelector::addCurveControlPointsButtonsToPanel(Curve * curve)
+{
+    for (ControlPoint* controlPoint : curve->getControlPoints())
+    {
+        ofxButton* button = controlPointsButtons.at(controlPoint);
+        addControlPointButtonToPanel(button);
+    }
+}
+
+void GameObjectSelector::addControlPointButtonToPanel(ofxButton * button)
+{
+    panel.add(button);
+    button->setPosition(button->getPosition() + ofVec3f(controlPointButtonXOffset, 0));
 }
 
 void GameObjectSelector::visit(GameObject * gameObject)
 {
     addItem(gameObject);
+    gameObjectList.push_back(gameObject);
 }
 
 void GameObjectSelector::visit(Curve * curve)
 {
-    addItem(curve);
+    visit((GameObject*)curve);
     for (ControlPoint* controlPoint : curve->getControlPoints())
     {
-        addControlPoint(curve, controlPoint);
+        ofxButton* newButton = createControlPointButton(controlPoint);
+        addControlPointButtonToPanel(newButton);
     }
+}
+
+void GameObjectSelector::visit(BezierCurve * bezierCurve)
+{
+    visit((Curve*)bezierCurve);
 }
 
 void GameObjectSelector::visit(ControlPoint * controlPoint)
@@ -90,4 +134,5 @@ GameObjectSelector::~GameObjectSelector()
         delete pair.second;
     }
     controlPointsButtons.clear();
+    gameObjectList.clear();
 }

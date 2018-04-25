@@ -9,6 +9,8 @@ void Inspector::setup()
     scaleFields.setup(scaleText, ofVec3f(1), ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE));
     colorPicker.setup(ofColor());
     parentField.setup(0, 0);
+    addControlPointButton.setup(addControlPointButtonText);
+    addControlPointButton.setBackgroundColor(addControlPointButtonColor);
 }
 
 void Inspector::setupPanel()
@@ -52,6 +54,12 @@ void Inspector::visit(GameObject * gameObject)
 void Inspector::visit(Curve * curve)
 {
     visit((GameObject*)curve);
+}
+
+void Inspector::visit(BezierCurve * bezierCurve)
+{
+    visit((GameObject*)bezierCurve);
+    panel.add(&addControlPointButton);
 }
 
 void Inspector::visit(ControlPoint * controlPoint)

@@ -6,6 +6,8 @@ class BezierCurve : public Curve
 {
 public:
     BezierCurve(std::string name);
+    void accept(GameObjectVisitor& visitor);
+    ControlPoint* addControlPoint();
 
 private:
     ofVec3f interpolate(float t);

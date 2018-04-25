@@ -63,6 +63,7 @@ void ofApp::setupInspector()
     inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
     inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
     inspector.parentField.addListener(this, &ofApp::onParentChanged);
+    inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
 
 void ofApp::setupLight(bool enableOrDisable)
@@ -151,6 +152,13 @@ void ofApp::onParentChanged(int & newParentButtonID)
         GameObject* parentGameObject = scene.getGameObjectByIndex(newParentButtonID - 1);
         scene.setSelectedGameObjectParent(parentGameObject);
     }
+}
+
+void ofApp::onSelectedCurveAddControlPoint()
+{
+    BezierCurve* bezierCurve = (BezierCurve*)scene.getSelectedGameObject();
+    ControlPoint* newControlPoint = bezierCurve->addControlPoint();
+    gameObjectSelector.addControlPoint(bezierCurve, newControlPoint);
 }
 
 void ofApp::draw()

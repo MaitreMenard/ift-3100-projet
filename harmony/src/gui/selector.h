@@ -7,11 +7,17 @@ class Selector
 public:
     void setup(std::string headerText)
     {
+        this->headerText = headerText;
+        setupPanel();
+
+        selectedItem = nullptr;
+    }
+
+    void setupPanel()
+    {
         panel.setup();
         panel.setName(headerText);
         panel.setHeaderBackgroundColor(headerColor);
-
-        selectedItem = nullptr;
     }
 
     virtual void update()
@@ -86,6 +92,7 @@ protected:
 private:
     const ofColor headerColor = ofColor(24, 120, 24);
 
+    std::string headerText;
     T selectedItem;
     ofEvent<T> buttonPressedEvent;
 
