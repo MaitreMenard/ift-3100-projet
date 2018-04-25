@@ -12,6 +12,7 @@ GameObject::GameObject(std::string name, Texture* texture)
     boundingBox.set(1);
 
     isSelected = false;
+    gameObjectIs2D = false;
 }
 
 GameObject::GameObject(const GameObject & other)

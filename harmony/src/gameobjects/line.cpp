@@ -5,7 +5,6 @@ Line::Line(std::string name, Texture* texture) : GameObject(name, texture)
 {
     nbVertex = 0;
 
-    gameObjectIs2D = true;
     color = ofColor(255);
     lineWidth = 5;
     boundingBox.set(1, 0.01f, 0.01f);

@@ -62,8 +62,6 @@ Cube::Cube(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(1);
     model.addIndex(4);
     model.addIndex(5);
-
-    gameObjectIs2D = false;
 }
 
 void Cube::setColor(ofColor color)

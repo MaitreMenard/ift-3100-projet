@@ -12,7 +12,6 @@ Model3D::Model3D(std::string name, std::string fileName, ofVec3f positionOffset=
 
     model = objModel.getMesh(0);
     nbVertex = model.getVertices().size();
-    gameObjectIs2D = false;
 }
 
 void Model3D::draw()
