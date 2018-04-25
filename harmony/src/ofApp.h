@@ -59,8 +59,6 @@ private:
     GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
 
-    bool guiIsSetup = false;
-
     void takeScreenShot();
 
     void addNewGameObject(size_t shapeType);

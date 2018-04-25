@@ -17,6 +17,8 @@ void ofApp::setup()
 
     ofSetVerticalSync(true);
 
+    setupInspector();
+
     gameObjectSelector.setup();
     gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
     gameObjectSelector.addControlPointListener(this, &ofApp::onSelectedControlPointChange);
@@ -38,15 +40,13 @@ void ofApp::setupCamera()
 
 void ofApp::setupInspector()
 {
-    inspector.setup(scene);
+    inspector.setup();
 
     inspector.positionFields.addListener(this, &ofApp::onSelectedGameObjectPositionChange);
     inspector.rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
     inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
     inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
     inspector.parentField.addListener(this, &ofApp::onParentChanged);
-
-    guiIsSetup = true;
 }
 
 void ofApp::exit()
@@ -419,14 +419,7 @@ void ofApp::setupNewGameObject(GameObject* gameObject)
     scene.addGameObject(gameObject);
     gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);
-    if (guiIsSetup)
-    {
-        inspector.update(scene);
-    }
-    else
-    {
-        setupInspector();
-    }
+    inspector.update(scene);
     if (gameObject->is2D())
     {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());

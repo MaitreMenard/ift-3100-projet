@@ -15,7 +15,7 @@ public:
     ColorPicker colorPicker;
     ParentIntField parentField;
 
-    void setup(Scene& scene);
+    void setup();
     void update(Scene& scene);
     void draw();
 
@@ -34,4 +34,6 @@ private:
     const ofColor headerColor = ofColor(24, 120, 24);
 
     ofxPanel panel;
+
+    void setupPanel();
 };
