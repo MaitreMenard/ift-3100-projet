@@ -2,8 +2,9 @@
 
 void ofApp::setup()
 {
+	iter = 0;
 	spotlight.setup();
-	spotlight.setPointLight();
+	spotlight.setAreaLight(2, 2);
 	spotlight.setPosition(1.5, 1.5, 1.5);
 
 	renderer.setup();
@@ -31,6 +32,9 @@ void ofApp::setup()
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
     GUIIsDisplayed = true;
+
+	// SHADERS
+	
 }
 
 void ofApp::setupCamera()
@@ -57,6 +61,7 @@ void ofApp::exit()
 
 void ofApp::update()
 {
+	iter++;
     gameObjectSelector.update();
     textureSelector.update();
     scene.update();
@@ -120,19 +125,16 @@ void ofApp::onParentChanged(int & newParentID)
 void ofApp::draw()
 {
 	ofBackgroundGradient(ofColor::white, ofColor::gray);
-	//ofBackground(ofColor::red);
-	float blur = ofMap(mouseX, 0, ofGetWidth(), 0, 10, true);
-	int iteration = ofMap(mouseY, 0, ofGetHeight(), 0, 10, true);
 
+	spotlight.enable();
 	fbo.begin();
 	ofClear(0);
 	camera.begin();
-	spotlight.enable();
     scene.draw();
 	gridPlane.draw();
-	spotlight.disable();
     camera.end();
 	fbo.end();
+	spotlight.disable();
 
 	renderer.apply(&fbo);
 
@@ -441,3 +443,5 @@ void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
 }
+
+// SHADERS

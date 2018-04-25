@@ -18,12 +18,14 @@
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
 #include "fboRenderer.h"
+#include "NormMapShaderManager.h"
 
 
 class ofApp : public ofBaseApp
 {
 private:
 	ofLight spotlight;
+	int iter;
 	ofFbo fbo;
 	fboRenderer renderer;
 
@@ -48,6 +50,7 @@ private:
     bool GUIIsDisplayed;
 
     ofCamera camera;
+	//ofEasyCam camera;
     GridPlane gridPlane;
     Scene scene;
 
@@ -90,6 +93,7 @@ public:
     void windowResized(int w, int h);
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
+
 };
 
 enum ShapeType

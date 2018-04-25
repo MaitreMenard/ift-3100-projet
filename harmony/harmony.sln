@@ -6,8 +6,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "harmony", "harmony.vcxproj"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "openframeworksLib", "..\..\..\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj", "{5837595D-ACA9-485C-8E76-729040CE4B0B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ExampleNormalMap", "..\ExampleNormalMap\ExampleNormalMap.vcxproj", "{BB96447F-0A9D-47B5-9277-675E58665DA2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -32,14 +30,6 @@ Global
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|Win32.Build.0 = Release|Win32
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|x64.ActiveCfg = Release|x64
 		{5837595D-ACA9-485C-8E76-729040CE4B0B}.Release|x64.Build.0 = Release|x64
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Debug|Win32.ActiveCfg = Debug|Win32
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Debug|Win32.Build.0 = Debug|Win32
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Debug|x64.ActiveCfg = Debug|x64
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Debug|x64.Build.0 = Debug|x64
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Release|Win32.ActiveCfg = Release|Win32
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Release|Win32.Build.0 = Release|Win32
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Release|x64.ActiveCfg = Release|x64
-		{BB96447F-0A9D-47B5-9277-675E58665DA2}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

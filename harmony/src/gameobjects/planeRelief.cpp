@@ -8,12 +8,13 @@ planeRelief::planeRelief()
 	ofSetFrameRate(500);
 	*/
 	shader.load("shaders/texture");
-	//shader.load("shaders/displacePhong");
 
-	if (!colorMap.load("img/6133-diffuse.jpg"))
+	//if (!colorMap.load("img/6133-diffuse.jpg"))
+	if (!colorMap.load("img/6903-diffuse.jpg"))
 		cout << "color map failed" << endl;
 
-	if (!bumpMap.load("img/6133-bump.jpg"))
+	//if (!bumpMap.load("img/6133-bump.jpg"))
+	if (!bumpMap.load("img/6903-bump.jpg"))
 		cout << "bump map failed" << endl;
 
 	int planeWidth = bumpMap.getWidth();
@@ -26,23 +27,6 @@ planeRelief::planeRelief()
 	plane.mapTexCoords(0, 0, 1.0, 1.0);
 
 	gameObjectIs2D = false;
-
-	pointLight.setDiffuseColor(ofColor(0.f, 255.f, 0.f));
-	pointLight.setSpecularColor(ofColor(255.f, 255.f, 0.f));
-	pointLight.setPointLight();
-
-	spotLight.setDiffuseColor(ofColor(255.f, 0.f, 0.f));
-	spotLight.setSpecularColor(ofColor(255.f, 255.f, 255.f));
-	spotLight.setSpotlight();
-
-	spotLight.setSpotlightCutOff(50);
-	spotLight.setSpotConcentration(45);
-
-	directionalLight.setDiffuseColor(ofColor(0.f, 0.f, 255.f));
-	directionalLight.setSpecularColor(ofColor(255.f, 255.f, 255.f));
-	directionalLight.setDirectional();
-
-	directionalLight.setOrientation(ofVec3f(0, 90, 0));
 
 }
 
@@ -62,7 +46,7 @@ void planeRelief::draw()
 	shader.begin();
 	shader.setUniformTexture("texColor", colorMap.getTextureReference(), 0);
 	shader.setUniformTexture("texBumpMap", bumpMap.getTextureReference(), 1);
-	shader.setUniform1f("maxHeight", 0.2);
+	shader.setUniform1f("maxHeight", 0.05);
 	plane.draw();
 	shader.end();
 
