@@ -86,6 +86,12 @@ void Curve::accept(GameObjectVisitor & visitor)
     visitor.visit(this);
 }
 
+std::vector<ControlPoint*> Curve::getControlPoints()
+{
+    //TODO
+    return std::vector<ControlPoint*>();
+}
+
 Curve::~Curve()
 {
     curvePoints.clear();

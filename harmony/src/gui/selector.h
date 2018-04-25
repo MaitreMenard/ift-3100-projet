@@ -71,15 +71,16 @@ public:
     }
 
 protected:
+    const ofColor baseButtonColor = ofColor(24, 24, 24);
+
     ofxPanel panel;
+    std::map<T, ofxButton*> itemButtons;
 
 private:
     const ofColor headerColor = ofColor(24, 120, 24);
-    const ofColor baseButtonColor = ofColor(24, 24, 24);
     const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     T selectedItem;
-    std::map<T, ofxButton*> itemButtons;
     ofEvent<T> buttonPressedEvent;
 
     bool isAnyItemSelected()

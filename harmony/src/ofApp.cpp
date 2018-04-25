@@ -330,7 +330,7 @@ void ofApp::addNewGameObject(size_t shapeType)
     {
         gameObject = new HermiteCurve(hermiteCurveText, emptyTexture);
     }
-    gameObjectSelector.addItem(gameObject);
+    gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
     gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);

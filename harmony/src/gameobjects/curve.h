@@ -2,6 +2,7 @@
 #include "ofMain.h"
 #include "gameobject.h"
 #include "texture.h"
+#include "controlpoint.h"
 
 class Curve : public GameObject
 {
@@ -12,6 +13,7 @@ public:
     ofColor getColor();
     void setColor(ofColor color);
     void accept(GameObjectVisitor& visitor);
+    std::vector<ControlPoint*> getControlPoints();
 
     ~Curve();
 

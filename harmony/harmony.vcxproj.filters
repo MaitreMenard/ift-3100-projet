@@ -126,7 +126,7 @@
     </ClCompile>
     <ClCompile Include="src\gameobjects\curve.cpp">
       <Filter>src\gameobjects</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="src\textureFactory.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -423,13 +423,16 @@
       <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\gameobject_visitor.h">
-	  <Filter>src</Filter>
+      <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\texture.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\textureFactory.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\controlpoint.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
