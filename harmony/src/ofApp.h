@@ -16,6 +16,7 @@
 #include "gameobjects/star.h"
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/hermite_curve.h"
+#include "gameobjects/controlpoint.h"
 #include "gameobjects/mirror.h"
 #include "gui/gameobject_selector.h"
 #include "gui/inspector.h"
@@ -69,6 +70,8 @@ private:
     void setupInspector();
 
     void onSelectedGameObjectChange(GameObject*& selectedGameObject);
+    void onSelectedControlPointChange(ControlPoint*& controlPoint);
+    void setSelectedGameObject(GameObject* selectedGameObject);
     void onSelectedGameObjectTextureChange(Texture*& texture);
     void onSelectedGameObjectPositionChange(ofVec3f& newPosition);
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);

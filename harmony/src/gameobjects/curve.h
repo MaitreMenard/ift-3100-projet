@@ -9,6 +9,7 @@ class Curve : public GameObject
 public:
     Curve(std::string name);
 
+    void updateCurvePoints();
     void draw();
     ofColor getColor();
     void setColor(ofColor color);
@@ -22,7 +23,6 @@ protected:
     const ofColor outlineColor = ofColor(0, 255, 0);
     std::vector<ControlPoint*> controlPoints;
 
-    void updateCurvePoints();
     virtual ofVec3f interpolate(float t) = 0;
     virtual void drawOutline() = 0;
 
@@ -34,6 +34,7 @@ private:
     ofPolyline curvePoints;
     ofColor curveColor;
 
+    ControlPoint* createControlPoint(ofVec3f position);
     void drawCurve();
     void drawControlPoints();
 };

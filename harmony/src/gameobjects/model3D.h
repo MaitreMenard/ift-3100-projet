@@ -1,7 +1,6 @@
 #pragma once
 #include "ofxAssimpModelLoader.h"
 #include "gameobject.h"
-#include "texture.h"
 
 class Model3D : public GameObject
 {

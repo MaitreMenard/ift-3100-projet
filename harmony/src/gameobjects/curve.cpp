@@ -13,11 +13,16 @@ Curve::Curve(std::string name) : GameObject(name, nullptr)
         curvePoints.addVertex(ofVec3f());
     }
 
-    //TODO: fix name
-    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(-0.5, 0, 0)));
-    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(-0.3, 0.3, 0)));
-    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(0.3, 0.3, 0)));
-    controlPoints.push_back(new ControlPoint(baseControlPointName, ofVec3f(0.5, 0, 0)));
+    controlPoints.push_back(createControlPoint(ofVec3f(-0.5, 0, 0)));
+    controlPoints.push_back(createControlPoint(ofVec3f(-0.3, 0.3, 0)));
+    controlPoints.push_back(createControlPoint(ofVec3f(0.3, 0.3, 0)));
+    controlPoints.push_back(createControlPoint(ofVec3f(0.5, 0, 0)));
+}
+
+ControlPoint * Curve::createControlPoint(ofVec3f position)
+{
+    std::string name = baseControlPointName + std::to_string(controlPoints.size());
+    return new ControlPoint(name, position, this);
 }
 
 void Curve::updateCurvePoints()

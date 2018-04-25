@@ -19,6 +19,7 @@ void ofApp::setup()
 
     gameObjectSelector.setup();
     gameObjectSelector.addListener(this, &ofApp::onSelectedGameObjectChange);
+    gameObjectSelector.addControlPointListener(this, &ofApp::onSelectedControlPointChange);
 
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
@@ -60,6 +61,11 @@ void ofApp::update()
 
 void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
 {
+    setSelectedGameObject(selectedGameObject);
+}
+
+void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
+{
     if (scene.getSelectedGameObject() != selectedGameObject)
     {
         scene.setSelectedGameObject(selectedGameObject);
@@ -69,6 +75,12 @@ void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
     }
+}
+
+void ofApp::onSelectedControlPointChange(ControlPoint*& controlPoint)
+{
+    setSelectedGameObject(controlPoint);
+    controlPoint->getCurve()->setSelected(true);
 }
 
 void ofApp::onSelectedGameObjectTextureChange(Texture*& texture)

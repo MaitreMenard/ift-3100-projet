@@ -14,7 +14,7 @@ public:
         selectedItem = nullptr;
     }
 
-    void update()
+    virtual void update()
     {
         /*
         Note: we have to fake events by polling instead of adding listeners to the buttons, because a button listener is only called
@@ -52,16 +52,22 @@ public:
 
     void setSelectedItem(T item)
     {
-        if (isAnyItemSelected())
-        {
-            itemButtons.at(selectedItem)->setBackgroundColor(baseButtonColor);
-        }
+        deselectItem();
 
         selectedItem = item;
         itemButtons.at(selectedItem)->setBackgroundColor(highlightedButtonColor);
     }
 
-    ~Selector()
+    virtual void deselectItem()
+    {
+        if (isAnyItemSelected())
+        {
+            itemButtons.at(selectedItem)->setBackgroundColor(baseButtonColor);
+            selectedItem = nullptr;
+        }
+    }
+
+    virtual ~Selector()
     {
         for (const auto& pair : itemButtons)
         {
@@ -72,13 +78,13 @@ public:
 
 protected:
     const ofColor baseButtonColor = ofColor(24, 24, 24);
+    const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     ofxPanel panel;
     std::map<T, ofxButton*> itemButtons;
 
 private:
     const ofColor headerColor = ofColor(24, 120, 24);
-    const ofColor highlightedButtonColor = ofColor(24, 24, 240);
 
     T selectedItem;
     ofEvent<T> buttonPressedEvent;
