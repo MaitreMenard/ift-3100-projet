@@ -6,6 +6,7 @@ class Light : public GameObject
 {
 private:
     ofLight* light;
+
 public:
     Light(string name);
     ~Light();

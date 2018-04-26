@@ -4,6 +4,7 @@
 Light::Light(string name) : GameObject(name, nullptr)
 {
     light = new ofLight();
+    boundingBox.set(0.2);
     setLightMode(Spot);
 }
 
@@ -77,6 +78,7 @@ ofVec3f Light::getPosition()
 
 void Light::setPosition(ofVec3f position)
 {
+    GameObject::setPosition(position);
     light->setPosition(position);
 }
 
@@ -94,7 +96,20 @@ void Light::accept(GameObjectVisitor & visitor)
     visitor.visit(this);
 }
 
-void Light::draw() {}
+void Light::draw()
+{
+    ofPushMatrix();
+    transform.applyToModelViewMatrix();
+
+    drawChildren();
+
+    if (isSelected)
+    {
+        drawBoundingBox();
+    }
+
+    ofPopMatrix();
+}
 
 ofColor Light::getColor()
 {

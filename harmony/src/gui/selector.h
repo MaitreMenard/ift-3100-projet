@@ -48,7 +48,7 @@ public:
         buttonPressedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
     }
 
-    void addItem(T item)
+    void addItem(T item)    //add another parameter std::string itemName
     {
         ofxButton *newButton = new ofxButton();
         itemButtons.insert(std::make_pair(item, newButton));
