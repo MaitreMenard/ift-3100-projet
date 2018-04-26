@@ -37,6 +37,7 @@ void fboRenderer::setup() {
 
 void fboRenderer::apply(ofFbo * pFbo) {
 	if (bitsIsSet_) {
+		// make edge detection mask
 		fboFirstPass.begin();
 		ofClear(0, 0, 0);
 		shaderGray.begin();
@@ -58,6 +59,7 @@ void fboRenderer::apply(ofFbo * pFbo) {
 		shaderEdge.end();
 		fboFirstPass.end();
 
+		// make edge detection mask
 		fboSecondPass.begin();
 		ofClear(0, 0, 0);
 		shader8bits.begin();
