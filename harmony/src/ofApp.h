@@ -10,11 +10,16 @@
 #include "gui/inspector.h"
 #include "gui/texture_selector.h"
 #include "gameobjectFactory.h"
+#include "fboRenderer.h"
+#include "gameobjectFactory.h"
 
 
 class ofApp : public ofBaseApp
 {
 private:
+	ofFbo fbo;
+	fboRenderer renderer;
+
     bool shiftIsPressed;
     bool CtrlIsPressed;
     bool GUIIsDisplayed;

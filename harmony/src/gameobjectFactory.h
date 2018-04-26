@@ -13,6 +13,7 @@
 #include "gameobjects/mirror.h"
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/hermite_curve.h"
+#include "gameobjects/planeBump.h"
 
 class GameObjectFactory
 {
@@ -33,6 +34,7 @@ private:
     const string xwingText = "X-Wing";
     const string bezierCurveText = "Bezier Curve";
     const string hermiteCurveText = "Hermite Curve";
+	const string planeBumpText = "Plane Bump";
 };
 
 enum ShapeType
@@ -50,5 +52,6 @@ enum ShapeType
     Shape_XWing,
     Shape_Portal,
     Shape_Bezier,
-    Shape_Hermite
+    Shape_Hermite,
+	Shape_PlaneBump
 };

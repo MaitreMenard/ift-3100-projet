@@ -2,6 +2,9 @@
 
 void ofApp::setup()
 {
+	renderer.setup();
+	fbo.allocate(ofGetWidth(), ofGetHeight());
+
     scene.enableUndoRedo();
     shiftIsPressed = false;
     CtrlIsPressed = false;
@@ -153,7 +156,7 @@ void ofApp::onSelectedCurveAddControlPoint()
 
 void ofApp::draw()
 {
-    ofClear(0);
+	ofClear(0);
 
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
@@ -167,6 +170,10 @@ void ofApp::draw()
     }
     else
     {
+		fbo.begin();
+		ofClear(0);
+		ofBackgroundGradient(ofColor::white, ofColor::gray);
+
         ofPushMatrix();
         camera.begin();
         if (camera.getOrtho())
@@ -177,14 +184,20 @@ void ofApp::draw()
         {
             light->enable();
         }
+
         scene.draw();
         gridPlane.draw();
+
         if (lightIsActive)
         {
             light->disable();
         }
         camera.end();
         ofPopMatrix();
+
+		fbo.end();
+		renderer.apply(&fbo);
+		fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
         if (GUIIsDisplayed)
         {
@@ -369,6 +382,9 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star, textureFactory.getEmptyTexture());
         break;
+	case '0':
+		addNewGameObject(Shape_PlaneBump, textureFactory.getEmptyTexture());
+		break;
     case 'p':
         currentlyDrawingPortal1 = true;
         break;
@@ -384,6 +400,9 @@ void ofApp::keyPressed(int key)
     case 'n':   //todo: make this h
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
         break;
+	case 'e':
+		renderer.next();
+		break;
     default:
         break;
     }
