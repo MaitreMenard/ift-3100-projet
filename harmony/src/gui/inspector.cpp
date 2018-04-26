@@ -7,8 +7,14 @@ void Inspector::setup()
     positionFields.setup(positionText, ofVec3f(0), ofVec3f(POSITION_MIN_VALUE), ofVec3f(POSITION_MAX_VALUE));
     rotation.setup(rotationText, ofVec3f(0), ofVec3f(ROTATION_MIN_VALUE), ofVec3f(ROTATION_MAX_VALUE));
     scaleFields.setup(scaleText, ofVec3f(1), ofVec3f(SCALE_MIN_VALUE), ofVec3f(SCALE_MAX_VALUE));
-    colorPicker.setup(ofColor());
+
+    colorPicker.setup(colorPickerText, ofColor());
+    diffuseColorpicker.setup(diffuseColorPickerText, ofColor());
+    specularColorPicker.setup(specularColorPickerText, ofColor());
+    ambientColorPicker.setup(ambientColorPickerText, ofColor());
+
     parentField.setup(0, 0);
+
     addControlPointButton.setup(addControlPointButtonText);
     addControlPointButton.setBackgroundColor(addControlPointButtonColor);
 }
@@ -78,4 +84,18 @@ void Inspector::visit(Model3D * model3D)
     positionFields = model3D->getPosition();
     rotation = model3D->getEulerAngles();
     scaleFields = model3D->getScale();
+}
+
+void Inspector::visit(Light * light)
+{
+    panel.add(&positionFields);
+    panel.add(&rotation);
+    panel.add(&diffuseColorpicker);
+    panel.add(&specularColorPicker);
+    panel.add(&ambientColorPicker);
+
+    positionFields = light->getPosition();
+    diffuseColorpicker.minimize();
+    specularColorPicker.minimize();
+    ambientColorPicker.minimize();
 }

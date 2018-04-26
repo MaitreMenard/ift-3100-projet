@@ -28,6 +28,7 @@ public:
     void visit(BezierCurve* bezierCurve);
     void visit(ControlPoint* controlPoint);
     void visit(Model3D* model3D);
+    void visit(Light* light);
 
     ~GameObjectSelector();
 

@@ -1,4 +1,5 @@
 #include "light.h"
+#include "gameobject_visitor.h"
 
 Light::Light(string name) : GameObject(name, nullptr)
 {
@@ -56,6 +57,11 @@ void Light::disable()
 void Light::enable()
 {
     light->enable();
+}
+
+void Light::accept(GameObjectVisitor & visitor)
+{
+    visitor.visit(this);
 }
 
 void Light::draw() {}

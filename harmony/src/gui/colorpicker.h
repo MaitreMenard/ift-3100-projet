@@ -7,7 +7,7 @@ class ColorPicker : public ofxGuiGroup
 {
 public:
     ColorPicker();
-    ColorPicker* setup(ofColor initialColor);
+    ColorPicker* setup(std::string headerText, ofColor initialColor);
 
     template<class ListenerClass, typename ListenerMethod>
     void addListener(ListenerClass * listener, ListenerMethod method)
@@ -18,15 +18,16 @@ public:
     void setColor(ofColor color);
 
 private:
-    const string headerText = "Color:";
     const string rgbText = "RGB";
     const string hsbText = "HSB";
-    const string aText = "A: ";
-    const string bText = "B: ";
-    const string gText = "G: ";
-    const string hText = "H: ";
-    const string rText = "R: ";
-    const string sText = "S: ";
+    const string AText = "A: ";
+    const string aText = "a: ";
+    const string BText = "B: ";
+    const string bText = "b: ";
+    const string GText = "G: ";
+    const string hText = "h: ";
+    const string RText = "R: ";
+    const string sText = "s: ";
     const ofColor labelColor = ofColor(48, 48, 72);
 
     ofxLabel rgb_label;

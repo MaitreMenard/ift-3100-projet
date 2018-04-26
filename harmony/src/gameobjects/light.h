@@ -22,6 +22,8 @@ public:
 
     void disable();
     void enable();
+
+    void accept(GameObjectVisitor& visitor);
 };
 
 enum LightMode

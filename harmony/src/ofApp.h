@@ -58,6 +58,9 @@ private:
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
     void onSelectedGameObjectColorChange(ofColor& newColor);
+    void onSelectedGameObjectDiffuseColorChange(ofColor& diffuseColor);
+    void onSelectedGameObjectSpecularColorChange(ofColor& specularColor);
+    void onSelectedGameObjectAmbientColorChange(ofColor& ambientColor);
     void onParentChanged(int& newParentID);
     void onSelectedCurveAddControlPoint();
 

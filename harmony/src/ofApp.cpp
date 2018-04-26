@@ -62,6 +62,9 @@ void ofApp::setupInspector()
     inspector.rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
     inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
     inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
+    inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
+    inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
+    inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
     inspector.parentField.addListener(this, &ofApp::onParentChanged);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
@@ -139,6 +142,24 @@ void ofApp::onSelectedGameObjectScaleChange(ofVec3f& newScale)
 void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
 {
     scene.setColorSelectedGameObject(newColor);
+}
+
+void ofApp::onSelectedGameObjectDiffuseColorChange(ofColor & diffuseColor)
+{
+    //TODO
+    ofLog() << "Diffuse color: " << diffuseColor;
+}
+
+void ofApp::onSelectedGameObjectSpecularColorChange(ofColor & specularColor)
+{
+    //TODO
+    ofLog() << "Specular color: " << specularColor;
+}
+
+void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
+{
+    //TODO
+    ofLog() << "Ambient color: " << ambientColor;
 }
 
 void ofApp::onParentChanged(int & newParentButtonID)
