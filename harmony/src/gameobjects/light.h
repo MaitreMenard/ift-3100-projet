@@ -14,6 +14,12 @@ public:
     void setColor(ofColor color);
 
     void setLightMode(size_t lightMode);
+    ofColor getDiffuseColor();
+    void setDiffuseColor(ofColor diffuseColor);
+    ofColor getSpecularColor();
+    void setSpecularColor(ofColor specularColor);
+    ofColor getAmbientColor();
+    void setAmbientColor(ofColor ambientColor);
 
     void draw();
 

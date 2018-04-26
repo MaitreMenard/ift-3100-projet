@@ -38,10 +38,14 @@ public:
     virtual void draw();
     virtual void drawTextureAndMaterial();
 
-    void setMaterialShininess(size_t shininess);
-    void setMaterialDiffuseColor(ofColor diffuseColor);
-    void setMaterialSpecularColor(ofColor specularColor);
-    void setMaterialAmbientColor(ofColor ambientColor);
+    float getShininess();
+    void setShininess(float shininess);
+    virtual ofColor getDiffuseColor();
+    virtual void setDiffuseColor(ofColor diffuseColor);
+    virtual ofColor getSpecularColor();
+    virtual void setSpecularColor(ofColor specularColor);
+    virtual ofColor getAmbientColor();
+    virtual void setAmbientColor(ofColor ambientColor);
 
     std::string getName();
 

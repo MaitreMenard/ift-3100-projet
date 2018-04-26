@@ -95,7 +95,10 @@ void Inspector::visit(Light * light)
     panel.add(&ambientColorPicker);
 
     positionFields = light->getPosition();
+    diffuseColorpicker.setColor(light->getDiffuseColor());
     diffuseColorpicker.minimize();
+    specularColorPicker.setColor(light->getSpecularColor());
     specularColorPicker.minimize();
+    ambientColorPicker.setColor(light->getAmbientColor());
     ambientColorPicker.minimize();
 }

@@ -146,20 +146,17 @@ void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
 
 void ofApp::onSelectedGameObjectDiffuseColorChange(ofColor & diffuseColor)
 {
-    //TODO
-    ofLog() << "Diffuse color: " << diffuseColor;
+    scene.getSelectedGameObject()->setDiffuseColor(diffuseColor);
 }
 
 void ofApp::onSelectedGameObjectSpecularColorChange(ofColor & specularColor)
 {
-    //TODO
-    ofLog() << "Specular color: " << specularColor;
+    scene.getSelectedGameObject()->setSpecularColor(specularColor);
 }
 
 void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
 {
-    //TODO
-    ofLog() << "Ambient color: " << ambientColor;
+    scene.getSelectedGameObject()->setAmbientColor(ambientColor);
 }
 
 void ofApp::onParentChanged(int & newParentButtonID)

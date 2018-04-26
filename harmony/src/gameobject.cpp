@@ -68,39 +68,57 @@ void GameObject::drawChildren()
 
 void GameObject::drawTextureAndMaterial()
 {
-    if (hasMaterial) {
+    if (hasMaterial)
+    {
         material.begin();
     }
     texture->bind();
     model.draw();
     texture->unbind();
-    if (hasMaterial) {
+    if (hasMaterial)
+    {
         material.end();
     }
 }
 
-void GameObject::setMaterialShininess(size_t shininess) {
-    if (hasMaterial) {
-        material.setShininess(shininess);
-    }
+float GameObject::getShininess()
+{
+    return material.getShininess();
 }
 
-void GameObject::setMaterialDiffuseColor(ofColor diffuseColor) {
-    if (hasMaterial) {
-        material.setDiffuseColor(diffuseColor);
-    }
+void GameObject::setShininess(float shininess)
+{
+    material.setShininess(shininess);
 }
 
-void GameObject::setMaterialSpecularColor(ofColor specularColor) {
-    if (hasMaterial) {
-        material.setSpecularColor(specularColor);
-    }
+ofColor GameObject::getDiffuseColor()
+{
+    return material.getDiffuseColor();
 }
 
-void GameObject::setMaterialAmbientColor(ofColor ambientColor) {
-    if (hasMaterial) {
-        material.setAmbientColor(ambientColor);
-    }
+void GameObject::setDiffuseColor(ofColor diffuseColor)
+{
+    material.setDiffuseColor(diffuseColor);
+}
+
+ofColor GameObject::getSpecularColor()
+{
+    return material.getSpecularColor();
+}
+
+void GameObject::setSpecularColor(ofColor specularColor)
+{
+    material.setSpecularColor(specularColor);
+}
+
+ofColor GameObject::getAmbientColor()
+{
+    return material.getAmbientColor();
+}
+
+void GameObject::setAmbientColor(ofColor ambientColor)
+{
+    material.setAmbientColor(ambientColor);
 }
 
 std::string GameObject::getName()

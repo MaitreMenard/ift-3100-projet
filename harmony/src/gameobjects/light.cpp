@@ -40,6 +40,36 @@ void Light::setLightMode(size_t lightMode)
     }
 }
 
+ofColor Light::getDiffuseColor()
+{
+    return light->getDiffuseColor();
+}
+
+void Light::setDiffuseColor(ofColor diffuseColor)
+{
+    light->setDiffuseColor(diffuseColor);
+}
+
+ofColor Light::getSpecularColor()
+{
+    return light->getSpecularColor();
+}
+
+void Light::setSpecularColor(ofColor specularColor)
+{
+    light->setSpecularColor(specularColor);
+}
+
+ofColor Light::getAmbientColor()
+{
+    return light->getAmbientColor();
+}
+
+void Light::setAmbientColor(ofColor ambientColor)
+{
+    light->setAmbientColor(ambientColor);
+}
+
 ofVec3f Light::getPosition()
 {
     return light->getPosition();
