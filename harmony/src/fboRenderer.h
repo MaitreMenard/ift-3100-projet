@@ -6,7 +6,7 @@ class fboRenderer
 private:
 	int fboIter;
 	ofFbo fboFirstPass, fboSecondPass;
-	ofShader shaderBlurX, shaderBlurY, shaderBlackWhite, shaderSepia, shaderEdgeDetect, shaderGray;
+	ofShader shaderBlurX, shaderBlurY, shaderBlackWhite, shaderSepia, shader8bits, shaderEdge, shaderEdgeLayer, shaderGray, shaderMult;
 
 	// Blur parameters
 	bool blurIsSet_;
@@ -19,8 +19,8 @@ private:
 	// Sepia
 	bool sepiaIsSet_;
 
-	// EdgeDetection
-	bool edgeDetectionIsSet_;
+	// 8bits
+	bool bitsIsSet_;
 
 public:
 	fboRenderer();
@@ -38,9 +38,9 @@ public:
 	void enableSepia();
 	void disableSepia();
 	bool isSepiaSet();
-	void enableEdgeDetection();
-	void disableEdgeDetection();
-	bool isEdgeDetectionSet();
+	void enable8bits();
+	void disable8bits();
+	bool is8bitsSet();
 	void resize();
 	void next();
 };

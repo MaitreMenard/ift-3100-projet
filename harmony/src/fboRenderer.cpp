@@ -10,20 +10,9 @@ void fboRenderer::setup() {
 	blurValue_ = 2;
 	blurIterations_ = 2;
 	blurIsSet_ = false;
+	shaderBlurX.load("shadersGL3/shaderBlurX");
+	shaderBlurY.load("shadersGL3/shaderBlurY");
 
-#ifdef TARGET_OPENGLES
-	shaderBlurX.load("shadersES2/shaderBlurX");
-	shaderBlurY.load("shadersES2/shaderBlurY");
-#else
-	if (ofIsGLProgrammableRenderer()) {
-		shaderBlurX.load("shadersGL3/shaderBlurX");
-		shaderBlurY.load("shadersGL3/shaderBlurY");
-	}
-	else {
-		shaderBlurX.load("shadersGL2/shaderBlurX");
-		shaderBlurY.load("shadersGL2/shaderBlurY");
-	}
-#endif
 
 	// setup black and white shaders
 	blackWhiteIsSet_ = false;
@@ -33,10 +22,13 @@ void fboRenderer::setup() {
 	sepiaIsSet_ = false;
 	shaderSepia.load("shaders/sepia");
 
-	// setup edge detection shaders
-	edgeDetectionIsSet_ = false;
-	shaderEdgeDetect.load("shaders/edgedetection");
+	// setup 8bits shaders
+	bitsIsSet_ = false;
+	shader8bits.load("shaders/colorbits");
+	shaderEdge.load("shaders/edgesobel");
 	shaderGray.load("shaders/gray");
+	shaderMult.load("shaders/multiple");
+	shaderEdgeLayer.load("shaders/edgewidth");
 
 	// setup fbo allocation
 	fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
@@ -44,7 +36,7 @@ void fboRenderer::setup() {
 }
 
 void fboRenderer::apply(ofFbo * pFbo) {
-	if (edgeDetectionIsSet_) {
+	if (bitsIsSet_) {
 		fboFirstPass.begin();
 		ofClear(0, 0, 0);
 		shaderGray.begin();
@@ -52,11 +44,33 @@ void fboRenderer::apply(ofFbo * pFbo) {
 		shaderGray.end();
 		fboFirstPass.end();
 
-		pFbo->begin();
-		shaderEdgeDetect.begin();
+		fboSecondPass.begin();
 		ofClear(0, 0, 0);
+		shaderBlackWhite.begin();
 		fboFirstPass.draw(0, 0, ofGetWidth(), ofGetHeight());
-		shaderEdgeDetect.end();
+		shaderBlackWhite.end();
+		fboSecondPass.end();
+
+		fboFirstPass.begin();
+		ofClear(0, 0, 0);
+		shaderEdge.begin();
+		fboSecondPass.draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderEdge.end();
+		fboFirstPass.end();
+
+		fboSecondPass.begin();
+		ofClear(0, 0, 0);
+		shader8bits.begin();
+		pFbo->draw(0, 0, ofGetWidth(), ofGetHeight());
+		shader8bits.end();
+		fboSecondPass.end();
+
+		pFbo->begin();
+		ofClear(0, 0, 0);
+		shaderMult.begin();
+		shaderMult.setUniformTexture("texEdge", fboFirstPass.getTextureReference(), 1);
+		fboSecondPass.draw(0, 0, ofGetWidth(), ofGetHeight());
+		shaderMult.end();
 		pFbo->end();
 	}
 
@@ -148,14 +162,16 @@ bool fboRenderer::isSepiaSet() {
 	return sepiaIsSet_;
 }
 
-void fboRenderer::enableEdgeDetection() {
-	edgeDetectionIsSet_ = true;
+void fboRenderer::enable8bits() {
+	bitsIsSet_ = true;
 }
-void fboRenderer::disableEdgeDetection() {
-	edgeDetectionIsSet_ = false;
+
+void fboRenderer::disable8bits() {
+	bitsIsSet_ = false;
 }
-bool fboRenderer::isEdgeDetectionSet() {
-	return edgeDetectionIsSet_;
+
+bool fboRenderer::is8bitsSet() {
+	return bitsIsSet_;
 }
 
 void fboRenderer::resize() {
@@ -163,27 +179,37 @@ void fboRenderer::resize() {
 }
 
 void fboRenderer::next() {
-	switch (++fboIter % 4)
+	switch (++fboIter % 5)
 	{
 	case 0:
 		disableBlur();
 		disableBW();
 		disableSepia();
+		disable8bits();
 		break;
 	case 1:
 		enableBlur();
 		disableBW();
 		disableSepia();
+		disable8bits();
 		break;
 	case 2:
 		disableBlur();
 		enableBW();
 		disableSepia();
+		disable8bits();
 		break;
 	case 3:
 		disableBlur();
 		disableBW();
 		enableSepia();
+		disable8bits();
+		break;
+	case 4:
+		disableBlur();
+		disableBW();
+		disableSepia();
+		enable8bits();
 		break;
 	default:
 		break;
