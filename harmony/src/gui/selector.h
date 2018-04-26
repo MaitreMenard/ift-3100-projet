@@ -4,13 +4,15 @@
 template<typename T>
 class Selector
 {
+//TODO: put all non public API methods protected/private
 public:
-    void setup(std::string headerText)
+    void setup(std::string headerText, T noSelectionItem)
     {
         this->headerText = headerText;
+        this->noSelectionItem = noSelectionItem;
         setupPanel();
 
-        selectedItem = nullptr;
+        selectedItem = noSelectionItem;
     }
 
     void setupPanel()
@@ -69,7 +71,7 @@ public:
         if (isAnyItemSelected())
         {
             itemButtons.at(selectedItem)->setBackgroundColor(baseButtonColor);
-            selectedItem = nullptr;
+            selectedItem = noSelectionItem;
         }
     }
 
@@ -94,10 +96,11 @@ private:
 
     std::string headerText;
     T selectedItem;
+    T noSelectionItem;
     ofEvent<T> buttonPressedEvent;
 
     bool isAnyItemSelected()
     {
-        return selectedItem != nullptr;
+        return selectedItem != noSelectionItem;
     }
 };

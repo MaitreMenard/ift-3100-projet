@@ -26,8 +26,11 @@ void ofApp::setup()
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
+    lightModeSelector.setup(LIGHTMODE_POINT);
+    lightModeSelector.addListener(this, &ofApp::onLightModeChange);
+
     light = new Light(lightText);
-    light->setLightMode(Point);
+    light->setLightMode(LIGHTMODE_POINT);
     /*light2 = new Light(lightText);
     light2->setLightMode(Spot);
     light3 = new Light(lightText);
@@ -65,7 +68,7 @@ void ofApp::setupInspector()
     inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
     inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
     inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
-    inspector.parentField.addListener(this, &ofApp::onParentChanged);
+    inspector.parentField.addListener(this, &ofApp::onParentChange);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
 
@@ -89,6 +92,7 @@ void ofApp::update()
 {
     gameObjectSelector.update();
     textureSelector.update();
+    lightModeSelector.update();
     scene.update();
 }
 
@@ -159,7 +163,7 @@ void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
     scene.getSelectedGameObject()->setAmbientColor(ambientColor);
 }
 
-void ofApp::onParentChanged(int & newParentButtonID)
+void ofApp::onParentChange(int & newParentButtonID)
 {
     if (newParentButtonID == 0)
     {
@@ -177,6 +181,11 @@ void ofApp::onSelectedCurveAddControlPoint()
     BezierCurve* bezierCurve = (BezierCurve*)scene.getSelectedGameObject();
     ControlPoint* newControlPoint = bezierCurve->addControlPoint();
     gameObjectSelector.addControlPoint(bezierCurve, newControlPoint);
+}
+
+void ofApp::onLightModeChange(int & newLightMode)
+{
+    ofLog() << newLightMode;
 }
 
 void ofApp::draw()
@@ -222,23 +231,36 @@ void ofApp::draw()
 
         if (GUIIsDisplayed)
         {
-            if (lightIsActive)
-            {
-                ofDisableLighting();
-            }
-            ofDisableDepthTest();
-            inspector.draw();
-            gameObjectSelector.draw();
-            if (scene.isSelectedGameObject2D())
-            {
-                textureSelector.draw();
-            }
-            ofEnableDepthTest();
-            if (lightIsActive)
-            {
-                ofEnableLighting();
-            }
+            drawGUI();
         }
+    }
+}
+
+void ofApp::drawGUI()
+{
+    if (lightIsActive)
+    {
+        ofDisableLighting();
+    }
+    ofDisableDepthTest();
+
+    GameObject* selectedGameObject = scene.getSelectedGameObject();
+    inspector.draw();
+    gameObjectSelector.draw();
+    if (selectedGameObject->is2D())
+    {
+        textureSelector.draw();
+    }
+    Light* light = dynamic_cast<Light*>(selectedGameObject);
+    if (light != nullptr)
+    {
+        lightModeSelector.draw();
+    }
+
+    ofEnableDepthTest();
+    if (lightIsActive)
+    {
+        ofEnableLighting();
     }
 }
 

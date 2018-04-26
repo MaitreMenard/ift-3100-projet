@@ -35,8 +35,8 @@ public:
 
 enum LightMode
 {
-    Point,
-    Spot,
-    Ambient,
-    Directional
+    LIGHTMODE_POINT,
+    LIGHTMODE_SPOT,
+    LIGHTMODE_AMBIENT,
+    LIGHTMODE_DIRECTIONAL
 };

@@ -2,7 +2,7 @@
 
 void TextureSelector::setup(TextureFactory& textureFactory)
 {
-    Selector::setup(headerText);
+    Selector::setup(headerText, nullptr);
 
     for (Texture* texture : textureFactory.getAllTextures())
     {

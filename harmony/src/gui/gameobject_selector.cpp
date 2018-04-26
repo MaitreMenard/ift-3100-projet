@@ -2,7 +2,7 @@
 
 void GameObjectSelector::setup()
 {
-    Selector::setup(headerText);
+    Selector::setup(headerText, nullptr);
     panel.setPosition(xOffset, yOffset);
 
     selectedControlPoint = nullptr;

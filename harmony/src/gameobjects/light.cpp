@@ -5,39 +5,48 @@ Light::Light(string name) : GameObject(name, nullptr)
 {
     light = new ofLight();
     boundingBox.set(0.2);
-    setLightMode(Spot);
+    setLightMode(LIGHTMODE_SPOT);
 }
 
 void Light::setLightMode(size_t lightMode)
 {
+    //TODO: Don't set if the same as current light mode
     if (light != nullptr)
     {
         delete light;
     }
     light = new ofLight();
-    if (lightMode == Point)
+    if (lightMode == LIGHTMODE_POINT)
     {
+        ofLog() << "Point light";
         light->setPointLight();
         //light->setDiffuseColor(ofColor(255, 0, 0));
         setPosition(ofVec3f(-5, 0, 0));
     }
-    else if (lightMode == Spot)
+    else if (lightMode == LIGHTMODE_SPOT)
     {
+        ofLog() << "Spot light";
         light->setSpotlight();
         //light->setDiffuseColor(ofColor(255, 100, 100));
         setPosition(ofVec3f(0, 3, 0));
         light->lookAt(ofVec3f(0, 0, 0));
         light->setSpotlightCutOff(15);
     }
-    else if (lightMode == Ambient)
+    else if (lightMode == LIGHTMODE_AMBIENT)
     {
+        ofLog() << "Ambient light";
         light->setAmbientColor(ofColor(255, 255, 255));
     }
-    else
+    else if (lightMode == LIGHTMODE_DIRECTIONAL)
     {
+        ofLog() << "Directional light";
         light->setDirectional();
         setPosition(ofVec3f(0, 0, 0));
         light->lookAt(ofVec3f(1, 1, 0));
+    }
+    else
+    {
+        ofLog() << "Invalid light mode";
     }
 }
 

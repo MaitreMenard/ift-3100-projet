@@ -5,10 +5,11 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "textureFactory.h"
-#include "gui/gameobject_selector.h"
 #include "gameobjects/light.h"
 #include "gui/inspector.h"
+#include "gui/gameobject_selector.h"
 #include "gui/texture_selector.h"
+#include "gui/lightmode_selector.h"
 #include "gameobjectFactory.h"
 
 
@@ -42,6 +43,7 @@ private:
     Inspector inspector;
     GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
+    LightModeSelector lightModeSelector;
 
     void takeScreenShot();
 
@@ -49,6 +51,8 @@ private:
     void setupNewGameObject(GameObject* gameObject);
 
     void setupInspector();
+    void setupCamera();
+    void setupLight(bool enableOrDisable);
 
     void onSelectedGameObjectChange(GameObject*& selectedGameObject);
     void onSelectedControlPointChange(ControlPoint*& controlPoint);
@@ -61,13 +65,12 @@ private:
     void onSelectedGameObjectDiffuseColorChange(ofColor& diffuseColor);
     void onSelectedGameObjectSpecularColorChange(ofColor& specularColor);
     void onSelectedGameObjectAmbientColorChange(ofColor& ambientColor);
-    void onParentChanged(int& newParentID);
+    void onParentChange(int& newParentID);
     void onSelectedCurveAddControlPoint();
+    void onLightModeChange(int& newLightMode);
 
-    void setupCamera();
     void toggleGUIVisibility();
-
-    void setupLight(bool enableOrDisable);
+    void drawGUI();
 
     ofPixels getCameraPortalImage();
     void createPortal(size_t portalId);
