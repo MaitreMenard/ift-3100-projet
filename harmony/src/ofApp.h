@@ -61,6 +61,7 @@ private:
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
     void onSelectedGameObjectColorChange(ofColor& newColor);
     void onParentChanged(int& newParentID);
+    void onSelectedCurveAddControlPoint();
 
     void setupCamera();
     void toggleGUIVisibility();

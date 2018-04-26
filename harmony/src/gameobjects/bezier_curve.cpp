@@ -1,8 +1,22 @@
 #include "bezier_curve.h"
+#include "gameobject_visitor.h"
 
 BezierCurve::BezierCurve(std::string name) : Curve(name)
 {
     updateCurvePoints();
+}
+
+void BezierCurve::accept(GameObjectVisitor & visitor)
+{
+    visitor.visit(this);
+}
+
+ControlPoint* BezierCurve::addControlPoint()
+{
+    ControlPoint* newControlPoint = createControlPoint(ofVec3f(0));
+    controlPoints.push_back(newControlPoint);
+    updateCurvePoints();
+    return newControlPoint;
 }
 
 ofVec3f BezierCurve::interpolate(float t)

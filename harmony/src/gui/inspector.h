@@ -3,6 +3,7 @@
 #include "scene.h"
 #include "gameobject_visitor.h"
 #include "gameobjects/curve.h"
+#include "gameobjects/bezier_curve.h"
 #include "gameobjects/model3D.h"
 #include "gui/colorpicker.h"
 #include "gui/parentIntField.h"
@@ -17,6 +18,7 @@ public:
     Vec3fTextField scaleFields;
     ColorPicker colorPicker;
     ParentIntField parentField;
+    ofxButton addControlPointButton;
 
     void setup();
     void update(Scene& scene);
@@ -24,6 +26,7 @@ public:
 
     void visit(GameObject* gameObject);
     void visit(Curve* curve);
+    void visit(BezierCurve* bezierCurve);
     void visit(ControlPoint* controlPoint);
     void visit(Model3D* model3D);
 
@@ -39,7 +42,9 @@ private:
     const string positionText = "Position: ";
     const string rotationText = "Rotation: ";
     const string scaleText = "Scale: ";
+    const string addControlPointButtonText = "Add Control Point";
     const ofColor headerColor = ofColor(24, 120, 24);
+    const ofColor addControlPointButtonColor = ofColor(48, 48, 72);
 
     ofxPanel panel;
 
