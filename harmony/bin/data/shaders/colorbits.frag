@@ -7,6 +7,6 @@ out vec4 outputColor;
 void main()
 {
 	vec3 factor = vec3(3.0, 3.0, 3.0);
-	vec3 color = floor(texture(tex0, texCoordVarying).rgb * factor) / factor;
+	vec3 color = floor(texture(tex0, texCoordVarying).rgb * factor + 0.5) / factor;
     outputColor = vec4(color, texture(tex0, texCoordVarying).a);
 }
