@@ -94,9 +94,6 @@ void Scene::draw()
         {
 			ofPushMatrix();
 			if (shaderRenderer.isActive) {
-				if (gameObject->is2D()) {
-					shaderRenderer.shader->setUniformTexture("texColor", *gameObject->getTexture(), 0);
-				}
 				shaderRenderer.shader->setUniform3f("lightPosition", shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW));
 			}
 			gameObject->draw();
