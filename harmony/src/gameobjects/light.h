@@ -14,7 +14,6 @@ class Light : public GameObject
 {
 public:
     Light(string name, LightMode lightMode);
-    ~Light();
 
     ofColor getColor();
     void setColor(ofColor color);
@@ -46,9 +45,17 @@ private:
     const float boxSize = 0.2;
     const float spotLightCutOff = 15;
 
-    ofLight* light;
+    ofLight* selectedLight;
+    ofLight pointLight;
+    ofLight spotLight;
+    ofLight directionnalLight;
     LightMode lightMode;
 
+    ofColor diffuseColor;
+    ofColor specularColor;
+    ofColor ambientColor;
+    ofColor defaultGlobalAmbientColor;
+
     void setNewLightMode(LightMode lightMode);
-    void resetLight();
+    void resetLightTransform();
 };

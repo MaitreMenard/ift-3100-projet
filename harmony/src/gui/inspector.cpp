@@ -83,17 +83,29 @@ void Inspector::visit(Model3D * model3D)
 
 void Inspector::visit(Light * light)
 {
-    panel.add(&positionFields);
-    panel.add(&rotation);
-    panel.add(&diffuseColorpicker);
-    panel.add(&specularColorPicker);
-    panel.add(&ambientColorPicker);
+    LightMode lightMode = light->getLightMode();
+    if (lightMode == LIGHTMODE_POINT || lightMode == LIGHTMODE_SPOT)
+    {
+        panel.add(&positionFields);
+        positionFields = light->getPosition();
+    }
+    if (lightMode == LIGHTMODE_SPOT || lightMode == LIGHTMODE_DIRECTIONAL)
+    {
+        panel.add(&rotation);
+        rotation = light->getRotation();
+    }
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        panel.add(&diffuseColorpicker);
+        diffuseColorpicker.setColor(light->getDiffuseColor());
+        diffuseColorpicker.minimize();
 
-    positionFields = light->getPosition();
-    diffuseColorpicker.setColor(light->getDiffuseColor());
-    diffuseColorpicker.minimize();
-    specularColorPicker.setColor(light->getSpecularColor());
-    specularColorPicker.minimize();
+        panel.add(&specularColorPicker);
+        specularColorPicker.setColor(light->getSpecularColor());
+        specularColorPicker.minimize();
+    }
+
+    panel.add(&ambientColorPicker);
     ambientColorPicker.setColor(light->getAmbientColor());
     ambientColorPicker.minimize();
 }

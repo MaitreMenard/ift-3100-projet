@@ -184,6 +184,7 @@ void ofApp::onLightModeChange(int & newLightMode)
 {
     Light* light = (Light*)scene.getSelectedGameObject();
     light->setLightMode((LightMode)newLightMode);
+    inspector.update(scene);
 }
 
 void ofApp::draw()

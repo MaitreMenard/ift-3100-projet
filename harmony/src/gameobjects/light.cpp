@@ -3,35 +3,56 @@
 
 Light::Light(string name, LightMode lightMode) : GameObject(name, nullptr)
 {
-    light = new ofLight();
+    pointLight.setPointLight();
+    spotLight.setSpotlight();
+    spotLight.setSpotlightCutOff(spotLightCutOff);
+    directionnalLight.setDirectional();
+
+    defaultGlobalAmbientColor = ofGetGlobalAmbientColor();
+
+    diffuseColor = ofColor(255);
+    specularColor = ofColor(255);
+    if (lightMode == LIGHTMODE_AMBIENT)
+    {
+        ambientColor = defaultGlobalAmbientColor;
+    }
+    else
+    {
+        ambientColor = ofColor(0);
+    }
+
     boundingBox.set(boxSize);
     setNewLightMode(lightMode);
 }
 
 void Light::setNewLightMode(LightMode lightMode)
 {
+    this->lightMode = lightMode;
+
     if (lightMode == LIGHTMODE_POINT)
     {
-        ofLog() << "Point light";
-        light->setPointLight();
+        selectedLight = &pointLight;
     }
     else if (lightMode == LIGHTMODE_SPOT)
     {
-        ofLog() << "Spot light";
-        light->setSpotlight();
-        light->setSpotlightCutOff(spotLightCutOff);
+        selectedLight = &spotLight;
     }
     else if (lightMode == LIGHTMODE_AMBIENT)
     {
-        ofLog() << "Ambient light";
-        light->setAmbientColor(ofColor(255, 255, 255));
+        selectedLight = nullptr;
+        ofSetGlobalAmbientColor(ambientColor);
     }
     else if (lightMode == LIGHTMODE_DIRECTIONAL)
     {
-        ofLog() << "Directional light";
-        light->setDirectional();
+        selectedLight = &directionnalLight;
     }
-    this->lightMode = lightMode;
+
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        selectedLight->setDiffuseColor(diffuseColor);
+        selectedLight->setSpecularColor(specularColor);
+        selectedLight->setAmbientColor(ambientColor);
+    }
 }
 
 LightMode Light::getLightMode()
@@ -43,88 +64,121 @@ void Light::setLightMode(LightMode lightMode)
 {
     if (this->lightMode != lightMode)
     {
-        GameObject::setPosition(ofVec3f(0));
-        GameObject::setRotation(0, 0, 0);
-
-        resetLight();
-
+        disable();
+        resetLightTransform();
         setNewLightMode(lightMode);
     }
 }
 
-void Light::resetLight()
+void Light::resetLightTransform()
 {
-    ofColor oldDiffuseColor = light->getDiffuseColor();
-    ofColor oldSpecularColor = light->getSpecularColor();
-    ofColor oldAmbientColor = light->getAmbientColor();
-
-    delete light;
-    light = new ofLight();
-
-    light->setDiffuseColor(oldDiffuseColor);
-    light->setSpecularColor(oldSpecularColor);
-    light->setAmbientColor(oldAmbientColor);
+    if (this->lightMode != LIGHTMODE_AMBIENT)
+    {
+        selectedLight->setPosition(ofVec3f(0));
+        selectedLight->setOrientation(ofVec3f(0));
+    }
+    GameObject::setPosition(ofVec3f(0));
+    GameObject::setRotation(0, 0, 0);
 }
 
 ofColor Light::getDiffuseColor()
 {
-    return light->getDiffuseColor();
+    return diffuseColor;
 }
 
 void Light::setDiffuseColor(ofColor diffuseColor)
 {
-    light->setDiffuseColor(diffuseColor);
+    this->diffuseColor = diffuseColor;
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        selectedLight->setDiffuseColor(diffuseColor);
+    }
 }
 
 ofColor Light::getSpecularColor()
 {
-    return light->getSpecularColor();
+    return specularColor;
 }
 
 void Light::setSpecularColor(ofColor specularColor)
 {
-    light->setSpecularColor(specularColor);
+    this->specularColor = specularColor;
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        selectedLight->setSpecularColor(specularColor);
+    }
 }
 
 ofColor Light::getAmbientColor()
 {
-    return light->getAmbientColor();
+    return ambientColor;
 }
 
 void Light::setAmbientColor(ofColor ambientColor)
 {
-    light->setAmbientColor(ambientColor);
+    this->ambientColor = ambientColor;
+    if (lightMode == LIGHTMODE_AMBIENT)
+    {
+        ofSetGlobalAmbientColor(ambientColor);
+    }
+    else
+    {
+        selectedLight->setAmbientColor(ambientColor);
+    }
 }
 
 ofVec3f Light::getPosition()
 {
-    return light->getPosition();
+    if (lightMode == LIGHTMODE_AMBIENT)
+    {
+        return ofVec3f();
+    }
+
+    return selectedLight->getPosition();
 }
 
 void Light::setPosition(ofVec3f position)
 {
-    GameObject::setPosition(position);
-    light->setPosition(position);
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        GameObject::setPosition(position);
+        selectedLight->setPosition(position);
+    }
 }
 
 ofVec3f Light::getRotation()
 {
-    return light->getOrientationEuler();
+    if (lightMode == LIGHTMODE_AMBIENT)
+    {
+        return ofVec3f();
+    }
+
+    return selectedLight->getOrientationEuler();
 }
 
 void Light::setRotation(float x, float y, float z)
 {
-    GameObject::setRotation(x, y, z);
-    light->setOrientation(ofVec3f(x, y, z));
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        GameObject::setRotation(x, y, z);
+        selectedLight->setOrientation(ofVec3f(x, y, z));
+    }
 }
 
 void Light::disable()
 {
-    light->disable();
+    pointLight.disable();
+    spotLight.disable();
+    directionnalLight.disable();
+    ofSetGlobalAmbientColor(defaultGlobalAmbientColor);
 }
+
 void Light::enable()
 {
-    light->enable();
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        selectedLight->enable();
+    }
 }
 
 void Light::accept(GameObjectVisitor & visitor)
@@ -153,8 +207,3 @@ ofColor Light::getColor()
 }
 
 void Light::setColor(ofColor color) {}
-
-Light::~Light()
-{
-    delete light;
-}
