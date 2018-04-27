@@ -119,12 +119,14 @@ void Light::setAmbientColor(ofColor ambientColor)
     this->ambientColor = ambientColor;
     if (lightMode == LIGHTMODE_AMBIENT)
     {
+        ofLog() << ambientColor;
         ofSetGlobalAmbientColor(ambientColor);
     }
     else
     {
         selectedLight->setAmbientColor(ambientColor);
     }
+    ofLog() << ofGetGlobalAmbientColor();
 }
 
 ofVec3f Light::getPosition()
@@ -178,6 +180,10 @@ void Light::enable()
     if (lightMode != LIGHTMODE_AMBIENT)
     {
         selectedLight->enable();
+    }
+    else
+    {
+        ofSetGlobalAmbientColor(ambientColor);
     }
 }
 
