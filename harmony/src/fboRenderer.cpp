@@ -22,8 +22,8 @@ void fboRenderer::setup() {
 	sepiaIsSet_ = false;
 	shaderSepia.load("shaders/sepia");
 
-	// setup 8bits shaders
-	bitsIsSet_ = false;
+	// setup toon shaders
+	toonIsSet_ = false;
 	shader8bits.load("shaders/colorbits");
 	shaderEdge.load("shaders/edgesobel");
 	shaderGray.load("shaders/gray");
@@ -36,7 +36,7 @@ void fboRenderer::setup() {
 }
 
 void fboRenderer::apply(ofFbo * pFbo) {
-	if (bitsIsSet_) {
+	if (toonIsSet_) {
 		// make edge detection mask
 		fboFirstPass.begin();
 		ofClear(0, 0, 0);
@@ -164,16 +164,16 @@ bool fboRenderer::isSepiaSet() {
 	return sepiaIsSet_;
 }
 
-void fboRenderer::enable8bits() {
-	bitsIsSet_ = true;
+void fboRenderer::enableToon() {
+	toonIsSet_ = true;
 }
 
-void fboRenderer::disable8bits() {
-	bitsIsSet_ = false;
+void fboRenderer::disableToon() {
+	toonIsSet_ = false;
 }
 
 bool fboRenderer::is8bitsSet() {
-	return bitsIsSet_;
+	return toonIsSet_;
 }
 
 void fboRenderer::resize() {
@@ -187,31 +187,31 @@ void fboRenderer::next() {
 		disableBlur();
 		disableBW();
 		disableSepia();
-		disable8bits();
+		disableToon();
 		break;
 	case 1:
 		enableBlur();
 		disableBW();
 		disableSepia();
-		disable8bits();
+		disableToon();
 		break;
 	case 2:
 		disableBlur();
 		enableBW();
 		disableSepia();
-		disable8bits();
+		disableToon();
 		break;
 	case 3:
 		disableBlur();
 		disableBW();
 		enableSepia();
-		disable8bits();
+		disableToon();
 		break;
 	case 4:
 		disableBlur();
 		disableBW();
 		disableSepia();
-		enable8bits();
+		enableToon();
 		break;
 	default:
 		break;

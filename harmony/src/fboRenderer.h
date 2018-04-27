@@ -20,7 +20,7 @@ private:
 	bool sepiaIsSet_;
 
 	// 8bits
-	bool bitsIsSet_;
+	bool toonIsSet_;
 
 public:
 	fboRenderer();
@@ -38,8 +38,8 @@ public:
 	void enableSepia();
 	void disableSepia();
 	bool isSepiaSet();
-	void enable8bits();
-	void disable8bits();
+	void enableToon();
+	void disableToon();
 	bool is8bitsSet();
 	void resize();
 	void next();
