@@ -1,10 +1,14 @@
 #pragma once
 #include "ofMain.h"
 
+enum class effectType { none, blur, black_white, sepia, toon };
+
 class fboRenderer
 {
 private:
-	int fboIter;
+	bool isActive;
+	string effectName;
+	effectType fboEffect;
 	ofFbo fboFirstPass, fboSecondPass;
 	ofShader shaderBlurX, shaderBlurY, shaderBlackWhite, shaderSepia, shader8bits, shaderEdge, shaderEdgeLayer, shaderGray, shaderMult;
 
@@ -26,6 +30,8 @@ public:
 	fboRenderer();
 	~fboRenderer();
 
+	bool isActiveEffect() { return isActive; };;
+	string getEffectName() { return effectName; };
 	void setup();
 	void apply(ofFbo * pFbo);
 	void setBlurParam(float pBlurValue, int pBlurIteration);

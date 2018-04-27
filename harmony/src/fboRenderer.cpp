@@ -6,7 +6,9 @@ fboRenderer::~fboRenderer() {}
 
 void fboRenderer::setup() {
 	// setup blur param / shaders
-	fboIter = 0;
+	effectName = "No effect";
+	fboEffect = effectType::none;
+	isActive = false;
 	blurValue_ = 2;
 	blurIterations_ = 2;
 	blurIsSet_ = false;
@@ -181,37 +183,48 @@ void fboRenderer::resize() {
 }
 
 void fboRenderer::next() {
-	switch (++fboIter % 5)
+	fboEffect = (effectType)(((int)fboEffect + 1)%5);
+	switch (fboEffect)
 	{
-	case 0:
+	case effectType::none:
+		effectName = "No effect";
 		disableBlur();
 		disableBW();
 		disableSepia();
 		disableToon();
+		isActive = false;
 		break;
-	case 1:
+	case effectType::blur:
+		effectName = "Gaussian Blur";
 		enableBlur();
 		disableBW();
 		disableSepia();
 		disableToon();
+		isActive = true;
 		break;
-	case 2:
+	case effectType::black_white:
+		effectName = "Black and White";
 		disableBlur();
 		enableBW();
 		disableSepia();
 		disableToon();
+		isActive = true;
 		break;
-	case 3:
+	case effectType::sepia:
+		effectName = "Sepia";
 		disableBlur();
 		disableBW();
 		enableSepia();
 		disableToon();
+		isActive = true;
 		break;
-	case 4:
+	case effectType::toon:
+		effectName = "Toon";
 		disableBlur();
 		disableBW();
 		disableSepia();
 		enableToon();
+		isActive = true;
 		break;
 	default:
 		break;

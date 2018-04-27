@@ -219,6 +219,15 @@ void ofApp::draw()
             {
                 ofEnableLighting();
             }
+
+			// Display render name
+			if(scene.shaderRenderer.isActive)
+				ofDrawBitmapStringHighlight("Modele Illumination: " + scene.shaderRenderer.getShaderName(), 220, 15,
+					ofColor::white, ofColor::black);
+			if(fboRender.isActiveEffect())
+				ofDrawBitmapStringHighlight("Effet: " + fboRender.getEffectName(), 220,
+					15 + (20 * (int)scene.shaderRenderer.isActive),
+					ofColor::white, ofColor::black);
         }
     }
 }

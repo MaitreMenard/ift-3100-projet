@@ -6,6 +6,7 @@
 
 void Renderer::setup()
 {
+	isActive = false;
 	rendererIter = 0;
 	ofSetFrameRate(60);
 	ofSetSphereResolution(32);
@@ -71,10 +72,15 @@ void Renderer::setup()
 		"shadersRender/blinn_phong_" + shader_version + "_fs.glsl");
 
 	// shader actif au lancement de la scène
-	shader_active = ShaderType::blinn_phong;
+	shader_active = ShaderType::none;
 
 	// initialisation de la scène
 	reset();
+}
+
+
+string Renderer::getShaderName() {
+	return shader_name;
 }
 
 void Renderer::reset()
@@ -108,12 +114,17 @@ void Renderer::update()
 	// passer les attributs uniformes au shader de sommets
 	switch (shader_active)
 	{
+	case ShaderType::none:
+		shader_name = "No render";
+		isActive = false;
+		break;
 	case ShaderType::color_fill:
 		shader_name = "Color Fill";
 		shader = &shader_color_fill;
 		shader->begin();
 		shader->setUniform3f("color", 1.0f, 1.0f, 0.0f);
 		shader->end();
+		isActive = true;
 		break;
 
 	case ShaderType::lambert:
@@ -123,6 +134,7 @@ void Renderer::update()
 		shader->setUniform3f("colorAmbient", 0.1f, 0.1f, 0.1f);
 		shader->setUniform3f("colorDiffuse", 0.6f, 0.6f, 0.6f);
 		shader->end();
+		isActive = true;
 		break;
 
 	case ShaderType::gouraud:
@@ -134,6 +146,7 @@ void Renderer::update()
 		shader->setUniform3f("colorSpecular", 1.0f, 1.0f, 0.0f);
 		shader->setUniform1f("brightness", oscillation);
 		shader->end();
+		isActive = true;
 		break;
 
 	case ShaderType::phong:
@@ -145,6 +158,7 @@ void Renderer::update()
 		shader->setUniform3f("colorSpecular", 1.0f, 1.0f, 0.0f);
 		shader->setUniform1f("brightness", oscillation);
 		shader->end();
+		isActive = true;
 		break;
 
 	case ShaderType::blinn_phong:
@@ -156,6 +170,7 @@ void Renderer::update()
 		shader->setUniform3f("colorSpecular", 1.0f, 1.0f, 0.0f);
 		shader->setUniform1f("brightness", oscillation);
 		shader->end();
+		isActive = true;
 		break;
 
 	default:
@@ -253,5 +268,5 @@ void Renderer::draw()
 }
 
 void Renderer::next() {
-	shader_active = (ShaderType)(((int)shader_active + 1) % 5);
+	shader_active = (ShaderType)(((int)shader_active + 1) % 6);
 }

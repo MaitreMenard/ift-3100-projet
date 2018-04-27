@@ -7,14 +7,15 @@
 #include "ofxAssimpModelLoader.h"
 
 // énumération des types de shader
-enum class ShaderType { color_fill, lambert, gouraud, phong, blinn_phong };
+enum class ShaderType { none, color_fill, lambert, gouraud, phong, blinn_phong };
 
 class Renderer
 {
 private:
 	int rendererIter;
 public:
-
+	string getShaderName();
+	bool isActive;
 	ShaderType shader_active;
 
 	ofShader shader_color_fill;
