@@ -4,7 +4,6 @@
 template<typename T>
 class Selector
 {
-//TODO: put all non public API methods protected/private
 public:
     void setup(std::string headerText, T noSelectionItem)
     {
@@ -13,13 +12,6 @@ public:
         setupPanel();
 
         selectedItem = noSelectionItem;
-    }
-
-    void setupPanel()
-    {
-        panel.setup();
-        panel.setName(headerText);
-        panel.setHeaderBackgroundColor(headerColor);
     }
 
     virtual void update()
@@ -50,12 +42,12 @@ public:
         buttonPressedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
     }
 
-    void addItem(T item)    //add another parameter std::string itemName
+    void addItem(T item, std::string itemName)
     {
         ofxButton *newButton = new ofxButton();
         itemButtons.insert(std::make_pair(item, newButton));
         newButton->setBackgroundColor(baseButtonColor);
-        panel.add(newButton->setup(ofParameter<string>(item->getName())));  //FIXME: getName might not work here -> make abstract method
+        panel.add(newButton->setup(ofParameter<string>(itemName)));
     }
 
     void setSelectedItem(T item)
@@ -90,6 +82,13 @@ protected:
 
     ofxPanel panel;
     std::map<T, ofxButton*> itemButtons;
+
+    void setupPanel()
+    {
+        panel.setup();
+        panel.setName(headerText);
+        panel.setHeaderBackgroundColor(headerColor);
+    }
 
 private:
     const ofColor headerColor = ofColor(24, 120, 24);

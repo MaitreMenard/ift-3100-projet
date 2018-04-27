@@ -2,20 +2,22 @@
 
 void ofApp::setup()
 {
-    scene.enableUndoRedo();
-    shiftIsPressed = false;
-    CtrlIsPressed = false;
-
     ofSetFrameRate(60);
     ofEnableDepthTest();
     ofDisableArbTex();
     ofEnableAlphaBlending();
+    ofSetVerticalSync(true);
+
+    lightIsActive = true;
+    GUIIsDisplayed = true;
+    shiftIsPressed = false;
+    CtrlIsPressed = false;
 
     setupCamera();
+    setupLight(lightIsActive);
     gridPlane.setup();
     scene.setup();
-
-    ofSetVerticalSync(true);
+    scene.enableUndoRedo();
 
     setupInspector();
 
@@ -29,8 +31,7 @@ void ofApp::setup()
     lightModeSelector.setup(LIGHTMODE_POINT);
     lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
-    light = new Light(lightText);
-    light->setLightMode(LIGHTMODE_POINT);
+    light = new Light(lightText, LIGHTMODE_POINT);
     /*light2 = new Light(lightText);
     light2->setLightMode(Spot);
     light3 = new Light(lightText);
@@ -41,11 +42,6 @@ void ofApp::setup()
     /*setupNewGameObject(light2);
     setupNewGameObject(light3);
     setupNewGameObject(light4);*/
-
-    lightIsActive = true;
-    setupLight(lightIsActive);
-
-    GUIIsDisplayed = true;
 }
 
 void ofApp::setupCamera()
@@ -111,6 +107,7 @@ void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
         {
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
+        //TODO: update lightModeSelector
     }
 }
 
@@ -185,7 +182,8 @@ void ofApp::onSelectedCurveAddControlPoint()
 
 void ofApp::onLightModeChange(int & newLightMode)
 {
-    ofLog() << newLightMode;
+    Light* light = (Light*)scene.getSelectedGameObject();
+    light->setLightMode((LightMode)newLightMode);
 }
 
 void ofApp::draw()
@@ -332,6 +330,7 @@ void ofApp::toggleGUIVisibility()
 
 void ofApp::keyPressed(int key)
 {
+    //TODO: fix undo/redo
     switch (key)
     {
     case -1: // CTRL_R + Z
@@ -458,15 +457,18 @@ void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
 
 void ofApp::setupNewGameObject(GameObject* gameObject)
 {
-    gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
-    gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);
+
+    gameObject->accept(gameObjectSelector);
+    gameObjectSelector.setSelectedItem(gameObject);
     inspector.update(scene);
     if (gameObject->is2D())
     {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
+
+    //TODO: update lightModeSelector
 }
 
 void ofApp::keyReleased(int key)

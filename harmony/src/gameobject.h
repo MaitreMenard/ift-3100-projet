@@ -55,7 +55,7 @@ public:
 
     ofQuaternion getRotation();
     ofVec3f getEulerAngles();
-    void setRotation(float x, float y, float z);
+    virtual void setRotation(float x, float y, float z);
     void rotate(float degrees, float x, float y, float z);
 
     ofVec3f getScale();

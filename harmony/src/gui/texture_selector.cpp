@@ -6,7 +6,7 @@ void TextureSelector::setup(TextureFactory& textureFactory)
 
     for (Texture* texture : textureFactory.getAllTextures())
     {
-        addItem(texture);
+        addItem(texture, texture->getName());
     }
 
     setSelectedItem(textureFactory.getEmptyTexture());

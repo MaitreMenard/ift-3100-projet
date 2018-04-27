@@ -6,10 +6,7 @@ void LightModeSelector::setup(enum LightMode defaultLightMode)
 
     for (int i = 0; i < 4; i++)
     {
-        ofxButton *newButton = new ofxButton();
-        itemButtons.insert(std::make_pair(i, newButton));
-        newButton->setBackgroundColor(baseButtonColor);
-        panel.add(newButton->setup(ofParameter<string>(lightModeLabels[i])));
+        addItem(i, lightModeLabels[i]);
     }
 
     setSelectedItem((int)defaultLightMode);

@@ -1,36 +1,25 @@
 #include "light.h"
 #include "gameobject_visitor.h"
 
-Light::Light(string name) : GameObject(name, nullptr)
+Light::Light(string name, LightMode lightMode) : GameObject(name, nullptr)
 {
     light = new ofLight();
-    boundingBox.set(0.2);
-    setLightMode(LIGHTMODE_SPOT);
+    boundingBox.set(boxSize);
+    setNewLightMode(lightMode);
 }
 
-void Light::setLightMode(size_t lightMode)
+void Light::setNewLightMode(LightMode lightMode)
 {
-    //TODO: Don't set if the same as current light mode
-    if (light != nullptr)
-    {
-        delete light;
-    }
-    light = new ofLight();
     if (lightMode == LIGHTMODE_POINT)
     {
         ofLog() << "Point light";
         light->setPointLight();
-        //light->setDiffuseColor(ofColor(255, 0, 0));
-        setPosition(ofVec3f(-5, 0, 0));
     }
     else if (lightMode == LIGHTMODE_SPOT)
     {
         ofLog() << "Spot light";
         light->setSpotlight();
-        //light->setDiffuseColor(ofColor(255, 100, 100));
-        setPosition(ofVec3f(0, 3, 0));
-        light->lookAt(ofVec3f(0, 0, 0));
-        light->setSpotlightCutOff(15);
+        light->setSpotlightCutOff(spotLightCutOff);
     }
     else if (lightMode == LIGHTMODE_AMBIENT)
     {
@@ -44,10 +33,34 @@ void Light::setLightMode(size_t lightMode)
         setPosition(ofVec3f(0, 0, 0));
         light->lookAt(ofVec3f(1, 1, 0));
     }
-    else
+    this->lightMode = lightMode;
+}
+
+void Light::setLightMode(LightMode lightMode)
+{
+    if (this->lightMode != lightMode)
     {
-        ofLog() << "Invalid light mode";
+        GameObject::setPosition(ofVec3f(0));
+        GameObject::setRotation(0, 0, 0);
+
+        resetLight(lightMode);
+
+        setNewLightMode(lightMode);
     }
+}
+
+void Light::resetLight(LightMode lightMode)
+{
+    ofColor oldDiffuseColor = light->getDiffuseColor();
+    ofColor oldSpecularColor = light->getSpecularColor();
+    ofColor oldAmbientColor = light->getAmbientColor();
+
+    delete light;
+    light = new ofLight();
+
+    light->setDiffuseColor(oldDiffuseColor);
+    light->setSpecularColor(oldSpecularColor);
+    light->setAmbientColor(oldAmbientColor);
 }
 
 ofColor Light::getDiffuseColor()
@@ -89,6 +102,17 @@ void Light::setPosition(ofVec3f position)
 {
     GameObject::setPosition(position);
     light->setPosition(position);
+}
+
+ofVec3f Light::getRotation()
+{
+    return light->getOrientationEuler();
+}
+
+void Light::setRotation(float x, float y, float z)
+{
+    GameObject::setRotation(x, y, z);
+    light->setOrientation(ofVec3f(x, y, z));
 }
 
 void Light::disable()

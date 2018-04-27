@@ -98,7 +98,7 @@ void GameObjectSelector::addControlPointButtonToPanel(ofxButton * button)
 
 void GameObjectSelector::visit(GameObject * gameObject)
 {
-    addItem(gameObject);
+    addItem(gameObject, gameObject->getName());
     gameObjectList.push_back(gameObject);
 }
 
