@@ -30,10 +30,13 @@ void Light::setNewLightMode(LightMode lightMode)
     {
         ofLog() << "Directional light";
         light->setDirectional();
-        setPosition(ofVec3f(0, 0, 0));
-        light->lookAt(ofVec3f(1, 1, 0));
     }
     this->lightMode = lightMode;
+}
+
+LightMode Light::getLightMode()
+{
+    return lightMode;
 }
 
 void Light::setLightMode(LightMode lightMode)
@@ -43,13 +46,13 @@ void Light::setLightMode(LightMode lightMode)
         GameObject::setPosition(ofVec3f(0));
         GameObject::setRotation(0, 0, 0);
 
-        resetLight(lightMode);
+        resetLight();
 
         setNewLightMode(lightMode);
     }
 }
 
-void Light::resetLight(LightMode lightMode)
+void Light::resetLight()
 {
     ofColor oldDiffuseColor = light->getDiffuseColor();
     ofColor oldSpecularColor = light->getSpecularColor();

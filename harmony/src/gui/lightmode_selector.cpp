@@ -13,3 +13,11 @@ void LightModeSelector::setup(enum LightMode defaultLightMode)
 
     panel.setPosition(2, ofGetHeight() - panel.getHeight() - 2);
 }
+
+void LightModeSelector::visit(GameObject * gameObject)
+{}
+
+void LightModeSelector::visit(Light * light)
+{
+    setSelectedItem((int)light->getLightMode());
+}

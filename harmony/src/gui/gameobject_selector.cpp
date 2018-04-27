@@ -117,21 +117,6 @@ void GameObjectSelector::visit(BezierCurve * bezierCurve)
     visit((Curve*)bezierCurve);
 }
 
-void GameObjectSelector::visit(ControlPoint * controlPoint)
-{
-    visit((GameObject*)controlPoint);
-}
-
-void GameObjectSelector::visit(Model3D * model3D)
-{
-    visit((GameObject*)model3D);
-}
-
-void GameObjectSelector::visit(Light * light)
-{
-    visit((GameObject*)light);
-}
-
 GameObjectSelector::~GameObjectSelector()
 {
     for (const auto& pair : controlPointsButtons)

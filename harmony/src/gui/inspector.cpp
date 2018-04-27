@@ -57,11 +57,6 @@ void Inspector::visit(GameObject * gameObject)
     colorPicker.setColor(gameObject->getColor());
 }
 
-void Inspector::visit(Curve * curve)
-{
-    visit((GameObject*)curve);
-}
-
 void Inspector::visit(BezierCurve * bezierCurve)
 {
     visit((GameObject*)bezierCurve);

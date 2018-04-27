@@ -19,7 +19,9 @@ public:
     ofColor getColor();
     void setColor(ofColor color);
 
+    LightMode getLightMode();
     void setLightMode(LightMode lightMode);
+
     ofColor getDiffuseColor();
     void setDiffuseColor(ofColor diffuseColor);
     ofColor getSpecularColor();
@@ -48,5 +50,5 @@ private:
     LightMode lightMode;
 
     void setNewLightMode(LightMode lightMode);
-    void resetLight(LightMode lightMode);
+    void resetLight();
 };

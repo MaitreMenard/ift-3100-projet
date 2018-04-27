@@ -1,8 +1,9 @@
 #pragma once
 #include "ofMain.h"
 #include "selector.h"
-#include "light.h"
 #include "gameobject_visitor.h"
+#include "gameobject.h"
+#include "gameobjects/light.h"
 
 class LightModeSelector : public Selector<int>, public GameObjectVisitor
 {
@@ -10,10 +11,6 @@ public:
     void setup(enum LightMode defaultLightMode);
 
     void visit(GameObject* gameObject);
-    void visit(Curve* curve);
-    void visit(BezierCurve* bezierCurve);
-    void visit(ControlPoint* controlPoint);
-    void visit(Model3D* model3D);
     void visit(Light* light);
 
 private:

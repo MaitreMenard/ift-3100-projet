@@ -107,7 +107,7 @@ void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
         {
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
-        //TODO: update lightModeSelector
+        selectedGameObject->accept(lightModeSelector);
     }
 }
 
@@ -467,8 +467,7 @@ void ofApp::setupNewGameObject(GameObject* gameObject)
     {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
-
-    //TODO: update lightModeSelector
+    gameObject->accept(lightModeSelector);
 }
 
 void ofApp::keyReleased(int key)

@@ -53,7 +53,7 @@ public:
     GameObject* getSelectedGameObject();
     size_t getGameObjectID(GameObject* gameObject);
     void setSelectedGameObject(GameObject* gameObject);
-    Texture* getSelectedGameObjectTexture();
+    Texture* getSelectedGameObjectTexture();    //FIXME: might be useless
     void setSelectedGameObjectTexture(Texture* texture);
 
     size_t getSelectedGameObjectParentID();

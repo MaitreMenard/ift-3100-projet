@@ -2,7 +2,6 @@
 #include "ofxGui.h"
 #include "scene.h"
 #include "gameobject_visitor.h"
-#include "gameobjects/curve.h"
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/model3D.h"
 #include "gameobjects/light.h"
@@ -29,7 +28,6 @@ public:
     void draw();
 
     void visit(GameObject* gameObject);
-    void visit(Curve* curve);
     void visit(BezierCurve* bezierCurve);
     void visit(ControlPoint* controlPoint);
     void visit(Model3D* model3D);
