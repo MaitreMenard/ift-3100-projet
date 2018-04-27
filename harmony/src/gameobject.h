@@ -76,8 +76,10 @@ public:
     void setTexture(Texture* texture);
 
     bool is2D();
+	virtual bool isWithNormalMap();
+	ofVec3f lightPosition;
 
-    virtual void accept(GameObjectVisitor& visitor);
+	virtual void accept(GameObjectVisitor& visitor);
 
     virtual ~GameObject();
 };

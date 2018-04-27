@@ -37,7 +37,6 @@ Arrow::Arrow(std::string name, Texture* texture) : GameObject(name, texture)
     gameObjectIs2D = true;
     boundingBox.set(1, 1, 0.01f);
 
-
 	vector< ofMeshFace > faces = model.getUniqueFaces();
 
 	for (int i = 0; i < faces.size(); i++) {

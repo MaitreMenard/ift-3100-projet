@@ -88,15 +88,31 @@ void Scene::draw()
 	shaderRenderer.shader->begin();
     for (GameObject* gameObject : gameObjects)
     {
-        if (gameObject->getParentGameObject() == nullptr)
+        if (gameObject->getParentGameObject() == nullptr && !gameObject->isWithNormalMap())
         {
 			ofPushMatrix();
 			shaderRenderer.shader->setUniform3f("lightPosition", shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW));
-            gameObject->draw();
+			gameObject->draw();
 			ofPopMatrix();
         }
     }
 	shaderRenderer.shader->end();
+	shaderRenderer.light.disable();
+	ofDisableLighting();
+
+
+	ofEnableLighting();
+	shaderRenderer.light.enable();
+	for (GameObject* gameObject : gameObjects)
+	{
+		if (gameObject->getParentGameObject() == nullptr && gameObject->isWithNormalMap())
+		{
+			ofPushMatrix();
+			gameObject->lightPosition = shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW);
+			gameObject->draw();
+			ofPopMatrix();
+		}
+	}
 	shaderRenderer.light.disable();
 	ofDisableLighting();
 }

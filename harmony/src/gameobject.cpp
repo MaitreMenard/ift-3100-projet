@@ -250,6 +250,10 @@ bool GameObject::is2D()
     return gameObjectIs2D;
 }
 
+bool GameObject::isWithNormalMap() {
+	return false;
+}
+
 void GameObject::accept(GameObjectVisitor& visitor)
 {
     visitor.visit(this);
