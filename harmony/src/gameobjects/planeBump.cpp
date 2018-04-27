@@ -26,7 +26,7 @@ planeBump::planeBump(string pName) : GameObject(pName, nullptr)
 	plane.set(1.0, 1.0, planeColumns, planeRows, OF_PRIMITIVE_TRIANGLES);
 	plane.mapTexCoords(0, 0, 1.0, 1.0);
 
-	boundingBox.set(1, 1, 0.01f);
+	boundingBox.set(1, 1, 0.1f);
 }
 
 void planeBump::draw()
