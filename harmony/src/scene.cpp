@@ -17,6 +17,22 @@ Scene::Scene(const Scene& other)
 
 void Scene::setup()
 {
+	// Shader Renderer
+	ofLog() << "<app::setup>";
+
+	if (ofIsGLProgrammableRenderer())
+	{
+		shaderRenderer.gl_version_major = 3;
+		shaderRenderer.gl_version_minor = 3;
+	}
+	else
+	{
+		shaderRenderer.gl_version_major = 2;
+		shaderRenderer.gl_version_minor = 1;
+	}
+
+	shaderRenderer.setup();
+
     for (GameObject* gameObject : gameObjects)
     {
         gameObject->setup();
@@ -25,6 +41,7 @@ void Scene::setup()
 
 void Scene::update()
 {
+	shaderRenderer.update();
     for (GameObject* gameObject : gameObjects)
     {
         gameObject->update();
@@ -66,13 +83,22 @@ void Scene::setColorSelectedGameObject(ofColor color)
 
 void Scene::draw()
 {
+	ofEnableLighting();
+	shaderRenderer.light.enable();
+	shaderRenderer.shader->begin();
     for (GameObject* gameObject : gameObjects)
     {
         if (gameObject->getParentGameObject() == nullptr)
         {
+			ofPushMatrix();
+			shaderRenderer.shader->setUniform3f("lightPosition", shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW));
             gameObject->draw();
+			ofPopMatrix();
         }
     }
+	shaderRenderer.shader->end();
+	shaderRenderer.light.disable();
+	ofDisableLighting();
 }
 
 void Scene::addGameObject(GameObject* gameObject)

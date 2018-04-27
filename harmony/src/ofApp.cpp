@@ -2,7 +2,7 @@
 
 void ofApp::setup()
 {
-	renderer.setup();
+	fboRender.setup();
 	fbo.allocate(ofGetWidth(), ofGetHeight());
 
     scene.enableUndoRedo();
@@ -176,7 +176,8 @@ void ofApp::draw()
 
         ofPushMatrix();
         camera.begin();
-        if (camera.getOrtho())
+
+		if (camera.getOrtho())
         {
             ofScale(ofVec3f(100));
         }
@@ -192,11 +193,12 @@ void ofApp::draw()
         {
             light->disable();
         }
+
         camera.end();
         ofPopMatrix();
 
 		fbo.end();
-		renderer.apply(&fbo);
+		fboRender.apply(&fbo);
 		fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
         if (GUIIsDisplayed)
@@ -401,7 +403,10 @@ void ofApp::keyPressed(int key)
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
         break;
 	case 'e':
-		renderer.next();
+		fboRender.next();
+		break;
+	case 'q':
+		scene.shaderRenderer.next();
 		break;
     default:
         break;

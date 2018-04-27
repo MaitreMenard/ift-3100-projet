@@ -12,13 +12,13 @@
 #include "gameobjectFactory.h"
 #include "fboRenderer.h"
 #include "gameobjectFactory.h"
-
+#include "renderer.h"
 
 class ofApp : public ofBaseApp
 {
 private:
 	ofFbo fbo;
-	fboRenderer renderer;
+	fboRenderer fboRender;
 
     bool shiftIsPressed;
     bool CtrlIsPressed;
