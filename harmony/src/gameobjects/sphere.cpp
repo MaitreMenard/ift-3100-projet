@@ -10,7 +10,7 @@ Sphere::Sphere(std::string name, Texture* texture) : GameObject(name, texture)
     model = spherePrimitive.getMesh();
     nbVertex = model.getVertices().size();
 
-    hasMaterial = true;
+    _hasMaterial = true;
 
     /*setMaterialDiffuseColor(ofColor(20, 244, 3));
     setMaterialShininess(100);

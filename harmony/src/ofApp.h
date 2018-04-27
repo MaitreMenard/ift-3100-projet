@@ -65,6 +65,7 @@ private:
     void onSelectedGameObjectDiffuseColorChange(ofColor& diffuseColor);
     void onSelectedGameObjectSpecularColorChange(ofColor& specularColor);
     void onSelectedGameObjectAmbientColorChange(ofColor& ambientColor);
+    void onSelectedGameObjectShininessChange(int& shininess);
     void onParentChange(int& newParentID);
     void onSelectedCurveAddControlPoint();
     void onLightModeChange(int& newLightMode);

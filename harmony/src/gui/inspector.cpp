@@ -16,7 +16,10 @@ void Inspector::setup()
     parentField.setup(0, 0);
 
     addControlPointButton.setup(addControlPointButtonText);
-    addControlPointButton.setBackgroundColor(addControlPointButtonColor);
+    addControlPointButton.setBackgroundColor(labelColor);
+
+    shininessField.setup(shininessFieldText, 0.2, 0, 128);
+    shininessField.setBackgroundColor(labelColor);
 }
 
 void Inspector::setupPanel()
@@ -46,15 +49,37 @@ void Inspector::draw()
 void Inspector::visit(GameObject * gameObject)
 {
     panel.add(&positionFields);
-    panel.add(&rotation);
-    panel.add(&scaleFields);
-    panel.add(&colorPicker);
-    panel.add(&parentField);
-
     positionFields = gameObject->getPosition();
+
+    panel.add(&rotation);
     rotation = gameObject->getEulerAngles();
+
+    panel.add(&scaleFields);
     scaleFields = gameObject->getScale();
+
+    panel.add(&colorPicker);
     colorPicker.setColor(gameObject->getColor());
+    colorPicker.minimize();
+
+    if (gameObject->hasMaterial())
+    {
+        panel.add(&diffuseColorpicker);
+        diffuseColorpicker.setColor(gameObject->getDiffuseColor());
+        diffuseColorpicker.minimize();
+
+        panel.add(&specularColorPicker);
+        specularColorPicker.setColor(gameObject->getSpecularColor());
+        specularColorPicker.minimize();
+
+        panel.add(&ambientColorPicker);
+        ambientColorPicker.setColor(gameObject->getAmbientColor());
+        ambientColorPicker.minimize();
+
+        panel.add(&shininessField);
+        shininessField = gameObject->getShininess();
+    }
+
+    panel.add(&parentField);
 }
 
 void Inspector::visit(BezierCurve * bezierCurve)

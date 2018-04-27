@@ -13,6 +13,7 @@ GameObject::GameObject(std::string name, Texture* texture)
 
     isSelected = false;
     gameObjectIs2D = false;
+    _hasMaterial = false;
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -68,14 +69,14 @@ void GameObject::drawChildren()
 
 void GameObject::drawTextureAndMaterial()
 {
-    if (hasMaterial)
+    if (_hasMaterial)
     {
         material.begin();
     }
     texture->bind();
     model.draw();
     texture->unbind();
-    if (hasMaterial)
+    if (_hasMaterial)
     {
         material.end();
     }
@@ -88,6 +89,7 @@ float GameObject::getShininess()
 
 void GameObject::setShininess(float shininess)
 {
+    ofLog() << shininess;
     material.setShininess(shininess);
 }
 
@@ -296,6 +298,11 @@ Texture* GameObject::getTexture()
 bool GameObject::is2D()
 {
     return gameObjectIs2D;
+}
+
+bool GameObject::hasMaterial()
+{
+    return _hasMaterial;
 }
 
 void GameObject::accept(GameObjectVisitor& visitor)

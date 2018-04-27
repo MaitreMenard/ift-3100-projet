@@ -22,6 +22,7 @@ public:
     ColorPicker ambientColorPicker;
     ParentIntField parentField;
     ofxButton addControlPointButton;
+    ofxIntField shininessField;
 
     void setup();
     void update(Scene& scene);
@@ -50,8 +51,9 @@ private:
     const string specularColorPickerText = "Specular Color:";
     const string ambientColorPickerText = "Ambient Color:";
     const string addControlPointButtonText = "Add Control Point";
+    const string shininessFieldText = "Shininess: ";
     const ofColor headerColor = ofColor(24, 120, 24);
-    const ofColor addControlPointButtonColor = ofColor(48, 48, 72);
+    const ofColor labelColor = ofColor(48, 48, 72);
 
     ofxPanel panel;
 

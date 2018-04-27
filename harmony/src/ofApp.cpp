@@ -32,16 +32,7 @@ void ofApp::setup()
     lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
     light = new Light(lightText, LIGHTMODE_POINT);
-    /*light2 = new Light(lightText);
-    light2->setLightMode(Spot);
-    light3 = new Light(lightText);
-    light3->setLightMode(Directional);
-    light4 = new Light(lightText);
-    light4->setLightMode(Point);*/
     setupNewGameObject(light);
-    /*setupNewGameObject(light2);
-    setupNewGameObject(light3);
-    setupNewGameObject(light4);*/
 }
 
 void ofApp::setupCamera()
@@ -64,6 +55,7 @@ void ofApp::setupInspector()
     inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
     inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
     inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
+    inspector.shininessField.addListener(this, &ofApp::onSelectedGameObjectShininessChange);
     inspector.parentField.addListener(this, &ofApp::onParentChange);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
@@ -158,6 +150,11 @@ void ofApp::onSelectedGameObjectSpecularColorChange(ofColor & specularColor)
 void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
 {
     scene.getSelectedGameObject()->setAmbientColor(ambientColor);
+}
+
+void ofApp::onSelectedGameObjectShininessChange(int & shininess)
+{
+    scene.getSelectedGameObject()->setShininess(shininess);
 }
 
 void ofApp::onParentChange(int & newParentButtonID)
