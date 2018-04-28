@@ -11,9 +11,4 @@ Sphere::Sphere(std::string name, Texture* texture) : GameObject(name, texture)
     nbVertex = model.getVertices().size();
 
     _hasMaterial = true;
-
-    /*setMaterialDiffuseColor(ofColor(20, 244, 3));
-    setMaterialShininess(100);
-    setMaterialAmbientColor(ofColor(20, 3, 244));
-    setMaterialSpecularColor(ofColor(255, 140, 0));*/
 }

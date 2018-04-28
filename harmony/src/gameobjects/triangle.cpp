@@ -17,6 +17,7 @@ Triangle::Triangle(std::string name, Texture* texture) : GameObject(name, textur
     model.addIndex(2);
 
     gameObjectIs2D = true;
+    _hasMaterial = true;
 
     boundingBox.set(1, 1, 0.01f);
 }

@@ -63,5 +63,7 @@ Star::Star(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(3);
 
     gameObjectIs2D = true;
+    _hasMaterial = true;
+
     boundingBox.set(1, 1, 0.01f);
 }
