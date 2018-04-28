@@ -272,6 +272,9 @@ void ofApp::drawGUI()
 
 void ofApp::createPortal(size_t portalId)
 {
+	ofFbo bufferFbo;
+	bufferFbo.allocate(ofGetWidth(), ofGetHeight());
+	bufferFbo.begin();
     if (portalId == 1)
     {
         currentlyDrawingPortal1 = false;
@@ -296,7 +299,12 @@ void ofApp::createPortal(size_t portalId)
         light->disable();
     }
     cameraPortal.end();
-    addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
+	bufferFbo.end();
+	ofPixels *pixels = new ofPixels();
+	pixels->allocate(ofGetWidth(), ofGetHeight(), OF_PIXELS_RGBA);
+	bufferFbo.getTexture().readToPixels(*pixels);
+    //addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
+	addNewGameObject(Shape_Portal, new Texture("portal", *pixels));
     scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
 }
 
