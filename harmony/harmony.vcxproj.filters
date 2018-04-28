@@ -157,6 +157,9 @@
     <ClCompile Include="src\gameobjects\planeRelief.cpp">
       <Filter>src\gameobjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\ReliefMaterial.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -481,6 +484,9 @@
     </ClInclude>
     <ClInclude Include="src\gameobjects\planeRelief.h">
       <Filter>src\gameobjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ReliefMaterial.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
