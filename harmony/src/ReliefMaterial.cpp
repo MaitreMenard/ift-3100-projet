@@ -29,7 +29,16 @@ ReliefMaterial::Data::Data()
 }
 
 ReliefMaterial::ReliefMaterial()
-{}
+{
+	if (!colorMap.load("img/6903-diffuse.jpg"))
+		cout << "color map failed" << endl;
+
+	if (!bumpMap.load("img/6903-bump.jpg"))
+		cout << "bump map failed" << endl;
+
+	if (!normalMap.load("img/6903-normal.jpg"))
+		cout << "bump map failed" << endl;
+}
 
 void ReliefMaterial::setColors(ofFloatColor oDiffuse, ofFloatColor oAmbient, ofFloatColor oSpecular, ofFloatColor oEmissive)
 {
@@ -176,6 +185,10 @@ void ReliefMaterial::updateMaterial(const ofShader & shader, ofGLProgrammableRen
 
 void ReliefMaterial::updateLights(const ofShader & shader, ofGLProgrammableRenderer & renderer) const
 {
+	shader.setUniformTexture("texColor", colorMap.getTextureReference(), 0);
+	shader.setUniformTexture("texBumpMap", bumpMap.getTextureReference(), 1);
+	shader.setUniformTexture("texNormalMap", normalMap.getTextureReference(), 2);
+	shader.setUniform1f("maxHeight", 0.05);
     for (size_t i = 0; i<ofLightsData().size(); i++)
     {
         string idx = ofToString(i);
@@ -251,15 +264,24 @@ static const string vertexShader = R"(
 	uniform mat4 modelViewProjectionMatrix;
 	uniform mat4 normalMatrix;
 
+	uniform sampler2D texColor;
+	uniform sampler2D texNormalMap;
+	uniform sampler2D texBumpMap;
+	uniform float maxHeight;
 
 	void main (void){
 		vec4 eyePosition = modelViewMatrix * position;
 		vec3 tempNormal = (normalMatrix * normal).xyz;
-		transformedNormal = normalize(tempNormal);
+		transformedNormal = normalize(tempNormal) + texture(texNormalMap, texcoord).rgb;
 		eyePosition3 = (eyePosition.xyz) / eyePosition.w;
 
 		outtexcoord = (textureMatrix*vec4(texcoord.x,texcoord.y,0,1)).xy;
-		gl_Position = modelViewProjectionMatrix * position;
+
+		vec4 bumpColor = texture(texBumpMap, texcoord);
+		float df = 0.30 * bumpColor.r + 0.59 * bumpColor.g + 0.11 * bumpColor.b;
+		vec4 newVertexPos = vec4(normal.xyz * df * float(maxHeight), 0.0) + position - vec4(normal.xyz * float(maxHeight), 0.0);
+		
+		gl_Position = modelViewProjectionMatrix * newVertexPos;
 	}
 )";
 
@@ -270,6 +292,10 @@ static const string fragmentShader = R"(
 	// Eye-coordinate position of vertex
 	IN vec3 eyePosition3;
 
+	uniform sampler2D texColor;
+	uniform sampler2D texNormalMap;
+	uniform sampler2D texBumpMap;
+	uniform float maxHeight;
 
 	struct lightData
 	{
@@ -494,12 +520,12 @@ static const string fragmentShader = R"(
 
 		////////////////////////////////////////////////////////////
 		// now add the material info
-		#ifdef HAS_TEXTURE
-			vec4 tex = TEXTURE(tex0, outtexcoord);
+		//#ifdef HAS_TEXTURE
+			vec4 tex = texture(texColor, outtexcoord);
 			vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * tex + vec4(specular,1.0) * mat_specular + mat_emissive;
-		#else
-			vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * mat_diffuse + vec4(specular,1.0) * mat_specular + mat_emissive;
-		#endif
+		//#else
+		//	vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * mat_diffuse + vec4(specular,1.0) * mat_specular + mat_emissive;
+		//#endif
 		FRAG_COLOR = clamp( localColor, 0.0, 1.0 );
 	}
 )";

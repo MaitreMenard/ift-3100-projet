@@ -2,6 +2,7 @@
 #include "ofColor.h"
 #include "ofShader.h"
 #include "ofBaseTypes.h"
+#include "ofMain.h"
 
 /**
 * Copied from ofMaterial.h
@@ -73,4 +74,8 @@ private:
     static size_t shaderLights;
     static string vertexShader;
     static string fragmentShader;
+
+	ofImage colorMap;
+	ofImage bumpMap;
+	ofImage normalMap;
 };
