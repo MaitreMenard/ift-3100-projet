@@ -210,16 +210,16 @@ void ofApp::draw()
         ofClear(200);
 
         ofPushMatrix();
+		enableAllLights();
         camera.begin();
         if (camera.getOrtho())
         {
             ofScale(ofVec3f(100));
         }
-        enableAllLights();
         scene.draw();
         gridPlane.draw();   //TODO: consider as GUI element
-        disableAllLights();
         camera.end();
+		disableAllLights();
         ofPopMatrix();
 
         fbo.end();
