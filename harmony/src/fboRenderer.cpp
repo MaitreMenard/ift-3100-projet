@@ -30,7 +30,6 @@ void FboRenderer::setup()
     shaderEdge.load("shaders/edgesobel");
     shaderGray.load("shaders/gray");
     shaderMult.load("shaders/multiple");
-    shaderEdgeLayer.load("shaders/edgewidth");
 
     // setup fbo allocation
     fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
