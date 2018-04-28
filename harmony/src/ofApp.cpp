@@ -2,20 +2,22 @@
 
 void ofApp::setup()
 {
-    scene.enableUndoRedo();
-    shiftIsPressed = false;
-    CtrlIsPressed = false;
-
     ofSetFrameRate(60);
     ofEnableDepthTest();
     ofDisableArbTex();
     ofEnableAlphaBlending();
+    ofSetVerticalSync(true);
+
+    lightIsActive = true;
+    GUIIsDisplayed = true;
+    shiftIsPressed = false;
+    CtrlIsPressed = false;
 
     setupCamera();
+    setupLight(lightIsActive);
     gridPlane.setup();
     scene.setup();
-
-    ofSetVerticalSync(true);
+    scene.enableUndoRedo();
 
     setupInspector();
 
@@ -29,23 +31,8 @@ void ofApp::setup()
     lightModeSelector.setup(LIGHTMODE_POINT);
     lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
-    light = new Light(lightText);
-    light->setLightMode(LIGHTMODE_POINT);
-    /*light2 = new Light(lightText);
-    light2->setLightMode(Spot);
-    light3 = new Light(lightText);
-    light3->setLightMode(Directional);
-    light4 = new Light(lightText);
-    light4->setLightMode(Point);*/
+    light = new Light(lightText, LIGHTMODE_POINT);
     setupNewGameObject(light);
-    /*setupNewGameObject(light2);
-    setupNewGameObject(light3);
-    setupNewGameObject(light4);*/
-
-    lightIsActive = true;
-    setupLight(lightIsActive);
-
-    GUIIsDisplayed = true;
 }
 
 void ofApp::setupCamera()
@@ -68,6 +55,7 @@ void ofApp::setupInspector()
     inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
     inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
     inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
+    inspector.shininessField.addListener(this, &ofApp::onSelectedGameObjectShininessChange);
     inspector.parentField.addListener(this, &ofApp::onParentChange);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
@@ -111,6 +99,7 @@ void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
         {
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
+        selectedGameObject->accept(lightModeSelector);
     }
 }
 
@@ -163,6 +152,11 @@ void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
     scene.getSelectedGameObject()->setAmbientColor(ambientColor);
 }
 
+void ofApp::onSelectedGameObjectShininessChange(int & shininess)
+{
+    scene.getSelectedGameObject()->setShininess(shininess);
+}
+
 void ofApp::onParentChange(int & newParentButtonID)
 {
     if (newParentButtonID == 0)
@@ -185,7 +179,9 @@ void ofApp::onSelectedCurveAddControlPoint()
 
 void ofApp::onLightModeChange(int & newLightMode)
 {
-    ofLog() << newLightMode;
+    Light* light = (Light*)scene.getSelectedGameObject();
+    light->setLightMode((LightMode)newLightMode);
+    inspector.update(scene);
 }
 
 void ofApp::draw()
@@ -332,6 +328,7 @@ void ofApp::toggleGUIVisibility()
 
 void ofApp::keyPressed(int key)
 {
+    //TODO: fix undo/redo
     switch (key)
     {
     case -1: // CTRL_R + Z
@@ -458,15 +455,17 @@ void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
 
 void ofApp::setupNewGameObject(GameObject* gameObject)
 {
-    gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
-    gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);
+
+    gameObject->accept(gameObjectSelector);
+    gameObjectSelector.setSelectedItem(gameObject);
     inspector.update(scene);
     if (gameObject->is2D())
     {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
+    gameObject->accept(lightModeSelector);
 }
 
 void ofApp::keyReleased(int key)

@@ -2,7 +2,6 @@
 #include "ofxGui.h"
 #include "scene.h"
 #include "gameobject_visitor.h"
-#include "gameobjects/curve.h"
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/model3D.h"
 #include "gameobjects/light.h"
@@ -23,13 +22,13 @@ public:
     ColorPicker ambientColorPicker;
     ParentIntField parentField;
     ofxButton addControlPointButton;
+    ofxIntField shininessField;
 
     void setup();
     void update(Scene& scene);
     void draw();
 
     void visit(GameObject* gameObject);
-    void visit(Curve* curve);
     void visit(BezierCurve* bezierCurve);
     void visit(ControlPoint* controlPoint);
     void visit(Model3D* model3D);
@@ -52,8 +51,9 @@ private:
     const string specularColorPickerText = "Specular Color:";
     const string ambientColorPickerText = "Ambient Color:";
     const string addControlPointButtonText = "Add Control Point";
+    const string shininessFieldText = "Shininess: ";
     const ofColor headerColor = ofColor(24, 120, 24);
-    const ofColor addControlPointButtonColor = ofColor(48, 48, 72);
+    const ofColor labelColor = ofColor(48, 48, 72);
 
     ofxPanel panel;
 

@@ -180,6 +180,7 @@
     <ClCompile Include="src\gameobjects\hermite_curve.cpp" />
     <ClCompile Include="src\gameobjects\mirror.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
+    <ClCompile Include="src\gameobject_visitor.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />

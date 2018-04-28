@@ -35,6 +35,7 @@ Arrow::Arrow(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(6);
 
     gameObjectIs2D = true;
-	hasMaterial = true;
+    _hasMaterial = true;
+
     boundingBox.set(1, 1, 0.01f);
 }

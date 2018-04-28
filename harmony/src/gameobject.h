@@ -17,7 +17,6 @@ protected:
     Texture* texture;
     Transform transform;
     ofMaterial material;
-    bool hasMaterial = false;
     std::vector<GameObject*> children;
     ofMesh model;
     GameObject* parentGameObject;
@@ -25,9 +24,11 @@ protected:
     size_t nbVertex;
     bool isSelected;
     bool gameObjectIs2D;
+    bool _hasMaterial;
 
     void drawChildren();
     virtual void drawBoundingBox();
+    virtual void drawTextureAndMaterial();
 
 public:
     GameObject(std::string name, Texture* texture);
@@ -36,7 +37,6 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-    virtual void drawTextureAndMaterial();
 
     float getShininess();
     void setShininess(float shininess);
@@ -55,13 +55,14 @@ public:
 
     ofQuaternion getRotation();
     ofVec3f getEulerAngles();
-    void setRotation(float x, float y, float z);
+    virtual void setRotation(float x, float y, float z);
     void rotate(float degrees, float x, float y, float z);
 
     ofVec3f getScale();
     void setScale(ofVec3f scale);
     void reScale(float x, float y, float z);
 
+    //TODO: setColor doesn't seem to work well with materials
     virtual ofColor getColor();
     virtual void setColor(ofColor color);
 
@@ -87,6 +88,7 @@ public:
     void setTexture(Texture* texture);
 
     bool is2D();
+    bool hasMaterial();
 
     virtual void accept(GameObjectVisitor& visitor);
 

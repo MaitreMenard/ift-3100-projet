@@ -16,7 +16,10 @@ void Inspector::setup()
     parentField.setup(0, 0);
 
     addControlPointButton.setup(addControlPointButtonText);
-    addControlPointButton.setBackgroundColor(addControlPointButtonColor);
+    addControlPointButton.setBackgroundColor(labelColor);
+
+    shininessField.setup(shininessFieldText, 0.2, 0, 128);
+    shininessField.setBackgroundColor(labelColor);
 }
 
 void Inspector::setupPanel()
@@ -46,20 +49,37 @@ void Inspector::draw()
 void Inspector::visit(GameObject * gameObject)
 {
     panel.add(&positionFields);
-    panel.add(&rotation);
-    panel.add(&scaleFields);
-    panel.add(&colorPicker);
-    panel.add(&parentField);
-
     positionFields = gameObject->getPosition();
-    rotation = gameObject->getEulerAngles();
-    scaleFields = gameObject->getScale();
-    colorPicker.setColor(gameObject->getColor());
-}
 
-void Inspector::visit(Curve * curve)
-{
-    visit((GameObject*)curve);
+    panel.add(&rotation);
+    rotation = gameObject->getEulerAngles();
+
+    panel.add(&scaleFields);
+    scaleFields = gameObject->getScale();
+
+    panel.add(&colorPicker);
+    colorPicker.setColor(gameObject->getColor());
+    colorPicker.minimize();
+
+    if (gameObject->hasMaterial())
+    {
+        panel.add(&diffuseColorpicker);
+        diffuseColorpicker.setColor(gameObject->getDiffuseColor());
+        diffuseColorpicker.minimize();
+
+        panel.add(&specularColorPicker);
+        specularColorPicker.setColor(gameObject->getSpecularColor());
+        specularColorPicker.minimize();
+
+        panel.add(&ambientColorPicker);
+        ambientColorPicker.setColor(gameObject->getAmbientColor());
+        ambientColorPicker.minimize();
+
+        panel.add(&shininessField);
+        shininessField = gameObject->getShininess();
+    }
+
+    panel.add(&parentField);
 }
 
 void Inspector::visit(BezierCurve * bezierCurve)
@@ -88,17 +108,29 @@ void Inspector::visit(Model3D * model3D)
 
 void Inspector::visit(Light * light)
 {
-    panel.add(&positionFields);
-    panel.add(&rotation);
-    panel.add(&diffuseColorpicker);
-    panel.add(&specularColorPicker);
-    panel.add(&ambientColorPicker);
+    LightMode lightMode = light->getLightMode();
+    if (lightMode == LIGHTMODE_POINT || lightMode == LIGHTMODE_SPOT)
+    {
+        panel.add(&positionFields);
+        positionFields = light->getPosition();
+    }
+    if (lightMode == LIGHTMODE_SPOT || lightMode == LIGHTMODE_DIRECTIONAL)
+    {
+        panel.add(&rotation);
+        rotation = light->getRotation();
+    }
+    if (lightMode != LIGHTMODE_AMBIENT)
+    {
+        panel.add(&diffuseColorpicker);
+        diffuseColorpicker.setColor(light->getDiffuseColor());
+        diffuseColorpicker.minimize();
 
-    positionFields = light->getPosition();
-    diffuseColorpicker.setColor(light->getDiffuseColor());
-    diffuseColorpicker.minimize();
-    specularColorPicker.setColor(light->getSpecularColor());
-    specularColorPicker.minimize();
+        panel.add(&specularColorPicker);
+        specularColorPicker.setColor(light->getSpecularColor());
+        specularColorPicker.minimize();
+    }
+
+    panel.add(&ambientColorPicker);
     ambientColorPicker.setColor(light->getAmbientColor());
     ambientColorPicker.minimize();
 }

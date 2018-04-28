@@ -63,7 +63,6 @@ Cube::Cube(std::string name, Texture* texture) : GameObject(name, texture)
     model.addIndex(4);
     model.addIndex(5);
 
-    hasMaterial = true;
 	vector< ofMeshFace > faces = model.getUniqueFaces();
 
 	for (int i = 0; i < faces.size(); i++) {
@@ -75,6 +74,7 @@ Cube::Cube(std::string name, Texture* texture) : GameObject(name, texture)
 	model.setFromTriangles(faces);
 	model.smoothNormals(60);
 
+    _hasMaterial = true;
 }
 
 void Cube::setColor(ofColor color)

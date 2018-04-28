@@ -10,7 +10,7 @@ Polygone::Polygone(std::string name, Texture* texture, size_t nbVertex) : GameOb
     }
 
     gameObjectIs2D = true;
-	hasMaterial = true;
+    _hasMaterial = true;
 
     boundingBox.set(1, 1, 0.01f);
 }

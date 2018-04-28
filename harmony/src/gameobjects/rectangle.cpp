@@ -23,7 +23,7 @@ Rektangle::Rektangle(std::string name, Texture* texture) : GameObject(name, text
     model.addIndex(1);
 
     gameObjectIs2D = true;
-	hasMaterial = true;
+    _hasMaterial = true;
 
     boundingBox.set(1, 1, 0.01f);
 }
