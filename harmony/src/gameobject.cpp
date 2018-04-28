@@ -73,9 +73,15 @@ void GameObject::drawTextureAndMaterial()
     {
         material.begin();
     }
-    texture->bind();
+    if (texture != nullptr)
+    {
+        texture->bind();
+    }
     model.draw();
-    texture->unbind();
+    if (texture != nullptr)
+    {
+        texture->unbind();
+    }
     if (_hasMaterial)
     {
         material.end();

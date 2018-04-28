@@ -20,7 +20,6 @@ private:
     bool shiftIsPressed;
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
-
     bool lightIsActive;
 
     const string lightText = "Light";
@@ -31,11 +30,7 @@ private:
     ofFbo fbo;
     FboRenderer fboRender;
 
-    Light* light;
-    Light* light2;
-    Light* light3;
-    Light* light4;
-
+    std::vector<Light*> lights;
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
     ofCamera cameraPortal;
@@ -51,12 +46,16 @@ private:
 
     void takeScreenShot();
 
-    void addNewGameObject(size_t shapeType, Texture* texture);
+    GameObject* addNewGameObject(size_t shapeType, Texture* texture);
     void setupNewGameObject(GameObject* gameObject);
 
     void setupInspector();
     void setupCamera();
     void setupLight(bool enableOrDisable);
+
+    void createLight();
+    void enableAllLights();
+    void disableAllLights();
 
     void onSelectedGameObjectChange(GameObject*& selectedGameObject);
     void onSelectedControlPointChange(ControlPoint*& controlPoint);
@@ -81,6 +80,7 @@ private:
     void createPortal(size_t portalId);
 
 public:
+    ~ofApp();
     void setup();
     void update();
     void draw();

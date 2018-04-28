@@ -14,10 +14,12 @@
 #include "gameobjects/bezier_curve.h"
 #include "gameobjects/hermite_curve.h"
 #include "gameobjects/planeRelief.h"
+#include "gameobjects/light.h"
 
 class GameObjectFactory
 {
 public:
+    //TODO: receive TextureFactory in constructor and use it when creating GameObject instead of receiving a Texture*
     GameObject* createNewGameObject(size_t shapeType, Texture* texture);
 private:
     const string cubeText = "Cube";
@@ -35,6 +37,7 @@ private:
     const string bezierCurveText = "Bezier Curve";
     const string hermiteCurveText = "Hermite Curve";
     const string planeReliefText = "Plane Relief";
+    const string lightText = "Light";
 };
 
 enum ShapeType
@@ -53,5 +56,6 @@ enum ShapeType
     Shape_Portal,
     Shape_Bezier,
     Shape_Hermite,
-    Shape_PlaneRelief
+    Shape_PlaneRelief,
+    Shape_Light //TODO: rename this
 };

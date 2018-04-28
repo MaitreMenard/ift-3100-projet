@@ -34,8 +34,7 @@ void ofApp::setup()
     lightModeSelector.setup(LIGHTMODE_POINT);
     lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
-    light = new Light(lightText, LIGHTMODE_POINT);
-    setupNewGameObject(light);
+    createLight();
 }
 
 void ofApp::setupCamera()
@@ -74,6 +73,12 @@ void ofApp::setupLight(bool enableOrDisable)
     {
         ofDisableLighting();
     }
+}
+
+void ofApp::createLight()
+{
+    Light* light = (Light*)addNewGameObject(Shape_Light, textureFactory.getEmptyTexture());
+    lights.push_back(light);
 }
 
 void ofApp::exit()
@@ -212,16 +217,10 @@ void ofApp::draw()
         {
             ofScale(ofVec3f(100));
         }
-        if (lightIsActive)
-        {
-            light->enable();
-        }
+        enableAllLights();
         scene.draw();
         gridPlane.draw();   //TODO: consider as GUI element
-        if (lightIsActive)
-        {
-            light->disable();
-        }
+        disableAllLights();
         camera.end();
         ofPopMatrix();
 
@@ -233,6 +232,30 @@ void ofApp::draw()
         {
             drawGUI();
         }
+    }
+}
+
+void ofApp::enableAllLights()
+{
+    if (lightIsActive)
+    {
+        for (Light* light : lights)
+        {
+            light->enable();
+        }
+
+    }
+}
+
+void ofApp::disableAllLights()
+{
+    if (lightIsActive)
+    {
+        for (Light* light : lights)
+        {
+            light->disable();
+        }
+
     }
 }
 
@@ -284,18 +307,14 @@ void ofApp::createPortal(size_t portalId)
         cameraPortal.setPosition(ofVec3f(2, 2, 0));
     }
     scene.setSelectedGameObject(nullptr);
+
     cameraPortal.begin();
-    if (lightIsActive)
-    {
-        light->enable();
-    }
+    enableAllLights();
     scene.draw();
     gridPlane.draw();
-    if (lightIsActive)
-    {
-        light->disable();
-    }
+    disableAllLights();
     cameraPortal.end();
+
     addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
     scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
 }
@@ -450,6 +469,10 @@ void ofApp::keyPressed(int key)
     case 'n':   //todo: make this h
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
         break;
+    case 'l':
+        //FIXME: why did you had to fuck this up in openGL3+ openFrameworks !?!?!?!?
+        //createLight();
+        break;
     case 'e':
         fboRender.next();
         break;
@@ -458,9 +481,11 @@ void ofApp::keyPressed(int key)
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
+GameObject* ofApp::addNewGameObject(size_t shapeType, Texture* texture)
 {
-    setupNewGameObject(gameobjectFactory.createNewGameObject(shapeType, texture));
+    GameObject* gameObject = gameobjectFactory.createNewGameObject(shapeType, texture);
+    setupNewGameObject(gameObject);
+    return gameObject;
 }
 
 void ofApp::setupNewGameObject(GameObject* gameObject)
@@ -537,4 +562,9 @@ void ofApp::gotMessage(ofMessage msg)
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
+}
+
+ofApp::~ofApp()
+{
+    lights.clear();
 }
