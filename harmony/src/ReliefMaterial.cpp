@@ -520,12 +520,8 @@ static const string fragmentShader = R"(
 
 		////////////////////////////////////////////////////////////
 		// now add the material info
-		//#ifdef HAS_TEXTURE
-			vec4 tex = texture(texColor, outtexcoord);
-			vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * tex + vec4(specular,1.0) * mat_specular + mat_emissive;
-		//#else
-		//	vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * mat_diffuse + vec4(specular,1.0) * mat_specular + mat_emissive;
-		//#endif
+		vec4 tex = texture(texColor, outtexcoord);
+		vec4 localColor = vec4(ambient,1.0) * mat_ambient + vec4(diffuse,1.0) * tex + vec4(specular,1.0) * mat_specular + mat_emissive;
 		FRAG_COLOR = clamp( localColor, 0.0, 1.0 );
 	}
 )";
