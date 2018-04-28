@@ -151,6 +151,12 @@
     <ClCompile Include="src\gameobject_visitor.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\fboRenderer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameobjects\planeRelief.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -469,6 +475,12 @@
     </ClInclude>
     <ClInclude Include="src\gui\lightmode_selector.h">
       <Filter>src\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fboRenderer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\planeRelief.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
