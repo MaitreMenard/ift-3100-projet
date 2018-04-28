@@ -160,6 +160,9 @@
     <ClCompile Include="src\ReliefMaterial.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameobjects\Material.cpp">
+      <Filter>src\gameobjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="src\ReliefMaterial.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameobjects\Material.h">
+      <Filter>src\gameobjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

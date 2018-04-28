@@ -123,7 +123,7 @@ void Material::initShaders(ofGLProgrammableRenderer & renderer) const {
 	}
 }
 
-const ofShader & ofMaterial::getShader(int textureTarget, ofGLProgrammableRenderer & renderer) const {
+const ofShader & Material::getShader(int textureTarget, ofGLProgrammableRenderer & renderer) const {
 	initShaders(renderer);
 	switch (textureTarget) {
 	case OF_NO_TEXTURE:

@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "transform.h"
 #include "texture.h"
+#include "gameobjects/Material.h"
 
 class GameObjectVisitor;
 
@@ -16,7 +17,7 @@ private:
 protected:
     Texture* texture;
     Transform transform;
-    ofMaterial material;
+	Material material;
     std::vector<GameObject*> children;
     ofMesh model;
     GameObject* parentGameObject;
