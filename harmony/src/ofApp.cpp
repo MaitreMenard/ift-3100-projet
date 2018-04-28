@@ -194,8 +194,7 @@ void ofApp::onLightModeChange(int & newLightMode)
 
 void ofApp::draw()
 {
-    ofClear(0);
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
+    ofClear(200);
 
     if (currentlyDrawingPortal1)
     {
@@ -208,8 +207,7 @@ void ofApp::draw()
     else
     {
         fbo.begin();
-        ofClear(0);
-        ofBackgroundGradient(ofColor::white, ofColor::gray);
+        ofClear(200);
 
         ofPushMatrix();
         camera.begin();
@@ -551,7 +549,12 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
+    fbo.allocate(ofGetWidth(), ofGetHeight());
+    fboRender.onWindowResized();
 
+    inspector.onWindowResized();
+    lightModeSelector.onWindowResized();
+    textureSelector.onWindowResized();
 }
 
 void ofApp::gotMessage(ofMessage msg)

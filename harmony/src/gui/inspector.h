@@ -34,6 +34,8 @@ public:
     void visit(Model3D* model3D);
     void visit(Light* light);
 
+    void onWindowResized();
+
 private:
     const float POSITION_MIN_VALUE = -1000;
     const float POSITION_MAX_VALUE = 1000;

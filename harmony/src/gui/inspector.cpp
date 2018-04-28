@@ -27,7 +27,8 @@ void Inspector::setupPanel()
     panel.setup();
     panel.setName(headerText);
     panel.setHeaderBackgroundColor(headerColor);
-    panel.setPosition(ofGetWidth() - panel.getWidth() - 2, 2);
+
+    onWindowResized();
 }
 
 void Inspector::update(Scene& scene)
@@ -133,4 +134,9 @@ void Inspector::visit(Light * light)
     panel.add(&ambientColorPicker);
     ambientColorPicker.setColor(light->getAmbientColor());
     ambientColorPicker.minimize();
+}
+
+void Inspector::onWindowResized()
+{
+    panel.setPosition(ofGetWidth() - panel.getWidth() - 2, 2);
 }

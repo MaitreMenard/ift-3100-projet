@@ -9,7 +9,6 @@ Light::Light(string name, LightMode lightMode) : GameObject(name, nullptr)
     directionnalLight.setDirectional();
 
     defaultGlobalAmbientColor = ofGetGlobalAmbientColor();
-    ofLog() << defaultGlobalAmbientColor;
 
     diffuseColor = ofColor(255);
     specularColor = ofColor(255);

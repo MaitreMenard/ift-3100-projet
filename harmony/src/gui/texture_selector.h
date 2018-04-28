@@ -11,4 +11,5 @@ private:
 
 public:
     void setup(TextureFactory& textureFactory);
+    void onWindowResized();
 };

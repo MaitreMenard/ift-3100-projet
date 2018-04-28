@@ -250,3 +250,9 @@ void FboRenderer::next()
         break;
     }
 }
+
+void FboRenderer::onWindowResized()
+{
+    fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
+    fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
+}

@@ -11,5 +11,10 @@ void TextureSelector::setup(TextureFactory& textureFactory)
 
     setSelectedItem(textureFactory.getEmptyTexture());
 
+    onWindowResized();
+}
+
+void TextureSelector::onWindowResized()
+{
     panel.setPosition(2, ofGetHeight() - panel.getHeight() - 2);
 }

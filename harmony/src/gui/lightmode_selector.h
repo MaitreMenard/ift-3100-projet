@@ -13,6 +13,8 @@ public:
     void visit(GameObject* gameObject);
     void visit(Light* light);
 
+    void onWindowResized();
+
 private:
     const std::string headerText = "Light Mode";
     const std::string lightModeLabels[4] = {   //FIXME: this should go in light.h

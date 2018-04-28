@@ -49,4 +49,6 @@ public:
     bool is8bitsSet();
     void resize();
     void next();
+
+    void onWindowResized();
 };
