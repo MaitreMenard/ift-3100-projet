@@ -2,6 +2,9 @@
 
 void ofApp::setup()
 {
+    fboRender.setup();
+    fbo.allocate(ofGetWidth(), ofGetHeight());
+
     ofSetFrameRate(60);
     ofEnableDepthTest();
     ofDisableArbTex();
@@ -187,7 +190,6 @@ void ofApp::onLightModeChange(int & newLightMode)
 void ofApp::draw()
 {
     ofClear(0);
-
     ofBackgroundGradient(ofColor::white, ofColor::gray);
 
     if (currentlyDrawingPortal1)
@@ -200,6 +202,10 @@ void ofApp::draw()
     }
     else
     {
+        fbo.begin();
+        ofClear(0);
+        ofBackgroundGradient(ofColor::white, ofColor::gray);
+
         ofPushMatrix();
         camera.begin();
         if (camera.getOrtho())
@@ -209,21 +215,19 @@ void ofApp::draw()
         if (lightIsActive)
         {
             light->enable();
-            /*light2->enable();
-            light3->enable();
-            light4->enable();*/
         }
         scene.draw();
-        gridPlane.draw();
+        gridPlane.draw();   //TODO: consider as GUI element
         if (lightIsActive)
         {
             light->disable();
-            /*light2->disable();
-            light3->disable();
-            light4->disable();*/
         }
         camera.end();
         ofPopMatrix();
+
+        fbo.end();
+        fboRender.apply(&fbo);
+        fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
         if (GUIIsDisplayed)
         {
@@ -258,6 +262,12 @@ void ofApp::drawGUI()
     {
         ofEnableLighting();
     }
+
+    // Display render name
+    if (fboRender.isActiveEffect())
+    {
+        ofDrawBitmapStringHighlight("Effet: " + fboRender.getEffectName(), 220, 15, ofColor::white, ofColor::black);
+    }
 }
 
 void ofApp::createPortal(size_t portalId)
@@ -278,18 +288,12 @@ void ofApp::createPortal(size_t portalId)
     if (lightIsActive)
     {
         light->enable();
-        /*light2->enable();
-        light3->enable();
-        light4->enable();*/
     }
     scene.draw();
     gridPlane.draw();
     if (lightIsActive)
     {
         light->disable();
-        /*light2->disable();
-        light3->disable();
-        light4->disable();*/
     }
     cameraPortal.end();
     addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
@@ -428,6 +432,9 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star, textureFactory.getEmptyTexture());
         break;
+    case '0':
+        addNewGameObject(Shape_PlaneRelief, textureFactory.getEmptyTexture());
+        break;
     case 'p':
         currentlyDrawingPortal1 = true;
         break;
@@ -442,6 +449,9 @@ void ofApp::keyPressed(int key)
         break;
     case 'n':   //todo: make this h
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
+        break;
+    case 'e':
+        fboRender.next();
         break;
     default:
         break;

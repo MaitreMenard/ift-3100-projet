@@ -11,6 +11,7 @@
 #include "gui/texture_selector.h"
 #include "gui/lightmode_selector.h"
 #include "gameobjectFactory.h"
+#include "fboRenderer.h"
 
 
 class ofApp : public ofBaseApp
@@ -26,6 +27,9 @@ private:
 
     bool currentlyDrawingPortal1;
     bool currentlyDrawingPortal2;
+
+    ofFbo fbo;
+    FboRenderer fboRender;
 
     Light* light;
     Light* light2;

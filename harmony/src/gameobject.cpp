@@ -310,6 +310,11 @@ void GameObject::accept(GameObjectVisitor& visitor)
     visitor.visit(this);
 }
 
+bool GameObject::isWithNormalMap()
+{
+    return false;
+}
+
 GameObject::~GameObject()
 {
     deleteAllChildren();

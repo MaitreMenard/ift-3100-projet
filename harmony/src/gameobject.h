@@ -90,6 +90,9 @@ public:
     bool is2D();
     bool hasMaterial();
 
+    virtual bool isWithNormalMap();
+    ofVec3f lightPosition;  //FIXME: not public
+
     virtual void accept(GameObjectVisitor& visitor);
 
     virtual ~GameObject();
