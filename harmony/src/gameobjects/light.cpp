@@ -201,10 +201,32 @@ void Light::draw()
 
     if (isSelected)
     {
-        drawBoundingBox();
+        switch (lightMode)
+        {
+        case LIGHTMODE_POINT:
+            drawBoundingBox();
+            break;
+        case LIGHTMODE_SPOT:
+            drawBoundingBox();
+            drawArrow(ofVec3f(0, 0, -1));
+            break;
+        case LIGHTMODE_DIRECTIONAL:
+            drawArrow(ofVec3f(0, 0, 1));
+            break;
+        default:
+            break;
+        }
     }
 
     ofPopMatrix();
+}
+
+void Light::drawArrow(ofVec3f direction)
+{
+    ofPushStyle();
+    ofSetColor(selectionGizmoColor);
+    ofDrawArrow(ofVec3f(), direction);
+    ofPopStyle();
 }
 
 ofColor Light::getColor()

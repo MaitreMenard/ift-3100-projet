@@ -15,6 +15,8 @@ private:
     void deleteAllChildren();
 
 protected:
+    const ofColor selectionGizmoColor = ofColor(0, 255, 0);
+
     Texture* texture;
     Transform transform;
 	Material material;

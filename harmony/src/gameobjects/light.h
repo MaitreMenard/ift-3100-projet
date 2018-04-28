@@ -58,4 +58,5 @@ private:
 
     void setNewLightMode(LightMode lightMode);
     void resetLightTransform();
+    void drawArrow(ofVec3f direction);
 };

@@ -138,7 +138,7 @@ void GameObject::drawBoundingBox()
 {
     for (size_t i = 0; i < 6; i++)
     {
-        boundingBox.setSideColor(i, ofColor(0, 255, 0));
+        boundingBox.setSideColor(i, selectionGizmoColor);
     }
 
     boundingBox.drawWireframe();
