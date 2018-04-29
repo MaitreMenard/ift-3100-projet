@@ -4,7 +4,8 @@ void ofApp::setup()
 {
     fboRender.setup();
     fbo.allocate(ofGetWidth(), ofGetHeight());
-
+	fboPortal.allocate(ofGetWidth(), ofGetHeight());
+	
     ofSetFrameRate(60);
     ofEnableDepthTest();
     ofDisableArbTex();
@@ -210,16 +211,18 @@ void ofApp::draw()
         ofClear(200);
 
         ofPushMatrix();
+		enableAllLights();
         camera.begin();
+
         if (camera.getOrtho())
         {
             ofScale(ofVec3f(100));
         }
-        enableAllLights();
+
         scene.draw();
         gridPlane.draw();   //TODO: consider as GUI element
-        disableAllLights();
         camera.end();
+		disableAllLights();
         ofPopMatrix();
 
         fbo.end();
@@ -306,14 +309,19 @@ void ofApp::createPortal(size_t portalId)
     }
     scene.setSelectedGameObject(nullptr);
 
+	fboPortal.begin();
+	ofClear(0);
     cameraPortal.begin();
     enableAllLights();
     scene.draw();
     gridPlane.draw();
     disableAllLights();
     cameraPortal.end();
+	fboPortal.end();
 
-    addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
+	ofPixels * pix = new ofPixels();
+	fboPortal.readToPixels(*pix);
+    addNewGameObject(Shape_Portal, new Texture("portal", *pix));
     scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
 }
 
@@ -549,13 +557,13 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
-    //TODO: fix FBO resizing on window resize (window becomes black for Renderer effect)
-    //fbo.allocate(ofGetWidth(), ofGetHeight());
-    //fboRender.onWindowResized();
-    
-    //inspector.onWindowResized();
-    //lightModeSelector.onWindowResized();
-    //textureSelector.onWindowResized();
+	//TODO: fix FBO resizing on window resize (window becomes black for Renderer effect)
+	//fbo.allocate(ofGetWidth(), ofGetHeight());
+	//fboRender.onWindowResized();
+
+	//inspector.onWindowResized();
+	//lightModeSelector.onWindowResized();
+	//textureSelector.onWindowResized()
 }
 
 void ofApp::gotMessage(ofMessage msg)

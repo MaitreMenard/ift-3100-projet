@@ -28,6 +28,7 @@ private:
     bool currentlyDrawingPortal2;
 
     ofFbo fbo;
+	ofFbo fboPortal;
     FboRenderer fboRender;
 
     std::vector<Light*> lights;
