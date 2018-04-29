@@ -65,20 +65,18 @@ void Light::setLightMode(LightMode lightMode)
     if (this->lightMode != lightMode)
     {
         disable();
-        resetLightTransform();
         setNewLightMode(lightMode);
+        updateLightTransform();
     }
 }
 
-void Light::resetLightTransform()
+void Light::updateLightTransform()
 {
     if (this->lightMode != LIGHTMODE_AMBIENT)
     {
-        selectedLight->setPosition(ofVec3f(0));
-        selectedLight->setOrientation(ofVec3f(0));
+        selectedLight->setPosition(transform.getPosition());
+        selectedLight->setOrientation(transform.getRotation());
     }
-    GameObject::setPosition(ofVec3f(0));
-    GameObject::setRotation(0, 0, 0);
 }
 
 ofColor Light::getDiffuseColor()

@@ -57,6 +57,6 @@ private:
     ofColor defaultGlobalAmbientColor;
 
     void setNewLightMode(LightMode lightMode);
-    void resetLightTransform();
+    void updateLightTransform();
     void drawArrow(ofVec3f direction);
 };
