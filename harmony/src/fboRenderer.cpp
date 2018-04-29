@@ -161,8 +161,8 @@ void FboRenderer::setBlurParam(float pBlurValue, int pBlurIteration)
 
 void FboRenderer::resize()
 {
-    //fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
-	//fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
+    fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
+	fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
 }
 
 void FboRenderer::next()
@@ -172,6 +172,6 @@ void FboRenderer::next()
 
 void FboRenderer::onWindowResized()
 {
-    //fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
-    //fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
+    fboFirstPass.allocate(ofGetWidth(), ofGetHeight());
+    fboSecondPass.allocate(ofGetWidth(), ofGetHeight());
 }
