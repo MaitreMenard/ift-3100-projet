@@ -24,8 +24,8 @@ private:
 
     const string lightText = "Light";
 
-    bool currentlyDrawingPortal1;
-    bool currentlyDrawingPortal2;
+    //bool currentlyDrawingPortal1;
+    //bool currentlyDrawingPortal2;
 
     ofFbo fbo;
 	ofFbo fboPortal;
@@ -39,6 +39,12 @@ private:
     TextureFactory textureFactory;
     GameObjectFactory gameobjectFactory;
     Scene scene;
+
+    bool portalsWereCreated;
+    Mirror* portal1;
+    const ofVec3f portal1InitialPosition = ofVec3f(-2, 2, 0);
+    Mirror* portal2;
+    const ofVec3f portal2InitialPosition = ofVec3f(2, 2, 0);
 
     Inspector inspector;
     GameObjectSelector gameObjectSelector;
@@ -77,8 +83,8 @@ private:
     void toggleGUIVisibility();
     void drawGUI();
 
-    ofPixels getCameraPortalImage();
-    void createPortal(size_t portalId);
+    void updatePortalFbo();
+    Mirror* createPortal(ofVec3f position);
 
 public:
     ~ofApp();

@@ -16,6 +16,7 @@ void ofApp::setup()
     GUIIsDisplayed = true;
     shiftIsPressed = false;
     CtrlIsPressed = false;
+    portalsWereCreated = false;
 
     setupCamera();
     setupLight(lightIsActive);
@@ -91,6 +92,41 @@ void ofApp::update()
     textureSelector.update();
     lightModeSelector.update();
     scene.update();
+
+    if (portalsWereCreated)
+    {
+        cameraPortal.setPosition(portal1->getPosition());
+        cameraPortal.setOrientation(portal1->getRotation());
+        updatePortalFbo();
+        ofPixels pixels1 = ofPixels();
+        fboPortal.readToPixels(pixels1);
+        portal1->setTexturePixels(pixels1);
+
+        cameraPortal.setPosition(portal2->getPosition());
+        cameraPortal.setOrientation(portal2->getRotation());
+        updatePortalFbo();
+        ofPixels pixels2 = ofPixels();
+        fboPortal.readToPixels(pixels2);
+        portal2->setTexturePixels(pixels2);
+    }
+}
+
+void ofApp::updatePortalFbo()
+{
+    GameObject* selectedGameObject = scene.getSelectedGameObject();
+    scene.setSelectedGameObject(nullptr);
+
+    fboPortal.begin();
+    ofClear(0);
+    cameraPortal.begin();
+    enableAllLights();
+    scene.draw();
+    gridPlane.draw();
+    disableAllLights();
+    cameraPortal.end();
+    fboPortal.end();
+
+    scene.setSelectedGameObject(selectedGameObject);
 }
 
 void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
@@ -195,44 +231,31 @@ void ofApp::onLightModeChange(int & newLightMode)
 
 void ofApp::draw()
 {
+    fbo.begin();
     ofClear(200);
 
-    if (currentlyDrawingPortal1)
+    ofPushMatrix();
+    enableAllLights();
+    camera.begin();
+
+    if (camera.getOrtho())
     {
-        createPortal(1);
+        ofScale(ofVec3f(100));
     }
-    else if (currentlyDrawingPortal2)
+
+    scene.draw();
+    gridPlane.draw();   //TODO: consider as GUI element
+    camera.end();
+    disableAllLights();
+    ofPopMatrix();
+
+    fbo.end();
+    fboRender.apply(&fbo);
+    fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
+
+    if (GUIIsDisplayed)
     {
-        createPortal(2);
-    }
-    else
-    {
-        fbo.begin();
-        ofClear(200);
-
-        ofPushMatrix();
-		enableAllLights();
-        camera.begin();
-
-        if (camera.getOrtho())
-        {
-            ofScale(ofVec3f(100));
-        }
-
-        scene.draw();
-        gridPlane.draw();   //TODO: consider as GUI element
-        camera.end();
-		disableAllLights();
-        ofPopMatrix();
-
-        fbo.end();
-        fboRender.apply(&fbo);
-        fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
-
-        if (GUIIsDisplayed)
-        {
-            drawGUI();
-        }
+        drawGUI();
     }
 }
 
@@ -294,37 +317,6 @@ void ofApp::drawGUI()
     }
 }
 
-void ofApp::createPortal(size_t portalId)
-{
-    if (portalId == 1)
-    {
-        currentlyDrawingPortal1 = false;
-        currentlyDrawingPortal2 = true;
-        cameraPortal.setPosition(ofVec3f(-2, 2, 0));
-    }
-    else if (portalId == 2)
-    {
-        currentlyDrawingPortal2 = false;
-        cameraPortal.setPosition(ofVec3f(2, 2, 0));
-    }
-    scene.setSelectedGameObject(nullptr);
-
-	fboPortal.begin();
-	ofClear(0);
-    cameraPortal.begin();
-    enableAllLights();
-    scene.draw();
-    gridPlane.draw();
-    disableAllLights();
-    cameraPortal.end();
-	fboPortal.end();
-
-	ofPixels * pix = new ofPixels();
-	fboPortal.readToPixels(*pix);
-    addNewGameObject(Shape_Portal, new Texture("portal", *pix));
-    scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
-}
-
 void ofApp::takeScreenShot()
 {
     time_t secondsSinceEpoch = time(0);
@@ -340,14 +332,6 @@ void ofApp::takeScreenShot()
     image.save(fileName);
 
     ofLog() << "screenshot saved to: " << fileName;
-}
-
-ofPixels ofApp::getCameraPortalImage()
-{
-    ofImage image;
-    image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
-
-    return image.getPixels();
 }
 
 void ofApp::toggleGUIVisibility()
@@ -461,7 +445,9 @@ void ofApp::keyPressed(int key)
         addNewGameObject(Shape_PlaneRelief, textureFactory.getEmptyTexture());
         break;
     case 'p':
-        currentlyDrawingPortal1 = true;
+        portal1 = createPortal(portal1InitialPosition);
+        portal2 = createPortal(portal2InitialPosition);
+        portalsWereCreated = true;
         break;
     case 'm':
         addNewGameObject(Shape_Falcon, textureFactory.getEmptyTexture());
@@ -507,6 +493,15 @@ void ofApp::setupNewGameObject(GameObject* gameObject)
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
     gameObject->accept(lightModeSelector);
+}
+
+Mirror* ofApp::createPortal(ofVec3f position)
+{
+    ofPixels pix = ofPixels();
+    pix.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR_ALPHA);
+    Mirror* portal = (Mirror*)addNewGameObject(Shape_Portal, new Texture("portal", pix));
+    portal->setPosition(position);
+    return portal;
 }
 
 void ofApp::keyReleased(int key)
