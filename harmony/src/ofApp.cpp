@@ -549,12 +549,13 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
-    fbo.allocate(ofGetWidth(), ofGetHeight());
-    fboRender.onWindowResized();
-
-    inspector.onWindowResized();
-    lightModeSelector.onWindowResized();
-    textureSelector.onWindowResized();
+    //TODO: fix FBO resizing on window resize (window becomes black for Renderer effect)
+    //fbo.allocate(ofGetWidth(), ofGetHeight());
+    //fboRender.onWindowResized();
+    
+    //inspector.onWindowResized();
+    //lightModeSelector.onWindowResized();
+    //textureSelector.onWindowResized();
 }
 
 void ofApp::gotMessage(ofMessage msg)
