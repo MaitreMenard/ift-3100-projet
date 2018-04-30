@@ -77,6 +77,7 @@ private:
     void onParentChange(int& newParentID);
     void onSelectedCurveAddControlPoint();
     void onLightModeChange(int& newLightMode);
+    void onSpotLightCutOffChange(int& spotCutOff);
 
     void toggleGUIVisibility();
     void drawGUI();

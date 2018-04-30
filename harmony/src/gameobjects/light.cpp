@@ -127,6 +127,16 @@ void Light::setAmbientColor(ofColor ambientColor)
     ofLog() << ofGetGlobalAmbientColor();
 }
 
+int Light::getSpotLightCutOff()
+{
+    return spotLight.getSpotlightCutOff();
+}
+
+void Light::setSpotLightCutOff(int spotCutOff)
+{
+    spotLight.setSpotlightCutOff(spotCutOff);
+}
+
 ofVec3f Light::getPosition()
 {
     if (lightMode == LIGHTMODE_AMBIENT)

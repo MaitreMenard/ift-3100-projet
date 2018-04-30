@@ -28,6 +28,9 @@ public:
     ofColor getAmbientColor();
     void setAmbientColor(ofColor ambientColor);
 
+    int getSpotLightCutOff();
+    void setSpotLightCutOff(int spotCutOff);
+
     void draw();
 
     ofVec3f getPosition();

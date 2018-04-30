@@ -58,6 +58,7 @@ void ofApp::setupInspector()
     inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
     inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
     inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
+    inspector.spotLightCutOffField.addListener(this, &ofApp::onSpotLightCutOffChange);
     inspector.shininessField.addListener(this, &ofApp::onSelectedGameObjectShininessChange);
     inspector.parentField.addListener(this, &ofApp::onParentChange);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
@@ -226,6 +227,12 @@ void ofApp::onLightModeChange(int & newLightMode)
     Light* light = (Light*)scene.getSelectedGameObject();
     light->setLightMode((LightMode)newLightMode);
     inspector.update(scene);
+}
+
+void ofApp::onSpotLightCutOffChange(int & spotCutOff)
+{
+    Light* spotLight = (Light*)scene.getSelectedGameObject();
+    spotLight->setSpotLightCutOff(spotCutOff);
 }
 
 void ofApp::draw()

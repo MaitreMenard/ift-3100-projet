@@ -20,6 +20,7 @@ public:
     ColorPicker diffuseColorpicker;
     ColorPicker specularColorPicker;
     ColorPicker ambientColorPicker;
+    ofxIntField spotLightCutOffField;
     ParentIntField parentField;
     ofxButton addControlPointButton;
     ofxIntField shininessField;
@@ -52,6 +53,7 @@ private:
     const string diffuseColorPickerText = "Diffuse Color:";
     const string specularColorPickerText = "Specular Color:";
     const string ambientColorPickerText = "Ambient Color:";
+    const string spotLightCutOffFieldText = "Spotlight Angle:";
     const string addControlPointButtonText = "Add Control Point";
     const string shininessFieldText = "Shininess: ";
     const ofColor headerColor = ofColor(24, 120, 24);

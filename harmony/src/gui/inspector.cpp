@@ -13,6 +13,9 @@ void Inspector::setup()
     specularColorPicker.setup(specularColorPickerText, ofColor());
     ambientColorPicker.setup(ambientColorPickerText, ofColor());
 
+    spotLightCutOffField.setup(spotLightCutOffFieldText, 15, 0, 90);
+    spotLightCutOffField.setBackgroundColor(labelColor);
+
     parentField.setup(0, 0);
 
     addControlPointButton.setup(addControlPointButtonText);
@@ -136,6 +139,12 @@ void Inspector::visit(Light * light)
     panel.add(&ambientColorPicker);
     ambientColorPicker.setColor(light->getAmbientColor());
     ambientColorPicker.minimize();
+
+    if (lightMode == LIGHTMODE_SPOT)
+    {
+        panel.add(&spotLightCutOffField);
+        spotLightCutOffField = light->getSpotLightCutOff();
+    }
 }
 
 void Inspector::onWindowResized()
