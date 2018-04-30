@@ -58,10 +58,6 @@ void Inspector::visit(GameObject * gameObject)
     panel.add(&scaleFields);
     scaleFields = gameObject->getScale();
 
-    panel.add(&colorPicker);
-    colorPicker.setColor(gameObject->getColor());
-    colorPicker.minimize();
-
     if (gameObject->hasMaterial())
     {
         panel.add(&diffuseColorpicker);
@@ -78,6 +74,12 @@ void Inspector::visit(GameObject * gameObject)
 
         panel.add(&shininessField);
         shininessField = gameObject->getShininess();
+    }
+    else
+    {
+        panel.add(&colorPicker);
+        colorPicker.setColor(gameObject->getColor());
+        colorPicker.minimize();
     }
 
     panel.add(&parentField);
