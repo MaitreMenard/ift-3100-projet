@@ -5,19 +5,19 @@ ColorPicker::ColorPicker()
     eventsEnabled = true;
 }
 
-ColorPicker* ColorPicker::setup(ofColor initialColor)
+ColorPicker* ColorPicker::setup(std::string headerText,  ofColor initialColor)
 {
     ofxGuiGroup::setup(headerText, "", 0, 0);
     setName(headerText);
     setHeaderBackgroundColor(labelColor);
 
     rgb_label.setBackgroundColor(labelColor);
-    add(rgb_label.setup(ofParameter<string>(rgbText)));
+    add(rgb_label.setup(rgbText, ""));
 
-    add(RGB_r.setup(rText, initialColor.r, 0, 255));
-    add(RGB_g.setup(gText, initialColor.g, 0, 255));
-    add(RGB_b.setup(bText, initialColor.b, 0, 255));
-    add(RGB_a.setup(aText, initialColor.a, 0, 255));
+    add(RGB_r.setup(RText, initialColor.r, 0, 255));
+    add(RGB_g.setup(GText, initialColor.g, 0, 255));
+    add(RGB_b.setup(BText, initialColor.b, 0, 255));
+    add(RGB_a.setup(AText, initialColor.a, 0, 255));
     
     RGB_r.addListener(this, &ColorPicker::rgbFieldsListener);
     RGB_g.addListener(this, &ColorPicker::rgbFieldsListener);
@@ -25,7 +25,7 @@ ColorPicker* ColorPicker::setup(ofColor initialColor)
     RGB_a.addListener(this, &ColorPicker::rgbFieldsListener);
 
     hsb_label.setBackgroundColor(labelColor);
-    add(hsb_label.setup(ofParameter<string>(hsbText)));
+    add(hsb_label.setup(hsbText, ""));
 
     add(HSB_h.setup(hText, initialColor.getHue(), 0, 255));
     add(HSB_s.setup(sText, initialColor.getSaturation(), 0, 255));

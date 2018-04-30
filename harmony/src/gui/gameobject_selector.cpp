@@ -2,7 +2,7 @@
 
 void GameObjectSelector::setup()
 {
-    Selector::setup(headerText);
+    Selector::setup(headerText, nullptr);
     panel.setPosition(xOffset, yOffset);
 
     selectedControlPoint = nullptr;
@@ -98,7 +98,7 @@ void GameObjectSelector::addControlPointButtonToPanel(ofxButton * button)
 
 void GameObjectSelector::visit(GameObject * gameObject)
 {
-    addItem(gameObject);
+    addItem(gameObject, gameObject->getName());
     gameObjectList.push_back(gameObject);
 }
 
@@ -115,16 +115,6 @@ void GameObjectSelector::visit(Curve * curve)
 void GameObjectSelector::visit(BezierCurve * bezierCurve)
 {
     visit((Curve*)bezierCurve);
-}
-
-void GameObjectSelector::visit(ControlPoint * controlPoint)
-{
-    visit((GameObject*)controlPoint);
-}
-
-void GameObjectSelector::visit(Model3D * model3D)
-{
-    visit((GameObject*)model3D);
 }
 
 GameObjectSelector::~GameObjectSelector()

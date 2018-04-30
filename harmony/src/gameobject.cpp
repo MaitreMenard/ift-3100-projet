@@ -13,6 +13,7 @@ GameObject::GameObject(std::string name, Texture* texture)
 
     isSelected = false;
     gameObjectIs2D = false;
+    _hasMaterial = false;
 }
 
 GameObject::GameObject(const GameObject & other)
@@ -47,7 +48,7 @@ void GameObject::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    drawTexture();
+    drawTextureAndMaterial();
     drawChildren();
 
     if (isSelected)
@@ -66,11 +67,66 @@ void GameObject::drawChildren()
     }
 }
 
-void GameObject::drawTexture()
+void GameObject::drawTextureAndMaterial()
 {
-    texture->bind();
+    if (_hasMaterial)
+    {
+        material.begin();
+    }
+    if (texture != nullptr)
+    {
+        texture->bind();
+    }
     model.draw();
-    texture->unbind();
+    if (texture != nullptr)
+    {
+        texture->unbind();
+    }
+    if (_hasMaterial)
+    {
+        material.end();
+    }
+}
+
+float GameObject::getShininess()
+{
+    return material.getShininess();
+}
+
+void GameObject::setShininess(float shininess)
+{
+    ofLog() << shininess;
+    material.setShininess(shininess);
+}
+
+ofColor GameObject::getDiffuseColor()
+{
+    return material.getDiffuseColor();
+}
+
+void GameObject::setDiffuseColor(ofColor diffuseColor)
+{
+    material.setDiffuseColor(diffuseColor);
+}
+
+ofColor GameObject::getSpecularColor()
+{
+    return material.getSpecularColor();
+}
+
+void GameObject::setSpecularColor(ofColor specularColor)
+{
+    material.setSpecularColor(specularColor);
+}
+
+ofColor GameObject::getAmbientColor()
+{
+    return material.getAmbientColor();
+}
+
+void GameObject::setAmbientColor(ofColor ambientColor)
+{
+    material.setAmbientColor(ambientColor);
 }
 
 std::string GameObject::getName()
@@ -82,7 +138,7 @@ void GameObject::drawBoundingBox()
 {
     for (size_t i = 0; i < 6; i++)
     {
-        boundingBox.setSideColor(i, ofColor(0, 255, 0));
+        boundingBox.setSideColor(i, selectionGizmoColor);
     }
 
     boundingBox.drawWireframe();
@@ -250,9 +306,19 @@ bool GameObject::is2D()
     return gameObjectIs2D;
 }
 
+bool GameObject::hasMaterial()
+{
+    return _hasMaterial;
+}
+
 void GameObject::accept(GameObjectVisitor& visitor)
 {
     visitor.visit(this);
+}
+
+bool GameObject::isWithNormalMap()
+{
+    return false;
 }
 
 GameObject::~GameObject()

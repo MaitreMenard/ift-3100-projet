@@ -15,14 +15,12 @@ void Line::draw()
     ofPushMatrix();
     transform.applyToModelViewMatrix();
 
-    texture->bind();
     ofPushStyle();
     ofSetLineWidth(lineWidth);
     ofFill();
     ofSetColor(color);
     ofDrawLine(ofVec3f(-0.5f, 0.f, 0.f), ofVec3f(0.5f, 0.f, 0.f));
     ofPopStyle();
-    texture->unbind();
 
     drawChildren();
 

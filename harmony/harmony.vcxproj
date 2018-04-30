@@ -171,6 +171,7 @@
     <PostBuildEvent />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\fboRenderer.cpp" />
     <ClCompile Include="src\gameobjectFactory.cpp" />
     <ClCompile Include="src\gameobjects\arrow.cpp" />
     <ClCompile Include="src\gameobjects\light.cpp" />
@@ -178,13 +179,18 @@
     <ClCompile Include="src\gameobjects\controlpoint.cpp" />
     <ClCompile Include="src\gameobjects\curve.cpp" />
     <ClCompile Include="src\gameobjects\hermite_curve.cpp" />
+    <ClCompile Include="src\gameobjects\Material.cpp" />
     <ClCompile Include="src\gameobjects\mirror.cpp" />
+    <ClCompile Include="src\gameobjects\planeRelief.cpp" />
     <ClCompile Include="src\gameobjects\star.cpp" />
+    <ClCompile Include="src\gameobject_visitor.cpp" />
     <ClCompile Include="src\gui\colorpicker.cpp" />
     <ClCompile Include="src\gui\gameobject_selector.cpp" />
     <ClCompile Include="src\gui\inspector.cpp" />
+    <ClCompile Include="src\gui\lightmode_selector.cpp" />
     <ClCompile Include="src\gui\parentIntField.cpp" />
     <ClCompile Include="src\gui\texture_selector.cpp" />
+    <ClCompile Include="src\ReliefMaterial.cpp" />
     <ClCompile Include="src\skybox.cpp" />
     <ClCompile Include="src\gui\vec3f_textfield.cpp" />
     <ClCompile Include="src\grid_plane.cpp" />
@@ -219,6 +225,7 @@
     <ClCompile Include="src\gameobjects\triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\fboRenderer.h" />
     <ClInclude Include="src\gameobjectFactory.h" />
     <ClInclude Include="src\gameobjects\arrow.h" />
     <ClInclude Include="src\gameobjects\light.h" />
@@ -226,15 +233,19 @@
     <ClInclude Include="src\gameobjects\controlpoint.h" />
     <ClInclude Include="src\gameobjects\curve.h" />
     <ClInclude Include="src\gameobjects\hermite_curve.h" />
+    <ClInclude Include="src\gameobjects\Material.h" />
     <ClInclude Include="src\gameobjects\mirror.h" />
+    <ClInclude Include="src\gameobjects\planeRelief.h" />
     <ClInclude Include="src\gameobjects\star.h" />
     <ClInclude Include="src\gameobject_visitor.h" />
     <ClInclude Include="src\gui\colorpicker.h" />
     <ClInclude Include="src\gui\gameobject_selector.h" />
     <ClInclude Include="src\gui\inspector.h" />
+    <ClInclude Include="src\gui\lightmode_selector.h" />
     <ClInclude Include="src\gui\parentIntField.h" />
     <ClInclude Include="src\gui\selector.h" />
     <ClInclude Include="src\gui\texture_selector.h" />
+    <ClInclude Include="src\ReliefMaterial.h" />
     <ClInclude Include="src\skybox.h" />
     <ClInclude Include="src\gui\vec3f_textfield.h" />
     <ClInclude Include="src\gui\rotation_slider.h" />

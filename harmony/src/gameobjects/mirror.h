@@ -11,6 +11,6 @@ public:
     Mirror(std::string name, Texture* texture);
     ~Mirror();
 
-    void drawTexture();
+    void drawTextureAndMaterial();
     void setTexturePixels(ofPixels pix);
 };

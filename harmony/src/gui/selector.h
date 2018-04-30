@@ -5,19 +5,13 @@ template<typename T>
 class Selector
 {
 public:
-    void setup(std::string headerText)
+    void setup(std::string headerText, T noSelectionItem)
     {
         this->headerText = headerText;
+        this->noSelectionItem = noSelectionItem;
         setupPanel();
 
-        selectedItem = nullptr;
-    }
-
-    void setupPanel()
-    {
-        panel.setup();
-        panel.setName(headerText);
-        panel.setHeaderBackgroundColor(headerColor);
+        selectedItem = noSelectionItem;
     }
 
     virtual void update()
@@ -48,12 +42,12 @@ public:
         buttonPressedEvent.add(listener, method, OF_EVENT_ORDER_AFTER_APP);
     }
 
-    void addItem(T item)
+    void addItem(T item, std::string itemName)
     {
         ofxButton *newButton = new ofxButton();
         itemButtons.insert(std::make_pair(item, newButton));
         newButton->setBackgroundColor(baseButtonColor);
-        panel.add(newButton->setup(ofParameter<string>(item->getName())));  //FIXME: getName might not work here -> make abstract method
+        panel.add(newButton->setup(ofParameter<string>(itemName)));
     }
 
     void setSelectedItem(T item)
@@ -69,7 +63,7 @@ public:
         if (isAnyItemSelected())
         {
             itemButtons.at(selectedItem)->setBackgroundColor(baseButtonColor);
-            selectedItem = nullptr;
+            selectedItem = noSelectionItem;
         }
     }
 
@@ -89,15 +83,23 @@ protected:
     ofxPanel panel;
     std::map<T, ofxButton*> itemButtons;
 
+    void setupPanel()
+    {
+        panel.setup();
+        panel.setName(headerText);
+        panel.setHeaderBackgroundColor(headerColor);
+    }
+
 private:
     const ofColor headerColor = ofColor(24, 120, 24);
 
     std::string headerText;
     T selectedItem;
+    T noSelectionItem;
     ofEvent<T> buttonPressedEvent;
 
     bool isAnyItemSelected()
     {
-        return selectedItem != nullptr;
+        return selectedItem != noSelectionItem;
     }
 };

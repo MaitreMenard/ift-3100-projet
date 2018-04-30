@@ -2,20 +2,27 @@
 
 void ofApp::setup()
 {
-    scene.enableUndoRedo();
-    shiftIsPressed = false;
-    CtrlIsPressed = false;
-
+    fboRender.setup();
+    fbo.allocate(ofGetWidth(), ofGetHeight());
+	fboPortal.allocate(ofGetWidth(), ofGetHeight());
+	
     ofSetFrameRate(60);
     ofEnableDepthTest();
     ofDisableArbTex();
     ofEnableAlphaBlending();
+    ofSetVerticalSync(true);
+
+    lightIsActive = true;
+    GUIIsDisplayed = true;
+    shiftIsPressed = false;
+    CtrlIsPressed = false;
+    portalsWereCreated = false;
 
     setupCamera();
+    setupLight(lightIsActive);
     gridPlane.setup();
     scene.setup();
-
-    ofSetVerticalSync(true);
+    scene.enableUndoRedo();
 
     setupInspector();
 
@@ -26,13 +33,10 @@ void ofApp::setup()
     textureSelector.setup(textureFactory);
     textureSelector.addListener(this, &ofApp::onSelectedGameObjectTextureChange);
 
-    light = new Light(lightText);
-    setupNewGameObject(light);
+    lightModeSelector.setup(LIGHTMODE_POINT);
+    lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
-    lightIsActive = true;
-    setupLight(lightIsActive);
-
-    GUIIsDisplayed = true;
+    createLight();
 }
 
 void ofApp::setupCamera()
@@ -41,7 +45,6 @@ void ofApp::setupCamera()
     camera.setPosition(initialCameraPosition);
 
     cameraPortal.setNearClip(0.1f);
-    cameraPortal.setOrientation(ofVec3f(0, -180, 90));
 }
 
 void ofApp::setupInspector()
@@ -52,7 +55,11 @@ void ofApp::setupInspector()
     inspector.rotation.addListener(this, &ofApp::onSelectedGameObjectRotationChange);
     inspector.scaleFields.addListener(this, &ofApp::onSelectedGameObjectScaleChange);
     inspector.colorPicker.addListener(this, &ofApp::onSelectedGameObjectColorChange);
-    inspector.parentField.addListener(this, &ofApp::onParentChanged);
+    inspector.diffuseColorpicker.addListener(this, &ofApp::onSelectedGameObjectDiffuseColorChange);
+    inspector.specularColorPicker.addListener(this, &ofApp::onSelectedGameObjectSpecularColorChange);
+    inspector.ambientColorPicker.addListener(this, &ofApp::onSelectedGameObjectAmbientColorChange);
+    inspector.shininessField.addListener(this, &ofApp::onSelectedGameObjectShininessChange);
+    inspector.parentField.addListener(this, &ofApp::onParentChange);
     inspector.addControlPointButton.addListener(this, &ofApp::onSelectedCurveAddControlPoint);
 }
 
@@ -69,6 +76,12 @@ void ofApp::setupLight(bool enableOrDisable)
     }
 }
 
+void ofApp::createLight()
+{
+    Light* light = (Light*)addNewGameObject(Shape_Light, textureFactory.getEmptyTexture());
+    lights.push_back(light);
+}
+
 void ofApp::exit()
 {}
 
@@ -76,7 +89,43 @@ void ofApp::update()
 {
     gameObjectSelector.update();
     textureSelector.update();
+    lightModeSelector.update();
     scene.update();
+
+    if (portalsWereCreated)
+    {
+        transfertPortalImage(portal1, portal2);
+        transfertPortalImage(portal2, portal1);
+    }
+}
+
+void ofApp::transfertPortalImage(Mirror * imageSender, Mirror * imageReceiver)
+{
+    cameraPortal.setPosition(imageSender->getPosition());
+    cameraPortal.setOrientation(imageSender->getRotation());
+    cameraPortal.pan(portalCameraYRotationOffset);
+    updatePortalFbo();
+    ofPixels pixels = ofPixels();
+    fboPortal.readToPixels(pixels);
+    imageReceiver->setTexturePixels(pixels);
+}
+
+void ofApp::updatePortalFbo()
+{
+    GameObject* selectedGameObject = scene.getSelectedGameObject();
+    scene.setSelectedGameObject(nullptr);
+
+    fboPortal.begin();
+    ofClear(0);
+    cameraPortal.begin();
+    enableAllLights();
+    scene.draw();
+    gridPlane.draw();
+    disableAllLights();
+    cameraPortal.end();
+    fboPortal.end();
+
+    scene.setSelectedGameObject(selectedGameObject);
 }
 
 void ofApp::onSelectedGameObjectChange(GameObject*& selectedGameObject)
@@ -94,6 +143,7 @@ void ofApp::setSelectedGameObject(GameObject* selectedGameObject)
         {
             textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
         }
+        selectedGameObject->accept(lightModeSelector);
     }
 }
 
@@ -131,7 +181,27 @@ void ofApp::onSelectedGameObjectColorChange(ofColor & newColor)
     scene.setColorSelectedGameObject(newColor);
 }
 
-void ofApp::onParentChanged(int & newParentButtonID)
+void ofApp::onSelectedGameObjectDiffuseColorChange(ofColor & diffuseColor)
+{
+    scene.getSelectedGameObject()->setDiffuseColor(diffuseColor);
+}
+
+void ofApp::onSelectedGameObjectSpecularColorChange(ofColor & specularColor)
+{
+    scene.getSelectedGameObject()->setSpecularColor(specularColor);
+}
+
+void ofApp::onSelectedGameObjectAmbientColorChange(ofColor & ambientColor)
+{
+    scene.getSelectedGameObject()->setAmbientColor(ambientColor);
+}
+
+void ofApp::onSelectedGameObjectShininessChange(int & shininess)
+{
+    scene.getSelectedGameObject()->setShininess(shininess);
+}
+
+void ofApp::onParentChange(int & newParentButtonID)
 {
     if (newParentButtonID == 0)
     {
@@ -151,91 +221,99 @@ void ofApp::onSelectedCurveAddControlPoint()
     gameObjectSelector.addControlPoint(bezierCurve, newControlPoint);
 }
 
+void ofApp::onLightModeChange(int & newLightMode)
+{
+    Light* light = (Light*)scene.getSelectedGameObject();
+    light->setLightMode((LightMode)newLightMode);
+    inspector.update(scene);
+}
+
 void ofApp::draw()
 {
-    ofClear(0);
+    fbo.begin();
+    ofClear(200);
 
-    ofBackgroundGradient(ofColor::white, ofColor::gray);
+    ofPushMatrix();
+    enableAllLights();
+    camera.begin();
 
-    if (currentlyDrawingPortal1)
+    if (camera.getOrtho())
     {
-        createPortal(1);
+        ofScale(ofVec3f(100));
     }
-    else if (currentlyDrawingPortal2)
-    {
-        createPortal(2);
-    }
-    else
-    {
-        ofPushMatrix();
-        camera.begin();
-        if (camera.getOrtho())
-        {
-            ofScale(ofVec3f(100));
-        }
-        if (lightIsActive)
-        {
-            light->enable();
-        }
-        scene.draw();
-        gridPlane.draw();
-        if (lightIsActive)
-        {
-            light->disable();
-        }
-        camera.end();
-        ofPopMatrix();
 
-        if (GUIIsDisplayed)
-        {
-            if (lightIsActive)
-            {
-                ofDisableLighting();
-            }
-            ofDisableDepthTest();
-            inspector.draw();
-            gameObjectSelector.draw();
-            if (scene.isSelectedGameObject2D())
-            {
-                textureSelector.draw();
-            }
-            ofEnableDepthTest();
-            if (lightIsActive)
-            {
-                ofEnableLighting();
-            }
-        }
+    scene.draw();
+    gridPlane.draw();   //TODO: consider as GUI element
+    camera.end();
+    disableAllLights();
+    ofPopMatrix();
+
+    fbo.end();
+    fboRender.apply(&fbo);
+    fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
+
+    if (GUIIsDisplayed)
+    {
+        drawGUI();
     }
 }
 
-void ofApp::createPortal(size_t portalId)
+void ofApp::enableAllLights()
 {
-    if (portalId == 1)
-    {
-        currentlyDrawingPortal1 = false;
-        currentlyDrawingPortal2 = true;
-        cameraPortal.setPosition(ofVec3f(-2, 2, 0));
-    }
-    else if (portalId == 2)
-    {
-        currentlyDrawingPortal2 = false;
-        cameraPortal.setPosition(ofVec3f(2, 2, 0));
-    }
-    scene.setSelectedGameObject(nullptr);
-    cameraPortal.begin();
     if (lightIsActive)
     {
-        light->enable();
+        for (Light* light : lights)
+        {
+            light->enable();
+        }
+
     }
-    scene.draw();
-    gridPlane.draw();
+}
+
+void ofApp::disableAllLights()
+{
     if (lightIsActive)
     {
-        light->disable();
+        for (Light* light : lights)
+        {
+            light->disable();
+        }
+
     }
-    cameraPortal.end();
-    addNewGameObject(Shape_Portal, &Texture("portal", getCameraPortalImage()));
-    scene.getSelectedGameObject()->setPosition(cameraPortal.getPosition());
+}
+
+void ofApp::drawGUI()
+{
+    if (lightIsActive)
+    {
+        ofDisableLighting();
+    }
+    ofDisableDepthTest();
+
+    GameObject* selectedGameObject = scene.getSelectedGameObject();
+    inspector.draw();
+    gameObjectSelector.draw();
+    if (selectedGameObject->is2D())
+    {
+        textureSelector.draw();
+    }
+    Light* light = dynamic_cast<Light*>(selectedGameObject);
+    if (light != nullptr)
+    {
+        lightModeSelector.draw();
+    }
+
+    ofEnableDepthTest();
+    if (lightIsActive)
+    {
+        ofEnableLighting();
+    }
+
+    // Display render name
+    if (fboRender.isActiveEffect())
+    {
+        ofDrawBitmapStringHighlight("Effet: " + fboRender.getEffectName(), 220, 15, ofColor::white, ofColor::black);
+    }
 }
 
 void ofApp::takeScreenShot()
@@ -255,14 +333,6 @@ void ofApp::takeScreenShot()
     ofLog() << "screenshot saved to: " << fileName;
 }
 
-ofPixels ofApp::getCameraPortalImage()
-{
-    ofImage image;
-    image.grabScreen((ofGetWindowWidth() - ofGetWindowHeight()) / 2, 0, ofGetWindowHeight(), ofGetWindowHeight());
-
-    return image.getPixels();
-}
-
 void ofApp::toggleGUIVisibility()
 {
     GUIIsDisplayed = !GUIIsDisplayed;
@@ -270,6 +340,7 @@ void ofApp::toggleGUIVisibility()
 
 void ofApp::keyPressed(int key)
 {
+    //TODO: fix undo/redo
     switch (key)
     {
     case -1: // CTRL_R + Z
@@ -369,8 +440,20 @@ void ofApp::keyPressed(int key)
     case '9':
         addNewGameObject(Shape_Star, textureFactory.getEmptyTexture());
         break;
+    case '0':
+        addNewGameObject(Shape_PlaneRelief, textureFactory.getEmptyTexture());
+        break;
     case 'p':
-        currentlyDrawingPortal1 = true;
+        if (!portalsWereCreated)
+        {
+            portal1 = createPortal(portal1InitialPosition);
+            portal2 = createPortal(portal2InitialPosition);
+            portalsWereCreated = true;
+        }
+        else
+        {
+            ofLog() << "The portals were already created";
+        }
         break;
     case 'm':
         addNewGameObject(Shape_Falcon, textureFactory.getEmptyTexture());
@@ -384,27 +467,47 @@ void ofApp::keyPressed(int key)
     case 'n':   //todo: make this h
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
         break;
+    case 'l':
+        //FIXME: why did you had to fuck this up in openGL3+ openFrameworks !?!?!?!?
+        //createLight();
+        break;
+    case 'e':
+        fboRender.next();
+        break;
     default:
         break;
     }
 }
 
-void ofApp::addNewGameObject(size_t shapeType, Texture* texture)
+GameObject* ofApp::addNewGameObject(size_t shapeType, Texture* texture)
 {
-    setupNewGameObject(gameobjectFactory.createNewGameObject(shapeType, texture));
+    GameObject* gameObject = gameobjectFactory.createNewGameObject(shapeType, texture);
+    setupNewGameObject(gameObject);
+    return gameObject;
 }
 
 void ofApp::setupNewGameObject(GameObject* gameObject)
 {
-    gameObject->accept(gameObjectSelector);
     scene.addGameObject(gameObject);
-    gameObjectSelector.setSelectedItem(gameObject);
     scene.setSelectedGameObject(gameObject);
+
+    gameObject->accept(gameObjectSelector);
+    gameObjectSelector.setSelectedItem(gameObject);
     inspector.update(scene);
     if (gameObject->is2D())
     {
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
     }
+    gameObject->accept(lightModeSelector);
+}
+
+Mirror* ofApp::createPortal(ofVec3f position)
+{
+    ofPixels pix = ofPixels();
+    pix.allocate(ofGetWidth(), ofGetHeight(), OF_IMAGE_COLOR_ALPHA);
+    Mirror* portal = (Mirror*)addNewGameObject(Shape_Portal, new Texture("portal", pix));
+    portal->setPosition(position);
+    return portal;
 }
 
 void ofApp::keyReleased(int key)
@@ -455,7 +558,13 @@ void ofApp::mouseExited(int x, int y)
 
 void ofApp::windowResized(int w, int h)
 {
+	//TODO: fix FBO resizing on window resize (window becomes black for Renderer effect)
+	//fbo.allocate(ofGetWidth(), ofGetHeight());
+	//fboRender.onWindowResized();
 
+	//inspector.onWindowResized();
+	//lightModeSelector.onWindowResized();
+	//textureSelector.onWindowResized()
 }
 
 void ofApp::gotMessage(ofMessage msg)
@@ -466,4 +575,9 @@ void ofApp::gotMessage(ofMessage msg)
 void ofApp::dragEvent(ofDragInfo dragInfo)
 {
 
+}
+
+ofApp::~ofApp()
+{
+    lights.clear();
 }

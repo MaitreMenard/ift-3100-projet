@@ -5,11 +5,13 @@
 #include "grid_plane.h"
 #include "scene.h"
 #include "textureFactory.h"
-#include "gui/gameobject_selector.h"
 #include "gameobjects/light.h"
 #include "gui/inspector.h"
+#include "gui/gameobject_selector.h"
 #include "gui/texture_selector.h"
+#include "gui/lightmode_selector.h"
 #include "gameobjectFactory.h"
+#include "fboRenderer.h"
 
 
 class ofApp : public ofBaseApp
@@ -18,16 +20,15 @@ private:
     bool shiftIsPressed;
     bool CtrlIsPressed;
     bool GUIIsDisplayed;
-
     bool lightIsActive;
 
     const string lightText = "Light";
 
-    bool currentlyDrawingPortal1;
-    bool currentlyDrawingPortal2;
+    ofFbo fbo;
+	ofFbo fboPortal;
+    FboRenderer fboRender;
 
-    Light* light;
-
+    std::vector<Light*> lights;
     const ofVec3f initialCameraPosition = ofVec3f(0, 2, 5);
     ofCamera camera;
     ofCamera cameraPortal;
@@ -36,16 +37,30 @@ private:
     GameObjectFactory gameobjectFactory;
     Scene scene;
 
+    bool portalsWereCreated;
+    Mirror* portal1;
+    const ofVec3f portal1InitialPosition = ofVec3f(-2, 2, 0);
+    Mirror* portal2;
+    const ofVec3f portal2InitialPosition = ofVec3f(2, 2, 0);
+    const float portalCameraYRotationOffset = 180.f;
+
     Inspector inspector;
     GameObjectSelector gameObjectSelector;
     TextureSelector textureSelector;
+    LightModeSelector lightModeSelector;
 
     void takeScreenShot();
 
-    void addNewGameObject(size_t shapeType, Texture* texture);
+    GameObject* addNewGameObject(size_t shapeType, Texture* texture);
     void setupNewGameObject(GameObject* gameObject);
 
     void setupInspector();
+    void setupCamera();
+    void setupLight(bool enableOrDisable);
+
+    void createLight();
+    void enableAllLights();
+    void disableAllLights();
 
     void onSelectedGameObjectChange(GameObject*& selectedGameObject);
     void onSelectedControlPointChange(ControlPoint*& controlPoint);
@@ -55,18 +70,23 @@ private:
     void onSelectedGameObjectRotationChange(ofVec3f& newRotation);
     void onSelectedGameObjectScaleChange(ofVec3f& newScale);
     void onSelectedGameObjectColorChange(ofColor& newColor);
-    void onParentChanged(int& newParentID);
+    void onSelectedGameObjectDiffuseColorChange(ofColor& diffuseColor);
+    void onSelectedGameObjectSpecularColorChange(ofColor& specularColor);
+    void onSelectedGameObjectAmbientColorChange(ofColor& ambientColor);
+    void onSelectedGameObjectShininessChange(int& shininess);
+    void onParentChange(int& newParentID);
     void onSelectedCurveAddControlPoint();
+    void onLightModeChange(int& newLightMode);
 
-    void setupCamera();
     void toggleGUIVisibility();
+    void drawGUI();
 
-    void setupLight(bool enableOrDisable);
-
-    ofPixels getCameraPortalImage();
-    void createPortal(size_t portalId);
+    void transfertPortalImage(Mirror* imageSender, Mirror* imageReceiver);
+    void updatePortalFbo();
+    Mirror* createPortal(ofVec3f position);
 
 public:
+    ~ofApp();
     void setup();
     void update();
     void draw();

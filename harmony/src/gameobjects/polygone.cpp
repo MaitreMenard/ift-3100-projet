@@ -10,6 +10,8 @@ Polygone::Polygone(std::string name, Texture* texture, size_t nbVertex) : GameOb
     }
 
     gameObjectIs2D = true;
+    _hasMaterial = true;
+	model.smoothNormals(60);
 
     boundingBox.set(1, 1, 0.01f);
 }
@@ -21,4 +23,5 @@ void Polygone::createPoint(size_t index)
 
     model.addVertex(ofVec3f(x, y));
     model.addTexCoord(texture->getCoordFromPercent(0.5f + x, 0.5f - y));
+	model.addNormal(ofVec3f(0, 0, 1));
 }

@@ -64,5 +64,13 @@ GameObject* GameObjectFactory::createNewGameObject(size_t shapeType, Texture* te
     {
         return new HermiteCurve(hermiteCurveText);
     }
+    else if (shapeType == Shape_PlaneRelief)
+    {
+        return new PlaneRelief(planeReliefText);
+    }
+    else if (shapeType == Shape_Light)
+    {
+        return new Light(lightText, LIGHTMODE_POINT);
+    }
     return nullptr;
 }

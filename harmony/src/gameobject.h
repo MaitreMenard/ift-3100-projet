@@ -3,6 +3,7 @@
 #include "ofMain.h"
 #include "transform.h"
 #include "texture.h"
+#include "gameobjects/Material.h"
 
 class GameObjectVisitor;
 
@@ -14,8 +15,11 @@ private:
     void deleteAllChildren();
 
 protected:
+    const ofColor selectionGizmoColor = ofColor(0, 255, 0);
+
     Texture* texture;
     Transform transform;
+	Material material;
     std::vector<GameObject*> children;
     ofMesh model;
     GameObject* parentGameObject;
@@ -23,9 +27,11 @@ protected:
     size_t nbVertex;
     bool isSelected;
     bool gameObjectIs2D;
+    bool _hasMaterial;
 
     void drawChildren();
     virtual void drawBoundingBox();
+    virtual void drawTextureAndMaterial();
 
 public:
     GameObject(std::string name, Texture* texture);
@@ -34,7 +40,15 @@ public:
     virtual void setup();
     virtual void update();
     virtual void draw();
-    virtual void drawTexture();
+
+    float getShininess();
+    void setShininess(float shininess);
+    virtual ofColor getDiffuseColor();
+    virtual void setDiffuseColor(ofColor diffuseColor);
+    virtual ofColor getSpecularColor();
+    virtual void setSpecularColor(ofColor specularColor);
+    virtual ofColor getAmbientColor();
+    virtual void setAmbientColor(ofColor ambientColor);
 
     std::string getName();
 
@@ -44,13 +58,14 @@ public:
 
     ofQuaternion getRotation();
     ofVec3f getEulerAngles();
-    void setRotation(float x, float y, float z);
+    virtual void setRotation(float x, float y, float z);
     void rotate(float degrees, float x, float y, float z);
 
     ofVec3f getScale();
     void setScale(ofVec3f scale);
     void reScale(float x, float y, float z);
 
+    //TODO: setColor doesn't seem to work well with materials
     virtual ofColor getColor();
     virtual void setColor(ofColor color);
 
@@ -76,6 +91,10 @@ public:
     void setTexture(Texture* texture);
 
     bool is2D();
+    bool hasMaterial();
+
+    virtual bool isWithNormalMap();
+    ofVec3f lightPosition;  //FIXME: not public
 
     virtual void accept(GameObjectVisitor& visitor);
 

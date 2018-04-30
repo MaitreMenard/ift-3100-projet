@@ -24,25 +24,30 @@ Mirror::Mirror(std::string name, Texture* texture) : GameObject(name, texture)
     boundingBox.set(1, 1, 0.01f);
 }
 
-void Mirror::addTexCoords() {
-    model.addTexCoord(mirrorTexture->getCoordFromPercent(0, 0));
+void Mirror::addTexCoords()
+{
     model.addTexCoord(mirrorTexture->getCoordFromPercent(0, 1));
-    model.addTexCoord(mirrorTexture->getCoordFromPercent(1, 0));
     model.addTexCoord(mirrorTexture->getCoordFromPercent(1, 1));
+    model.addTexCoord(mirrorTexture->getCoordFromPercent(0, 0));
+    model.addTexCoord(mirrorTexture->getCoordFromPercent(1, 0));
+
 }
 
-void Mirror::setTexturePixels(ofPixels pix) {
+void Mirror::setTexturePixels(ofPixels pix)
+{
     mirrorTexture->allocate(pix);
     model.clearTexCoords();
     addTexCoords();
 }
 
-void Mirror::drawTexture() {
+void Mirror::drawTextureAndMaterial()
+{
     mirrorTexture->bind();
     model.draw();
     mirrorTexture->unbind();
 }
 
-Mirror::~Mirror() {
+Mirror::~Mirror()
+{
     delete mirrorTexture;
 }
