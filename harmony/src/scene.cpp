@@ -256,24 +256,31 @@ void Scene::deleteAllGameObjects()
     }
 }
 
-void Scene::undo()
+bool Scene::undo()
 {
-    history_.undo();
-    GameObject * gobj = history_.getSelectedGameObject();
-    if (gobj != nullptr)
-    {
-        setSelectedGameObject(gobj);
-    }
+	if (history_.undo()) {
+		GameObject * gobj = history_.getSelectedGameObject();
+		if (gobj != nullptr)
+		{
+			setSelectedGameObject(gobj);
+			return true;
+		}
+	}
+	return false;
 }
 
-void Scene::redo()
+bool Scene::redo()
 {
-    history_.redo();
-    GameObject * gobj = history_.getSelectedGameObject();
-    if (gobj != nullptr)
-    {
-        setSelectedGameObject(gobj);
-    }
+	if (history_.redo()) {
+		GameObject * gobj = history_.getSelectedGameObject();
+		if (gobj != nullptr)
+		{
+			setSelectedGameObject(gobj);
+			return true;
+		}
+
+	}
+	return false;
 }
 
 Scene::~Scene()

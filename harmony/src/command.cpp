@@ -34,19 +34,22 @@ void CommandHandler::add(Command * cmd)
         pop_back_bw();
 }
 
-void CommandHandler::undo()
+bool CommandHandler::undo()
 {
     if (!history_bw.empty())
     {
         if (UNDO_REDO_VERBOSE) cout << "Cmd undo" << endl;
         history_fw.push(history_bw.top());
         history_bw.pop();
-        if (!history_bw.empty())
+        if (!history_bw.empty() && history_bw.top()->getGameObject()->getType() != GObj_LIGHT){
             history_bw.top()->exec();
+			return true;
+		}
     }
+	return false;
 }
 
-void CommandHandler::redo()
+bool CommandHandler::redo()
 {
     if (!history_fw.empty())
     {
@@ -54,7 +57,9 @@ void CommandHandler::redo()
         history_bw.push(history_fw.top());
         history_fw.pop();
         history_bw.top()->exec();
+		return true;
     }
+	return false;
 }
 
 void CommandHandler::pop_back_bw()

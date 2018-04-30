@@ -7,9 +7,12 @@
 
 class GameObjectVisitor;
 
+typedef enum {GObj_LIGHT, GObj_STANDARD}GObjType;
+
 class GameObject
 {
 private:
+	GObjType type;
     std::string name;
 
     void deleteAllChildren();
@@ -34,7 +37,7 @@ protected:
     virtual void drawTextureAndMaterial();
 
 public:
-    GameObject(std::string name, Texture* texture);
+    GameObject(std::string name, Texture* texture, GObjType type = GObj_STANDARD);
     GameObject(const GameObject& other);
 
     virtual void setup();
@@ -42,6 +45,7 @@ public:
     virtual void draw();
 
     float getShininess();
+	GObjType getType() { return type; };
     void setShininess(float shininess);
     virtual ofColor getDiffuseColor();
     virtual void setDiffuseColor(ofColor diffuseColor);

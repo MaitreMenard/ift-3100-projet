@@ -3,7 +3,7 @@
 #include <stack>
 #include <vector>
 
-#define UNDO_REDO_VERBOSE 0
+#define UNDO_REDO_VERBOSE 1
 #define QUEUE_LIMIT 500
 
 #pragma once
@@ -37,8 +37,8 @@ public:
     CommandHandler();
 	~CommandHandler();
     void add(Command * cmd);
-    void undo();
-    void redo();
+	bool undo();
+	bool redo();
     void enable() { isEnable = true; };
     void disable() { isEnable = false; };
     GameObject * getSelectedGameObject();

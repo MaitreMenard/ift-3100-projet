@@ -35,8 +35,8 @@ public:
     void setRotationSelectedGameObject(ofVec3f rotation);
     void setScaleSelectedGameObject(ofVec3f scale);
 
-    void undo();
-    void redo();
+	bool undo();
+	bool redo();
     void enableUndoRedo() { history_.enable(); };
     void disableUndoRedo() { history_.disable(); };
     void setColorSelectedGameObject(ofColor color);

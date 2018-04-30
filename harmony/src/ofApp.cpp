@@ -22,7 +22,6 @@ void ofApp::setup()
     setupLight(lightIsActive);
     gridPlane.setup();
     scene.setup();
-    scene.enableUndoRedo();
 
     setupInspector();
 
@@ -37,6 +36,7 @@ void ofApp::setup()
     lightModeSelector.addListener(this, &ofApp::onLightModeChange);
 
     createLight();
+	scene.enableUndoRedo();
 }
 
 void ofApp::setupCamera()
@@ -352,17 +352,21 @@ void ofApp::keyPressed(int key)
     {
     case -1: // CTRL_R + Z
     case 26: // CTRL_L + Z
-        scene.undo();
-        gameObjectSelector.setSelectedItem(scene.getSelectedGameObject());
-        inspector.update(scene);
-        textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+		cout << "ctrl +z" << endl;
+        if(scene.undo()){
+			gameObjectSelector.setSelectedItem(scene.getSelectedGameObject());
+			inspector.update(scene);
+			textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+		}
         break;
     case 8592: // CTRL_R + Y
     case 25: // CTRL_L + Y
-        scene.redo();
+		cout << "ctrl +y" << endl;
+        if(scene.redo()){
         gameObjectSelector.setSelectedItem(scene.getSelectedGameObject());
         inspector.update(scene);
         textureSelector.setSelectedItem(scene.getSelectedGameObjectTexture());
+		}
         break;
     case ' ':
         takeScreenShot();

@@ -1,8 +1,9 @@
 #include "gameobject.h"
 #include "gameobject_visitor.h"
 
-GameObject::GameObject(std::string name, Texture* texture)
+GameObject::GameObject(std::string name, Texture* texture, GObjType type)
 {
+	this->type = type;
     this->name = name;
     this->texture = texture;
 
@@ -18,6 +19,7 @@ GameObject::GameObject(std::string name, Texture* texture)
 
 GameObject::GameObject(const GameObject & other)
 {
+	type = other.type;
     name = other.name;
     texture = other.texture;
     transform = other.transform;
