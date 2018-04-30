@@ -64,9 +64,5 @@ GameObject* GameObjectFactory::createNewGameObject(size_t shapeType, Texture* te
     {
         return new HermiteCurve(hermiteCurveText);
     }
-	else if (shapeType == Shape_PlaneBump)
-	{
-		return new planeBump(planeBumpText);
-	}
     return nullptr;
 }
