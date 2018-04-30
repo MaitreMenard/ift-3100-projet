@@ -45,7 +45,6 @@ void ofApp::setupCamera()
     camera.setPosition(initialCameraPosition);
 
     cameraPortal.setNearClip(0.1f);
-    cameraPortal.setOrientation(ofVec3f(0, -180, 90));
 }
 
 void ofApp::setupInspector()
@@ -95,20 +94,20 @@ void ofApp::update()
 
     if (portalsWereCreated)
     {
-        cameraPortal.setPosition(portal1->getPosition());
-        cameraPortal.setOrientation(portal1->getRotation());
-        updatePortalFbo();
-        ofPixels pixels1 = ofPixels();
-        fboPortal.readToPixels(pixels1);
-        portal1->setTexturePixels(pixels1);
-
-        cameraPortal.setPosition(portal2->getPosition());
-        cameraPortal.setOrientation(portal2->getRotation());
-        updatePortalFbo();
-        ofPixels pixels2 = ofPixels();
-        fboPortal.readToPixels(pixels2);
-        portal2->setTexturePixels(pixels2);
+        transfertPortalImage(portal1, portal2);
+        transfertPortalImage(portal2, portal1);
     }
+}
+
+void ofApp::transfertPortalImage(Mirror * imageSender, Mirror * imageReceiver)
+{
+    cameraPortal.setPosition(imageSender->getPosition());
+    cameraPortal.setOrientation(imageSender->getRotation());
+    cameraPortal.pan(portalCameraYRotationOffset);
+    updatePortalFbo();
+    ofPixels pixels = ofPixels();
+    fboPortal.readToPixels(pixels);
+    imageReceiver->setTexturePixels(pixels);
 }
 
 void ofApp::updatePortalFbo()

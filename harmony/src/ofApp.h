@@ -24,9 +24,6 @@ private:
 
     const string lightText = "Light";
 
-    //bool currentlyDrawingPortal1;
-    //bool currentlyDrawingPortal2;
-
     ofFbo fbo;
 	ofFbo fboPortal;
     FboRenderer fboRender;
@@ -45,6 +42,7 @@ private:
     const ofVec3f portal1InitialPosition = ofVec3f(-2, 2, 0);
     Mirror* portal2;
     const ofVec3f portal2InitialPosition = ofVec3f(2, 2, 0);
+    const float portalCameraYRotationOffset = 180.f;
 
     Inspector inspector;
     GameObjectSelector gameObjectSelector;
@@ -83,6 +81,7 @@ private:
     void toggleGUIVisibility();
     void drawGUI();
 
+    void transfertPortalImage(Mirror* imageSender, Mirror* imageReceiver);
     void updatePortalFbo();
     Mirror* createPortal(ofVec3f position);
 
