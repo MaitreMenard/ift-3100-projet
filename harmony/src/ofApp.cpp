@@ -444,9 +444,16 @@ void ofApp::keyPressed(int key)
         addNewGameObject(Shape_PlaneRelief, textureFactory.getEmptyTexture());
         break;
     case 'p':
-        portal1 = createPortal(portal1InitialPosition);
-        portal2 = createPortal(portal2InitialPosition);
-        portalsWereCreated = true;
+        if (!portalsWereCreated)
+        {
+            portal1 = createPortal(portal1InitialPosition);
+            portal2 = createPortal(portal2InitialPosition);
+            portalsWereCreated = true;
+        }
+        else
+        {
+            ofLog() << "The portals were already created";
+        }
         break;
     case 'm':
         addNewGameObject(Shape_Falcon, textureFactory.getEmptyTexture());
