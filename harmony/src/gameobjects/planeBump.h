@@ -7,7 +7,6 @@ class planeBump : public GameObject
 private:
 	ofImage colorMap;
 	ofImage bumpMap;
-	ofImage normalMap;
 	ofShader shader;
 	ofPlanePrimitive plane;
 
@@ -15,5 +14,4 @@ public:
     planeBump(string pName);
 	void draw();
 	void setColor(ofColor color);
-	bool isWithNormalMap();
 };

@@ -2,7 +2,6 @@
 #include <vector>
 #include "gameobject.h"
 #include "command.h"
-#include "renderer.h"
 
 class Scene
 {
@@ -62,8 +61,6 @@ public:
     void removeSelectedGameObjectParent();
 
     Scene& operator=(const Scene& other);
-
-	Renderer shaderRenderer;
 
     ~Scene();
 };

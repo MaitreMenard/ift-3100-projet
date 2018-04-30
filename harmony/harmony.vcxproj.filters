@@ -151,9 +151,6 @@
     <ClCompile Include="src\fboRenderer.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\renderer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -474,9 +471,6 @@
       <Filter>src\gameobjects</Filter>
     </ClInclude>
     <ClInclude Include="src\fboRenderer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\renderer.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

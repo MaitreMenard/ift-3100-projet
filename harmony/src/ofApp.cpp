@@ -2,7 +2,7 @@
 
 void ofApp::setup()
 {
-	fboRender.setup();
+	renderer.setup();
 	fbo.allocate(ofGetWidth(), ofGetHeight());
 
     scene.enableUndoRedo();
@@ -176,8 +176,7 @@ void ofApp::draw()
 
         ofPushMatrix();
         camera.begin();
-
-		if (camera.getOrtho())
+        if (camera.getOrtho())
         {
             ofScale(ofVec3f(100));
         }
@@ -193,12 +192,11 @@ void ofApp::draw()
         {
             light->disable();
         }
-
         camera.end();
         ofPopMatrix();
 
 		fbo.end();
-		fboRender.apply(&fbo);
+		renderer.apply(&fbo);
 		fbo.draw(0, 0, ofGetWidth(), ofGetHeight());
 
         if (GUIIsDisplayed)
@@ -219,15 +217,6 @@ void ofApp::draw()
             {
                 ofEnableLighting();
             }
-
-			// Display render name
-			if(scene.shaderRenderer.isActive)
-				ofDrawBitmapStringHighlight("Modele Illumination: " + scene.shaderRenderer.getShaderName(), 220, 15,
-					ofColor::white, ofColor::black);
-			if(fboRender.isActiveEffect())
-				ofDrawBitmapStringHighlight("Effet: " + fboRender.getEffectName(), 220,
-					15 + (20 * (int)scene.shaderRenderer.isActive),
-					ofColor::white, ofColor::black);
         }
     }
 }
@@ -412,10 +401,7 @@ void ofApp::keyPressed(int key)
         addNewGameObject(Shape_Hermite, textureFactory.getEmptyTexture());
         break;
 	case 'e':
-		fboRender.next();
-		break;
-	case 'q':
-		scene.shaderRenderer.next();
+		renderer.next();
 		break;
     default:
         break;

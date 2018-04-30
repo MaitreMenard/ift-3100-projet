@@ -1,14 +1,10 @@
 #pragma once
 #include "ofMain.h"
 
-enum class effectType { none, blur, black_white, sepia, toon };
-
 class fboRenderer
 {
 private:
-	bool isActive;
-	string effectName;
-	effectType fboEffect;
+	int fboIter;
 	ofFbo fboFirstPass, fboSecondPass;
 	ofShader shaderBlurX, shaderBlurY, shaderBlackWhite, shaderSepia, shader8bits, shaderEdge, shaderEdgeLayer, shaderGray, shaderMult;
 
@@ -24,14 +20,12 @@ private:
 	bool sepiaIsSet_;
 
 	// 8bits
-	bool toonIsSet_;
+	bool bitsIsSet_;
 
 public:
 	fboRenderer();
 	~fboRenderer();
 
-	bool isActiveEffect() { return isActive; };;
-	string getEffectName() { return effectName; };
 	void setup();
 	void apply(ofFbo * pFbo);
 	void setBlurParam(float pBlurValue, int pBlurIteration);
@@ -44,8 +38,8 @@ public:
 	void enableSepia();
 	void disableSepia();
 	bool isSepiaSet();
-	void enableToon();
-	void disableToon();
+	void enable8bits();
+	void disable8bits();
 	bool is8bitsSet();
 	void resize();
 	void next();

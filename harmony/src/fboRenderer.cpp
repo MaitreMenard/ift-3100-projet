@@ -6,9 +6,7 @@ fboRenderer::~fboRenderer() {}
 
 void fboRenderer::setup() {
 	// setup blur param / shaders
-	effectName = "No effect";
-	fboEffect = effectType::none;
-	isActive = false;
+	fboIter = 0;
 	blurValue_ = 2;
 	blurIterations_ = 2;
 	blurIsSet_ = false;
@@ -24,8 +22,8 @@ void fboRenderer::setup() {
 	sepiaIsSet_ = false;
 	shaderSepia.load("shaders/sepia");
 
-	// setup toon shaders
-	toonIsSet_ = false;
+	// setup 8bits shaders
+	bitsIsSet_ = false;
 	shader8bits.load("shaders/colorbits");
 	shaderEdge.load("shaders/edgesobel");
 	shaderGray.load("shaders/gray");
@@ -38,7 +36,7 @@ void fboRenderer::setup() {
 }
 
 void fboRenderer::apply(ofFbo * pFbo) {
-	if (toonIsSet_) {
+	if (bitsIsSet_) {
 		// make edge detection mask
 		fboFirstPass.begin();
 		ofClear(0, 0, 0);
@@ -166,16 +164,16 @@ bool fboRenderer::isSepiaSet() {
 	return sepiaIsSet_;
 }
 
-void fboRenderer::enableToon() {
-	toonIsSet_ = true;
+void fboRenderer::enable8bits() {
+	bitsIsSet_ = true;
 }
 
-void fboRenderer::disableToon() {
-	toonIsSet_ = false;
+void fboRenderer::disable8bits() {
+	bitsIsSet_ = false;
 }
 
 bool fboRenderer::is8bitsSet() {
-	return toonIsSet_;
+	return bitsIsSet_;
 }
 
 void fboRenderer::resize() {
@@ -183,48 +181,37 @@ void fboRenderer::resize() {
 }
 
 void fboRenderer::next() {
-	fboEffect = (effectType)(((int)fboEffect + 1)%5);
-	switch (fboEffect)
+	switch (++fboIter % 5)
 	{
-	case effectType::none:
-		effectName = "No effect";
+	case 0:
 		disableBlur();
 		disableBW();
 		disableSepia();
-		disableToon();
-		isActive = false;
+		disable8bits();
 		break;
-	case effectType::blur:
-		effectName = "Gaussian Blur";
+	case 1:
 		enableBlur();
 		disableBW();
 		disableSepia();
-		disableToon();
-		isActive = true;
+		disable8bits();
 		break;
-	case effectType::black_white:
-		effectName = "Black and White";
+	case 2:
 		disableBlur();
 		enableBW();
 		disableSepia();
-		disableToon();
-		isActive = true;
+		disable8bits();
 		break;
-	case effectType::sepia:
-		effectName = "Sepia";
+	case 3:
 		disableBlur();
 		disableBW();
 		enableSepia();
-		disableToon();
-		isActive = true;
+		disable8bits();
 		break;
-	case effectType::toon:
-		effectName = "Toon";
+	case 4:
 		disableBlur();
 		disableBW();
 		disableSepia();
-		enableToon();
-		isActive = true;
+		enable8bits();
 		break;
 	default:
 		break;

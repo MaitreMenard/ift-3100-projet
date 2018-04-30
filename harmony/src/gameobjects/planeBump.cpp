@@ -3,8 +3,7 @@
 planeBump::planeBump(string pName) : GameObject(pName, nullptr)
 {
 	gameObjectIs2D = false;
-	//shader.load("shaders/bumpMap");
-	shader.load("shaders/normalMap");
+	shader.load("shaders/bumpMap");
 
 	//if (!colorMap.load("img/6133-diffuse.jpg"))
 	if (!colorMap.load("img/6903-diffuse.jpg"))
@@ -12,9 +11,6 @@ planeBump::planeBump(string pName) : GameObject(pName, nullptr)
 
 	//if (!bumpMap.load("img/6133-bump.jpg"))
 	if (!bumpMap.load("img/6903-bump.jpg"))
-		cout << "bump map failed" << endl;
-
-	if (!normalMap.load("img/6903-normal.jpg"))
 		cout << "bump map failed" << endl;
 
 	int planeWidth = bumpMap.getWidth();
@@ -25,8 +21,6 @@ planeBump::planeBump(string pName) : GameObject(pName, nullptr)
 
 	plane.set(1.0, 1.0, planeColumns, planeRows, OF_PRIMITIVE_TRIANGLES);
 	plane.mapTexCoords(0, 0, 1.0, 1.0);
-
-	boundingBox.set(1, 1, 0.1f);
 }
 
 void planeBump::draw()
@@ -37,9 +31,7 @@ void planeBump::draw()
 	shader.begin();
 	shader.setUniformTexture("texColor", colorMap.getTextureReference(), 0);
 	shader.setUniformTexture("texBumpMap", bumpMap.getTextureReference(), 1);
-	shader.setUniformTexture("texNormalMap", normalMap.getTextureReference(), 2);
 	shader.setUniform1f("maxHeight", 0.05);
-	shader.setUniform3f("lightPosition", lightPosition);
 	plane.draw();
 	shader.end();
 
@@ -53,9 +45,4 @@ void planeBump::draw()
 
 void planeBump::setColor(ofColor color) {
 
-}
-
-
-bool planeBump::isWithNormalMap() {
-	return true;
 }

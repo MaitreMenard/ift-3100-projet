@@ -17,22 +17,6 @@ Scene::Scene(const Scene& other)
 
 void Scene::setup()
 {
-	// Shader Renderer
-	ofLog() << "<app::setup>";
-
-	if (ofIsGLProgrammableRenderer())
-	{
-		shaderRenderer.gl_version_major = 3;
-		shaderRenderer.gl_version_minor = 3;
-	}
-	else
-	{
-		shaderRenderer.gl_version_major = 2;
-		shaderRenderer.gl_version_minor = 1;
-	}
-
-	shaderRenderer.setup();
-
     for (GameObject* gameObject : gameObjects)
     {
         gameObject->setup();
@@ -41,7 +25,6 @@ void Scene::setup()
 
 void Scene::update()
 {
-	shaderRenderer.update();
     for (GameObject* gameObject : gameObjects)
     {
         gameObject->update();
@@ -83,48 +66,13 @@ void Scene::setColorSelectedGameObject(ofColor color)
 
 void Scene::draw()
 {
-	if (shaderRenderer.isActive) {
-		ofEnableLighting();
-		shaderRenderer.light.enable();
-		shaderRenderer.shader->begin();
-	}
     for (GameObject* gameObject : gameObjects)
     {
-        if (gameObject->getParentGameObject() == nullptr && !gameObject->isWithNormalMap())
+        if (gameObject->getParentGameObject() == nullptr)
         {
-			ofPushMatrix();
-			if (shaderRenderer.isActive) {
-				shaderRenderer.shader->setUniform3f("lightPosition", shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW));
-			}
-			gameObject->draw();
-			ofPopMatrix();
+            gameObject->draw();
         }
     }
-	if (shaderRenderer.isActive) {
-		shaderRenderer.shader->end();
-		shaderRenderer.light.disable();
-		ofDisableLighting();
-	}
-
-
-	if (shaderRenderer.isActive) {
-		ofEnableLighting();
-		shaderRenderer.light.enable();
-	}
-	for (GameObject* gameObject : gameObjects)
-	{
-		if (gameObject->getParentGameObject() == nullptr && gameObject->isWithNormalMap())
-		{
-			ofPushMatrix();
-			gameObject->lightPosition = shaderRenderer.light.getGlobalPosition() * ofGetCurrentMatrix(OF_MATRIX_MODELVIEW);
-			gameObject->draw();
-			ofPopMatrix();
-		}
-	}
-	if (shaderRenderer.isActive) {
-		shaderRenderer.light.disable();
-		ofDisableLighting();
-	}
 }
 
 void Scene::addGameObject(GameObject* gameObject)

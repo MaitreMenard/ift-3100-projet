@@ -21,5 +21,4 @@ void Polygone::createPoint(size_t index)
 
     model.addVertex(ofVec3f(x, y));
     model.addTexCoord(texture->getCoordFromPercent(0.5f + x, 0.5f - y));
-	model.addNormal(ofVec3f(0, 0, 1));
 }
